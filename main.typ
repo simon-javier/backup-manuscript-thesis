@@ -1,0 +1,653 @@
+#set text(font: "Times New Roman", size: 12pt)
+
+#let font-size = 12pt
+#let double-spacing = 1.5em
+
+#let chp(title) = {
+  show heading: none
+  heading(level: 1, outlined: false)[#title]
+  align(center)[*#upper(title)*]
+}
+
+#let h2(title, c: true, hidden: false, outlined: true) = {
+  show heading: none
+  set par(first-line-indent: 0em)
+  if not outlined {
+    heading(level: 2, outlined: false)[#title]
+  } else {
+    heading(level: 2)[#title]
+  }
+  
+  if not hidden {
+    if not c {
+      [*#upper(title)*]
+    } else {
+      align(center)[*#upper(title)*]
+    }
+  }
+}
+
+#let h3(title, hidden: false) = {
+  show heading: none
+  set par(first-line-indent: 0em)
+  heading(level: 3)[#title]
+  if not hidden {
+    align(left)[*#upper(title)*]
+  }
+}
+
+#let defaultSpacing(body) = {
+  set par(leading: 0.65em, spacing: 1.2em)
+  body
+}
+
+#let oneHalfSpacing(body) = {
+  set par(leading: 1em, spacing: 1em)
+  body
+}
+
+#let singleSpacing(body) = {
+  set par(leading: 0.5em, spacing: 0.5em)
+  body
+}
+
+
+#set page(margin: (
+  y: 1in,
+  left: 1.5in,
+  right: 1in,
+  ),
+  header: context{
+    let current-page = here().page()
+    let page-number = counter(page).display()
+    let chapter-page = query(heading.where(level:1)).filter(it => lower(it.body.text).contains("chapter"))
+    let has-chapter = chapter-page.any(it => it.location().page() == current-page)
+
+    let in-prelim-page = query(selector(heading).after(<prelim-s>).before(<prelim-e>)).any(it => it.location().page() == current-page)
+    
+    if not has-chapter {
+      align(right)[#page-number]
+    }
+   },
+)
+#set par(
+  justify: true,
+  first-line-indent: (
+    amount: 0.5in,
+    all: true,
+  ),
+  leading: 1.5em,
+  spacing: 1.5em
+)
+#show heading: set text(size: font-size)
+#show heading: set block(spacing: double-spacing)
+
+#show heading: it => emph(strong[#it.body.])
+#show heading.where(level: 1): it => align(center, strong(it.body))
+#show heading.where(level: 2): it => align(center, strong(it.body))
+
+#show heading.where(level: 3): it => par(
+  first-line-indent: 0in,
+  strong(it.body),
+)
+
+#show heading.where(level: 4): it => par(
+  first-line-indent: 0in,
+  emph[#it.body],
+)
+
+#show heading.where(level: 5): it => emph(strong[#it.body.])
+
+
+
+  #show figure: set block(breakable: true, sticky: true)
+
+  #set figure(
+    gap: double-spacing,
+    placement: auto,
+  )
+
+  #set figure.caption(separator: parbreak(), position: bottom, )
+
+  #show outline.entry.where(level: 1): it => link(
+    it.element.location(),
+    it.indented(strong(it.prefix()), it.inner())
+  )
+  
+  #show figure.caption: set align(center)
+  #show figure.caption: set par(first-line-indent: 0em)
+  #show figure.caption: it => {
+    [*#it.supplement #context it.counter.display(it.numbering).* #it.body]
+  }
+
+  #set list(
+    marker: ([•], [◦]),
+    indent: 0.5in - 1.75em,
+    body-indent: 1.3em,
+  )
+
+  #set enum(
+    indent: 0.5in - 1.5em,
+    body-indent: 0.75em,
+  )
+
+  #set raw(
+    tab-size: 4,
+    block: true,
+  )
+
+  #show raw.where(block: true): block.with(
+    fill: luma(250),
+    stroke: (left: 3pt + rgb("#6272a4")),
+    inset: (x: 10pt, y: 8pt),
+    width: auto,
+    breakable: true,
+    outset: (y: 7pt),
+    radius: (left: 0pt, right: 6pt),
+  )
+
+  #show raw: set text(
+    font: "Cascadia Code",
+    size: 10pt,
+  )
+
+  #show raw.where(block: true): set par(leading: 1em)
+  #show figure.where(kind: raw): set block(breakable: true, sticky: false, width: 100%)
+
+  #set math.equation(numbering: "(1)")
+
+  #show quote.where(block: true): set block(spacing: double-spacing)
+
+  #show quote: it => {
+    let quote-text-words = to-string(it.body).split(regex("\\s+")).filter(word => word != "").len()
+
+    if quote-text-words < 40 {
+      ["#it.body" ]
+
+      if (type(it.attribution) == label) {
+        cite(it.attribution)
+      } else if (
+        type(it.attribution) == str or type(it.attribution) == content
+      ) {
+        it.attribution
+      }
+    } else {
+      block(inset: (left: 0.5in))[
+        #set par(first-line-indent: 0.5in)
+        #it.body
+        #if (type(it.attribution) == label) {
+          cite(it.attribution)
+        } else if (type(it.attribution) == str or type(it.attribution) == content) {
+          it.attribution
+        }
+      ]
+    }
+  }
+
+  #set bibliography(style: "apa")
+  #show bibliography: set par(first-line-indent: 0in)
+
+#metadata("group 1 start") <prelim-s>
+#set page(numbering: "i", number-align: top+right)
+#let title = [PROBABILISTIC DETECTION OF SYSTEMIC DISEASES USING DEEP LEARNING ON FINGERNAIL BIOMARKERS]
+
+#let title_page = context counter(page).display()
+#page(header: none)[#align(center)[
+  #{
+    show heading: none
+    [== Title Page]
+  }
+  
+  #singleSpacing[*#title*]
+  \
+  \
+  \
+  An Undergraduate Thesis \
+  Presented to the \
+  Faculty of College of Computer Studies \
+  Laguna State Polytechnic University \
+  Santa Cruz Campus
+  \
+  \
+  \
+  In Partial Fulfillment of the requirements for the Degree \
+  *BACHELOR OF SCIENCE IN COMPUTER SCIENCE*
+  \
+  \
+  \
+  \
+  #oneHalfSpacing[
+  By: \
+  *
+  JAVIER, GERON SIMON A. \
+  MACAPALLAG, MHAR ANDREI C. \
+  VALDEABELLA, SEANREI ETHAN M.
+  \
+  *
+  ]
+  \
+  \
+  Under the supervision of: \
+  *MIA M. VILLARICA, DIT*
+  #v(1fr)
+  *JUNE 2025*
+]]
+#pagebreak()
+
+#singleSpacing[
+  #show heading: none
+  #set par(first-line-indent: 0em)
+  == Vision, Mission, and Objectives of BSCS Program
+  #set enum(spacing: 1.5em, indent: 0em)
+
+  #align(center)[*VISION*]
+  \
+  The Laguna State Polytechnic University is a center of sustainable development initiatives transforming lives and communities.
+  \
+  \
+  #align(center)[*MISSION*]
+  \
+  LSPU, driven by progressive leadership, is a premier institution providing technology- mediated agriculture, fisheries, and other related and emerging disciplines significantly contributing to the growth and development of the region and nation.
+  \
+  \
+  #align(center)[*QUALITY POLICY*]
+  \
+  LSPU delivers quality education through responsive instruction, distinctive research, sustainable extension, and production services. Thus, we are committed with continual improvement to meet applicable requirements to provide quality, efficient and effective services to the university stakeholders’ highest level of satisfaction through an excellent management system imbued with utmost integrity, professionalism and innovation.
+  \
+  \
+  #align(center)[*College of Computer Studies Goal*]
+  \
+  The College of Computer Studies graduates are expected to become globally competitive and innovative computing professionals imbued with utmost integrity, contributing to the country’s national development goals.
+  \
+  \
+  #align(center)[*Program Educational Objective*]
+  \
+  The Bachelor of Science in Computer Science (BSCS) graduates are computing professionals and proficient researchers in designing and developing innovative solutions. It is designed to enable students to achieve the following by the time they graduate:
+  \
+  \
+  + Apply knowledge of computing solutions from fundamentals to complex problems appropriate for the abstraction and conceptualization of computing models.
+  + Communicate effectively and recognize the legal, ethical and professional issues governing the utilization of computer technology and to engage in independent learning development as a computing professional.
+  + Ability to apply design, develop and evaluate systems’ components and processes through mathematical foundations, algorithmic principles and computer science theories.
+  + Developed a culture of research for technology advancement.
+  + Demonstrated good leadership and a team player that will contribute to nation building and engage in life-long learning as foundation for professional development.
+  
+]
+
+#pagebreak()
+
+#singleSpacing[
+#h2[Approval Sheet]
+
+#set par(
+  first-line-indent: (
+    amount: 0.5in,
+    all: true,
+  ),
+)
+
+\
+
+The thesis entitled *"#title"* prepared and submitted by *GERON SIMON A. JAVIER*, *MHAR ANDREI C. MACAPALLAG*, and *SEANREI ETHAN M. VALDEABELLA* in partial fulfillment of the requirements for the degree of *BACHELOR OF SCIENCE IN COMPUTER SCIENCE*, major in *INTELLIGENT SYSTEM* is hereby recommended for approval and acceptance.
+\
+\
+\
+#grid(
+  columns: (2fr, 2fr, 1fr),
+  [],
+  [],
+  align(center)[*Mia M. Villarica* \ Thesis Adviser],
+) #v(0.5em)
+
+#line(length: 100%)
+#v(0.5em)
+
+Approved by the Committee on Oral Examination with a grade of #underline[#box(width: 3em,repeat(sym.space))].
+\
+\
+\
+\
+#grid(
+  columns: (1fr, 1fr),
+  row-gutter: 4em,
+  align: center,
+  [*MARK P. BERNARDINO* \ Member],
+  [*MARIA LAUREEN B. MIRANDA* \ Member],
+  text(size: 11pt)[*MA. CEZANNE D. DIMACULANGAN* \ Member],
+  text(size: 11pt)[*ENGR. MARIBELLE B. MANALANSAN* \ Member],
+  grid.cell(colspan: 2)[*REYNALEN C. JUSTO, LPT, DIT* \ Research Implement Unit Head],
+)
+
+#v(1.5em)#line(length: 100%)#v(0.5em)
+
+Accepted and approved in partial fulfillment of the requirement for the degree of *BACHELOR OF SCIENCE IN COMPUTER SCIENCE*, Major in *INTELLIGENT SYSTEM*.
+\
+\
+\
+#grid(
+  columns: (1fr, 1fr),
+  align: center,
+  [],
+  [*MIA V. VILLARICA, DIT* \ Dean/Associate Dean]
+)
+#v(1fr)
+#grid(
+  columns: (1fr, 1fr),
+  align: center,
+  [*BENJAMIN O. ARJONA, Ed. D.* \ Chairperson, Research and Development],
+  [#underline[#box(width: 10em, repeat(sym.space))]\ Date Signed]
+)
+#v(1fr)
+
+#table(
+  columns: (1fr, 1fr),
+  inset: 0.5em,
+  [*RESEARCH CONTRIBUTION NO.*],
+  []
+)
+]
+#pagebreak()
+
+#singleSpacing[
+
+#h2[Acknowledgement]
+\
+
+The researchers would like to express their sincere gratitude to the following individuals who have contributed and supported them in the completion of the study:
+\
+\
+
+First and foremost, to *OUR ALMIGHTY GOD*, for empowering the researcher when they feel down, gives them strength, patience, spiritual guidance, and everything provided when they need it most;
+\
+\
+
+To their Thesis Adviser and Associate Dean of the College of Computer Studies, *MS. MIA V. VILLARICA, DIT*, for her time, effort, and patience in checking the papers from time to time, and for sharing her ideas and constructive critiques, which greatly contributed to the success of this study;
+\
+\
+
+To their System Expert, *MR. MARK P. BERNARDINO, MSCS,* for improving this thesis's technical features. Their careful consideration to detail has significantly increased the paper's overall structure and clarity;
+\
+\
+
+To their Technical Editor, *MS. MICAH FORMARAN*, who thoughtfully corrected the manuscript's format and content;
+\
+\
+
+To their Statistician, *MR. VICTOR A. ESTALILLA JR.*, for his guidance on the structure of the data sample and her help in completing the data sampling for the study;
+\
+\
+
+To their Language Critic, *MR. JOHNJOHN ZOTOMAYOR*, for being helpful in checking and revising the manuscript's grammar and its structure;
+\
+\
+
+To their *FRIENDS* and *CLASSMATES*, for encouraging, helping and inspiring them to finish this study;
+\
+\
+
+The researchers are deeply thankful to their *FAMILY*, for their unwavering support, love, and care;
+\
+\
+
+And lastly, they are thankful for the effort and hard work of each member of this *RESEARCH TEAM*, for believing in themselves, for doing all the hard work, and for never quitting in order to make this humble work a success.
+
+#pagebreak()
+]
+
+#singleSpacing[
+#h2[Abstract]
+\
+
+#lorem(300)
+\
+\
+\
+_*Keywords:* Image Processing, Deep Learning, Machine Learning, Fingernail Disease, Systemic Disease, Convolutional Neural Networks_
+]
+
+#pagebreak()
+
+
+
+#let toc = [
+  #h2[Table of Contents]
+  #h2(c:false)[Preliminaries]
+   #outline(target: selector(heading).after(<prelim-s>).before(<prelim-e>), title: none)
+   
+   #metadata("group 1 end") <prelim-e>
+   
+   #h3[CHAPTER I INTRODUCTION AND ITS BACKGROUND]
+   #outline(target: selector(heading).after(<ch1-s>).before(<ch1-e>), title: none)
+
+   #h3[CHAPTER II REVIEW OF RELATED LITERATURE]
+   #outline(target: selector(heading).after(<ch2-s>).before(<ch2-e>), indent: 0.5em,  title: none)
+   
+   #h3[CHAPTER III RESEARCH METHODOLOGY]
+   #outline(target: selector(heading).after(<ch3-s>).before(<ch3-e>), indent: 0.5em,  title: none)
+
+   #pagebreak()
+   #h2[List of Figures]
+   #outline(target: figure.where(kind: image), title: none)
+
+   
+]
+
+#toc
+
+
+#pagebreak()
+
+#show table.cell: set par(leading: 1em)
+#set table(
+  stroke: (x, y) => if y == 0 {
+    (
+      top: (thickness: 1pt, dash: "solid"),
+      bottom: (thickness: 0.5pt, dash: "solid"),
+    )
+  },
+)
+
+#set page(numbering: "1")
+#counter(page).update(1)
+
+#metadata("Chapter 1 start") <ch1-s>
+#chp[Chapter I]
+#h2[Introduction and Its Background]
+Fingernails are often referred to as a “window to systemic health,” as they can reveal early signs of serious conditions such as diabetes, cardiovascular diseases, and liver disorders through subtle changes in their appearance. These abnormalities, such as Beau’s lines (horizontal ridges indicating stress or illness), clubbing (enlarged fingertips linked to heart or lung issues), or pitting (small depressions associated with psoriasis or other systemic diseases), frequently appear before other symptoms become noticeable. Despite their diagnostic potential, these signs are commonly overlooked during routine medical checkups due to their subtle nature and the lack of specialized tools or training for general practitioners to identify them. This oversight delays early intervention, which could significantly improve health outcomes, particularly for individuals in underserved communities with limited access to advanced diagnostics.
+
+The importance of accessible, non-invasive diagnostic methods cannot be overstated, as they empower individuals to monitor their health proactively and seek timely medical advice. However, many people worldwide face barriers to such healthcare services, including geographical isolation, financial constraints, and a lack of awareness about the significance of nail abnormalities. According to #cite(<gaurav_artificial_2025>, form: "prose"), fingernails are a globally recognized source of biomarkers due to their visibility and ease of examination, yet their potential in preventive healthcare remains largely untapped. This gap highlights the urgent need for innovative solutions that can bridge these barriers and democratize early disease detection.
+
+Artificial Intelligence (AI) has emerged as a transformative force in addressing such healthcare challenges, particularly through advancements in image processing and probabilistic modeling. Deep learning techniques, such as Convolutional Neural Networks (CNNs), excel at analyzing visual data, identifying patterns that may escape human observation. For example, a hybrid Capsule CNN achieved a 99.40% training accuracy in classifying nail disorders, showcasing the potential of deep learning in this domain #cite(<shandilya_autonomous_2024>). Similarly, a region-based CNN demonstrated superior performance to dermatologists in diagnosing onychomycosis, a common nail condition #cite(<han_deep_2018>). However, these studies often focus solely on classifying nail abnormalities without linking them to underlying systemic diseases, limiting their practical impact on preventive care.
+
+In the Philippines, early efforts like the Bionyx project (2018) explored AI-driven fingernail analysis, using Microsoft Azure Custom Vision to identify systemic conditions such as heart, lung, and liver issues through nail images. While innovative, its reliance on older technology resulted in limited precision compared to modern deep learning models #cite(<chua_student-made_2018>). Internationally, research has emphasized the diagnostic value of nails, with studies employing machine learning techniques like Support Vector Machines and CNNs to enhance classification accuracy #cite(<dhanashree_fingernail_2022>). Despite these advancements, a critical gap persists: the integration of deep learning-based classification with probabilistic inference to estimate the likelihood of systemic diseases, providing actionable insights for users.
+
+This study aims to address this gap by developing a deep learning-based system that combines CNNs (e.g., ResNet, MobileNet, Efficent Net) for nail disorder classification with probabilistic models (e.g., Naïve Bayes, Bayesian Inference) to infer systemic disease probabilities. By using publicly available datasets from Kaggle and Roboflow, augmented with clinical health data, the system is designed to be a globally accessible, non-invasive tool for early health screening. The proposed system will empower individuals, regardless of their location or socioeconomic status, to monitor their health proactively, offering a user-friendly platform that delivers probabilistic risk assessments and actionable recommendations for medical consultation.
+
+#pagebreak()
+=== Research Problem
+
+Systemic diseases such as diabetes, cardiovascular disorders, and liver conditions often manifest early through fingernail abnormalities, providing a critical window for intervention before more severe symptoms arise. These changes, such as discoloration, texture alterations, or structural deformities, are often subtle and require specialized knowledge to interpret, making them easy to overlook during standard medical evaluations. This delay in detection can lead to worsening health outcomes, particularly in areas with limited access to advanced diagnostics, where early intervention could be life-saving.
+
+The advent of AI-driven technologies has shown promise in addressing this challenge by enabling accurate classification of fingernail disorders. For instance, a 2016 study achieved 65% accuracy in detecting diseases based on nail color analysis, but its scope was limited by ignoring texture and shape features #cite(<indi_early_2016>). More recent studies, such as those employing advanced CNN models, have achieved higher accuracy in nail disorder classification, up to 99.40% in some cases, but they often stop at identifying nail conditions without linking them to systemic diseases #cite(<shandilya_autonomous_2024>). This gap reduces the clinical utility of these systems, as they fail to provide comprehensive insights that could guide users toward appropriate medical action.
+
+The potential of AI extends beyond healthcare into various sectors, demonstrating its versatility in addressing complex problems. In education, AI tools facilitate personalized learning experiences; in social services, they provide accessible resources to underserved populations; and in healthcare, they can enhance diagnostic accuracy, as seen in studies where CNNs outperformed dermatologists in diagnosing nail conditions #cite(<han_deep_2018>). A system that integrates deep learning with probabilistic modeling could similarly revolutionize preventive healthcare by offering non-invasive screening to individuals worldwide, particularly those who lack access to specialized medical services. However, existing approaches often lack the ability to handle diagnostic uncertainty or provide interpretable results, limiting their effectiveness in real-world applications.
+
+Moreover, the field of medical diagnostics has long sought non-invasive methods to improve early detection, with fingernails emerging as a promising biomarker due to their accessibility. #cite(<pinoliad>, form: "prose") demonstrated the feasibility of using machine learning for nail-based disease detection in the Philippines, but their system did not incorporate probabilistic inference for systemic diseases. This highlights the need for a more integrated approach that not only classifies nail disorders but also estimates the likelihood of underlying conditions, empowering users with actionable health insights.
+
+Thus, this study specifically seeks to address the following problems:
++ How can the researchers preprocess and prepare fingernail image datasets for deep learning algorithms to ensure accuracy and robustness?
++ How can deep learning algorithms like CNNs (e.g., ResNet, MobileNet, EfficientNet) be utilized to train, test, and validate models for classifying fingernail disorders with high accuracy?
++ How can probabilistic models (e.g., Naïve Bayes, Bayesian Inference) estimate the likelihood of systemic diseases based on classified nail disorders, incorporating clinical data?
++ How can the system’s performance be evaluated using standard metrics such as sensitivity, recall, and confidence intervals to ensure reliability?
++ How can the integrated model be deployed into a mobile or web-based platform to provide accessible, user-friendly preventive healthcare applications for a global audience?
+
+
+
+=== Research Objectives
+The main objective of this study is to design and develop a deep learning-based system for the probabilistic detection of systemic diseases using fingernail biomarkers, offering a non-invasive, accessible, and cost-effective solution to enhance preventive healthcare for individuals worldwide.
+
+Specifically, this study seeks to achieve the following objectives:
++ To preprocess fingernail image datasets from sources like Kaggle and Roboflow, applying techniques such as normalization, augmentation, and segmentation to prepare them for deep learning models.
++ To train, test, and validate deep learning models, including CNNs (e.g., ResNet, MobileNet), using the preprocessed datasets to achieve accurate classification of fingernail disorders.
++ To implement probabilistic models (e.g., Naïve Bayes, Bayesian Inference) to estimate the likelihood of systemic diseases based on classified fingernail conditions, integrating clinical health data for relevance.
++ To evaluate the system’s performance using standard metrics such as sensitivity, recall, and confidence intervals, ensuring its reliability and accuracy for real-world use.
++ To deploy the integrated model into a mobile or web-based platform, providing a user-friendly interface for individuals globally to access preventive healthcare applications.
+
+
+=== Research Framework
+This section outlines the theoretical and conceptual frameworks that underpin the study, providing a structured approach to developing the proposed system.
+
+==== Theoretical Framework
+#figure(
+  image("img/theoretical-framework.png"),
+  caption: [Integrated Deep Learning and Probabilistic Diagnostic Framework for Fingernail-Based Systemic Disease Detection]
+)
+The theoretical framework integrates deep learning and probabilistic modeling to create a comprehensive system for fingernail-based systemic disease detection, drawing inspiration from AI-driven diagnostic methodologies. It adapts principles from frameworks like #cite(<debnath_framework_2020>, form: "prose"), which emphasize systematic processing, feature extraction, and response generation in AI systems.
+
+The process begins with users uploading fingernail images via a user interface, followed by input handling and preprocessing steps such as normalization, resizing, and augmentation to enhance image quality and variability. Feature extraction employs CNNs (e.g., ResNet, MobileNet) to identify visual patterns, while intent recognition classifies nail disorders (e.g., clubbing, pitting) and entity recognition isolates specific biomarkers. A knowledge integration module, populated with clinical literature and health data, supports probabilistic inference using models like Naïve Bayes and Bayesian Inference, generating risk assessments and recommendations. A feedback loop ensures continuous improvement by merging new data into the knowledge base, with third-party services providing external validation to enhance reliability.
+
+
+#pagebreak()
+==== Conceptual Framework
+The conceptual framework provides a practical workflow for implementing the theoretical foundation, detailing the process from data collection to system deployment. It is divided into three phases: input, process, and output.
+
+#figure(
+  placement: none,
+  image("img/ConceptualFramework.png"),
+  caption: [Conceptual Framework of the Study]
+)
+
+The input phase involves collecting fingernail images from datasets like Kaggle and Roboflow, supplemented by local health data to inform probabilistic inference. The process phase includes data cleaning (normalization, noise reduction), segmentation to isolate fingernail regions, and augmentation (flipping, scaling, brightness adjustment) to enhance dataset diversity. Feature extraction using CNNs (e.g., ResNet, MobileNet, EfficientNet) precedes model training with a split dataset (80% training, 20% testing), employing CNNs for classification and probabilistic models (e.g., Naïve Bayes, Bayesian Inference) for inference. Evaluation metrics (sensitivity, recall, confidence intervals) guide hyperparameter tuning, leading to the selection of the best-performing model. The output phase delivers probabilistic classifications of nail disorders, systemic disease likelihoods (e.g., diabetes: 85%), and recommendations for medical consultation, with deployment into a mobile or web application for global accessibility.
+
+
+
+=== Scope and Limitation of the Study
+The general purpose of this study, titled "Probabilistic Detection of Systemic Diseases Using Deep Learning on Fingernail Biomarkers: A Preventive Healthcare Approach," is to develop an innovative and user-friendly system that leverages deep learning and probabilistic modeling to classify fingernail disorders and infer systemic diseases. The system aims to empower individuals globally by providing a non-invasive, accessible tool for early health screening, promoting preventive healthcare through early detection and actionable recommendations.
+
+==== Scope and Coverage
+The following identifies the scope and coverage of the study in terms of subject, methods, advanced technologies, features, output, target audience, and duration:
+
+*Subject:* The research focuses on the classification of fingernail disorders and the probabilistic inference of systemic diseases, such as diabetes, cardiovascular diseases, and liver disorders, using fingernail biomarkers as a non-invasive diagnostic approach.
+
+*Data Collection:* The study utilizes publicly available datasets from Kaggle and Roboflow, consisting of fingernail images with corresponding labels, augmented with clinical health data sourced from local health agencies to ensure relevance in probabilistic inference.
+
+*Advanced Technologies:* The system employs deep learning techniques, specifically CNNs (e.g., ResNet, MobileNet, EfficientNet), for image classification, and probabilistic models (e.g., Naïve Bayes, Bayesian Inference) for systemic disease inference, ensuring high accuracy and interpretability.
+
+*Features:* The system features an intuitive user interface that allows users to upload fingernail images, receive probabilistic classifications of nail disorders, and view estimated likelihoods of systemic diseases with recommendations for further medical evaluation. It also includes a feedback loop for continuous improvement.
+
+*System Output:* The system provides probabilistic risk assessments in text format (e.g., "Clubbing: 98%, Diabetes Likelihood: 85%"), accompanied by actionable recommendations, fostering an informative interaction that enhances users’ understanding of their health risks.
+
+*Target Audience:* The system targets a local and global audience, including individuals seeking proactive health monitoring, healthcare providers needing screening tools, and public health organizations aiming to monitor disease prevalence.
+
+*Testing Group:* To assess its usability and reliability, the system will undergo testing with a diverse group, including non-medical individuals, healthcare professionals, and public health experts, ensuring it meets varied user needs.
+
+*Time Duration:* The research is scheduled over a seven-month period, covering phases such as data collection, preprocessing, model development, training, testing, integration, evaluation, and deployment.
+
+==== Limitations 
+However, this study is limited to the following:
+
+*Dataset Quality and Balance:* The system’s performance relies on the quality and diversity of the training datasets, which may contain noise, inconsistencies, or class imbalances, potentially affecting its ability to generalize across diverse populations.
+
+*Unverified Medical Annotations:* Publicly sourced datasets may lack formal verification from licensed medical professionals, introducing risks of inaccurate labels that could impact classification and inference reliability.
+
+*Risk of Misclassification:* Errors in nail disorder classification may lead to inaccurate systemic disease probabilities, necessitating clear communication that the system serves as a preliminary screening tool, not a definitive diagnostic substitute.
+
+*Computational Constraints:* Training complex CNN models requires substantial computational resources, which may limit the ability to explore advanced architectures, perform extensive hyperparameter tuning, or train for longer periods.
+
+*Reliance on Image-Based Biomarkers:* The system depends solely on visual features from fingernail images, excluding other clinical indicators such as patient history, symptoms, or lab results, which are typically used in comprehensive medical diagnostics.
+
+*Language Barrier:* While the system will include multilingual support, translation accuracy may vary, potentially affecting user understanding in non-English-speaking regions.
+
+*Researcher Expertise:* The student-researcher’s current knowledge and programming skills may limit the system’s sophistication compared to state-of-the-art models developed by experienced professionals.
+
+=== Significance of the Research
+The findings of this study are beneficial to individuals and organizations worldwide, offering a non-invasive, accessible tool for early detection of systemic diseases through fingernail biomarkers. By addressing critical gaps in preventive healthcare, the system empowers users to take proactive steps toward better health outcomes. Specifically, the results of this study provide advantages to the following:
+
+*Global Community:* Individuals worldwide, especially those in remote or resource-limited areas, can access early health risk assessments, bridging gaps in healthcare access and empowering them to seek timely medical consultation.
+
+*Healthcare Providers:* Medical professionals can utilize the system as a preliminary screening tool to prioritize patients for further evaluation, improving efficiency in resource-constrained settings and enhancing patient care.
+
+*Public Health Organizations:* The system supports population-level health monitoring by identifying disease prevalence patterns, aiding in the development of targeted health interventions and policies.
+
+*Researchers:* The study serves as a foundation for future research in AI-driven diagnostics, offering insights into integrating deep learning and probabilistic modeling for medical applications.
+
+*Underserved Populations:* Communities in remote or economically disadvantaged regions benefit from a tool that requires no specialized equipment, promoting health equity and reducing disparities in healthcare access.
+
+*Health Tech Developers:* The project provides a blueprint for developing scalable, AI-driven health solutions, encouraging innovation in preventive healthcare technologies.
+
+*Policy Makers:* The results can inform public health policies on integrating AI tools into healthcare systems, improving access to early detection and preventive care on a global scale.
+
+*Educational Institutions:* Medical and technology students can use the system as a learning tool to explore the intersection of AI and healthcare, fostering interdisciplinary education.
+
+#metadata("Chapter 1 end") <ch1-e>
+#pagebreak()
+
+#metadata("Chapter 2 start") <ch2-s>
+#chp[CHAPTER II]
+#h2(outlined: false)[Review of Related Literatures]
+
+This chapter provides a review of relevant research and literature from the various books, websites, magazines, and expertly developed principles to have improved comprehension of the research.  The literature is discussed in this chapter. and research projects undertaken by various scholars that have a substantial relationship to the way the study was conducted.  Those who were also a part of this chapter aids in familiarizing oneself with pertinent and comparable material to the current research.
+
+
+=== Nails as Health Indicators
+According to #cite(<shandilya_autonomous_2024>, form: "prose"), the architectural complexity of the nail unit proves to be an important marker for the general health condition and very often represents alterations coinciding with most diseases. Architectural changes in the nails constitute important diagnostic information within a broad spectrum of diseases-from cancer and dermatological diseases to respiratory and cardiovascular diseases. Their study develops an intricate classification system for nail diseases based on the anatomical characteristics of the nail unit for the enhancement of accuracy in dermatological diagnosis. Detailed diagnosis of nail diseases such as onychogryphosis, cyanosis, clubbing, and koilonychia enhances the accuracy of dermatological examination and alerts the clinician to more generalized health issues including hypoxia or anemia due to an iron deficiency. Besides, changes in nails may include manifestations like pitting in psoriasis or onycholysis in eczema: two diseases with a long duration.
+
+Additionally, in the study of #cite(<indi_early_2016>, form: "prose"), different colors of nails indicate certain diseases. For example, Pink color nail indicate healthy nails which in turn indicates good health symptoms. White color nail means lack of iron and poor circulation, in which the blood is not reaching the end of your fingers, are resulting into white nails. It indicates anemic conditions or malnutrition. Moreover, a red-purple color nail means an upset digestive system caused by over consumption of sugar, pharmaceutical drugs, fruits and juices results into red-purple nails. When there are white spots in the nail, it indicate high content of sugar and lack of zinc which is required in the digestion process.
+
+
+=== Limitations of Human Visual Diagnosis
+Doctors observe nails of patient to get assistance in disease identification. The need of system to analyze nails for disease prediction is because human eye is having subjectivity about colors, having limitation in resolution and small amount of color change in few pixels on nail would not be highlighted to human eyes which may lead to wrong result where as computer recognizes small color changes on nail. #cite(<indi_early_2016>)
+
+
+In addition, the study of #cite(<dhanashree_fingernail_2022>, form: "prose") mentions that though various disease can be diagnosed using the colour of finger nails, the accuracy rate sometimes fails. This is mainly due to the colour assumptions made by humans through naked eye. Human eye has limitation in resolution and small amount of colour change in few pixels on nail would not be highlighted to human eyes which may lead to wrong result whereas it is possible for a machine to recognize small colour changes on nail. The health condition can be diagnosed using the nail’s thickness, length of nails, colour and texture.
+
+=== Deep Learning and Image Processing for Nail Analysis
+The research conducted by #cite(<shandilya_autonomous_2024>, form: "prose") began with the development of a Base CNN model for nail disease classification and progressed to the creation of a more advanced Hybrid Capsule CNN model to improve classification performance. The integration of capsule networks into the Hybrid model significantly enhanced its ability to capture spatial hierarchies and handle transformations, leading to better overall classification outcomes. The Nail Disease Detection dataset has been employed to conduct the training and testing of both models. With an accuracy of 99.25%, the Hybrid Capsule CNN model provides a more accurate, robust, and dependable solution for automated nail disease classification then Base CNN model with 97.75% accuracy. Its potential applications extend to medical diagnostics and healthcare automation, where accurate disease detection is critical for effective treatment.
+
+Furthermore, #cite(<ardianto_bioinformatics-driven_2025>, form: "prose") explored the application of Convolutional Neural Networks (CNNs) to detect 17 classes of nail conditions, achieving an overall detection accuracy of 83%. The CNN model, configured with predefined parameters such as a dropout rate of 0.2 and a learning rate of 0.001, demonstrated strong generalization capabilities. Notably, the dropout rate effectively reduced overfitting by introducing regularization, while the learning rate balanced convergence speed and stability during training. These parameter choices were instrumental in achieving a low validation error (0.1037) compared to training error, highlighting the model's ability to generalize to unseen data. Certain classes, such as "Leukonychia" and "Splinter Hemorrhage," showed excellent detection accuracy due to well-defined visual patterns in these conditions. However, classes like "Pale Nail" and "Alopecia Areata" exhibited lower accuracy, indicating the need for additional data and refinement in feature extraction. This highlights the model's strengths while also identifying areas requiring further research. The results underscore the potential of using CNN models in medical applications, providing a rapid and accessible diagnostic tool for nail condition detection.
+
+In the study conducted by #cite(<lahari_cnn_2023>, form: "prose"), two algorithms for classification namely Artificial Neural Network and Convolution neural network (DenseNet121) were used. The two algorithms are compared based on accuracy, specificity, and sensitivity. ANN is the older version which is less accurate. CNN is the latest model which can perform the classification better and it gives better results than ANN. CNN gives more accuracy and sensitivity than ANN. And the specificity is almost equal in both the algorithms. In their proposed technique, they trained a model that classifies the disease based on the colour and pattern of the nail. The system detects the diseases based on the features. It is able to identify the small patterns and colour variations also such that providing a system with higher success rate. Their proposed model gives more accurate results than human vision, because it overcomes the limitations of human eye like to identify the variations in nail colour and patterns.
+
+#cite(<archana_sharma_fingernail_2024>, form: "prose") conducted a fingernail image-based health assessment using a hybrid VGG16 and Random Forest Model. The hybrid model has proven to be highly effective in classifying fingernail images into specific disease categories. The model's performance, evaluated through metrics such as accuracy, precision, recall, and F1-score, exceeded those of alternative classifiers. With a 97.02% accuracy rate, the proposed model shows great promise for early diagnosis of diseases such as kidney disorder, melanoma, and anaemia through fingernail analysis. The proposed hybrid model has several advantages, including high accuracy and effective feature extraction through VGG16, making it highly reliable for disease detection. It is scalable, non-invasive, and versatile for other image-based diagnostics. However, its disadvantages include a limited dataset, and narrow disease focus. Future work can be focused on expanding the dataset, including more diseases, integrating the model into mobile applications, exploring advanced architectures like ResNet, and improving robustness to handle variable image quality for broader applicability.
+
+Furthermore, in a study written by #cite(<han_deep_2018>, form: "prose"), although there have been reports of the successful diagnosis of skin disorders using deep learning, unrealistically large clinical image datasets are required for artificial intelligence  (AI) training. In their study, they created datasets of standardized nail images using a region-based convolutional neural network (R-CNN) trained to distinguish the nail from the background. They used R-CNN to generate training datasets of 49,567 images, which is then used to  fine-tune the ResNet-152 and VGG-19 models. The validation datasets comprised 100 and  194 images from Inje University (B1 and B2 datasets, respectively), 125 images from Hallym  University (C dataset), and 939 images from Seoul National University (D dataset).  The AI (ensemble model; ResNet-152 + VGG-19 + feedforward neural networks) results  showed test sensitivity/specificity/ area under the curve values of (96.0 / 94.7 / 0.98), (82.7 /  96.7 / 0.95), (92.3 / 79.3 / 0.93), (87.7 / 69.3 / 0.82) for the B1, B2, C, and D datasets.  With a combination of the B1 and C datasets, the AI Youden index was significantly  (p = 0.01) higher than that of 42 dermatologists doing the same assessment manually. For  B1+C and B2+ D dataset combinations, almost none of the dermatologists performed as  well as the AI. By training with a dataset comprising 49,567 images, they achieved a diagnostic accuracy for onychomycosis using deep learning that was superior to that of most of the  dermatologists who participated in their study.
+
+
+#pagebreak()
+#metadata("Chapter 2 end") <ch2-e>
+
+#metadata("Chapter 3 start") <ch3-s>
+#chp[Chapter III]
+#h2(outlined: false)[RESEARCH METHODOLOGY]
+
+=== Research Design
++ Image Collection & Preprocessing
+
+  Image datasets are sourced from Kaggle and Roboflow. The datasets contain images of fingernails with their corresponding labels. The dataset of probabilities of its systemic diseases is sourced from local health agencies. The data is augmented via flipping, scaling, normalization, brightness, etc.
+
++ Deep Learning Classification of Fingernail Diseases
+
+  Convolutional Neural Networks and its models (ResNet, EfficientNet, MobileNet, etc.) will be developed and trained on the dataset of fingernail images. The model will classify visible nail conditions such as Beau’s Line, Clubbing, Pitting, etc.
++ Probabilistic Inference of Systemic Diseases
+
+  After classification, the system will use probabilistic models to infer the likelihood of underlying systemic diseases associated with classified fingernail condition. This may include models such as Bayes’ Theorem, Bayesian Inference, Naïve Bayes, or probabilistic neural networks.
+
++ Testing and Evaluation
+
+  After testing and evaluating each model, the model that performs the best will be integrated into the application
+
++ System Integration and Deployment
+
+  The model will be integrated into a deployable mobile/web application. The app will allow users to capture or upload an image of a fingernail, receive a classification of the nail condition, and view probabilities of possible systemic diseases.
+
+=== Locale of the Study
+
+=== Applied Concepts and Techniques
+
+=== Algorithm Analysis
+
+
+
+#pagebreak()
+#metadata("Chapter 3 end") <ch3-e>
+
+#bibliography("reference.bib", style: "american-psychological-association")
