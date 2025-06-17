@@ -1,4 +1,4 @@
-#set text(font: "Times New Roman", size: 12pt)
+#set text(font: "TeX Gyre Termes", size: 12pt)
 
 #let font-size = 12pt
 #let double-spacing = 1.5em
