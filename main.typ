@@ -3,6 +3,7 @@
 #let font-size = 12pt
 #let double-spacing = 1.5em
 
+
 #let chp(title) = {
   show heading: none
   heading(level: 1, outlined: false)[#title]
@@ -130,6 +131,7 @@
     indent: 0.5in - 1.5em,
     body-indent: 0.75em,
   )
+  #set enum(numbering: "1.1.1.")
 
   #set raw(
     tab-size: 4,
@@ -473,23 +475,32 @@ The potential of AI extends beyond healthcare into various sectors, demonstratin
 Moreover, the field of medical diagnostics has long sought non-invasive methods to improve early detection, with fingernails emerging as a promising biomarker due to their accessibility. #cite(<pinoliad>, form: "prose") demonstrated the feasibility of using machine learning for nail-based disease detection in the Philippines, but their system did not incorporate probabilistic inference for systemic diseases. This highlights the need for a more integrated approach that not only classifies nail disorders but also estimates the likelihood of underlying conditions, empowering users with actionable health insights.
 
 Thus, this study specifically seeks to address the following problems:
-+ How can the researchers preprocess and prepare fingernail image datasets for deep learning algorithms to ensure accuracy and robustness?
-+ How can deep learning algorithms like CNNs (e.g., ResNet, MobileNet, EfficientNet) be utilized to train, test, and validate models for classifying fingernail disorders with high accuracy?
-+ How can probabilistic models (e.g., Naïve Bayes, Bayesian Inference) estimate the likelihood of systemic diseases based on classified nail disorders, incorporating clinical data?
-+ How can the system’s performance be evaluated using standard metrics such as sensitivity, recall, and confidence intervals to ensure reliability?
-+ How can the integrated model be deployed into a mobile or web-based platform to provide accessible, user-friendly preventive healthcare applications for a global audience?
++ How can a deep learning-based detection system be designed and implemented to utilize fingernail image biomarkers, probabilistic modeling, and clinical data for the accurate diagnosis of systemic diseases?
 
++ How can the functionality and accuracy of the developed detection system be tested in terms of classifying fingernail disorders and estimating the likelihood of systemic diseases using deep learning and probabilistic models?
+
++ How can the acceptability and usability of the fingernail-based disease detection system be evaluated among healthcare professionals and users at selected diagnostic clinics or health institutions?
 
 
 === Research Objectives
 The main objective of this study is to design and develop a deep learning-based system for the probabilistic detection of systemic diseases using fingernail biomarkers, offering a non-invasive, accessible, and cost-effective solution to enhance preventive healthcare for individuals worldwide.
 
 Specifically, this study seeks to achieve the following objectives:
-+ To preprocess fingernail image datasets from sources like Kaggle and Roboflow, applying techniques such as normalization, augmentation, and segmentation to prepare them for deep learning models.
-+ To train, test, and validate deep learning models, including CNNs (e.g., ResNet, MobileNet), using the preprocessed datasets to achieve accurate classification of fingernail disorders.
-+ To implement probabilistic models (e.g., Naïve Bayes, Bayesian Inference) to estimate the likelihood of systemic diseases based on classified fingernail conditions, integrating clinical health data for relevance.
-+ To evaluate the system’s performance using standard metrics such as sensitivity, recall, and confidence intervals, ensuring its reliability and accuracy for real-world use.
-+ To deploy the integrated model into a mobile or web-based platform, providing a user-friendly interface for individuals globally to access preventive healthcare applications.
++ To develop a deep learning-based detection system for systemic diseases using fingernail image biomarkers and probabilistic modeling, intended for use in preventive healthcare diagnostics.
+
++ To identify the best performing models for the system by assessing performance using standard evaluation metrics such as:
+  + For CNN models (e.g., ResNet, MobileNet, EfficientNet):
+    - Accuracy
+    - Precision
+    - Recall
+    - F1-Score
+
+  + For probabilistic models (e.g., Naïve Bayes, Bayesian Inference):
+    - Confidence intervals
+    - Sensitivity
+    - Specificity
+
++ To examine the performance and usability of the developed disease detection system by conducting actual testing and evaluation among healthcare professionals at selected clinics or health centers.
 
 
 === Research Framework
