@@ -294,7 +294,7 @@ The thesis entitled *"#title"* prepared and submitted by *GERON SIMON A. JAVIER*
 \
 \
 #grid(
-  columns: (2fr, 2fr, 1fr),
+  columns: (2fr, 1fr, 1fr),
   [],
   [],
   align(center)[*Mia M. Villarica* \ Thesis Adviser],
@@ -509,7 +509,7 @@ This section outlines the theoretical and conceptual frameworks that underpin th
 ==== Theoretical Framework
 #figure(
   image("img/theoretical-framework.png"),
-  caption: [Integrated Deep Learning and Probabilistic Diagnostic Framework for Fingernail-Based Systemic Disease Detection]
+  caption: [Integrated Deep Learning and Probabilistic Diagnostic Framework for \ Fingernail-Based Systemic Disease Detection]
 )
 The theoretical framework integrates deep learning and probabilistic modeling to create a comprehensive system for fingernail-based systemic disease detection, drawing inspiration from AI-driven diagnostic methodologies. It adapts principles from frameworks like #cite(<debnath_framework_2020>, form: "prose"), which emphasize systematic processing, feature extraction, and response generation in AI systems.
 
