@@ -128,10 +128,11 @@
   )
 
   #set enum(
-    indent: 0.5in - 1.5em,
-    body-indent: 0.75em,
-  )
-  #set enum(numbering: "1.1.1.")
+  indent: 0.5in - 1.5em,
+  body-indent: 0.75em,
+  numbering: "1.1.1.",
+  full: true,
+)
 
   #set raw(
     tab-size: 4,
@@ -494,7 +495,6 @@ Specifically, this study seeks to achieve the following objectives:
     - Precision
     - Recall
     - F1-Score
-
   + For probabilistic models (e.g., Naïve Bayes, Bayesian Inference):
     - Confidence intervals
     - Sensitivity
@@ -595,10 +595,12 @@ The findings of this study are beneficial to individuals and organizations world
 #chp[CHAPTER II]
 #h2(outlined: false)[Review of Related Literatures]
 
+
+
 This chapter provides a review of relevant research and literature from the various books, websites, magazines, and expertly developed principles to have improved comprehension of the research.  The literature is discussed in this chapter. and research projects undertaken by various scholars that have a substantial relationship to the way the study was conducted.  Those who were also a part of this chapter aids in familiarizing oneself with pertinent and comparable material to the current research.
 
 
-=== Nails as Health Indicators
+=== Nail as Health Indicators
 According to #cite(<shandilya_autonomous_2024>, form: "prose"), the architectural complexity of the nail unit proves to be an important marker for the general health condition and very often represents alterations coinciding with most diseases. Architectural changes in the nails constitute important diagnostic information within a broad spectrum of diseases-from cancer and dermatological diseases to respiratory and cardiovascular diseases. Their study develops an intricate classification system for nail diseases based on the anatomical characteristics of the nail unit for the enhancement of accuracy in dermatological diagnosis. Detailed diagnosis of nail diseases such as onychogryphosis, cyanosis, clubbing, and koilonychia enhances the accuracy of dermatological examination and alerts the clinician to more generalized health issues including hypoxia or anemia due to an iron deficiency. Besides, changes in nails may include manifestations like pitting in psoriasis or onycholysis in eczema: two diseases with a long duration.
 
 Additionally, in the study of #cite(<indi_early_2016>, form: "prose"), different colors of nails indicate certain diseases. For example, Pink color nail indicate healthy nails which in turn indicates good health symptoms. White color nail means lack of iron and poor circulation, in which the blood is not reaching the end of your fingers, are resulting into white nails. It indicates anemic conditions or malnutrition. Moreover, a red-purple color nail means an upset digestive system caused by over consumption of sugar, pharmaceutical drugs, fruits and juices results into red-purple nails. When there are white spots in the nail, it indicate high content of sugar and lack of zinc which is required in the digestion process.
