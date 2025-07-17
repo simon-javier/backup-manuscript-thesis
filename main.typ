@@ -413,23 +413,26 @@
   #outline(target: selector(heading).after(<prelim-s>).before(<prelim-e>), title: none)
 
   #h2(c: false, outlined: false, bookmarked: false)[CHAPTER I INTRODUCTION AND ITS BACKGROUND]
-  #outline(target: selector(heading).after(<ch1-s>).before(<ch1-e>), title: none)
+  #outline(target: selector(heading).after(<ch1-s>).before(<ch1-e>), title: none, indent: 0.5em)
 
   #h2(c: false, outlined: false, bookmarked: false)[CHAPTER II REVIEW OF RELATED LITERATURE]
   #outline(target: selector(heading).after(<ch2-s>).before(<ch2-e>), indent: 0.5em, title: none)
 
   #h2(c: false, outlined: false, bookmarked: false)[CHAPTER III RESEARCH METHODOLOGY]
-  #outline(target: selector(heading).after(<ch3-s>).before(<ch3-e>), title: none)
+  #outline(target: selector(heading).after(<ch3-s>).before(<ch3-e>), title: none, indent: 0.5em)
 
   #h2(c: false, outlined: false, bookmarked: false)[CHAPTER IV RESULTS AND DISCUSSION]
-  #outline(target: selector(heading).after(<ch4-s>).before(<ch4-e>), title: none)
+  #outline(target: selector(heading).after(<ch4-s>).before(<ch4-e>), title: none, indent: 0.5em)
 
   #h2(c: false, outlined: false, bookmarked: false)[CHAPTER V SUMMARY, CONCLUSIONS AND RECOMMENDATIONS]
-  #outline(target: selector(heading).after(<ch5-s>).before(<ch5-e>), title: none)
+  #outline(target: selector(heading).after(<ch5-s>).before(<ch5-e>), title: none, indent: 0.5em)
 
   #pagebreak()
   #h2[List of Figures]
   #outline(target: figure.where(kind: image), title: none)
+
+  #h2[List of Tables]
+  #outline(target: figure.where(kind: table), title: none)
 
 
   #metadata("group 1 end") <prelim-e>
@@ -441,12 +444,14 @@
 #pagebreak()
 
 #show table.cell: set par(leading: 1em)
-#set table(stroke: (x, y) => if y == 0 {
-  (
-    top: (thickness: 1pt, dash: "solid"),
-    bottom: (thickness: 0.5pt, dash: "solid"),
-  )
-})
+#show table.cell.where(y: 0): strong
+#show table.cell.where(y: 0): upper
+#set table(stroke: (x, y) => (
+  top: if y <= 0 { (thickness: 2pt, dash: "solid") } else if y <= 1 { (thickness: 1pt, dash: "solid") } else {
+    (thickness: 0pt, dash: "solid")
+  },
+  bottom: (thickness: 2pt, dash: "solid"),
+))
 
 #set page(numbering: "1")
 #counter(page).update(1)
@@ -726,7 +731,6 @@ On top of that, while being promoted as one of the most reliable physical signs 
 === Conclusions
 
 === Recommendations
-
 
 #pagebreak()
 #metadata("Chapter 5 end") <ch5-e>
