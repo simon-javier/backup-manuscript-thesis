@@ -10,7 +10,7 @@
   align(center)[*#upper(title)*]
 }
 
-#let h2(title, c: true, hidden: false, outlined: true, bookmarked: true) = {
+#let h2(title, c: true, hidden: false, outlined: true, bookmarked: true, uppercase: true) = {
   show heading: none
   set par(first-line-indent: 0em)
   if not outlined {
@@ -28,10 +28,18 @@
   }
 
   if not hidden {
-    if not c {
-      [*#upper(title)*]
+    if uppercase {
+      if not c {
+        [*#upper(title)*]
+      } else {
+        align(center)[*#upper(title)*]
+      }
     } else {
-      align(center)[*#upper(title)*]
+      if not c {
+        [*#title*]
+      } else {
+        align(center)[*#title*]
+      }
     }
   }
 }
@@ -413,23 +421,29 @@
   #outline(target: selector(heading).after(<prelim-s>).before(<prelim-e>), title: none)
 
   #h2(c: false, outlined: false, bookmarked: false)[CHAPTER I INTRODUCTION AND ITS BACKGROUND]
-  #outline(target: selector(heading).after(<ch1-s>).before(<ch1-e>), title: none, indent: 0.5em)
+  #outline(target: selector(heading).after(<ch1-s>).before(<ch1-e>), title: none)
 
   #h2(c: false, outlined: false, bookmarked: false)[CHAPTER II REVIEW OF RELATED LITERATURE]
-  #outline(target: selector(heading).after(<ch2-s>).before(<ch2-e>), indent: 0.5em, title: none)
+  #outline(target: selector(heading).after(<ch2-s>).before(<ch2-e>), title: none)
 
   #h2(c: false, outlined: false, bookmarked: false)[CHAPTER III RESEARCH METHODOLOGY]
-  #outline(target: selector(heading).after(<ch3-s>).before(<ch3-e>), title: none, indent: 0.5em)
+  #outline(target: selector(heading).after(<ch3-s>).before(<ch3-e>), title: none)
 
   #h2(c: false, outlined: false, bookmarked: false)[CHAPTER IV RESULTS AND DISCUSSION]
-  #outline(target: selector(heading).after(<ch4-s>).before(<ch4-e>), title: none, indent: 0.5em)
+  #outline(target: selector(heading).after(<ch4-s>).before(<ch4-e>), title: none)
 
   #h2(c: false, outlined: false, bookmarked: false)[CHAPTER V SUMMARY, CONCLUSIONS AND RECOMMENDATIONS]
-  #outline(target: selector(heading).after(<ch5-s>).before(<ch5-e>), title: none, indent: 0.5em)
+  #outline(target: selector(heading).after(<ch5-s>).before(<ch5-e>), title: none)
+
+  // #outline(target: selector(heading).after(<bib-s>).before(<bib-e>), title: none, indent: 0em)
+  //
+  // #outline(target: selector(heading).after(<app-s>).before(<app-e>), title: none, indent: 0em)
 
   #pagebreak()
+
   #h2[List of Figures]
   #outline(target: figure.where(kind: image), title: none)
+  #pagebreak()
 
   #h2[List of Tables]
   #outline(target: figure.where(kind: table), title: none)
@@ -446,12 +460,15 @@
 #show table.cell: set par(leading: 1em)
 #show table.cell.where(y: 0): strong
 #show table.cell.where(y: 0): upper
-#set table(stroke: (x, y) => (
-  top: if y <= 0 { (thickness: 2pt, dash: "solid") } else if y <= 1 { (thickness: 1pt, dash: "solid") } else {
-    (thickness: 0pt, dash: "solid")
-  },
-  bottom: (thickness: 2pt, dash: "solid"),
-))
+#set table(
+  align: (_, y) => if y == 0 { center + horizon } else { left + horizon },
+  stroke: (x, y) => (
+    top: if y <= 0 { (thickness: 2pt, dash: "solid") } else if y <= 1 { (thickness: 1pt, dash: "solid") } else {
+      (thickness: 0pt, dash: "solid")
+    },
+    bottom: (thickness: 2pt, dash: "solid"),
+  ),
+)
 
 #set page(numbering: "1")
 #counter(page).update(1)
@@ -662,42 +679,145 @@ On top of that, while being promoted as one of the most reliable physical signs 
 #h2(outlined: false, bookmarked: false)[Research Methodology]
 
 === Research Design
-+ Image Collection & Preprocessing
 
-  Image datasets are sourced from Kaggle and Roboflow. The datasets contain images of fingernails with their corresponding labels. The dataset of probabilities of its systemic diseases is sourced from local health agencies. The data is augmented via flipping, scaling, normalization, brightness, etc.
+This study adopts a quantitative research approach, emphasizing measurable outcomes and statistical evaluation of model performance. The research is both experimental and developmental in nature. The experimental aspect involves testing and evaluating various deep learning architectures on a curated and augmented dataset of fingernail images. The developmental component focuses on the design and implementation of an intelligent system that integrates image classification and probabilistic inference to detect systemic diseases based on nail biomarkers.
 
-+ Deep Learning Classification of Fingernail Diseases
+Through systematic experimentation, model benchmarking, and iterative improvement, the study aims to determine the most effective neural network architectures for the classification task and integrate them into a functional web-based application for real-world use.
 
-  Convolutional Neural Networks and its models (ResNet, EfficientNet, MobileNet, etc.) will be developed and trained on the dataset of fingernail images. The model will classify visible nail conditions such as Beau’s Line, Clubbing, Pitting, etc.
-+ Probabilistic Inference of Systemic Diseases
+The dataset utilized for this study is sourced from a publicly available
+Nail Disease Detection collection hosed on Roboflow, and is released under
+the Creative Commons Attribution 4.0 (CC BY 4.0) license. The dataset comprises
+a total of 7,258 images, annotated using the TensorFlow TFRecord (Raccoon) format,
+covering 11 classes of nail diseases.
 
-  After classification, the system will use probabilistic models to infer the likelihood of underlying systemic diseases associated with classified fingernail condition. This may include models such as Bayes’ Theorem, Bayesian Inference, Naïve Bayes, or probabilistic neural networks.
+The dataset we collected were already pre-processed and augmented.
+These were the preprocessing step used by the owner of the public dataset:
 
-+ Testing and Evaluation
+- Automatic orientation correction (EXIF metadata removed)
+- Resizing to 416 x 416 pixels using "fit" scaling, which introduces black padding to maintain aspect ratio
 
-  After testing and evaluating each model, the model that performs the best will be integrated into the application
+To improve model generalization, data augmentation was also applied, producing three versions of each source image. These augmentations included:
 
-+ System Integration and Deployment
+- 50% chance of horizontal flip
+- 50% chance of vertical flip
+- Equal probability of a 90-degree rotation (none, clockwise, counter-clockwise, or 180°)
+- Random rotation within the range of -15° to +15°
+- Random shear transformations between -15° and +15° in both horizontal and vertical directions
+- Random brightness adjustment between -20% and +20%
+- Random exposure adjustment between -15% and +15%
 
-  The model will be integrated into a deployable mobile/web application. The app will allow users to capture or upload an image of a fingernail, receive a classification of the nail condition, and view probabilities of possible systemic diseases.
+Although the dataset was initially preprocessed and augmented through Roboflow's pipeline, additional preprocessing steps were performed to ensure compatibility with the PyTorch deep learning framework. Specifically, all images were resized to 224 × 224 pixels, which is the standard input dimension for most pre-trained Convolutional Neural Network (CNN) architectures in PyTorch.
+
+Each image was then converted into a tensor format to facilitate numerical computation during training and inference. Furthermore, normalization was applied using the mean and standard deviation values commonly used by PyTorch’s pre-trained models on the ImageNet dataset. This normalization ensures consistency in input distribution, allowing for more stable and efficient model convergence.
+
+These preprocessing steps were essential for adapting the dataset to the specific requirements of the chosen model architectures and the deep learning environment used in this study.
+
+- Deep Learning Classification of Nail Disease
+- Probabilistic Inference of Systemic Diseases
+- Model Evaluation
+- Web Integration
+- Testing and Evalutation
+- Deployment
 
 === Locale of the Study
+Who: Future researchers, community, stakeholders
+Where: Laguna State Polytechnic University
+What: Probabilistic Detection of Systemic Diseases Using Deep Learning on Fingernail Biomarkers
 
 === Applied Concepts and Techniques
+- Batch Learning
+  - Batches of 32
+- Class balancing
+- Convolutional Neural Networks
+- Deep Learning
+- Transfer Learning
+- Image segmentation
+- Modularization
+- Image classification
+- Model Evaluation
+- Learning rate scheduling
+  - StepLR
+  - Reduce LR on Plateau
+- Visualization
+
+// ==== Convolutional Neural Networks (CNNs)
+// CNNs serve as the foundational architecture for processing image data, enabling the extraction of spatial features crucial for disease classification.
+//
+// ==== Deep Learning
+// The research employs deep neural networks with multiple layers to learn hierarchical feature representations directly from image data, minimizing the need for manual feature extraction.
+//
+// ==== Transfer Learning
+// Pre-trained models such as EfficientNet and RegNetY, originally trained on large datasets like ImageNet, were fine-tuned on the nail disease dataset. This approach significantly reduces training time and enhances performance on the target task.
+//
+// ==== Image Classification
+// The central task of the research is multi-class classification, wherein each image is assigned one of ten possible nail disease labels based on learned visual features.
+
+
 
 === Algorithm Analysis
+All models are trained using:
+
+- Batch size: 32
+- Learning rate: 1e-4
+- Loss: Cross Netropy Loss
+- Optimizer: AdamW
+
+#text(size: 7pt)[
+  #table(
+    columns: (1fr,) * 8,
+    table.header([Model], [Parameters], [Epochs], [Training Time (min)], [Accuracy], [Precision], [Recall], [F1-Score]),
+
+    [EfficientNetV2S], [20,190,298], [5], [21.22], [88%], [90%], [88%], [88%],
+    [VGG16], [134,301,514], [5], [27.06], [66%], [77%], [66%], [67%],
+    [ResNet50], [23,528,522], [5], [22.86], [75%], [80%], [75%], [76%],
+    [RegNetY-16GF], [80,595,390], [5], [24.33], [85%], [88%], [85%], [85%],
+  )]
+
 
 === Data Collection Methods
+The dataset utilized for this study is sourced from a publicly available
+Nail Disease Detection collection hosed on Roboflow, and is released under
+the Creative Commons Attribution 4.0 (CC BY 4.0) license. The dataset comprises
+a total of 7,258 images, annotated using the TensorFlow TFRecord (Raccoon) format,
+covering 11 classes of nail diseases.
+
+The dataset we collected were already pre-processed and augmented.
+These were the preprocessing step used by the owner of the public dataset:
+
+- Automatic orientation correction (EXIF metadata removed)
+- Resizing to 416 x 416 pixels using "fit" scaling, which introduces black padding
+  to maintain aspect ratio
+
+To improve model generalization, data augmentation was also applied, producing three
+versions of each source image. These augmentations included:
+
+- 50% chance of horizontal flip
+- 50% chance of vertical flip
+- Equal probability of a 90-degree rotation (none, clockwise, counter-clockwise, or 180°)
+- Random rotation within the range of -15° to +15°
+- Random shear transformations between -15° and +15° in both horizontal and vertical directions
+- Random brightness adjustment between -20% and +20%
+- Random exposure adjustment between -15% and +15%
+
 
 === Data Model Generation
 
 === System Development Methodology
+The models are trained using google colab. It is then integrated into django for web interfaces
 
 === Software Tools Used
+- Django
+- PyTorch
+- Python
+- Google Colab: for model training
+- Visual Studio Code: for version control
+- Github: for version control
+
 
 === System Architecture
 
 === Software Testing
+Software testing
 
 #pagebreak()
 #metadata("Chapter 3 end") <ch3-e>
@@ -732,7 +852,14 @@ On top of that, while being promoted as one of the most reliable physical signs 
 
 === Recommendations
 
-#pagebreak()
 #metadata("Chapter 5 end") <ch5-e>
+#pagebreak()
 
+#metadata("Bibliography start") <bib-s>
 #bibliography("reference.bib", style: "american-psychological-association")
+#metadata("Bibliography end") <bib-e>
+#pagebreak()
+
+#metadata("Appendices start") <app-s>
+#text(size: 60pt)[#align(center + horizon)[*Appendices*]]
+#metadata("Appendices end") <app-e>
