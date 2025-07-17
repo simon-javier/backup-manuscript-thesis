@@ -6,19 +6,27 @@
 
 #let chp(title) = {
   show heading: none
-  heading(level: 1, outlined: false)[#title]
+  heading(level: 1, outlined: false, bookmarked: true)[#title]
   align(center)[*#upper(title)*]
 }
 
-#let h2(title, c: true, hidden: false, outlined: true) = {
+#let h2(title, c: true, hidden: false, outlined: true, bookmarked: true) = {
   show heading: none
   set par(first-line-indent: 0em)
   if not outlined {
-    heading(level: 2, outlined: false)[#title]
+    if not bookmarked {
+      heading(level: 2, outlined: false, bookmarked: false)[#title]
+    } else {
+      heading(level: 2, outlined: false, bookmarked: true)[#title]
+    }
   } else {
-    heading(level: 2)[#title]
+    if not bookmarked {
+      heading(level: 2, bookmarked: false)[#title]
+    } else {
+      heading(level: 2, bookmarked: true)[#title]
+    }
   }
-  
+
   if not hidden {
     if not c {
       [*#upper(title)*]
@@ -53,23 +61,26 @@
 }
 
 
-#set page(margin: (
-  y: 1in,
-  left: 1.5in,
-  right: 1in,
+#set page(
+  margin: (
+    y: 1in,
+    left: 1.5in,
+    right: 1in,
   ),
-  header: context{
+  header: context {
     let current-page = here().page()
     let page-number = counter(page).display()
-    let chapter-page = query(heading.where(level:1)).filter(it => lower(it.body.text).contains("chapter"))
+    let chapter-page = query(heading.where(level: 1)).filter(it => lower(it.body.text).contains("chapter"))
     let has-chapter = chapter-page.any(it => it.location().page() == current-page)
 
-    let in-prelim-page = query(selector(heading).after(<prelim-s>).before(<prelim-e>)).any(it => it.location().page() == current-page)
-    
+    let in-prelim-page = query(selector(heading).after(<prelim-s>).before(<prelim-e>)).any(it => (
+      it.location().page() == current-page
+    ))
+
     if not has-chapter {
       align(right)[#page-number]
     }
-   },
+  },
 )
 #set par(
   justify: true,
@@ -78,7 +89,7 @@
     all: true,
   ),
   leading: 1.5em,
-  spacing: 1.5em
+  spacing: 1.5em,
 )
 #show heading: set text(size: font-size)
 #show heading: set block(spacing: double-spacing)
@@ -87,154 +98,145 @@
 #show heading.where(level: 1): it => align(center, strong(it.body))
 #show heading.where(level: 2): it => align(center, strong(it.body))
 
-#show heading.where(level: 3): it => par(
-  first-line-indent: 0in,
-  strong(it.body),
-)
+#show heading.where(level: 3): it => par(first-line-indent: 0in, strong(it.body))
 
-#show heading.where(level: 4): it => par(
-  first-line-indent: 0in,
-  emph[#it.body],
-)
+#show heading.where(level: 4): it => par(first-line-indent: 0in, emph[#it.body])
 
 #show heading.where(level: 5): it => emph(strong[#it.body.])
 
 
 
-  #show figure: set block(breakable: true, sticky: true)
+#show figure: set block(breakable: true, sticky: true)
 
-  #set figure(
-    gap: double-spacing,
-    placement: auto,
-  )
+#set figure(
+  gap: double-spacing,
+  placement: auto,
+)
 
-  #set figure.caption(separator: parbreak(), position: bottom, )
+#set figure.caption(separator: parbreak(), position: bottom)
 
-  #show outline.entry.where(level: 1): it => link(
-    it.element.location(),
-    it.indented(strong(it.prefix()), it.inner())
-  )
-  
-  #show figure.caption: set align(center)
-  #show figure.caption: set par(first-line-indent: 0em)
-  #show figure.caption: it => {
-    [*#it.supplement #context it.counter.display(it.numbering).* #it.body]
-  }
+#show outline.entry.where(level: 1): it => link(it.element.location(), it.indented(strong(it.prefix()), it.inner()))
 
-  #set list(
-    marker: ([•], [◦]),
-    indent: 0.5in - 1.75em,
-    body-indent: 1.3em,
-  )
+#show figure.caption: set align(center)
+#show figure.caption: set par(first-line-indent: 0em)
+#show figure.caption: it => {
+  [*#it.supplement #context it.counter.display(it.numbering).* #it.body]
+}
 
-  #set enum(
+#set list(
+  marker: ([•], [◦]),
+  indent: 0.5in - 1.75em,
+  body-indent: 1.3em,
+)
+
+#set enum(
   indent: 0.5in - 1.5em,
   body-indent: 0.75em,
   numbering: "1.1.1.",
   full: true,
 )
 
-  #set raw(
-    tab-size: 4,
-    block: true,
-  )
+#set raw(
+  tab-size: 4,
+  block: true,
+)
 
-  #show raw.where(block: true): block.with(
-    fill: luma(250),
-    stroke: (left: 3pt + rgb("#6272a4")),
-    inset: (x: 10pt, y: 8pt),
-    width: auto,
-    breakable: true,
-    outset: (y: 7pt),
-    radius: (left: 0pt, right: 6pt),
-  )
+#show raw.where(block: true): block.with(
+  fill: luma(250),
+  stroke: (left: 3pt + rgb("#6272a4")),
+  inset: (x: 10pt, y: 8pt),
+  width: auto,
+  breakable: true,
+  outset: (y: 7pt),
+  radius: (left: 0pt, right: 6pt),
+)
 
-  #show raw: set text(
-    font: "Cascadia Code",
-    size: 10pt,
-  )
+#show raw: set text(
+  font: "Cascadia Code",
+  size: 10pt,
+)
 
-  #show raw.where(block: true): set par(leading: 1em)
-  #show figure.where(kind: raw): set block(breakable: true, sticky: false, width: 100%)
+#show raw.where(block: true): set par(leading: 1em)
+#show figure.where(kind: raw): set block(breakable: true, sticky: false, width: 100%)
 
-  #set math.equation(numbering: "(1)")
+#set math.equation(numbering: "(1)")
 
-  #show quote.where(block: true): set block(spacing: double-spacing)
+#show quote.where(block: true): set block(spacing: double-spacing)
 
-  #show quote: it => {
-    let quote-text-words = to-string(it.body).split(regex("\\s+")).filter(word => word != "").len()
+#show quote: it => {
+  let quote-text-words = to-string(it.body).split(regex("\\s+")).filter(word => word != "").len()
 
-    if quote-text-words < 40 {
-      ["#it.body" ]
+  if quote-text-words < 40 {
+    ["#it.body" ]
 
-      if (type(it.attribution) == label) {
+    if (type(it.attribution) == label) {
+      cite(it.attribution)
+    } else if (
+      type(it.attribution) == str or type(it.attribution) == content
+    ) {
+      it.attribution
+    }
+  } else {
+    block(inset: (left: 0.5in))[
+      #set par(first-line-indent: 0.5in)
+      #it.body
+      #if (type(it.attribution) == label) {
         cite(it.attribution)
-      } else if (
-        type(it.attribution) == str or type(it.attribution) == content
-      ) {
+      } else if (type(it.attribution) == str or type(it.attribution) == content) {
         it.attribution
       }
-    } else {
-      block(inset: (left: 0.5in))[
-        #set par(first-line-indent: 0.5in)
-        #it.body
-        #if (type(it.attribution) == label) {
-          cite(it.attribution)
-        } else if (type(it.attribution) == str or type(it.attribution) == content) {
-          it.attribution
-        }
-      ]
-    }
+    ]
   }
+}
 
-  #set bibliography(style: "apa")
-  #show bibliography: set par(first-line-indent: 0in)
+#set bibliography(style: "apa")
+#show bibliography: set par(first-line-indent: 0in)
 
 #metadata("group 1 start") <prelim-s>
-#set page(numbering: "i", number-align: top+right)
+#set page(numbering: "i", number-align: top + right)
 #let title = [PROBABILISTIC DETECTION OF SYSTEMIC DISEASES USING DEEP LEARNING ON FINGERNAIL BIOMARKERS]
 
 #let title_page = context counter(page).display()
 #page(header: none)[#align(center)[
-  #{
-    show heading: none
-    [== Title Page]
-  }
-  
-  #singleSpacing[*#title*]
-  \
-  \
-  \
-  An Undergraduate Thesis \
-  Presented to the \
-  Faculty of College of Computer Studies \
-  Laguna State Polytechnic University \
-  Santa Cruz Campus
-  \
-  \
-  \
-  In Partial Fulfillment of the requirements for the Degree \
-  *BACHELOR OF SCIENCE IN COMPUTER SCIENCE*
-  \
-  \
-  \
-  \
-  #oneHalfSpacing[
-  By: \
-  *
-  JAVIER, GERON SIMON A. \
-  MACAPALLAG, MHAR ANDREI C. \
-  VALDEABELLA, SEANREI ETHAN M.
-  \
-  *
-  ]
-  \
-  \
-  Under the supervision of: \
-  *MIA M. VILLARICA, DIT*
-  #v(1fr)
-  *JUNE 2025*
-]]
+    #{
+      show heading: none
+      [== Title Page]
+    }
+
+    #singleSpacing[*#title*]
+    \
+    \
+    \
+    An Undergraduate Thesis \
+    Presented to the \
+    Faculty of College of Computer Studies \
+    Laguna State Polytechnic University \
+    Santa Cruz Campus
+    \
+    \
+    \
+    In Partial Fulfillment of the requirements for the Degree \
+    *BACHELOR OF SCIENCE IN COMPUTER SCIENCE*
+    \
+    \
+    \
+    \
+    #oneHalfSpacing[
+      By: \
+      *
+      JAVIER, GERON SIMON A. \
+      MACAPALLAG, MHAR ANDREI C. \
+      VALDEABELLA, SEANREI ETHAN M.
+      \
+      *
+    ]
+    \
+    \
+    Under the supervision of: \
+    *MIA M. VILLARICA, DIT*
+    #v(1fr)
+    *JUNE 2025*
+  ]]
 #pagebreak()
 
 #singleSpacing[
@@ -273,138 +275,132 @@
   + Ability to apply design, develop and evaluate systems’ components and processes through mathematical foundations, algorithmic principles and computer science theories.
   + Developed a culture of research for technology advancement.
   + Demonstrated good leadership and a team player that will contribute to nation building and engage in life-long learning as foundation for professional development.
-  
+
 ]
 
 #pagebreak()
 
 #singleSpacing[
-#h2[Approval Sheet]
+  #h2[Approval Sheet]
 
-#set par(
-  first-line-indent: (
+  #set par(first-line-indent: (
     amount: 0.5in,
     all: true,
-  ),
-)
+  ))
 
-\
+  \
 
-The thesis entitled *"#title"* prepared and submitted by *GERON SIMON A. JAVIER*, *MHAR ANDREI C. MACAPALLAG*, and *SEANREI ETHAN M. VALDEABELLA* in partial fulfillment of the requirements for the degree of *BACHELOR OF SCIENCE IN COMPUTER SCIENCE*, major in *INTELLIGENT SYSTEM* is hereby recommended for approval and acceptance.
-\
-\
-\
-#grid(
-  columns: (2fr, 1fr, 1fr),
-  [],
-  [],
-  align(center)[*Mia M. Villarica* \ Thesis Adviser],
-) #v(0.5em)
+  The thesis entitled *"#title"* prepared and submitted by *GERON SIMON A. JAVIER*, *MHAR ANDREI C. MACAPALLAG*, and *SEANREI ETHAN M. VALDEABELLA* in partial fulfillment of the requirements for the degree of *BACHELOR OF SCIENCE IN COMPUTER SCIENCE*, major in *INTELLIGENT SYSTEM* is hereby recommended for approval and acceptance.
+  \
+  \
+  \
+  #grid(
+    columns: (2fr, 1fr, 1fr),
+    [], [], align(center)[*Mia M. Villarica* \ Thesis Adviser],
+  ) #v(0.5em)
 
-#line(length: 100%)
-#v(0.5em)
+  #line(length: 100%)
+  #v(0.5em)
 
-Approved by the Committee on Oral Examination with a grade of #underline[#box(width: 3em,repeat(sym.space))].
-\
-\
-\
-\
-#grid(
-  columns: (1fr, 1fr),
-  row-gutter: 4em,
-  align: center,
-  [*MARK P. BERNARDINO* \ Member],
-  [*MARIA LAUREEN B. MIRANDA* \ Member],
-  text(size: 11pt)[*MA. CEZANNE D. DIMACULANGAN* \ Member],
-  text(size: 11pt)[*ENGR. MARIBELLE B. MANALANSAN* \ Member],
-  grid.cell(colspan: 2)[*REYNALEN C. JUSTO, LPT, DIT* \ Research Implement Unit Head],
-)
+  Approved by the Committee on Oral Examination with a grade of #underline[#box(width: 3em, repeat(sym.space))].
+  \
+  \
+  \
+  \
+  #grid(
+    columns: (1fr, 1fr),
+    row-gutter: 4em,
+    align: center,
+    [*MARK P. BERNARDINO* \ Member],
+    [*MARIA LAUREEN B. MIRANDA* \ Member],
+    text(size: 11pt)[*MA. CEZANNE D. DIMACULANGAN* \ Member],
+    text(size: 11pt)[*ENGR. MARIBELLE B. MANALANSAN* \ Member],
+    grid.cell(colspan: 2)[*REYNALEN C. JUSTO, LPT, DIT* \ Research Implement Unit Head],
+  )
 
-#v(1.5em)#line(length: 100%)#v(0.5em)
+  #v(1.5em)#line(length: 100%)#v(0.5em)
 
-Accepted and approved in partial fulfillment of the requirement for the degree of *BACHELOR OF SCIENCE IN COMPUTER SCIENCE*, Major in *INTELLIGENT SYSTEM*.
-\
-\
-\
-#grid(
-  columns: (1fr, 1fr),
-  align: center,
-  [],
-  [*MIA V. VILLARICA, DIT* \ Dean/Associate Dean]
-)
-#v(1fr)
-#grid(
-  columns: (1fr, 1fr),
-  align: center,
-  [*BENJAMIN O. ARJONA, Ed. D.* \ Chairperson, Research and Development],
-  [#underline[#box(width: 10em, repeat(sym.space))]\ Date Signed]
-)
-#v(1fr)
+  Accepted and approved in partial fulfillment of the requirement for the degree of *BACHELOR OF SCIENCE IN COMPUTER SCIENCE*, Major in *INTELLIGENT SYSTEM*.
+  \
+  \
+  \
+  #grid(
+    columns: (1fr, 1fr),
+    align: center,
+    [], [*MIA V. VILLARICA, DIT* \ Dean/Associate Dean],
+  )
+  #v(1fr)
+  #grid(
+    columns: (1fr, 1fr),
+    align: center,
+    [*BENJAMIN O. ARJONA, Ed. D.* \ Chairperson, Research and Development],
+    [#underline[#box(width: 10em, repeat(sym.space))]\ Date Signed],
+  )
+  #v(1fr)
 
-#table(
-  columns: (1fr, 1fr),
-  inset: 0.5em,
-  [*RESEARCH CONTRIBUTION NO.*],
-  []
-)
+  #table(
+    columns: (1fr, 1fr),
+    inset: 0.5em,
+    [*RESEARCH CONTRIBUTION NO.*], [],
+  )
 ]
 #pagebreak()
 
 #singleSpacing[
 
-#h2[Acknowledgement]
-\
+  #h2[Acknowledgement]
+  \
 
-The researchers would like to express their sincere gratitude to the following individuals who have contributed and supported them in the completion of the study:
-\
-\
+  The researchers would like to express their sincere gratitude to the following individuals who have contributed and supported them in the completion of the study:
+  \
+  \
 
-First and foremost, to *OUR ALMIGHTY GOD*, for empowering the researcher when they feel down, gives them strength, patience, spiritual guidance, and everything provided when they need it most;
-\
-\
+  First and foremost, to *OUR ALMIGHTY GOD*, for empowering the researcher when they feel down, gives them strength, patience, spiritual guidance, and everything provided when they need it most;
+  \
+  \
 
-To their Thesis Adviser and Associate Dean of the College of Computer Studies, *MS. MIA V. VILLARICA, DIT*, for her time, effort, and patience in checking the papers from time to time, and for sharing her ideas and constructive critiques, which greatly contributed to the success of this study;
-\
-\
+  To their Thesis Adviser and Associate Dean of the College of Computer Studies, *MS. MIA V. VILLARICA, DIT*, for her time, effort, and patience in checking the papers from time to time, and for sharing her ideas and constructive critiques, which greatly contributed to the success of this study;
+  \
+  \
 
-To their System Expert, *MR. MARK P. BERNARDINO, MSCS,* for improving this thesis's technical features. Their careful consideration to detail has significantly increased the paper's overall structure and clarity;
-\
-\
+  To their System Expert, *MR. MARK P. BERNARDINO, MSCS,* for improving this thesis's technical features. Their careful consideration to detail has significantly increased the paper's overall structure and clarity;
+  \
+  \
 
-To their Technical Editor, *MS. MICAH FORMARAN*, who thoughtfully corrected the manuscript's format and content;
-\
-\
+  To their Technical Editor, *MS. MICAH FORMARAN*, who thoughtfully corrected the manuscript's format and content;
+  \
+  \
 
-To their Statistician, *MR. VICTOR A. ESTALILLA JR.*, for his guidance on the structure of the data sample and her help in completing the data sampling for the study;
-\
-\
+  To their Statistician, *MR. VICTOR A. ESTALILLA JR.*, for his guidance on the structure of the data sample and her help in completing the data sampling for the study;
+  \
+  \
 
-To their Language Critic, *MR. JOHNJOHN ZOTOMAYOR*, for being helpful in checking and revising the manuscript's grammar and its structure;
-\
-\
+  To their Language Critic, *MR. JOHNJOHN ZOTOMAYOR*, for being helpful in checking and revising the manuscript's grammar and its structure;
+  \
+  \
 
-To their *FRIENDS* and *CLASSMATES*, for encouraging, helping and inspiring them to finish this study;
-\
-\
+  To their *FRIENDS* and *CLASSMATES*, for encouraging, helping and inspiring them to finish this study;
+  \
+  \
 
-The researchers are deeply thankful to their *FAMILY*, for their unwavering support, love, and care;
-\
-\
+  The researchers are deeply thankful to their *FAMILY*, for their unwavering support, love, and care;
+  \
+  \
 
-And lastly, they are thankful for the effort and hard work of each member of this *RESEARCH TEAM*, for believing in themselves, for doing all the hard work, and for never quitting in order to make this humble work a success.
+  And lastly, they are thankful for the effort and hard work of each member of this *RESEARCH TEAM*, for believing in themselves, for doing all the hard work, and for never quitting in order to make this humble work a success.
 
-#pagebreak()
+  #pagebreak()
 ]
 
 #singleSpacing[
-#h2[Abstract]
-\
+  #h2[Abstract]
+  \
 
-#lorem(300)
-\
-\
-\
-_*Keywords:* Image Processing, Deep Learning, Machine Learning, Fingernail Disease, Systemic Disease, Convolutional Neural Networks_
+  #lorem(300)
+  \
+  \
+  \
+  _*Keywords:* Image Processing, Deep Learning, Machine Learning, Fingernail Disease, Systemic Disease, Convolutional Neural Networks_
 ]
 
 #pagebreak()
@@ -413,24 +409,30 @@ _*Keywords:* Image Processing, Deep Learning, Machine Learning, Fingernail Disea
 
 #let toc = [
   #h2[Table of Contents]
-  #h2(c:false)[Preliminaries]
-   #outline(target: selector(heading).after(<prelim-s>).before(<prelim-e>), title: none)
-   
-   #h2(c:false, outlined: false)[CHAPTER I INTRODUCTION AND ITS BACKGROUND]
-   #outline(target: selector(heading).after(<ch1-s>).before(<ch1-e>), title: none)
+  #h2(c: false)[Preliminaries]
+  #outline(target: selector(heading).after(<prelim-s>).before(<prelim-e>), title: none)
 
-   #h2(c:false, outlined: false)[CHAPTER II REVIEW OF RELATED LITERATURE]
-   #outline(target: selector(heading).after(<ch2-s>).before(<ch2-e>), indent: 0.5em,  title: none)
-   
-   #h2(c:false, outlined: false)[CHAPTER III RESEARCH METHODOLOGY]
-   #outline(target: selector(heading).after(<ch3-s>).before(<ch3-e>), indent: 0.5em,  title: none)
+  #h2(c: false, outlined: false, bookmarked: false)[CHAPTER I INTRODUCTION AND ITS BACKGROUND]
+  #outline(target: selector(heading).after(<ch1-s>).before(<ch1-e>), title: none)
 
-   #pagebreak()
-   #h2[List of Figures]
-   #outline(target: figure.where(kind: image), title: none)
+  #h2(c: false, outlined: false, bookmarked: false)[CHAPTER II REVIEW OF RELATED LITERATURE]
+  #outline(target: selector(heading).after(<ch2-s>).before(<ch2-e>), indent: 0.5em, title: none)
 
-   
-   #metadata("group 1 end") <prelim-e>
+  #h2(c: false, outlined: false, bookmarked: false)[CHAPTER III RESEARCH METHODOLOGY]
+  #outline(target: selector(heading).after(<ch3-s>).before(<ch3-e>), title: none)
+
+  #h2(c: false, outlined: false, bookmarked: false)[CHAPTER IV RESULTS AND DISCUSSION]
+  #outline(target: selector(heading).after(<ch4-s>).before(<ch4-e>), title: none)
+
+  #h2(c: false, outlined: false, bookmarked: false)[CHAPTER V SUMMARY, CONCLUSIONS AND RECOMMENDATIONS]
+  #outline(target: selector(heading).after(<ch5-s>).before(<ch5-e>), title: none)
+
+  #pagebreak()
+  #h2[List of Figures]
+  #outline(target: figure.where(kind: image), title: none)
+
+
+  #metadata("group 1 end") <prelim-e>
 ]
 
 #toc
@@ -439,21 +441,19 @@ _*Keywords:* Image Processing, Deep Learning, Machine Learning, Fingernail Disea
 #pagebreak()
 
 #show table.cell: set par(leading: 1em)
-#set table(
-  stroke: (x, y) => if y == 0 {
-    (
-      top: (thickness: 1pt, dash: "solid"),
-      bottom: (thickness: 0.5pt, dash: "solid"),
-    )
-  },
-)
+#set table(stroke: (x, y) => if y == 0 {
+  (
+    top: (thickness: 1pt, dash: "solid"),
+    bottom: (thickness: 0.5pt, dash: "solid"),
+  )
+})
 
 #set page(numbering: "1")
 #counter(page).update(1)
 
 #metadata("Chapter 1 start") <ch1-s>
 #chp[Chapter I]
-#h2[Introduction and Its Background]
+#h2(outlined: false, bookmarked: false)[Introduction and Its Background]
 Fingernails are often referred to as a “window to systemic health,” as they can reveal early signs of serious conditions such as diabetes, cardiovascular diseases, and liver disorders through subtle changes in their appearance. These abnormalities, such as Beau’s lines (horizontal ridges indicating stress or illness), clubbing (enlarged fingertips linked to heart or lung issues), or pitting (small depressions associated with psoriasis or other systemic diseases), frequently appear before other symptoms become noticeable. Despite their diagnostic potential, these signs are commonly overlooked during routine medical checkups due to their subtle nature and the lack of specialized tools or training for general practitioners to identify them. This oversight delays early intervention, which could significantly improve health outcomes, particularly for individuals in underserved communities with limited access to advanced diagnostics.
 
 The importance of accessible, non-invasive diagnostic methods cannot be overstated, as they empower individuals to monitor their health proactively and seek timely medical advice. However, many people worldwide face barriers to such healthcare services, including geographical isolation, financial constraints, and a lack of awareness about the significance of nail abnormalities. According to #cite(<gaurav_artificial_2025>, form: "prose"), fingernails are a globally recognized source of biomarkers due to their visibility and ease of examination, yet their potential in preventive healthcare remains largely untapped. This gap highlights the urgent need for innovative solutions that can bridge these barriers and democratize early disease detection.
@@ -509,7 +509,7 @@ This section outlines the theoretical and conceptual frameworks that underpin th
 ==== Theoretical Framework
 #figure(
   image("img/theoretical-framework.png"),
-  caption: [Integrated Deep Learning and Probabilistic Diagnostic Framework for \ Fingernail-Based Systemic Disease Detection]
+  caption: [Integrated Deep Learning and Probabilistic Diagnostic Framework for \ Fingernail-Based Systemic Disease Detection],
 )
 The theoretical framework integrates deep learning and probabilistic modeling to create a comprehensive system for fingernail-based systemic disease detection, drawing inspiration from AI-driven diagnostic methodologies. It adapts principles from frameworks like #cite(<debnath_framework_2020>, form: "prose"), which emphasize systematic processing, feature extraction, and response generation in AI systems.
 
@@ -520,11 +520,7 @@ The process begins with users uploading fingernail images via a user interface, 
 ==== Conceptual Framework
 The conceptual framework provides a practical workflow for implementing the theoretical foundation, detailing the process from data collection to system deployment. It is divided into three phases: input, process, and output.
 
-#figure(
-  placement: none,
-  image("img/ConceptualFramework.png"),
-  caption: [Conceptual Framework of the Study]
-)
+#figure(placement: none, image("img/ConceptualFramework.png"), caption: [Conceptual Framework of the Study])
 
 The input phase involves collecting fingernail images from datasets like Kaggle and Roboflow, supplemented by local health data to inform probabilistic inference. The process phase includes data cleaning (normalization, noise reduction), segmentation to isolate fingernail regions, and augmentation (flipping, scaling, brightness adjustment) to enhance dataset diversity. Feature extraction using CNNs (e.g., ResNet, MobileNet, EfficientNet) precedes model training with a split dataset (80% training, 20% testing), employing CNNs for classification and probabilistic models (e.g., Naïve Bayes, Bayesian Inference) for inference. Evaluation metrics (sensitivity, recall, confidence intervals) guide hyperparameter tuning, leading to the selection of the best-performing model. The output phase delivers probabilistic classifications of nail disorders, systemic disease likelihoods (e.g., diabetes: 85%), and recommendations for medical consultation, with deployment into a mobile or web application for global accessibility.
 
@@ -552,7 +548,7 @@ The following identifies the scope and coverage of the study in terms of subject
 
 *Time Duration:* The research is scheduled over a seven-month period, covering phases such as data collection, preprocessing, model development, training, testing, integration, evaluation, and deployment.
 
-==== Limitations 
+==== Limitations
 However, this study is limited to the following:
 
 *Dataset Quality and Balance:* The system’s performance relies on the quality and diversity of the training datasets, which may contain noise, inconsistencies, or class imbalances, potentially affecting its ability to generalize across diverse populations.
@@ -592,8 +588,8 @@ The findings of this study are beneficial to individuals and organizations world
 #pagebreak()
 
 #metadata("Chapter 2 start") <ch2-s>
-#chp[CHAPTER II]
-#h2(outlined: false)[Review of Related Literatures]
+#chp[Chapter II]
+#h2(outlined: false, bookmarked: false)[Review of Related Literatures]
 
 
 
@@ -626,7 +622,7 @@ Furthermore, in a study written by #cite(<han_deep_2018>, form: "prose"), althou
 === Subungual Melanoma
 According to #cite(<Emanuel_2023>, form: "prose"), Subungual melanoma is a cancer that arises from a malignant proliferation of melanocytes in the nail matrix. Typically, it presents clinically as a pigmented streak in the nail plate , which slowly expands at the proximal border and may extend to involve the adjacent nail fold.
 
-In the study conducted by #cite(<Holman_Van_2020>, form:"prose"), Subungual melanomas (SUM) arise beneath the nails of the hands and feet, and account for 0.7–3.5% of all malignant melanomas. Most studies include SUM in the category of acral melanoma, but understanding the specific features of SUM is critical for improving patient care. In their study, they performed a site-specific comparison of the clinical and molecular features between 54 cases of SUM and 78 cases of nonsubungual acral melanoma. Compared to patients with acral melanoma, patients with SUM were younger at diagnosis, had a higher prevalence of primary melanomas on the hand, and had more frequent reports of previous trauma at the tumor site. SUM was deeper than acral melanoma at diagnosis, which correlated with an increased frequency of metastases. Analysis of common melanoma driver genes revealed KIT and KRAS mutations were predominantly found in SUM, whereas BRAF and NRAS mutations occurred almost exclusively in acral melanoma.
+In the study conducted by #cite(<Holman_Van_2020>, form: "prose"), Subungual melanomas (SUM) arise beneath the nails of the hands and feet, and account for 0.7–3.5% of all malignant melanomas. Most studies include SUM in the category of acral melanoma, but understanding the specific features of SUM is critical for improving patient care. In their study, they performed a site-specific comparison of the clinical and molecular features between 54 cases of SUM and 78 cases of nonsubungual acral melanoma. Compared to patients with acral melanoma, patients with SUM were younger at diagnosis, had a higher prevalence of primary melanomas on the hand, and had more frequent reports of previous trauma at the tumor site. SUM was deeper than acral melanoma at diagnosis, which correlated with an increased frequency of metastases. Analysis of common melanoma driver genes revealed KIT and KRAS mutations were predominantly found in SUM, whereas BRAF and NRAS mutations occurred almost exclusively in acral melanoma.
 
 Subungual melanoma is most common in non-White race persons, with both men and women having equal risk, and requires the efforts of an interprofessional healthcare team. This team includes clinicians (MDs, DOs, NPs, and PAs), dermatological specialists, nursing staff, and pharmacists. Like other forms of melanoma, subungual melanoma can also spread to other parts of the body and is lethal. The key to diagnosis and early treatment is awareness. All healthcare team members, including nurses, should routinely examine the nails and maintain a high index of suspicion for any pigmented lesion on the nails. The only way to reduce the high mortality is an early referral to a dermatologist for a biopsy. Further, the nurse should educate patients on examining their skin and nails for unusual changes. Finally, both the nurse and the pharmacist should educate the public about using sunscreen when going outdoors and wearing protective clothing when going outdoors. Sunglasses are also recommended as the sun's UV rays can damage the retinal cells. #cite(<Mole_MacKenzie_2023>)
 
@@ -658,7 +654,7 @@ On top of that, while being promoted as one of the most reliable physical signs 
 
 #metadata("Chapter 3 start") <ch3-s>
 #chp[Chapter III]
-#h2(outlined: false)[RESEARCH METHODOLOGY]
+#h2(outlined: false, bookmarked: false)[Research Methodology]
 
 === Research Design
 + Image Collection & Preprocessing
@@ -686,9 +682,53 @@ On top of that, while being promoted as one of the most reliable physical signs 
 
 === Algorithm Analysis
 
+=== Data Collection Methods
 
+=== Data Model Generation
+
+=== System Development Methodology
+
+=== Software Tools Used
+
+=== System Architecture
+
+=== Software Testing
 
 #pagebreak()
 #metadata("Chapter 3 end") <ch3-e>
+
+#metadata("Chapter 4 start")<ch4-s>
+#chp[Chapter IV]
+#h2(outlined: false, bookmarked: true)[Results and Discussion]
+
+=== System Overview
+
+=== Research Objective 1
+
+=== Research Objective 2
+
+=== Research Objective 3
+
+=== Research Objective 4
+
+=== Research Objective 5
+
+
+#pagebreak()
+#metadata("Chapter 4 end") <ch4-e>
+
+#metadata("Chapter 5 start") <ch5-s>
+#chp[Chapter V]
+#h2(outlined: false, bookmarked: false)[Summary, Conclusions, Recommendations]
+
+=== Summary
+
+=== Conclusions
+
+=== Recommendations
+
+
+#pagebreak()
+#metadata("Chapter 5 end") <ch5-e>
 
 #bibliography("reference.bib", style: "american-psychological-association")
