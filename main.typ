@@ -4,10 +4,12 @@
 #let double-spacing = 1.5em
 
 
-#let chp(title) = {
+#let chp(title, hidden: false) = {
   show heading: none
   heading(level: 1, outlined: false, bookmarked: true)[#title]
-  align(center)[*#upper(title)*]
+  if not hidden {
+    align(center)[*#upper(title)*]
+  } else {}
 }
 
 #let h2(title, c: true, hidden: false, outlined: true, bookmarked: true, uppercase: true) = {
@@ -85,7 +87,11 @@
       it.location().page() == current-page
     ))
 
-    if not has-chapter {
+    let in-postlude-page = query(selector(here()).after(<post-s>).before(<post-e>)).any(it => (
+      it.location().page() == current-page
+    ))
+
+    if not has-chapter and not in-postlude-page {
       align(right)[#page-number]
     }
   },
@@ -435,9 +441,7 @@
   #h2(c: false, outlined: false, bookmarked: false)[CHAPTER V SUMMARY, CONCLUSIONS AND RECOMMENDATIONS]
   #outline(target: selector(heading).after(<ch5-s>).before(<ch5-e>), title: none)
 
-  // #outline(target: selector(heading).after(<bib-s>).before(<bib-e>), title: none, indent: 0em)
-  //
-  // #outline(target: selector(heading).after(<app-s>).before(<app-e>), title: none, indent: 0em)
+  #outline(target: selector(heading).after(<post-s>).before(<post-e>), title: none, indent: 0em)
 
   #pagebreak()
 
@@ -762,16 +766,23 @@ All models are trained using:
 - Loss: Cross Netropy Loss
 - Optimizer: AdamW
 
-#text(size: 7pt)[
-  #table(
-    columns: (1fr,) * 8,
-    table.header([Model], [Parameters], [Epochs], [Training Time (min)], [Accuracy], [Precision], [Recall], [F1-Score]),
+  #figure(
+    placement: none,
+    text(size: 6pt)[
+      #table(
+        columns: (1fr,) * 8,
+        align: (x, _) => if x == 0 { left + horizon } else { horizon + center },
+        table.header(
+          [Model], [Parameters], [Epochs], [Training Time (min)], [Accuracy], [Precision], [Recall], [F1-Score]
+        ),
 
-    [EfficientNetV2S], [20,190,298], [5], [21.22], [88%], [90%], [88%], [88%],
-    [VGG16], [134,301,514], [5], [27.06], [66%], [77%], [66%], [67%],
-    [ResNet50], [23,528,522], [5], [22.86], [75%], [80%], [75%], [76%],
-    [RegNetY-16GF], [80,595,390], [5], [24.33], [85%], [88%], [85%], [85%],
-  )]
+        [EfficientNetV2S], [20,190,298], [5], [21.22], [88%], [90%], [88%], [88%],
+        [VGG16], [134,301,514], [5], [27.06], [66%], [77%], [66%], [67%],
+        [ResNet50], [23,528,522], [5], [22.86], [75%], [80%], [75%], [76%],
+        [RegNetY-16GF], [80,595,390], [5], [24.33], [85%], [88%], [85%], [85%],
+      )],
+    caption: [Comparison of model performance metrics and training efficiency across four CNN architectures.],
+  )
 
 
 === Data Collection Methods
@@ -847,19 +858,19 @@ Software testing
 #h2(outlined: false, bookmarked: false)[Summary, Conclusions, Recommendations]
 
 === Summary
-
 === Conclusions
 
 === Recommendations
 
 #metadata("Chapter 5 end") <ch5-e>
+#metadata("postlude start") <post-s>
 #pagebreak()
 
-#metadata("Bibliography start") <bib-s>
-#bibliography("reference.bib", style: "american-psychological-association")
-#metadata("Bibliography end") <bib-e>
+
+#bibliography("reference.bib", style: "american-psychological-association", title: none)
 #pagebreak()
 
-#metadata("Appendices start") <app-s>
+
+#show heading: none
 #text(size: 60pt)[#align(center + horizon)[*Appendices*]]
-#metadata("Appendices end") <app-e>
+#metadata("postlude end") <post-e>
