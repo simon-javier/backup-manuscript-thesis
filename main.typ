@@ -733,30 +733,39 @@ This study integrates a wide range of machine learning and software engineering 
 
 ==== Deep Learning Fundamentals
 
-- *Convolutional Neural Networks (CNNs):* CNNs are the primary architecture for analyzing image data. They automatically learn spatial hierarchies of features—edges, textures, and shapes—that are essential for accurate classification of nail abnormalities.
-- *Vision Transformers (ViTs):* In addition to CNNs, Vision Transformers are explored for their ability to capture long-range dependencies and attention-based representations, which may enhance classification in complex image scenarios.
-- *Deep Learning:* The system utilizes deep neural networks capable of hierarchical representation learning, enabling end-to-end learning from raw images to disease classification output.
-- *Transfer Learning:* Pre-trained models such as EfficientNetV2 and RegNetY16GF, initially trained on large-scale datasets (e.g., ImageNet), were fine-tuned using the nail disease dataset to accelerate training and improve performance.
-- *Image Classification:* The core task involves classifying images into one of several disease categories, serving as the basis for subsequent probabilistic inference of systemic conditions.
+*Convolutional Neural Networks (CNNs):* CNNs are the primary architecture for analyzing image data. They automatically learn spatial hierarchies of features—edges, textures, and shapes—that are essential for accurate classification of nail abnormalities.
+
+*Vision Transformers (ViTs):* In addition to CNNs, Vision Transformers are explored for their ability to capture long-range dependencies and attention-based representations, which may enhance classification in complex image scenarios.
+
+*Deep Learning:* The system utilizes deep neural networks capable of hierarchical representation learning, enabling end-to-end learning from raw images to disease classification output.
+
+*Transfer Learning:* Pre-trained models such as EfficientNetV2 and RegNetY16GF, initially trained on large-scale datasets (e.g., ImageNet), were fine-tuned using the nail disease dataset to accelerate training and improve performance.
+
+*Image Classification:* The core task involves classifying images into one of several disease categories, serving as the basis for subsequent probabilistic inference of systemic conditions.
 
 ==== Image Data Handling and Preprocessing
-- *Image Preprocessing: * Prior to training, images underwent resizing format conversion, augmentation, and normalization to ensure consistency across inputs and compatibility with model architectures.
-- *Normalization Input:* images were normalized using the standard ImageNet mean and standard deviation values: $"mean" = [0.485, 0.456, 0.406]$ and $"std" = [0.229, 0.224, 0.225]$. This normalization ensures compatibility with pre-trained models from PyTorch’s torchvision library, which were originally trained on the ImageNet dataset. By aligning the data distributions, normalization enables more effective transfer learning and stable gradient flow during training.
-- *Data Augmentation:* Techniques such as horizontal flipping, rotation, and brightness adjustment were applied to increase dataset diversity and reduce overfitting.
+*Image Preprocessing: * Prior to training, images underwent resizing format conversion, augmentation, and normalization to ensure consistency across inputs and compatibility with model architectures.
+
+*Normalization Input:* images were normalized using the standard ImageNet mean and standard deviation values: $"mean" = [0.485, 0.456, 0.406]$ and $"std" = [0.229, 0.224, 0.225]$. This normalization ensures compatibility with pre-trained models from PyTorch’s torchvision library, which were originally trained on the ImageNet dataset. By aligning the data distributions, normalization enables more effective transfer learning and stable gradient flow during training.
+
+*Data Augmentation:* Techniques such as horizontal flipping, rotation, and brightness adjustment were applied to increase dataset diversity and reduce overfitting.
 
 ==== Training Optimization
-- *Batch Learning:* Training was conducted using mini-batches of 32 images per iteration. This method enhances training efficiency while maintaining a balance between generalization and convergence speed.
-- *Class Balancing:* To address class imbalance within the dataset, a weighted loss function was used. Class weights were assigned inversely proportional to the frequency of each class, ensuring that underrepresented classes contributed more significantly to the loss during training. This approach helped mitigate bias toward majority classes without altering the data distribution through sampling techniques.
-- *Learning Rate Scheduling:* Two strategies were employed to adaptively tune learning rates during training:
-  - _StepLR:_ Decreases the learning rate by a factor at fixed intervals.
-  - _ReduceLROnPlateau:_ Lowers the learning rate when validation metrics stop improving, allowing for more fine-grained convergence.
+*Batch Learning:* Training was conducted using mini-batches of 32 images per iteration. This method enhances training efficiency while maintaining a balance between generalization and convergence speed.
+
+*Class Balancing:* To address class imbalance within the dataset, a weighted loss function was used. Class weights were assigned inversely proportional to the frequency of each class, ensuring that underrepresented classes contributed more significantly to the loss during training. This approach helped mitigate bias toward majority classes without altering the data distribution through sampling techniques.
+
+*Learning Rate Scheduling:* Two strategies were employed to adaptively tune learning rates during training:
+- _StepLR:_ Decreases the learning rate by a factor at fixed intervals.
+- _ReduceLROnPlateau:_ Lowers the learning rate when validation metrics stop improving, allowing for more fine-grained convergence.
 
 ==== Model Evaluation and Interpretability
-- *Model Evaluation:* Performance was measured using standard metrics such as accuracy, precision, recall, and F1-score. Confusion matrices were also generated to evaluate per-class performance and misclassification trends.
-- *Visualization:* Plots of training/validation loss, accuracy curves, and confusion matrices were used to monitor and interpret model performance. Techniques such as Grad-CAM may also be explored to visualize model attention and improve transparency.
+*Model Evaluation:* Performance was measured using standard metrics such as accuracy, precision, recall, and F1-score. Confusion matrices were also generated to evaluate per-class performance and misclassification trends.
+
+*Visualization:* Plots of training/validation loss, accuracy curves, and confusion matrices were used to monitor and interpret model performance. Techniques such as Grad-CAM may also be explored to visualize model attention and improve transparency.
 
 ==== Software Engineering and System Design
-- *Modularization:* The system was structured into modular components—data preprocessing, model training, evaluation, and deployment—to facilitate maintenance, experimentation, and scalability.
+*Modularization:* The system was structured into modular components—data preprocessing, model training, evaluation, and deployment—to facilitate maintenance, experimentation, and scalability.
 
 === Algorithm Analysis
 To assess the performance and computational efficiency of the selected deep learning models, five architectures were evaluated using identical training parameters. Each model was trained for five epochs with a batch size of 32, a learning rate of $1e-4$, and the AdamW optimizer. The loss function employed was Cross Entropy Loss. All experiments were executed under consistent hardware and software environments to ensure comparability.
@@ -796,7 +805,7 @@ In contrast, *VGG16*, the oldest architecture in this benchmark, demonstrated th
 ==== Classification Breakdown
 Individual classification reports are provided for each model, detailing per-class precision, recall, and F1-scores. These metrics are especially crucial given the dataset’s class imbalance and the medical significance of detecting less common conditions (_e.g., Koilonychia, Muehrcke’s Lines_).
 
-For example:
+#par(first-line-indent: 0em)[For example:]
 - SwinV2B shows strong and consistent class-wise performance, particularly achieving *1.00 recall* for _Acral Lentiginous Melanoma_ and _Muehrcke’s Lines_, which is critical in a preventive diagnostic context.
 - VGG16 struggles with minority classes such as _Blue Finger_ and _Beau’s Line_, exhibiting high variance and frequent underperformance.
 - ResNet50 shows improvement in difficult classes like _Blue Finger_ (F1: *0.78*) and _Pitting_ (F1: *0.89*), albeit at lower recall for others like Clubbing.
@@ -863,17 +872,27 @@ The models are trained using google colab. It is then integrated into django for
 === Software Tools Used
 The development, training, evaluation, and deployment of the proposed system utilized a suite of open-source and industry-standard software tools, ensuring both reproducibility and scalability of the research. The following tools and frameworks were employed:
 
-- *Python:* The primary programming language used throughout the study for data processing, model development, and system integration due to its extensive support for machine learning and scientific computing.
-- *PyTorch:* A deep learning framework used for implementing, training, and fine-tuning convolutional neural networks (CNNs) and vision transformers. PyTorch enabled seamless integration with pre-trained models, dynamic computation graphs, and GPU acceleration.
-- *Torchvision* A PyTorch companion library used for loading pre-trained models (e.g., EfficientNetV2, RegNetY16GF, ResNet50), applying standard image transformations, and accessing utility functions for computer vision tasks.
-- *Torchmetrics:* A PyTorch-native library for computing evaluation metrics such as accuracy, precision, recall, and F1-score. Its modular design ensured consistent metric computation across training, validation, and testing phases.
-- *Google Colab:* A cloud-based Jupyter notebook environment used for training and experimentation. It provided access to free GPU resources (T4) essential for efficient model training.
-- *Matplotlib & Seaborn:* Visualization libraries used to plot training metrics (loss, accuracy), confusion matrices, and Grad-CAM outputs for model interpretability and evaluation.
-- *Grad-CAM:* Applied to generate class activation maps that explain the visual reasoning behind model predictions, enhancing interpretability and transparency.
-- *Pandas & NumPy:* Used for data manipulation, statistical computation, and label handling throughout preprocessing and evaluation.
-- *Scikit-learn:* Employed for computing evaluation metrics such as precision, recall, F1-score, and for generating confusion matrices.
-- *Visual Studio Code:* The primary development environment used for writing and organizing code modules. Its extensions for Python and Git integration facilitated version control and modular code development.
-- *Django:* A high-level Python web framework intended for integrating the trained model into a web application, enabling users to upload nail images and receive probabilistic health feedback.
+*Python:* The primary programming language used throughout the study for data processing, model development, and system integration due to its extensive support for machine learning and scientific computing.
+
+*PyTorch:* A deep learning framework used for implementing, training, and fine-tuning convolutional neural networks (CNNs) and vision transformers. PyTorch enabled seamless integration with pre-trained models, dynamic computation graphs, and GPU acceleration.
+
+*Torchvision:* A PyTorch companion library used for loading pre-trained models (e.g., EfficientNetV2, RegNetY16GF, ResNet50), applying standard image transformations, and accessing utility functions for computer vision tasks.
+
+*Torchmetrics:* A PyTorch-native library for computing evaluation metrics such as accuracy, precision, recall, and F1-score. Its modular design ensured consistent metric computation across training, validation, and testing phases.
+
+*Google Colab:* A cloud-based Jupyter notebook environment used for training and experimentation. It provided access to free GPU resources (T4) essential for efficient model training.
+
+*Matplotlib & Seaborn:* Visualization libraries used to plot training metrics (loss, accuracy), confusion matrices, and Grad-CAM outputs for model interpretability and evaluation.
+
+*Grad-CAM:* Applied to generate class activation maps that explain the visual reasoning behind model predictions, enhancing interpretability and transparency.
+
+*Pandas & NumPy:* Used for data manipulation, statistical computation, and label handling throughout preprocessing and evaluation.
+
+*Scikit-learn:* Employed for computing evaluation metrics such as precision, recall, F1-score, and for generating confusion matrices.
+
+*Visual Studio Code:* The primary development environment used for writing and organizing code modules. Its extensions for Python and Git integration facilitated version control and modular code development.
+
+*Django:* A high-level Python web framework intended for integrating the trained model into a web application, enabling users to upload nail images and receive probabilistic health feedback.
 
 === System Architecture
 
