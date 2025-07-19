@@ -1,0 +1,39 @@
+Themes 1-10:
+1. Early Non-Invasive Diagnosis in Rural Settings
+Importance of accessible, non-invasive nail-based diagnostics for systemic diseases in rural areas with limited medical resources.
+Key: Nail biomarkers, rural healthcare challenges, early detection.
+
+2. Nail Abnormalities as Systemic Disease Indicators
+Nail features (e.g., clubbing, koilonychia, Terry’s nails) signal systemic conditions like psoriasis or melanoma, ideal for rural diagnostics.
+Key: Nail disorders, systemic diseases, occupational risks (e.g., farming).
+
+3. Limitations of Traditional Diagnostics in Rural Areas
+Conventional methods (e.g., clinical exams, histopathology) are limited by equipment and expertise scarcity in rural settings.
+Key: Interobserver variability, lack of imaging, need for AI.
+
+4. AI and Machine Learning in Rural Medical Diagnosis
+AI enables scalable, low-cost diagnosis using nail images, suitable for rural clinics with minimal infrastructure.
+Key: AI in medicine, lightweight models (e.g., MobileNet), AI ethics.
+
+5. Deep Learning for Nail Disorder Detection
+Deep learning (e.g., CNNs, EfficientNet, VGG16) automates nail disease classification with high accuracy.
+Key: CNNs, transfer learning, multi-label classification.
+
+6. Advanced Imaging for AI-Driven Nail Analysis
+AI-enhanced imaging (e.g., segmentation, spatial analysis) supports precise nail disorder diagnosis in rural settings.
+Key: Image segmentation, US/NVC integration, NAPSI scoring.
+
+7. Probabilistic Modeling and Explainable AI
+Probabilistic models and XAI ensure reliable, interpretable diagnoses for rural healthcare providers.
+Key: Probabilistic modeling, explainable AI, model evaluation.
+
+8. Multimodal AI and Ensemble Models
+Combining nail images, microbiome data, and clinical reports improves diagnostic accuracy via ensemble models.
+Key: Multimodal AI, ensemble models (e.g., EfficientNet+ResNet).
+
+9. Clinical and Forensic Applications
+AI automates NAPSI scoring and supports forensic toxicology via nail biomarkers in clinical and rural settings.
+Key: NAPSI calculator, infectious diseases, forensic applications.
+
+10. Lightweight AI for Rural DeploymentLightweight models (e.g., MobileNet, YOLO) enable real-time nail disease detection on mobile devices in rural clinics.
+Key: mHealth, model robustness, rural accessibility.

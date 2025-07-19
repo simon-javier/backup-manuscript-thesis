@@ -712,26 +712,135 @@ On top of that, while being promoted as one of the most reliable physical signs 
 #chp[Chapter III]
 #h2(outlined: false, bookmarked: false)[Research Methodology]
 
-=== Research Design
+This chapter presents the methods and materials the researchers used to fulfill the objectives. It covers the research design, locale of the study, applied concepts and techniques, algorithm analysis, data collection methods, system development methodology, software tools used, system architecture and software testing
 
-This study adopts a quantitative research approach, emphasizing measurable outcomes and statistical evaluation of model performance. The research is both experimental and developmental in nature. The experimental aspect involves testing and evaluating various deep learning architectures on a curated and augmented dataset of fingernail images. The developmental component focuses on the design and implementation of an intelligent system that integrates image classification and probabilistic inference to detect systemic diseases based on nail biomarkers.
+=== Research Design
+This study adopts a quantitative research approach, emphasizing measurable outcomes and statistical evaluation of model performance. The research is both experimental and developmental in nature. The experimental aspect involves testing and evaluating various deep learning architectures on an augmented dataset of fingernail images. The developmental component focuses on the design and implementation of an intelligent system that integrates image classification and probabilistic inference to detect systemic diseases based on nail biomarkers.
 
 Through systematic experimentation, model benchmarking, and iterative improvement, the study aims to determine the most effective neural network architectures for the classification task and integrate them into a functional web-based application for real-world use.
 
-The dataset utilized for this study is sourced from a publicly available
-Nail Disease Detection collection hosed on Roboflow, and is released under
-the Creative Commons Attribution 4.0 (CC BY 4.0) license. The dataset comprises
-a total of 7,258 images, annotated using the TensorFlow TFRecord (Raccoon) format,
-covering 11 classes of nail diseases.
+=== Locale of the Study
+This study will be conducted at Laguna State Polytechnic University (LSPU), a state university located in the province of Laguna, Philippines. LSPU provides an academic environment conducive to scientific research, technological development, and community-centered innovation. The university's resources and academic community offer an appropriate setting for research involving artificial intelligence applications in public health.
 
-The dataset we collected were already pre-processed and augmented.
-These were the preprocessing step used by the owner of the public dataset:
+The study focuses on the probabilistic detection of systemic diseases using deep learning on fingernail biomarkers, aiming to develop an application that enables early health risk screening. Conducting the research at LSPU ensures access to necessary computational tools, academic supervision, and local data insights relevant to the community.
 
+The primary beneficiaries of this study are individuals seeking preventive healthcare in a convenient, accessible form. By designing the system to be user-friendly and deployable on digital platforms, the research addresses the growing demand for proactive health monitoring solutions. This includes not only residents of Sta. Cruz, Laguna and nearby areas but also any users with internet access who want to perform preliminary health assessments on the go.
+
+Moreover, the research may serve as a valuable reference for future researchers, healthcare stakeholders, and technology developers interested in AI-driven solutions for early disease detection. By grounding the study in a local academic institution and addressing global health accessibility concerns, the project aims to contribute meaningfully to both scientific literature and real-world healthcare practices.
+
+=== Applied Concepts and Techniques
+This study integrates a wide range of machine learning and software engineering techniques to develop a reliable, scalable system for the probabilistic detection of systemic diseases through nail image classification. The applied concepts are grouped thematically to emphasize their specific roles in the system development lifecycle.
+
+==== Deep Learning Fundamentals
+
+- *Convolutional Neural Networks (CNNs):* CNNs are the primary architecture for analyzing image data. They automatically learn spatial hierarchies of features—edges, textures, and shapes—that are essential for accurate classification of nail abnormalities.
+- *Vision Transformers (ViTs):* In addition to CNNs, Vision Transformers are explored for their ability to capture long-range dependencies and attention-based representations, which may enhance classification in complex image scenarios.
+- *Deep Learning:* The system utilizes deep neural networks capable of hierarchical representation learning, enabling end-to-end learning from raw images to disease classification output.
+- *Transfer Learning:* Pre-trained models such as EfficientNetV2 and RegNetY16GF, initially trained on large-scale datasets (e.g., ImageNet), were fine-tuned using the nail disease dataset to accelerate training and improve performance.
+- *Image Classification:* The core task involves classifying images into one of several disease categories, serving as the basis for subsequent probabilistic inference of systemic conditions.
+
+==== Image Data Handling and Preprocessing
+- *Image Preprocessing: * Prior to training, images underwent resizing format conversion, augmentation, and normalization to ensure consistency across inputs and compatibility with model architectures.
+- *Normalization Input:* images were normalized using the standard ImageNet mean and standard deviation values: $"mean" = [0.485, 0.456, 0.406]$ and $"std" = [0.229, 0.224, 0.225]$. This normalization ensures compatibility with pre-trained models from PyTorch’s torchvision library, which were originally trained on the ImageNet dataset. By aligning the data distributions, normalization enables more effective transfer learning and stable gradient flow during training.
+- *Data Augmentation:* Techniques such as horizontal flipping, rotation, and brightness adjustment were applied to increase dataset diversity and reduce overfitting.
+
+==== Training Optimization
+- *Batch Learning:* Training was conducted using mini-batches of 32 images per iteration. This method enhances training efficiency while maintaining a balance between generalization and convergence speed.
+- *Class Balancing:* To address class imbalance within the dataset, a weighted loss function was used. Class weights were assigned inversely proportional to the frequency of each class, ensuring that underrepresented classes contributed more significantly to the loss during training. This approach helped mitigate bias toward majority classes without altering the data distribution through sampling techniques.
+- *Learning Rate Scheduling:* Two strategies were employed to adaptively tune learning rates during training:
+  - _StepLR:_ Decreases the learning rate by a factor at fixed intervals.
+  - _ReduceLROnPlateau:_ Lowers the learning rate when validation metrics stop improving, allowing for more fine-grained convergence.
+
+==== Model Evaluation and Interpretability
+- *Model Evaluation:* Performance was measured using standard metrics such as accuracy, precision, recall, and F1-score. Confusion matrices were also generated to evaluate per-class performance and misclassification trends.
+- *Visualization:* Plots of training/validation loss, accuracy curves, and confusion matrices were used to monitor and interpret model performance. Techniques such as Grad-CAM may also be explored to visualize model attention and improve transparency.
+
+==== Software Engineering and System Design
+- *Modularization:* The system was structured into modular components—data preprocessing, model training, evaluation, and deployment—to facilitate maintenance, experimentation, and scalability.
+
+=== Algorithm Analysis
+To assess the performance and computational efficiency of the selected deep learning models, five architectures were evaluated using identical training parameters. Each model was trained for five epochs with a batch size of 32, a learning rate of $1e-4$, and the AdamW optimizer. The loss function employed was Cross Entropy Loss. All experiments were executed under consistent hardware and software environments to ensure comparability.
+
+#figure(
+  placement: none,
+  text(size: 7pt)[
+    #table(
+      columns: (1fr,) * 8,
+      align: (x, _) => if x == 0 { left + horizon } else { horizon + center },
+      table.header(
+        [Model], [Parameters], [Epochs], [Training Time (min)], [Accuracy], [Precision], [Recall], [F1-Score]
+      ),
+
+      [EfficientNetV2S], [20,190,298], [5], [21.22], [88%], [90%], [88%], [88%],
+
+      [VGG16], [134,301,514], [5], [27.06], [66%], [77%], [66%], [67%],
+
+      [ResNet50], [23,528,522], [5], [22.86], [75%], [80%], [75%], [76%],
+
+      [RegNetY-16GF], [80,595,390], [5], [24.33], [85%], [88%], [85%], [85%],
+
+      [SwinV2B], [86,916,068], [5], [62.13], [90%], [90%], [90%], [89%],
+    )],
+  caption: [Comparison of model performance metrics and training efficiency across four CNN architectures.],
+)
+
+// ==== Comparative Analysis
+Among the five architectures, *SwinV2B* achieved the highest performance across all evaluated metrics, obtaining an accuracy of _90%_, precision of _90%_, recall of _90%_, and an F1-score of _89%_. Despite its computational intensity—demonstrated by the highest training time of _62.13 minutes_—its superior classification performance justifies the resource cost in scenarios where accuracy is prioritized.
+
+*EfficientNetV2S* follows closely, with a relatively lower parameter count and faster training time, making it a competitive choice for lightweight applications. It achieves an F1-score of _88%_, while maintaining strong recall and precision.
+
+In contrast, *VGG16*, the oldest architecture in this benchmark, demonstrated the lowest accuracy (_72%_) and F1-score (_70%_), coupled with the highest number of parameters. This result underscores its inefficiency for fine-grained classification tasks, such as fingernail disease detection, especially when compared to more modern architectures.
+
+*ResNet50* and *RegNetY-16GF* exhibit balanced trade-offs between performance and computational requirements. *ResNet50*, with its residual connections, offers a solid baseline (F1-score: _76%_), while *RegNetY-16GF* leverages architectural flexibility to achieve higher metrics, albeit at increased parameter complexity.
+
+==== Classification Breakdown
+Individual classification reports are provided for each model, detailing per-class precision, recall, and F1-scores. These metrics are especially crucial given the dataset’s class imbalance and the medical significance of detecting less common conditions (_e.g., Koilonychia, Muehrcke’s Lines_).
+
+For example:
+- SwinV2B shows strong and consistent class-wise performance, particularly achieving *1.00 recall* for _Acral Lentiginous Melanoma_ and _Muehrcke’s Lines_, which is critical in a preventive diagnostic context.
+- VGG16 struggles with minority classes such as _Blue Finger_ and _Beau’s Line_, exhibiting high variance and frequent underperformance.
+- ResNet50 shows improvement in difficult classes like _Blue Finger_ (F1: *0.78*) and _Pitting_ (F1: *0.89*), albeit at lower recall for others like Clubbing.
+
+These reports indicate that while newer models offer significantly improved overall accuracy, their strength also lies in more balanced performance across all classes.
+
+
+=== Data Collection Methods
+The dataset utilized for this study is sourced from a publicly available Nail Disease Detection collection hosed on Roboflow, and is released under the Creative Commons Attribution 4.0 (CC BY 4.0) license. The dataset comprises a total of 7,264 images, annotated using the TensorFlow TFRecord (Raccoon) format, covering 11 classes of nail diseases. However, the researchers have dropped the Lindsay's Nail class due to few number of images.
+
+The final dataset used in this study consists of 7,258 labeled nail images, divided into three subsets: training (6,360 images, 88%), validation (591 images, 8%), and testing (307 images, 4%).
+
+Each subset contains images from ten nail disease classes, with class distributions reflecting a natural imbalance. The training set is used for model learning, the validation set for hyperparameter tuning and early stopping, and the test set for final evaluation.
+
+The class with the highest representation across all sets is Terry's Nail, while Muehrcke’s Lines is the most underrepresented. The breakdown of samples per class in each subset is as follows:
+
+#figure(
+  placement: none,
+  table(
+    columns: (1.7fr, 1fr, 1fr, 1fr),
+    align: (x, _) => if x == 0 { left + horizon } else { horizon + center },
+    table.header([Class], [Train], [Validation], [Test]),
+
+    [Acral Lentiginous Melanoma], [753], [70], [36],
+    [Beau's Line], [456], [44], [22],
+    [Blue Finger], [612], [59], [29],
+    [Clubbing], [783], [74], [38],
+    [Healthy Nail], [642], [54], [30],
+    [Koilonychia], [537], [52], [28],
+    [Muehrcke’s Lines], [336], [31], [16],
+    [Onychogryphosis], [690], [65], [34],
+    [Pitting], [657], [61], [32],
+    [Terry’s Nail], [894], [81], [42],
+  ),
+  caption: [Sample distribution per class across dataset splits.],
+)
+
+Weighted loss was used during training to compensate for class imbalance and improve model fairness across underrepresented classes.
+
+The dataset we collected were already pre-processed and augmented. These were the preprocessing step used by the owner of the public dataset:
 - Automatic orientation correction (EXIF metadata removed)
-- Resizing to 416 x 416 pixels using "fit" scaling, which introduces black padding to maintain aspect ratio
+- Resizing to $416 #sym.times 416$ pixels using "fit" scaling, which introduces black padding to maintain aspect ratio
 
 To improve model generalization, data augmentation was also applied, producing three versions of each source image. These augmentations included:
-
 - 50% chance of horizontal flip
 - 50% chance of vertical flip
 - Equal probability of a 90-degree rotation (none, clockwise, counter-clockwise, or 180°)
@@ -740,106 +849,11 @@ To improve model generalization, data augmentation was also applied, producing t
 - Random brightness adjustment between -20% and +20%
 - Random exposure adjustment between -15% and +15%
 
-Although the dataset was initially preprocessed and augmented through Roboflow's pipeline, additional preprocessing steps were performed to ensure compatibility with the PyTorch deep learning framework. Specifically, all images were resized to 224 × 224 pixels, which is the standard input dimension for most pre-trained Convolutional Neural Network (CNN) architectures in PyTorch.
+Although the dataset was initially preprocessed and augmented through Roboflow's pipeline, additional preprocessing steps were performed to ensure compatibility with the PyTorch deep learning framework. Specifically, all images were resized to $224 × 224$ pixels, which is the standard input dimension for most pre-trained Convolutional Neural Network (CNN) architectures in PyTorch.
 
 Each image was then converted into a tensor format to facilitate numerical computation during training and inference. Furthermore, normalization was applied using the mean and standard deviation values commonly used by PyTorch’s pre-trained models on the ImageNet dataset. This normalization ensures consistency in input distribution, allowing for more stable and efficient model convergence.
 
 These preprocessing steps were essential for adapting the dataset to the specific requirements of the chosen model architectures and the deep learning environment used in this study.
-
-- Deep Learning Classification of Nail Disease
-- Probabilistic Inference of Systemic Diseases
-- Model Evaluation
-- Web Integration
-- Testing and Evalutation
-- Deployment
-
-=== Locale of the Study
-Who: Future researchers, community, stakeholders
-Where: Laguna State Polytechnic University
-What: Probabilistic Detection of Systemic Diseases Using Deep Learning on Fingernail Biomarkers
-
-=== Applied Concepts and Techniques
-- Batch Learning
-  - Batches of 32
-- Class balancing
-- Convolutional Neural Networks
-- Deep Learning
-- Transfer Learning
-- Image segmentation
-- Modularization
-- Image classification
-- Model Evaluation
-- Learning rate scheduling
-  - StepLR
-  - Reduce LR on Plateau
-- Visualization
-
-// ==== Convolutional Neural Networks (CNNs)
-// CNNs serve as the foundational architecture for processing image data, enabling the extraction of spatial features crucial for disease classification.
-//
-// ==== Deep Learning
-// The research employs deep neural networks with multiple layers to learn hierarchical feature representations directly from image data, minimizing the need for manual feature extraction.
-//
-// ==== Transfer Learning
-// Pre-trained models such as EfficientNet and RegNetY, originally trained on large datasets like ImageNet, were fine-tuned on the nail disease dataset. This approach significantly reduces training time and enhances performance on the target task.
-//
-// ==== Image Classification
-// The central task of the research is multi-class classification, wherein each image is assigned one of ten possible nail disease labels based on learned visual features.
-
-
-
-=== Algorithm Analysis
-All models are trained using:
-
-- Batch size: 32
-- Learning rate: 1e-4
-- Loss: Cross Netropy Loss
-- Optimizer: AdamW
-
-  #figure(
-    placement: none,
-    text(size: 6pt)[
-      #table(
-        columns: (1fr,) * 8,
-        align: (x, _) => if x == 0 { left + horizon } else { horizon + center },
-        table.header(
-          [Model], [Parameters], [Epochs], [Training Time (min)], [Accuracy], [Precision], [Recall], [F1-Score]
-        ),
-
-        [EfficientNetV2S], [20,190,298], [5], [21.22], [88%], [90%], [88%], [88%],
-        [VGG16], [134,301,514], [5], [27.06], [66%], [77%], [66%], [67%],
-        [ResNet50], [23,528,522], [5], [22.86], [75%], [80%], [75%], [76%],
-        [RegNetY-16GF], [80,595,390], [5], [24.33], [85%], [88%], [85%], [85%],
-      )],
-    caption: [Comparison of model performance metrics and training efficiency across four CNN architectures.],
-  )
-
-
-=== Data Collection Methods
-The dataset utilized for this study is sourced from a publicly available
-Nail Disease Detection collection hosed on Roboflow, and is released under
-the Creative Commons Attribution 4.0 (CC BY 4.0) license. The dataset comprises
-a total of 7,258 images, annotated using the TensorFlow TFRecord (Raccoon) format,
-covering 11 classes of nail diseases.
-
-The dataset we collected were already pre-processed and augmented.
-These were the preprocessing step used by the owner of the public dataset:
-
-- Automatic orientation correction (EXIF metadata removed)
-- Resizing to 416 x 416 pixels using "fit" scaling, which introduces black padding
-  to maintain aspect ratio
-
-To improve model generalization, data augmentation was also applied, producing three
-versions of each source image. These augmentations included:
-
-- 50% chance of horizontal flip
-- 50% chance of vertical flip
-- Equal probability of a 90-degree rotation (none, clockwise, counter-clockwise, or 180°)
-- Random rotation within the range of -15° to +15°
-- Random shear transformations between -15° and +15° in both horizontal and vertical directions
-- Random brightness adjustment between -20% and +20%
-- Random exposure adjustment between -15% and +15%
-
 
 === Data Model Generation
 
@@ -847,18 +861,23 @@ versions of each source image. These augmentations included:
 The models are trained using google colab. It is then integrated into django for web interfaces
 
 === Software Tools Used
-- Django
-- PyTorch
-- Python
-- Google Colab: for model training
-- Visual Studio Code: for version control
-- Github: for version control
+The development, training, evaluation, and deployment of the proposed system utilized a suite of open-source and industry-standard software tools, ensuring both reproducibility and scalability of the research. The following tools and frameworks were employed:
 
+- *Python:* The primary programming language used throughout the study for data processing, model development, and system integration due to its extensive support for machine learning and scientific computing.
+- *PyTorch:* A deep learning framework used for implementing, training, and fine-tuning convolutional neural networks (CNNs) and vision transformers. PyTorch enabled seamless integration with pre-trained models, dynamic computation graphs, and GPU acceleration.
+- *Torchvision* A PyTorch companion library used for loading pre-trained models (e.g., EfficientNetV2, RegNetY16GF, ResNet50), applying standard image transformations, and accessing utility functions for computer vision tasks.
+- *Torchmetrics:* A PyTorch-native library for computing evaluation metrics such as accuracy, precision, recall, and F1-score. Its modular design ensured consistent metric computation across training, validation, and testing phases.
+- *Google Colab:* A cloud-based Jupyter notebook environment used for training and experimentation. It provided access to free GPU resources (T4) essential for efficient model training.
+- *Matplotlib & Seaborn:* Visualization libraries used to plot training metrics (loss, accuracy), confusion matrices, and Grad-CAM outputs for model interpretability and evaluation.
+- *Grad-CAM:* Applied to generate class activation maps that explain the visual reasoning behind model predictions, enhancing interpretability and transparency.
+- *Pandas & NumPy:* Used for data manipulation, statistical computation, and label handling throughout preprocessing and evaluation.
+- *Scikit-learn:* Employed for computing evaluation metrics such as precision, recall, F1-score, and for generating confusion matrices.
+- *Visual Studio Code:* The primary development environment used for writing and organizing code modules. Its extensions for Python and Git integration facilitated version control and modular code development.
+- *Django:* A high-level Python web framework intended for integrating the trained model into a web application, enabling users to upload nail images and receive probabilistic health feedback.
 
 === System Architecture
 
 === Software Testing
-Software testing
 
 #pagebreak()
 #metadata("Chapter 3 end") <ch3-e>
