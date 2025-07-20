@@ -125,17 +125,18 @@
 
 #set figure(
   gap: double-spacing,
+  numbering: "1.",
   placement: auto,
 )
 
-#set figure.caption(separator: parbreak(), position: bottom)
+#set figure.caption(separator: none, position: bottom)
 
 #show outline.entry.where(level: 1): it => link(it.element.location(), it.indented(strong(it.prefix()), it.inner()))
 
 #show figure.caption: set align(center)
 #show figure.caption: set par(first-line-indent: 0em)
 #show figure.caption: it => {
-  [*#it.supplement #context it.counter.display(it.numbering).* #it.body]
+  [*#it.supplement #context it.counter.display(it.numbering)#it.separator* #it.body]
 }
 
 #set list(
@@ -790,7 +791,7 @@ To assess the performance and computational efficiency of the selected deep lear
 
       [SwinV2B], [86,916,068], [5], [62.13], [90%], [90%], [90%], [89%],
     )],
-  caption: [Comparison of model performance metrics and training efficiency across four CNN architectures.],
+  caption: [Comparison of model performance metrics and training efficiency across nail conditions.],
 )
 
 // ==== Comparative Analysis
