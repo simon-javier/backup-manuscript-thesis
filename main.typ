@@ -1058,7 +1058,7 @@ Such comprehensive evaluation ensures that the selected model not only performs 
 
 ==== Deployment
 
-The final phase involved integrating the trained model into a web-based application using the Django framework. This step was necessary to make the predictive system accessible to end users, such as clinicians or patients. The deployment pipeline includes model serialization, backend integration, and the development of a user interface for uploading images and displaying predictions. Deploying the model on the web facilitates real-world application, bridging the gap between research and practical healthcare utility.
+The final phase involved integrating the trained model into a web-based application using the Flask framework. This step was necessary to make the predictive system accessible to end users, such as clinicians or patients. The deployment pipeline includes model serialization, backend integration, and the development of a user interface for uploading images and displaying predictions. Deploying the model on the web facilitates real-world application, bridging the gap between research and practical healthcare utility.
 
 === System Development Methodology
 The flask web application was developed using an Agile Software Development Methodology, employing iterative and incremental cycles to integrate machine learning models with web application frameworks. This approach ensures flexibility and collaboration, accommodating evolving requirements critical for healthcare applications requiring technical precision and user-centric design.
@@ -1094,7 +1094,7 @@ The development, training, evaluation, and deployment of the proposed system uti
 
 *Visual Studio Code:* The primary development environment used for writing and organizing code modules. Its extensions for Python and Git integration facilitated version control and modular code development.
 
-*Django:* A high-level Python web framework intended for integrating the trained model into a web application, enabling users to upload nail images and receive probabilistic health feedback.
+*Flask:* A high-level Python web framework intended for integrating the trained model into a web application, enabling users to upload nail images and receive probabilistic health feedback.
 
 === System Architecture
 The system employs a three-tier architecture, separating concerns across presentation, business logic, and data access layers to deliver a robust nail disease detection platform:
