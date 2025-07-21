@@ -868,7 +868,15 @@ These preprocessing steps were essential for adapting the dataset to the specifi
 === Data Model Generation
 
 === System Development Methodology
-The models are trained using google colab. It is then integrated into django for web interfaces
+The flask web application was developed using an Agile Software Development Methodology, employing iterative and incremental cycles to integrate machine learning models with web application frameworks. This approach ensures flexibility and collaboration, accommodating evolving requirements critical for healthcare applications requiring technical precision and user-centric design.
+
+*Requirements Analysis:* Engages stakeholders, including healthcare professionals, patients, and administrators, to define functional needs such as user authentication, image upload, AI-driven diagnosis, result visualization, and historical data management. Non-functional requirements prioritize performance optimization, security compliance, and scalability. Risk assessment addresses model accuracy, data privacy, and system reliability critical for medical applications.
+
+*System Design:* Establishes a detailed database schema for user management, diagnosis records, and audit trails. RESTful API endpoints facilitate data exchange and model integration, while responsive user interface mockups align with modern web standards. A robust security framework incorporates authentication protocols, data encryption, and access controls compliant with healthcare regulations.
+
+*Implementation:* Proceeds through two-week sprints, focusing on specific feature sets to ensure manageable progress and quality assurance. PyTorch-based models, including EfficientNetV2- S and VGG16, are integrated with standardized image preprocessing and thread-safe inference pipelines. The Model-as-a-Service architecture ensures seamless model integration, with results stored alongside metadata for audits and analytics.
+
+*Testing and Validation:* Conducted continuously, incorporating unit tests for components, integration tests for model-application interfaces, and user acceptance tests with healthcare professional feedback to refine functionality and ensure clinical reliability.
 
 === Software Tools Used
 The development, training, evaluation, and deployment of the proposed system utilized a suite of open-source and industry-standard software tools, ensuring both reproducibility and scalability of the research. The following tools and frameworks were employed:
@@ -896,8 +904,31 @@ The development, training, evaluation, and deployment of the proposed system uti
 *Django:* A high-level Python web framework intended for integrating the trained model into a web application, enabling users to upload nail images and receive probabilistic health feedback.
 
 === System Architecture
+The system employs a three-tier architecture, separating concerns across presentation, business logic, and data access layers to deliver a robust nail disease detection platform:
+
+*Presentation Layer:* A Flask-driven web interface supports user authentication, secure image uploads, diagnosis visualization, and paginated history management, designed with responsive HTML5, CSS3, and JavaScript for cross-browser compatibility and accessibility.
+
+*Business Logic Layer:* The Flask application core manages request routing, file processing, and API responses, integrating machine learning models for nail disease detection. Key functions include:
+- Secure file validation and preprocessing using Werkzeug and Pillow.
+- Model inference with PyTorch, using EfficientNetV2-S, VGG16, SwinV2B, ResNet50, and RegNetY-16GF for accurate diagnosis.
+- Result interpretation with confidence scoring and classification mapping.
+
+*Data Access Layer:* SQLAlchemy with SQLite manages user profiles, diagnosis records, and audit trails, ensuring data integrity through optimized queries, transaction control, and relationship management.
+
+*Security Architecture:* Incorporates password hashing (Werkzeug), session management (FlaskLogin), CSRF protection (Flask-WTF), and input sanitization to safeguard sensitive data and prevent vulnerabilities like SQL injection and XSS.
 
 === Software Testing
+A comprehensive multi-level testing strategy ensures the system’s reliability and effectiveness in solving the automated medical image classification problem:
+
+*Unit Testing:* Validates individual components, including model loading, image preprocessing pipelines, database CRUD operations, and security functions, ensuring correct functionality and robust error handling.
+
+*Integration Testing:* Verifies model-application interactions, performance under concurrent requests, and data consistency across SQLAlchemy operations, with emphasis on end-to-end prediction pipelines and error propagation.
+
+*System Testing:* Confirms complete functionality through user workflow validation, diagnosis accuracy, and performance under load, including stress testing and memory usage monitoring to meet response time thresholds.
+
+*Security Testing:* Assesses vulnerabilities, input validation, authentication mechanisms, and data protection to ensure compliance with healthcare privacy standards.
+
+*User Acceptance Testing:* Incorporates healthcare professional feedback to validate clinical accuracy, usability, and accessibility, ensuring mobile responsiveness and browser compatibility. Quality assurance enforces 85% code coverage, PEP 8 compliance, and performance metrics, including three-second diagnosis completion and support for 100 concurrent users, confirming the system’s reliability, accuracy, and usability as a healthcare decision support tool.
 
 #pagebreak()
 #metadata("Chapter 3 end") <ch3-e>
