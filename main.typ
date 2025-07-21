@@ -866,6 +866,44 @@ Each image was then converted into a tensor format to facilitate numerical compu
 These preprocessing steps were essential for adapting the dataset to the specific requirements of the chosen model architectures and the deep learning environment used in this study.
 
 === Data Model Generation
+This section presents the systematic framework employed in the development of the deep learning model for nail disease classification and probabilistic inference of systemic diseases. The process adheres to standard machine learning practices and scientific methodologies, particularly aligning with the phases found in the Cross-Industry Standard Process for Data Mining (CRISP-DM) and other established machine learning pipelines. Each step is carefully designed to ensure reproducibility, scalability, and clinical relevance.
+
+==== Data Preparation
+The dataset, comprising labeled images of fingernails, was stored in Google Drive to allow seamless integration with Google Colab. This approach leverages Colab's cloud-based GPU resources, facilitating efficient model training. The directory containing the dataset was mounted in the Colab environment, and the paths to its `train`, `valid`, and `test` subsets were programmatically stored for ease of access.
+
+The images were organized into class-specific directories, making them compatible with PyTorch’s `ImageFolder` utility. This function simplifies the labeling process by automatically assigning labels based on folder names, thus reducing the risk of human error. The dataset was then loaded into memory in mini-batches of 32 using PyTorch’s `DataLoader`, which supports parallel data loading, shuffling, and efficient memory usage — all essential for stable and reproducible training of deep learning models.
+
+==== Data Preprocessing
+
+Given that the dataset had undergone prior augmentation, the preprocessing steps were minimal but essential. Images were resized to 224×224 pixels, a standard input size for most pre-trained convolutional neural networks. The images were then converted into tensors and normalized using the mean and standard deviation values of the ImageNet dataset. This normalization ensures consistency with the distribution of the pre-trained models, which is critical for transfer learning to perform effectively.
+
+==== Model Building
+
+Five state-of-the-art pre-trained models were selected: four Convolutional Neural Networks (CNNs) and one Vision Transformer (ViT). The use of transfer learning — where models pre-trained on large datasets such as ImageNet are adapted to new tasks — significantly reduces training time and improves performance, especially when labeled data is limited.
+
+The final classification layers (also known as the "head") of each model were modified to output probabilities for 10 distinct nail disease classes. A CrossEntropy loss function was employed for multiclass classification. To address class imbalance in the dataset, weighted loss functions were used, ensuring that minority classes contributed proportionally to the loss and gradient calculations.
+
+The optimization algorithm chosen was AdamW, which combines the benefits of Adam with improved weight decay handling, leading to better generalization. The learning rate was empirically set to $1e-4$. Additionally, during the validation phase, accuracy was computed using the `Accuracy` metric from the `torchmetrics` library to ensure standardized and reliable evaluation.
+
+==== Model Training
+
+Each model was trained for five epochs. The training routine followed the conventional two-phase approach: the training step and the validation step. In the training step, batches from the training set were used to iteratively update the model’s weights via backpropagation. Training loss and training accuracy were recorded in each epoch to monitor learning progression.
+
+In the validation step, the model was evaluated on unseen data from the validation set. Here, no weight updates occurred; the purpose was solely to assess the model’s generalization performance. Validation loss and validation accuracy were likewise monitored to detect overfitting or underfitting. The training process also recorded the total time taken, which is essential for computational efficiency analysis, especially when scaling to larger systems.
+
+==== Model Evaluation
+
+Following training, the models were rigorously evaluated using both quantitative and qualitative metrics. These included:
+
+- *Loss curves*, to visualize convergence behavior.
+- *Confusion matrices*, to observe classification patterns and errors.
+- *Accuracy, precision, recall, and F1-score*, which are standard metrics in medical image classification, providing a more nuanced view of model performance beyond simple accuracy.
+
+Such comprehensive evaluation ensures that the selected model not only performs well overall but also minimizes critical misclassifications — particularly important in health-related applications.
+
+==== Deployment
+
+The final phase involved integrating the trained model into a web-based application using the Django framework. This step was necessary to make the predictive system accessible to end users, such as clinicians or patients. The deployment pipeline includes model serialization, backend integration, and the development of a user interface for uploading images and displaying predictions. Deploying the model on the web facilitates real-world application, bridging the gap between research and practical healthcare utility.
 
 === System Development Methodology
 The flask web application was developed using an Agile Software Development Methodology, employing iterative and incremental cycles to integrate machine learning models with web application frameworks. This approach ensures flexibility and collaboration, accommodating evolving requirements critical for healthcare applications requiring technical precision and user-centric design.
