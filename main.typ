@@ -12,6 +12,15 @@
   } else {}
 }
 
+#let h1(hidden: false, title) = {
+  if not hidden {
+    heading(level: 1, outlined: true, bookmarked: true)[#title]
+  } else {
+    show heading: none
+    heading(level: 1, outlined: true, bookmarked: true)[#title]
+}
+}
+
 #let h2(title, c: true, hidden: false, outlined: true, bookmarked: true, uppercase: true) = {
   show heading: none
   set par(first-line-indent: 0em)
@@ -49,9 +58,11 @@
 #let h3(title, hidden: false) = {
   show heading: none
   set par(first-line-indent: 0em)
-  heading(level: 3)[#title]
   if not hidden {
-    align(left)[*#upper(title)*]
+    heading(level: 3)[#title]
+  } else {
+    heading(level: 3, outlined: false, bookmarked: true)[#title]
+    align(left)[*#title*]
   }
 }
 
@@ -1163,6 +1174,101 @@ A comprehensive multi-level testing strategy ensures the system’s reliability 
 #pagebreak()
 
 
+
+#h1(hidden: true)[Appendices]
+#text(size: 56pt)[#align(center + horizon)[*Appendices*]]
+#pagebreak()
+
+
 #show heading: none
-#text(size: 60pt)[#align(center + horizon)[*Appendices*]]
+#h2(hidden: true, outlined: false)[Appendix A]
+#align(center + horizon)[
+  #grid(
+    align: center + horizon,
+    row-gutter: 1.8em,
+    columns: (1fr),
+    text(size: 56pt)[Appendix A],
+    text(size: 28pt)[Technical Background]
+
+  )
+]
+#pagebreak()
+
+#h2(hidden: true, outlined: false)[Appendix B]
+#align(center + horizon)[
+  #grid(
+    align: center + horizon,
+    row-gutter: 1.8em,
+    columns: (1fr),
+    text(size: 56pt)[Appendix B],
+    text(size: 28pt)[Communication Letter & Forms]
+  )
+]
+#pagebreak()
+
+#h3(hidden: true)[Communication Letter]
+
+#image("img/communication-letter-01.jpg", width: 100%, height: 96%)
+#pagebreak()
+
+#image("img/communication-letter-02.jpg", width: 100%, height: 100%)
+#pagebreak()
+
+#image("img/communication-letter-03.jpg", width: 100%, height: 100%)
+#pagebreak()
+
+#image("img/Request Letter_page-0001.jpg", width: 100%, height: 100%)
+#pagebreak()
+
+#image("img/Request Letter_page-0002.jpg", width: 100%, height: 100%)
+#pagebreak()
+
+
+#image("img/FOI Request Form_page-0001.jpg", width: 100%, height: 100%)
+#pagebreak()
+
+#image("img/FOI Request Form_page-0002.jpg", width: 100%, height: 100%)
+#pagebreak()
+
+#h3(hidden: true)[Rating Sheet]
+
+#image("img/01_Title_Proposal_Rating_Sheet_page-0001.jpg", width: 100%, height: 96%)
+#pagebreak()
+
+#image("img/01_Title_Proposal_Rating_Sheet_page-0002.jpg", width: 100%, height: 100%)
+#pagebreak()
+
+#image("img/01_Title_Proposal_Rating_Sheet_page-0003.jpg", width: 100%, height: 100%)
+#pagebreak()
+
+#image("img/01_Title_Proposal_Rating_Sheet_page-0004.jpg", width: 100%, height: 100%)
+#pagebreak()
+
+#image("img/01_Title_Proposal_Rating_Sheet_page-0005.jpg", width: 100%, height: 100%)
+#pagebreak()
+
+#image("img/01_Title_Proposal_Rating_Sheet_page-0006.jpg", width: 100%, height: 100%)
+#pagebreak()
+
+
+#h3(hidden: true)[Summary of Recommendations]
+#image("img/Summary_of_Recommendations.jpg", width: 100%, height: 96%)
+#pagebreak()
+
+#h3(hidden: true)[ISO Forms]
+#image("img/011-Thesis-Adviser-Nomination-Form-&-012-Panel-Member-Nomination-Form_page-0001.jpg", width: 100%, height: 96%)
+#pagebreak()
+
+#image("img/011-Thesis-Adviser-Nomination-Form-&-012-Panel-Member-Nomination-Form_page-0002.jpg", width: 100%, height: 100%)
+#pagebreak()
+
+#image("img/011-Thesis-Adviser-Nomination-Form-&-012-Panel-Member-Nomination-Form_page-0003.jpg", width: 100%, height: 100%)
+#pagebreak()
+
+#image("img/011-Thesis-Adviser-Nomination-Form-&-012-Panel-Member-Nomination-Form_page-0004.jpg", width: 100%, height: 100%)
+#pagebreak()
+
+#image("img/011-Thesis-Adviser-Nomination-Form-&-012-Panel-Member-Nomination-Form_page-0005.jpg", width: 100%, height: 100%)
+
+
 #metadata("postlude end") <post-e>
