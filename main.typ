@@ -855,6 +855,16 @@ In the study conducted by #cite(<lahari_cnn_2023>, form: "prose"), two algorithm
 
 Furthermore, in a study written by #cite(<han_deep_2018>, form: "prose"), although there have been reports of the successful diagnosis of skin disorders using deep learning, unrealistically large clinical image datasets are required for artificial intelligence  (AI) training. In their study, they created datasets of standardized nail images using a region-based convolutional neural network (R-CNN) trained to distinguish the nail from the background. They used R-CNN to generate training datasets of 49,567 images, which is then used to  fine-tune the ResNet-152 and VGG-19 models. The validation datasets comprised 100 and  194 images from Inje University (B1 and B2 datasets, respectively), 125 images from Hallym  University (C dataset), and 939 images from Seoul National University (D dataset).  The AI (ensemble model; ResNet-152 + VGG-19 + feedforward neural networks) results  showed test sensitivity/specificity/ area under the curve values of $(96.0 \/ 94.7 \/ 0.98), (82.7 \/ 96.7 \/ 0.95), (92.3 \/ 79.3 \/ 0.93), (87.7 \/ 69.3 \/ 0.82)$ for the B1, B2, C, and D datasets.  With a combination of the B1 and C datasets, the AI Youden index was significantly  $(p = 0.01)$ higher than that of 42 dermatologists doing the same assessment manually. For  $"B1"+C$ and $"B2"+D$ dataset combinations, almost none of the dermatologists performed as  well as the AI. By training with a dataset comprising 49,567 images, they achieved a diagnostic accuracy for onychomycosis using deep learning that was superior to that of most of the  dermatologists who participated in their study.
 
+#pagebreak()
+#metadata("Chapter 2 end") <ch2-e>
+
+#metadata("Chapter 3 start") <ch3-s>
+#chp[Chapter III]
+#h2(outlined: false, bookmarked: false)[Research Methodology]
+
+This chapter presents the methods and materials the researchers used to fulfill the objectives. It covers the research design, locale of the study, applied concepts and techniques, algorithm analysis, data collection methods, system development methodology, software tools used, system architecture and software testing
+
+
 === Research Design
 This study adopts a quantitative research approach, emphasizing measurable outcomes and statistical evaluation of model performance. The research is both experimental and developmental in nature. The experimental aspect involves testing and evaluating various deep learning architectures on an augmented dataset of fingernail images. The developmental component focuses on the design and implementation of an intelligent system that integrates image classification and probabilistic inference to detect systemic diseases based on nail biomarkers.
 
