@@ -1041,6 +1041,10 @@ Each model was trained for five epochs. The training routine followed the conven
 
 In the validation step, the model was evaluated on unseen data from the validation set. Here, no weight updates occurred; the purpose was solely to assess the model’s generalization performance. Validation loss and validation accuracy were likewise monitored to detect overfitting or underfitting. The training process also recorded the total time taken, which is essential for computational efficiency analysis, especially when scaling to larger systems.
 
+==== Systemic Disease Inference
+
+After predicting a nail condition, the system cross-references it with a predefined mapping of associated systemic diseases based on medical literature. Instead of making a definitive diagnosis, it presents all possible related systemic conditions to inform the user. This approach enhances interpretability, supports preventive healthcare, and avoids overstepping diagnostic boundaries—making the system ethically sound and suitable for academic deployment.
+
 ==== Model Evaluation
 
 Following training, the models were rigorously evaluated using both quantitative and qualitative metrics. These included:
