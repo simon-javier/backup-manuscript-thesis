@@ -716,7 +716,11 @@ The conceptual framework provides a practical workflow for implementing the theo
 
 The input phase involves collecting fingernail images from datasets like Kaggle and Roboflow, supplemented by local health data to inform probabilistic inference. The process phase includes data cleaning (normalization, noise reduction) and augmentation (flipping, scaling, brightness adjustment) to enhance dataset diversity. Feature extraction using CNNs (e.g., ResNet, MobileNet, EfficientNet) precedes model training with a split dataset (80% training, 20% testing), employing CNNs for classification and probabilistic models (e.g., Naïve Bayes, Bayesian Inference) for inference. Evaluation metrics (sensitivity, recall, confidence intervals) guide hyperparameter tuning, leading to the selection of the best-performing model. The output phase delivers probabilistic classifications of nail disorders, systemic disease likelihoods (e.g., diabetes: 85%), and recommendations for medical consultation, with deployment into a mobile or web application for global accessibility.
 
-
+// The classification of the nail only revolves around 10 labels. It does not detect the individual features of the nail (like the lunula, nail bed, etc).
+// The model learns on whole nail images with background noise. 
+// 
+// We have not acquired datasets of the probabilities of systemic diseases based on nail biomarkers. Thus, we resort to probabilities from literature
+// 
 
 === Scope and Limitation of the Study
 The general purpose of this study, titled "Probabilistic Detection of Systemic Diseases Using Deep Learning on Fingernail Biomarkers: A Preventive Healthcare Approach," is to develop an innovative and user-friendly system that leverages deep learning and probabilistic modeling to classify fingernail disorders and infer systemic diseases. The system aims to empower individuals globally by providing a non-invasive, accessible tool for early health screening, promoting preventive healthcare through early detection and actionable recommendations.
@@ -724,11 +728,16 @@ The general purpose of this study, titled "Probabilistic Detection of Systemic D
 ==== Scope and Coverage
 The following identifies the scope and coverage of the study in terms of subject, methods, advanced technologies, features, output, target audience, and duration:
 
-*Subject:* The research focuses on the classification of fingernail disorders and the probabilistic inference of systemic diseases, such as diabetes, cardiovascular diseases, and liver disorders, using fingernail biomarkers as a non-invasive diagnostic approach.
+*Subject:* The research focuses on the classification of fingernail disorders and the probabilistic inference of systemic diseases using fingernail biomarkers as a non-invasive diagnostic approach.
 
-*Data Collection:* The study utilizes publicly available datasets from Kaggle and Roboflow, consisting of fingernail images with corresponding labels, augmented with clinical health data sourced from local health agencies to ensure relevance in probabilistic inference.
+*Data Collection:* The study utilizes a publicly available dataset from Roboflow, consisting of fingernail images with corresponding labels. The dataset used consists of 7,258 images divided into training, testing, and validation set. The classes consist of 10 labels, namely, Beau's Line, Blue Finger, Clubbing, Healthy Nail, Koilonychia, Melanonychia, Muehrcke's Lines, Onychogryphosis, Pitting, and Terry's Nail.
+The training set was originally augmented by the author of the dataset. The augmentations include resizing to 416x416 pixels, 50% chance of horizontal flip, 50% chance of vertical flip, equal probability of a 90-degree rotation (none, clockwise, counter-clockwise, or 180°), random rotation within the range of −15° to +15°, random shear transformations between
+−15° and +15° in both horizontal and vertical directions, random brightness adjustment between −20% and +20%, and random exposure adjustment between −15% and +15%.
 
-*Advanced Technologies:* The system employs deep learning techniques, specifically CNNs (e.g., ResNet, MobileNet, EfficientNet), for image classification, and probabilistic models (e.g., Naïve Bayes, Bayesian Inference) for systemic disease inference, ensuring high accuracy and interpretability.
+On top of the pre-augmented dataset, we further augmented it to fit with PyTorch's compatibility. The images were resized to 224x224 pixels, converted to tensors, then normalized. It is a necessary step to ensure that the images are consistent
+with PyTorch's pre-trained weights.
+
+*Technologies:* The system uses five trained models, four of which are Convolutional Neural Networks. These are ResNet-50, VGG-16, RegNetY-16GF, and EfficientNetV2-S. One is a Vision Transformer (ViT) which is SwinV2-B.  
 
 *Features:* The system features an intuitive user interface that allows users to upload fingernail images, receive probabilistic classifications of nail disorders, and view estimated likelihoods of systemic diseases with recommendations for further medical evaluation. It also includes a feedback loop for continuous improvement.
 
@@ -742,7 +751,10 @@ The following identifies the scope and coverage of the study in terms of subject
 
 ==== Limitations
 However, this study is limited to the following:
+// It does not detect the individual features of the nail (like the lunula, nail bed, etc).
+// The model learns on whole nail images with background noise. 
 
+// Severity of diseases requires medical interference/guidance, thus we will not include severity of diseases.
 *Dataset Quality and Balance:* The system’s performance relies on the quality and diversity of the training datasets, which may contain noise, inconsistencies, or class imbalances, potentially affecting its ability to generalize across diverse populations.
 
 *Unverified Medical Annotations:* Publicly sourced datasets may lack formal verification from licensed medical professionals, introducing risks of inaccurate labels that could impact classification and inference reliability.
