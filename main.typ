@@ -132,7 +132,7 @@
 
 
 
-#show figure: set block(breakable: true, sticky: true)
+#show figure: set block(breakable: true, sticky: false)
 
 #set figure(
   gap: double-spacing,
@@ -713,10 +713,10 @@ The conceptual framework provides a practical workflow for implementing the theo
 
 The input phase involves collecting fingernail images from datasets like Kaggle and Roboflow, supplemented by local health data to inform probabilistic inference. The process phase includes data cleaning (normalization, noise reduction) and augmentation (flipping, scaling, brightness adjustment) to enhance dataset diversity. Feature extraction using CNNs (e.g., ResNet, MobileNet, EfficientNet) precedes model training with a split dataset (80% training, 20% testing), employing CNNs for classification and probabilistic models (e.g., Naïve Bayes, Bayesian Inference) for inference. Evaluation metrics (sensitivity, recall, confidence intervals) guide hyperparameter tuning, leading to the selection of the best-performing model. The output phase delivers probabilistic classifications of nail disorders, systemic disease likelihoods (e.g., diabetes: 85%), and recommendations for medical consultation, with deployment into a mobile or web application for global accessibility.
 
-// The classification of the nail only revolves around 10 labels. 
-// 
+// The classification of the nail only revolves around 10 labels.
+//
 // We have not acquired datasets of the probabilities of systemic diseases based on nail biomarkers. Thus, we resort to probabilities from literature
-// 
+//
 
 === Scope and Limitation of the Study
 The general purpose of this study, titled "Probabilistic Detection of Systemic Diseases Using Deep Learning on Fingernail Biomarkers: A Preventive Healthcare Approach," is to develop an innovative and user-friendly system that leverages deep learning and probabilistic modeling to classify fingernail disorders and infer systemic diseases. The system aims to empower individuals globally by providing a non-invasive, accessible tool for early health screening, promoting preventive healthcare through early detection and actionable recommendations.
@@ -733,7 +733,7 @@ The training set was originally augmented by the author of the dataset. The augm
 On top of the pre-augmented dataset, we further augmented it to fit with PyTorch's compatibility. The images were resized to 224x224 pixels, converted to tensors, then normalized. It is a necessary step to ensure that the images are consistent
 with PyTorch's pre-trained weights.
 
-*Technologies:* The system uses five trained models, four of which are Convolutional Neural Networks. These are ResNet-50, VGG-16, RegNetY-16GF, and EfficientNetV2-S. One is a Vision Transformer (ViT) which is SwinV2-B.  
+*Technologies:* The system uses five trained models, four of which are Convolutional Neural Networks. These are ResNet-50, VGG-16, RegNetY-16GF, and EfficientNetV2-S. One is a Vision Transformer (ViT) which is SwinV2-B.
 
 *Features:* The system features an intuitive user interface that allows users to upload fingernail images, receive probabilistic classifications of nail disorders, and view estimated likelihoods of systemic diseases with recommendations for further medical evaluation. It also includes a feedback loop for continuous improvement.
 
@@ -747,9 +747,9 @@ with PyTorch's pre-trained weights.
 
 ==== Limitations
 However, this study is limited to the following:
-// It does not detect the individual features of the nail (like the lunula, nail bed, color of the nail etc). It relies solely on the power of the CNN models to detect from subtle to distinct features. 
+// It does not detect the individual features of the nail (like the lunula, nail bed, color of the nail etc). It relies solely on the power of the CNN models to detect from subtle to distinct features.
 // The system will not be a diagnosis system, thus it won't try to make a diagnosis out of the user such as asking questions, etc. The inference is solely based on the general probabilities of getting these systemic diseases if you have this certain nail feature.
-// The model learns on whole nail images with background noise. 
+// The model learns on whole nail images with background noise.
 // Severity of diseases requires medical interference/guidance, thus we will not include severity of diseases.
 // Explainability and Interpretability will be a hindrance, but it is workable.
 
@@ -972,15 +972,12 @@ Individual classification reports are provided for each model, detailing per-cla
 
 These reports indicate that while newer models offer significantly improved overall accuracy, their strength also lies in more balanced performance across all classes.
 
-
 === Data Collection Methods
 The dataset utilized for this study is sourced from a publicly available Nail Disease Detection collection hosed on Roboflow, and is released under the Creative Commons Attribution 4.0 (CC BY 4.0) license. The dataset comprises a total of 7,264 images, annotated using the TensorFlow TFRecord (Raccoon) format, covering 11 classes of nail diseases. However, the researchers have dropped the Lindsay's Nail class due to few number of images.
 
-#show figure: set block(breakable: true, sticky: false)
-#figure(
-  placement: none,
-  text(size: 12pt)[
-    #table(
+#context {
+  figure(
+    table(
       inset: 0.3em,
       columns: (1.7fr, 1fr, 1fr, 1fr),
       align: (x, _) => if x == 0 { left + horizon } else { horizon + center },
@@ -997,11 +994,9 @@ The dataset utilized for this study is sourced from a publicly available Nail Di
       [Pitting], [657], [61], [32],
       [Terry’s Nail], [894], [81], [42],
     ),
-    #v(-2em)
-  ],
-  caption: [Sample distribution per class across dataset splits.],
-)
-
+    caption: [Sample distribution per class across dataset splits.],
+  )
+}
 
 The final dataset used in this study consists of 7,258 labeled nail images, divided into three subsets: training (6,360 images, 88%), validation (591 images, 8%), and testing (307 images, 4%).
 
@@ -1011,54 +1006,55 @@ The class with the highest representation across all sets is Terry's Nail, while
 
 Weighted loss was used during training to compensate for class imbalance and improve model fairness across underrepresented classes.\
 
-#set image(width: 50%)
-#show figure: set block(breakable: true, sticky: true)
-#figure(
-  placement: none,
-  table(
-    columns: (1.5fr, 3fr, 2fr),
-    align: (x, y) => if x < 2 and y != 0 { left } else { horizon + center },
-    table.header([Class], [Description], [Sample Image]),
+#context {
+  set image(width: 50%)
+  figure(
+    placement: none,
+    table(
+      columns: (1.5fr, 3fr, 2fr),
+      align: (x, y) => if x < 2 and y != 0 { left } else { horizon + center },
+      table.header([Class], [Description], [Sample Image]),
 
-    [Beau's Line],
-    [Beau’s lines are horizontal ridges or dents in one or more of the fingernails or toenails.],
-    [#image("img/table-2-beaus-line.jpg")],
-    //https://my.clevelandclinic.org/health/symptoms/22906-beaus-lines
+      [Beau's Line],
+      [Beau’s lines are horizontal ridges or dents in one or more of the fingernails or toenails.],
+      [#image("img/table-2-beaus-line.jpg")],
+      //https://my.clevelandclinic.org/health/symptoms/22906-beaus-lines
 
-    [Blue Finger],
-    [Also known as Cyanosis, is when the nails turn a bluish tone],
-    [#image("img/table-2-blue-finger.jpg")],
+      [Blue Finger],
+      [Also known as Cyanosis, is when the nails turn a bluish tone],
+      [#image("img/table-2-blue-finger.jpg")],
 
-    [Clubbing],
-    [Nails appear wider, spongelike or swollen, like an upside-down spoon],
-    [#image("img/table-2-clubbing.jpg")],
+      [Clubbing],
+      [Nails appear wider, spongelike or swollen, like an upside-down spoon],
+      [#image("img/table-2-clubbing.jpg")],
 
-    [Healthy Nail],
-    [Healthy nails are smooth, consistent in color and consistency],
-    [#image("img/table-2-healthy.jpg")],
+      [Healthy Nail],
+      [Healthy nails are smooth, consistent in color and consistency],
+      [#image("img/table-2-healthy.jpg")],
 
-    [Koilonychia], [Soft nails that have a spoon-shaped dent], [#image("img/table-2-koilonychia.jpg")],
-    [Melanonychia],
-    [Are brown or black discolouration of a nail. It may be diffuse or take the form of a longitudinal band.],
-    [#image("img/table-2-melanonychia.jpg")],
-    //https://dermnetnz.org/topics/melanonychia
-    [Muehrcke’s Lines], [Are horizontal white lines across the nail], [#image("img/table-2-muehrckes-lines.jpg")],
-    //https://my.clevelandclinic.org/health/symptoms/muehrcke-lines
-    [Onychogryphosis],
-    [Characterised by an opaque, yellow-brown thickening of the nail plate with elongation and increased curvature],
-    [#image("img/table-2-onychogryphosis.jpg")],
-    //https://dermnetnz.org/topics/onychogryphosis
-    [Pitting],
-    [May show up as shallow or deep holes in the nail. It can look like white spots or marks],
-    [#image("img/table-2-pitting.jpg")],
+      [Koilonychia], [Soft nails that have a spoon-shaped dent], [#image("img/table-2-koilonychia.jpg")],
+      [Melanonychia],
+      [Are brown or black discolouration of a nail. It may be diffuse or take the form of a longitudinal band.],
+      [#image("img/table-2-melanonychia.jpg")],
+      //https://dermnetnz.org/topics/melanonychia
+      [Muehrcke’s Lines], [Are horizontal white lines across the nail], [#image("img/table-2-muehrckes-lines.jpg")],
+      //https://my.clevelandclinic.org/health/symptoms/muehrcke-lines
+      [Onychogryphosis],
+      [Characterised by an opaque, yellow-brown thickening of the nail plate with elongation and increased curvature],
+      [#image("img/table-2-onychogryphosis.jpg")],
+      //https://dermnetnz.org/topics/onychogryphosis
+      [Pitting],
+      [May show up as shallow or deep holes in the nail. It can look like white spots or marks],
+      [#image("img/table-2-pitting.jpg")],
 
-    [Terry's Nail],
-    [Nail looks white, like frosted glass, except for a thin brown or pink strip at the tip.],
-    [#image("img/table-2-terrys-nail.jpg")],
-    //https://my.clevelandclinic.org/health/symptoms/22890-terrys-nails
-  ),
-  caption: [Nail features],
-)
+      [Terry's Nail],
+      [Nail looks white, like frosted glass, except for a thin brown or pink strip at the tip.],
+      [#image("img/table-2-terrys-nail.jpg")],
+      //https://my.clevelandclinic.org/health/symptoms/22890-terrys-nails
+    ),
+    caption: [Description of nail features],
+  )
+}
 
 The dataset we collected were already pre-processed and augmented. These were the preprocessing step used by the owner of the public dataset:
 - Automatic orientation correction (EXIF metadata removed)
@@ -1073,24 +1069,25 @@ To improve model generalization, data augmentation was also applied, producing t
 - Random brightness adjustment between -20% and +20%
 - Random exposure adjustment between -15% and +15%
 
-#set image(width: 50%)
-#show figure: set block(breakable: true, sticky: true)
-#figure(
-  placement: none,
-  table(
-    columns: (1fr, 0.5fr),
-    align: (x, y) => if x < 0 { left } else { horizon + center },
-    table.header([Class], [Sample Image]),
-    [Melanonychia], [#image("img/augmentation-melanonychia.jpg")],
-    [Beau's Line], [#image("img/augmentation-beaus-line.jpg")],
-    [Blue Finger], [#image("img/augmentation-blue-finger.jpg")],
-    [Clubbing], [#image("img/augmentation-clubbing.jpg")],
-    [Melanonychia], [#image("img/augmentation-melanonychia.jpg")],
-    [Melanonychia], [#image("img/augmentation-melanonychia.jpg")],
-
-  ),
-  caption: [Sample Nail Augmentations],
-)
+#context {
+  set image(width: 25%)
+  show figure: set block(breakable: true, sticky: false)
+  figure(
+    placement: none,
+    table(
+      columns: (1fr, 2fr),
+      align: (x, y) => if x == 0 { left + horizon } else { horizon + center },
+      table.header([Class], [Sample Image]),
+      [Melanonychia], [#image("img/augmentation-melanonychia.jpg")],
+      [Beau's Line], [#image("img/augmentation-beaus-line.jpg")],
+      [Blue Finger], [#image("img/augmentation-blue-finger.jpg")],
+      [Clubbing], [#image("img/augmentation-clubbing.jpg")],
+      [Melanonychia], [#image("img/augmentation-melanonychia.jpg")],
+      [Melanonychia], [#image("img/augmentation-melanonychia.jpg")],
+    ),
+    caption: [Sample Nail Augmentations],
+  )
+}
 
 Although the dataset was initially preprocessed and augmented through Roboflow's pipeline, additional preprocessing steps were performed to ensure compatibility with the PyTorch deep learning framework. Specifically, all images were resized to $224 × 224$ pixels, which is the standard input dimension for most pre-trained Convolutional Neural Network (CNN) architectures in PyTorch.
 
