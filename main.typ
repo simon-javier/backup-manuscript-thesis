@@ -243,7 +243,9 @@
     \
     \
     In Partial Fulfillment of the requirements for the Degree \
-    *BACHELOR OF SCIENCE IN COMPUTER SCIENCE*
+    *BACHELOR OF SCIENCE IN COMPUTER SCIENCE* \
+    *Major in Intelligent System*
+
     \
     \
     \
@@ -453,9 +455,6 @@ Some terminologies used in the design and development of the developed system we
 
   [*Batch Learning / Mini Batches*],
   [Training was conducted using mini batches of 32 images per iteration to enhance training efficiency while balancing generalization and convergence speed.],
-
-  [*Clinical Health Data*],
-  [Clinical health data is used to augment publicly available datasets from Kaggle and Roboflow to inform probabilistic inference.],
 
   [*Confidence Intervals*],
   [Confidence Intervals are an evaluation metric for probabilistic models, with the system providing probabilistic risk assessments (e.g., "Diabetes Likelihood: 85%") along with recommendations for medical consultation.],
@@ -681,7 +680,7 @@ Moreover, the field of medical diagnostics has long sought non-invasive methods 
 
 Thus, this study specifically seeks to address the following problems:
 + How can a high-quality, balanced dataset of fingernail images, annotated with confirmed systemic disease labels, be effectively compiled and preprocessed using standardized techniques such as resizing, and normalization to support accurate disease classification?
-+ What is the impact of applying systematic geometric and photometric transformations to increase the dataset size by at least 30% on the generalization and robustness of deep learning models for systemic disease classification?
++ How do organized shape and lighting changes to fingernail images affect how well deep learning models perform when identifying systemic diseases in different situations?
 + How do the performance outcomes of deep learning models (EfficientNetV2S, VGG16, ResNet50, RegNetY-16GF, and SwinV2-B) compare when trained on the augmented fingernail image dataset for systemic disease classification, as measured by accuracy, precision, recall, and F1-score?
 + Which deep learning model demonstrates superior performance for systemic disease classification from fingernail images, and how do standard evaluation metrics (e.g., accuracy, precision, recall, F1-score for CNNs; confidence intervals, sensitivity, specificity for probabilistic models) inform the selection of the optimal model?
 + How can the best-performing model be deployed in a prototype application to provide interpretable systemic disease inference from fingernail images, and what are the key challenges in ensuring its suitability for clinical decision support or health screening?
