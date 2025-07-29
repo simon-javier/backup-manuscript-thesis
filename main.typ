@@ -1,4 +1,4 @@
-#set text(font: "TeX Gyre Termes", size: 12pt)
+#set text(font: "TeX Gyre Termes", size: 12pt, hyphenate: false)
 
 #let font-size = 12pt
 #let double-spacing = 1.5em
@@ -18,7 +18,7 @@
   } else {
     show heading: none
     heading(level: 1, outlined: true, bookmarked: true)[#title]
-}
+  }
 }
 
 #let h2(title, c: true, hidden: false, outlined: true, bookmarked: true, uppercase: true) = {
@@ -712,7 +712,7 @@ This section outlines the theoretical and conceptual frameworks that underpin th
 ==== Theoretical Framework
 #figure(
   image("img/theoretical-framework.png"),
-  caption: [Integrated Deep Learning and Probabilistic Diagnostic Framework for \ Fingernail-Based Systemic Disease Detection],
+  caption: [Integrated Deep Learning and Probabilistic Diagnostic Framework for Fingernail-Based Systemic Disease Detection],
 )
 The theoretical framework integrates deep learning and probabilistic modeling to create a comprehensive system for fingernail-based systemic disease detection, drawing inspiration from AI-driven diagnostic methodologies. It adapts principles from frameworks like #cite(<debnath_framework_2020>, form: "prose"), which emphasize systematic processing, feature extraction, and response generation in AI systems.
 
@@ -1186,10 +1186,9 @@ A comprehensive multi-level testing strategy ensures the system’s reliability 
   #grid(
     align: center + horizon,
     row-gutter: 1.8em,
-    columns: (1fr),
+    columns: 1fr,
     text(size: 56pt)[Appendix A],
     text(size: 28pt)[Technical Background]
-
   )
 ]
 #pagebreak()
@@ -1199,7 +1198,7 @@ A comprehensive multi-level testing strategy ensures the system’s reliability 
   #grid(
     align: center + horizon,
     row-gutter: 1.8em,
-    columns: (1fr),
+    columns: 1fr,
     text(size: 56pt)[Appendix B],
     text(size: 28pt)[Communication Letter & Forms]
   )
@@ -1256,19 +1255,39 @@ A comprehensive multi-level testing strategy ensures the system’s reliability 
 #pagebreak()
 
 #h3(hidden: true)[ISO Forms]
-#image("img/011-Thesis-Adviser-Nomination-Form-&-012-Panel-Member-Nomination-Form_page-0001.jpg", width: 100%, height: 96%)
+#image(
+  "img/011-Thesis-Adviser-Nomination-Form-&-012-Panel-Member-Nomination-Form_page-0001.jpg",
+  width: 100%,
+  height: 96%,
+)
 #pagebreak()
 
-#image("img/011-Thesis-Adviser-Nomination-Form-&-012-Panel-Member-Nomination-Form_page-0002.jpg", width: 100%, height: 100%)
+#image(
+  "img/011-Thesis-Adviser-Nomination-Form-&-012-Panel-Member-Nomination-Form_page-0002.jpg",
+  width: 100%,
+  height: 100%,
+)
 #pagebreak()
 
-#image("img/011-Thesis-Adviser-Nomination-Form-&-012-Panel-Member-Nomination-Form_page-0003.jpg", width: 100%, height: 100%)
+#image(
+  "img/011-Thesis-Adviser-Nomination-Form-&-012-Panel-Member-Nomination-Form_page-0003.jpg",
+  width: 100%,
+  height: 100%,
+)
 #pagebreak()
 
-#image("img/011-Thesis-Adviser-Nomination-Form-&-012-Panel-Member-Nomination-Form_page-0004.jpg", width: 100%, height: 100%)
+#image(
+  "img/011-Thesis-Adviser-Nomination-Form-&-012-Panel-Member-Nomination-Form_page-0004.jpg",
+  width: 100%,
+  height: 100%,
+)
 #pagebreak()
 
-#image("img/011-Thesis-Adviser-Nomination-Form-&-012-Panel-Member-Nomination-Form_page-0005.jpg", width: 100%, height: 100%)
+#image(
+  "img/011-Thesis-Adviser-Nomination-Form-&-012-Panel-Member-Nomination-Form_page-0005.jpg",
+  width: 100%,
+  height: 100%,
+)
 
 
 #metadata("postlude end") <post-e>
