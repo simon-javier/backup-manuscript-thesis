@@ -755,7 +755,7 @@ The study also went a step further by connecting each nail condition to possible
   ),
 ) <ann-architecture>
 
-@ann-architecture shows the architecture of an artificial neural network (ANN) from the book of #cite(<jentzen_mathematical_2025>) titled "Mathematical Introduction to Deep Learning: Methods, Implementations, and Theory." According to #cite(<jentzen_mathematical_2025>), the structure of an ANN involves several layers. The Input Layer is the first layer where the initial data is fed into the network. Hidden Layers are intermediate layers located between the input and output layers. The Output Layer is the final layer that produces the network's result.
+@ann-architecture shows the architecture of an artificial neural network (ANN) from the book of #cite(<jentzen_mathematical_2025>) titled "Mathematical Introduction to Deep Learning: Methods, Implementations, and Theory." According to #cite(<jentzen_mathematical_2025>), the structure of an ANN involves several layers. The input layer is the first layer where the initial data is fed into the network. Hidden layers are intermediate layers located between the input and output layers. The output layer is the final layer that produces the network's result.
 
 Within these layers, operations involve affine functions, which use linear transformation matrices (weight matrices) and translation vectors (bias vectors) as their trainable parameters. These are followed by nonlinear activation functions, which introduce complexity, enabling the network to learn intricate patterns. Examples of such activation functions include the Rectified Linear Unit (ReLU), Gaussian Error Linear Unit (GELU), standard logistic (sigmoid), hyperbolic tangent (tanh), softplus, swish, clipping, softsign, leaky ReLU, exponential linear unit (ELU), rectified power unit (RePU), sine, and Heaviside.
 
@@ -816,11 +816,11 @@ The input phase involves collecting fingernail images from datasets like Kaggle 
 
 // (Desktop Application) and Web Application
 
-// The classification of the nail only revolves around 10 labels. 
-// 
+// The classification of the nail only revolves around 10 labels.
+//
 // The classification of the nail only revolves around 10 labels.
 // We have not acquired datasets of the probabilities of systemic diseases based on nail biomarkers. Thus, we resort to probabilities from literature
-// 
+//
 
 === Scope and Limitation of the Study
 The general purpose of this study, titled "Probabilistic Detection of Systemic Diseases Using Deep Learning on Fingernail Biomarkers: A Preventive Healthcare Approach," is to develop an innovative and user-friendly system that leverages deep learning and probabilistic modeling to classify fingernail disorders and infer systemic diseases. The system aims to empower individuals globally by providing a non-invasive, accessible tool for early health screening, promoting preventive healthcare through early detection and actionable recommendations.
@@ -841,7 +841,7 @@ The training set was originally augmented by the author of the dataset. The augm
 On top of the pre-augmented dataset, we further augmented it to fit with PyTorch's compatibility. The images were resized to 224x224 pixels, converted to tensors, then normalized. It is a necessary step to ensure that the images are consistent
 with PyTorch's pre-trained weights.
 
-*Technologies:* The system uses five trained models, four of which are Convolutional Neural Networks. These are ResNet-50, VGG-16, RegNetY-16GF, and EfficientNetV2-S. One is a Vision Transformer (ViT) which is SwinV2-B.  
+*Technologies:* The system uses five trained models, four of which are Convolutional Neural Networks. These are ResNet-50, VGG-16, RegNetY-16GF, and EfficientNetV2-S. One is a Vision Transformer (ViT) which is SwinV2-B.
 
 *Features:* The system features an intuitive user interface that allows users to upload fingernail images, receive probabilistic classifications of nail disorders, and view estimated likelihoods of systemic diseases with recommendations for further medical evaluation. It also includes a feedback loop for continuous improvement.
 
@@ -855,9 +855,9 @@ with PyTorch's pre-trained weights.
 
 ==== Limitations
 However, this study is limited to the following:
-// It does not detect the individual features of the nail (like the lunula, nail bed, color of the nail etc). It relies solely on the power of the CNN models to detect from subtle to distinct features. 
+// It does not detect the individual features of the nail (like the lunula, nail bed, color of the nail etc). It relies solely on the power of the CNN models to detect from subtle to distinct features.
 // The system will not be a diagnosis system, thus it won't try to make a diagnosis out of the user such as asking questions, etc. The inference is solely based on the general probabilities of getting these systemic diseases if you have this certain nail feature.
-// The model learns on whole nail images with background noise. 
+// The model learns on whole nail images with background noise.
 // Severity of diseases requires medical interference/guidance, thus we will not include severity of diseases.
 // Explainability and Interpretability will be a hindrance, but it is workable.
 
@@ -1000,22 +1000,19 @@ Moreover, the research may serve as a valuable reference for future researchers,
 This study integrates a wide range of machine learning and software engineering techniques to develop a reliable, scalable system for the probabilistic detection of systemic diseases through nail image classification. The applied concepts are grouped thematically to emphasize their specific roles in the system development lifecycle.
 
 ==== Machine Learning
-According to #cite(<geeksforgeeks-2025a>), machine learning is a branch of artificial intelligence that enables algorithms to uncover hidden patterns within datasets. It allows them to predict new, similar data without explicit programming for each task. 
+According to #cite(<geeksforgeeks-2025a>), machine learning is a branch of artificial intelligence that enables algorithms to uncover hidden patterns within datasets. It allows them to predict new, similar data without explicit programming for each task.
 
 In this study, the researchers utilized machine learning to detect subtle to distinct nail changes. These nail features, such as discoloration for blue finger (Cyanosis) and shape abnormalities for clubbing, can be difficult to interpret using rule-based methods or traditional programming techniques. By using machine learning, particularly deep learning models, the system can learn to recognize patterns in nail images without explicitly programming what each nail feature would look like.
 
 #context {
-  figure(
-    placement: none,
-    image("img/machine-learning-geek-for-geeks.png"),
-    caption: flex-caption(
+  [
+    #figure(placement: none, image("img/machine-learning-geek-for-geeks.png"), caption: flex-caption(
       [Machine Learning #cite(<geeksforgeeks-2025a>, form: "normal")],
       [Machine Learning],
-    ),
-  )
+    )) <machine-learning>]
 }
 
-Figure 9 shows how machine learning models work. The model takes in inputs like stock data, customer transaction data, streaming data, and email text. It is then put into machine learning algorithms and techniques such as regression for numerical data and classification for categorical data where the model learns patterns in the data. Lastly, the output represents the model's prediction of the expected outcome based on the patterns it has learned from the training data. 
+@machine-learning shows how machine learning models work. The model takes in inputs like stock data, customer transaction data, streaming data, and email text. It is then put into machine learning algorithms and techniques such as regression for numerical data and classification for categorical data where the model learns patterns in the data. Lastly, the output represents the model's prediction of the expected outcome based on the patterns it has learned from the training data.
 
 ==== Supervised Machine Learning
 According to #cite(<geeksforgeeks-2025b>), supervised machine learning is a fundamental approach for machine learning and artificial intelligence. It involves training a model using labeled data, where each input comes with a corresponding correct. Supervised machine learning can be applied to two main types of problems: classification and regression.
@@ -1023,56 +1020,46 @@ According to #cite(<geeksforgeeks-2025b>), supervised machine learning is a fund
 This study involves a classification problem and falls under the category of supervised machine learning. The model is trained on labeled data which are nail images paired with corresponding nail disease labels. Then it learns to classify new, unseen nail images into their respective categories based on learned features.
 
 #context {
-  figure(
-    placement: none,
-    image("img/supervised-machine-learning-geek-for-geeks.png"),
-    caption: flex-caption(
+  [#figure(placement: none, image("img/supervised-machine-learning-geek-for-geeks.png"), caption: flex-caption(
       [Supervised Machine Learning #cite(<geeksforgeeks-2025a>, form: "normal")],
       [Supervised Machine Learning],
-    ),
-  )
+    ))<supervised>]
 }
 
-Figure 10 illustrates how supervised learning works. The input data contains data that are labeled. Each labeled data are then fed into the algorithm. The algorithm learns the associations and patterns between the data and its label. It finds out what patterns likely leads to each label. Finally, the model predicts labels based on inputs.
+@supervised illustrates how supervised learning works. The input data contains data that are labeled. Each labeled data are then fed into the algorithm. The algorithm learns the associations and patterns between the data and its label. It finds out what patterns likely leads to each label. Finally, the model predicts labels based on inputs.
 
 
 ==== Neural Networks
-According to #cite(<ibm-2025>), a neural network is a machine learning program, or model, that makes decisions in a manner similar to the human brain, by using processes that mimic the way biological neurons work together to identify phenomena, weigh options and arrive at conclusions. 
+According to #cite(<ibm-2025>), a neural network is a machine learning program, or model, that makes decisions in a manner similar to the human brain, by using processes that mimic the way biological neurons work together to identify phenomena, weigh options and arrive at conclusions.
 
-In this study, the researchers utilized neural networks because of their strong ability to detect complex patterns in data like images of nails. Unlike traditional machine learning algorithms that often require manual feature extraction, neural networks can automatically learn hierarchical representations of features like color and texture by analyzing images pixels by pixels. 
+In this study, the researchers utilized neural networks because of their strong ability to detect complex patterns in data like images of nails. Unlike traditional machine learning algorithms that often require manual feature extraction, neural networks can automatically learn hierarchical representations of features like color and texture by analyzing images pixels by pixels.
 
 #context {
-  figure(
-    placement: none,
-    image("img/neural-networks-geeks-for-geeks.png"),
-    caption: flex-caption(
-      [Neural Network Architecture #cite(<geeksforgeeks-2025c>, form: "normal")], 
+  [
+    #figure(placement: none, image("img/neural-networks-geeks-for-geeks.png"), caption: flex-caption(
+      [Neural Network Architecture #cite(<geeksforgeeks-2025c>, form: "normal")],
       [Neural Network Architecture],
-    ),
-  )
+    )) <cnn-architecture2>
+  ]
 }
 
-Figure 11 shows the architecture of a neural network. Every neural network consists of layers of nodes or artificial neurons, an input layer, one or more hidden layers, and an output layer. Each node connects to others, and has its own associated weight and threshold. If the output of any individual node is above the specified threshold value, that node is activated, sending data to the next layer of the network. Otherwise, no data is passed along to the next layer of the network.
+@cnn-architecture2 shows the architecture of a neural network. Every neural network consists of layers of nodes or artificial neurons, an input layer, one or more hidden layers, and an output layer. Each node connects to others, and has its own associated weight and threshold. If the output of any individual node is above the specified threshold value, that node is activated, sending data to the next layer of the network. Otherwise, no data is passed along to the next layer of the network.
 
 ==== Deep Learning
-Deep learning is a subset of machine learning that uses multilayered neural networks, called deep neural networks, to simulate the complex decision-making power of the human brain #cite(<holdsworth-2025>, form: "normal"). 
+Deep learning is a subset of machine learning that uses multilayered neural networks, called deep neural networks, to simulate the complex decision-making power of the human brain #cite(<holdsworth-2025>, form: "normal").
 
 According to #cite(<ibm-2025>), deep learning and neural networks tend to be used interchangeably in conversation, which can be confusing. It is important to note that the term “deep” in deep learning refers specifically to the number of layers within a neural network. A neural network with more than three layers, including the input and output layers, is typically classified as a deep learning algorithm. In contrast, networks with only two or three layers are considered basic neural networks.
 
 The neural networks used in this study are considered deep neural networks, since images of nails are very complex and has variations such as texture, color, and spatial patterns, which will require multiple hidden layers to effectively extract and learn these features for accurate classification.
 
 #context {
-  figure(
-    placement: none,
-    image("img/deep-neural-network-ibm.png"),
-    caption: flex-caption(
-      [Deep Neural Network Architecture #cite(<ibm-2025>, form: "normal")], 
+  [#figure(placement: none, image("img/deep-neural-network-ibm.png"), caption: flex-caption(
+      [Deep Neural Network Architecture #cite(<ibm-2025>, form: "normal")],
       [Deep Neural Network Architecture],
-    ),
-  )
+    ))<dnn>]
 }
 
-Figure 12 shows the architecture of a deep neural network. Unlike basic neural networks, deep neural networks consists of many more hidden layers. Machine learning on these deep neural networks is called deep learning.
+@dnn shows the architecture of a deep neural network. Unlike basic neural networks, deep neural networks consists of many more hidden layers. Machine learning on these deep neural networks is called deep learning.
 
 
 
@@ -1082,7 +1069,7 @@ CNNs are the primary architecture for analyzing image data. They automatically l
 ==== Vision Transformers (ViTs)
 In addition to CNNs, Vision Transformers are explored for their ability to capture long-range dependencies and attention-based representations, which may enhance classification in complex image scenarios.
 
-==== Transfer Learning 
+==== Transfer Learning
 Pre-trained models such as EfficientNetV2 and RegNetY16GF, initially trained on large-scale datasets (e.g., ImageNet), were fine-tuned using the nail disease dataset to accelerate training and improve performance.
 
 ==== Image Classification
@@ -1091,13 +1078,13 @@ The core task involves classifying images into one of several disease categories
 ==== Image Data Handling and Preprocessing
 Image Preprocessing:  Prior to training, images underwent resizing format conversion, augmentation, and normalization to ensure consistency across inputs and compatibility with model architectures.
 
-==== Normalization 
+==== Normalization
 Input images were normalized using the standard ImageNet mean and standard deviation values: $"mean" = [0.485, 0.456, 0.406]$ and $"std" = [0.229, 0.224, 0.225]$. This normalization ensures compatibility with pre-trained models from PyTorch’s torchvision library, which were originally trained on the ImageNet dataset. By aligning the data distributions, normalization enables more effective transfer learning and stable gradient flow during training.
 
 ==== Data Augmentation
 Techniques such as horizontal flipping, rotation, and brightness adjustment were applied to increase dataset diversity and reduce overfitting.
 
-==== Batch Learning 
+==== Batch Learning
 Training was conducted using mini-batches of 32 images per iteration. This method enhances training efficiency while maintaining a balance between generalization and convergence speed.
 
 ==== Class Balancing
@@ -1283,7 +1270,6 @@ To improve model generalization, data augmentation was also applied, producing t
     [Onychogryphosis], [#image("img/augmentation-onychogryphosis.jpg")],
     [Pitting], [#image("img/augmentation-pitting.jpg")],
     [Terry’s Nails], [#image("img/augmentation-terrys-nails.jpg")],
-
   ),
   caption: [Sample Nail Augmentations],
 )
