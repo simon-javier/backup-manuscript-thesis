@@ -830,7 +830,11 @@ The following identifies the scope and coverage of the study in terms of subject
 
 *Subject:* The research focuses on the classification of fingernail disorders and the probabilistic inference of systemic diseases using fingernail biomarkers as a non-invasive diagnostic approach.
 
-*Data Collection:* The study utilizes a publicly available dataset from Roboflow, consisting of fingernail images with corresponding labels. The dataset used consists of 7,258 images divided into training, testing, and validation set. The classes consist of 10 labels, namely, Beau's Line, Blue Finger, Clubbing, Healthy Nail, Koilonychia, Melanonychia, Muehrcke's Lines, Onychogryphosis, Pitting, and Terry's Nail.
+*Data Collection:* The study utilizes a publicly available dataset from Roboflow, consisting of fingernail images with corresponding labels. The original dataset comprises a total of 7,264 images covering 11 classes of nail diseases. However, the researchers have dropped the Lindsay's Nail class due to exretemely few number of images. The researchers also
+renamed the class "acral lentiginous melanoma" to "melanonychia" for medical accuracy, since all of the images have melanonychia features, but not all images may have been confirmed to be acral lentiginous melanoma. Additionally, acral lentiginous melanoma is a diagnosis itself, making melanonychia the better fit since melanonychia is a nail feature and not a diagnosis.
+
+The final dataset used consists of 7,258 images divided into training, testing, and validation set. The classes consist of 10 labels, namely, Beau's Line, Blue Finger, Clubbing, Healthy Nail, Koilonychia, Melanonychia, Muehrcke's Lines, Onychogryphosis, Pitting, and Terry's Nail.
+
 The training set was originally augmented by the author of the dataset. The augmentations include resizing to 416x416 pixels, 50% chance of horizontal flip, 50% chance of vertical flip, equal probability of a 90-degree rotation (none, clockwise, counter-clockwise, or 180°), random rotation within the range of −15° to +15°, random shear transformations between
 −15° and +15° in both horizontal and vertical directions, random brightness adjustment between −20% and +20%, and random exposure adjustment between −15% and +15%.
 
@@ -995,41 +999,123 @@ Moreover, the research may serve as a valuable reference for future researchers,
 === Applied Concepts and Techniques
 This study integrates a wide range of machine learning and software engineering techniques to develop a reliable, scalable system for the probabilistic detection of systemic diseases through nail image classification. The applied concepts are grouped thematically to emphasize their specific roles in the system development lifecycle.
 
+==== Machine Learning
+According to #cite(<geeksforgeeks-2025a>), machine learning is a branch of artificial intelligence that enables algorithms to uncover hidden patterns within datasets. It allows them to predict new, similar data without explicit programming for each task. 
+
+In this study, the researchers utilized machine learning to detect subtle to distinct nail changes. These nail features, such as discoloration for blue finger (Cyanosis) and shape abnormalities for clubbing, can be difficult to interpret using rule-based methods or traditional programming techniques. By using machine learning, particularly deep learning models, the system can learn to recognize patterns in nail images without explicitly programming what each nail feature would look like.
+
+#context {
+  figure(
+    placement: none,
+    image("img/machine-learning-geek-for-geeks.png"),
+    caption: flex-caption(
+      [Machine Learning #cite(<geeksforgeeks-2025a>, form: "normal")],
+      [Machine Learning],
+    ),
+  )
+}
+
+Figure 9 shows how machine learning models work. The model takes in inputs like stock data, customer transaction data, streaming data, and email text. It is then put into machine learning algorithms and techniques such as regression for numerical data and classification for categorical data where the model learns patterns in the data. Lastly, the output represents the model's prediction of the expected outcome based on the patterns it has learned from the training data. 
+
+==== Supervised Machine Learning
+According to #cite(<geeksforgeeks-2025b>), supervised machine learning is a fundamental approach for machine learning and artificial intelligence. It involves training a model using labeled data, where each input comes with a corresponding correct. Supervised machine learning can be applied to two main types of problems: classification and regression.
+
+This study involves a classification problem and falls under the category of supervised machine learning. The model is trained on labeled data which are nail images paired with corresponding nail disease labels. Then it learns to classify new, unseen nail images into their respective categories based on learned features.
+
+#context {
+  figure(
+    placement: none,
+    image("img/supervised-machine-learning-geek-for-geeks.png"),
+    caption: flex-caption(
+      [Supervised Machine Learning #cite(<geeksforgeeks-2025a>, form: "normal")],
+      [Supervised Machine Learning],
+    ),
+  )
+}
+
+Figure 10 illustrates how supervised learning works. The input data contains data that are labeled. Each labeled data are then fed into the algorithm. The algorithm learns the associations and patterns between the data and its label. It finds out what patterns likely leads to each label. Finally, the model predicts labels based on inputs.
+
+
+==== Neural Networks
+According to #cite(<ibm-2025>), a neural network is a machine learning program, or model, that makes decisions in a manner similar to the human brain, by using processes that mimic the way biological neurons work together to identify phenomena, weigh options and arrive at conclusions. 
+
+In this study, the researchers utilized neural networks because of their strong ability to detect complex patterns in data like images of nails. Unlike traditional machine learning algorithms that often require manual feature extraction, neural networks can automatically learn hierarchical representations of features like color and texture by analyzing images pixels by pixels. 
+
+#context {
+  figure(
+    placement: none,
+    image("img/neural-networks-geeks-for-geeks.png"),
+    caption: flex-caption(
+      [Neural Network Architecture #cite(<geeksforgeeks-2025c>, form: "normal")], 
+      [Neural Network Architecture],
+    ),
+  )
+}
+
+Figure 11 shows the architecture of a neural network. Every neural network consists of layers of nodes or artificial neurons, an input layer, one or more hidden layers, and an output layer. Each node connects to others, and has its own associated weight and threshold. If the output of any individual node is above the specified threshold value, that node is activated, sending data to the next layer of the network. Otherwise, no data is passed along to the next layer of the network.
+
 ==== Deep Learning
+Deep learning is a subset of machine learning that uses multilayered neural networks, called deep neural networks, to simulate the complex decision-making power of the human brain #cite(<holdsworth-2025>, form: "normal"). 
 
-*Convolutional Neural Networks (CNNs):* CNNs are the primary architecture for analyzing image data. They automatically learn spatial hierarchies of features—edges, textures, and shapes—that are essential for accurate classification of nail abnormalities.
+According to #cite(<ibm-2025>), deep learning and neural networks tend to be used interchangeably in conversation, which can be confusing. It is important to note that the term “deep” in deep learning refers specifically to the number of layers within a neural network. A neural network with more than three layers, including the input and output layers, is typically classified as a deep learning algorithm. In contrast, networks with only two or three layers are considered basic neural networks.
 
-*Vision Transformers (ViTs):* In addition to CNNs, Vision Transformers are explored for their ability to capture long-range dependencies and attention-based representations, which may enhance classification in complex image scenarios.
+The neural networks used in this study are considered deep neural networks, since images of nails are very complex and has variations such as texture, color, and spatial patterns, which will require multiple hidden layers to effectively extract and learn these features for accurate classification.
 
-*Deep Learning:* The system utilizes deep neural networks capable of hierarchical representation learning, enabling end-to-end learning from raw images to disease classification output.
+#context {
+  figure(
+    placement: none,
+    image("img/deep-neural-network-ibm.png"),
+    caption: flex-caption(
+      [Deep Neural Network Architecture #cite(<ibm-2025>, form: "normal")], 
+      [Deep Neural Network Architecture],
+    ),
+  )
+}
 
-*Transfer Learning:* Pre-trained models such as EfficientNetV2 and RegNetY16GF, initially trained on large-scale datasets (e.g., ImageNet), were fine-tuned using the nail disease dataset to accelerate training and improve performance.
+Figure 12 shows the architecture of a deep neural network. Unlike basic neural networks, deep neural networks consists of many more hidden layers. Machine learning on these deep neural networks is called deep learning.
 
-*Image Classification:* The core task involves classifying images into one of several disease categories, serving as the basis for subsequent probabilistic inference of systemic conditions.
+
+
+==== Convolutional Neural Networks (CNNs)
+CNNs are the primary architecture for analyzing image data. They automatically learn spatial hierarchies of features—edges, textures, and shapes—that are essential for accurate classification of nail abnormalities.
+
+==== Vision Transformers (ViTs)
+In addition to CNNs, Vision Transformers are explored for their ability to capture long-range dependencies and attention-based representations, which may enhance classification in complex image scenarios.
+
+==== Transfer Learning 
+Pre-trained models such as EfficientNetV2 and RegNetY16GF, initially trained on large-scale datasets (e.g., ImageNet), were fine-tuned using the nail disease dataset to accelerate training and improve performance.
+
+==== Image Classification
+The core task involves classifying images into one of several disease categories, serving as the basis for subsequent probabilistic inference of systemic conditions.
 
 ==== Image Data Handling and Preprocessing
-*Image Preprocessing: * Prior to training, images underwent resizing format conversion, augmentation, and normalization to ensure consistency across inputs and compatibility with model architectures.
+Image Preprocessing:  Prior to training, images underwent resizing format conversion, augmentation, and normalization to ensure consistency across inputs and compatibility with model architectures.
 
-*Normalization Input:* images were normalized using the standard ImageNet mean and standard deviation values: $"mean" = [0.485, 0.456, 0.406]$ and $"std" = [0.229, 0.224, 0.225]$. This normalization ensures compatibility with pre-trained models from PyTorch’s torchvision library, which were originally trained on the ImageNet dataset. By aligning the data distributions, normalization enables more effective transfer learning and stable gradient flow during training.
+==== Normalization 
+Input images were normalized using the standard ImageNet mean and standard deviation values: $"mean" = [0.485, 0.456, 0.406]$ and $"std" = [0.229, 0.224, 0.225]$. This normalization ensures compatibility with pre-trained models from PyTorch’s torchvision library, which were originally trained on the ImageNet dataset. By aligning the data distributions, normalization enables more effective transfer learning and stable gradient flow during training.
 
-*Data Augmentation:* Techniques such as horizontal flipping, rotation, and brightness adjustment were applied to increase dataset diversity and reduce overfitting.
+==== Data Augmentation
+Techniques such as horizontal flipping, rotation, and brightness adjustment were applied to increase dataset diversity and reduce overfitting.
 
-==== Training Optimization
-*Batch Learning:* Training was conducted using mini-batches of 32 images per iteration. This method enhances training efficiency while maintaining a balance between generalization and convergence speed.
+==== Batch Learning 
+Training was conducted using mini-batches of 32 images per iteration. This method enhances training efficiency while maintaining a balance between generalization and convergence speed.
 
-*Class Balancing:* To address class imbalance within the dataset, a weighted loss function was used. Class weights were assigned inversely proportional to the frequency of each class, ensuring that underrepresented classes contributed more significantly to the loss during training. This approach helped mitigate bias toward majority classes without altering the data distribution through sampling techniques.
+==== Class Balancing
+To address class imbalance within the dataset, a weighted loss function was used. Class weights were assigned inversely proportional to the frequency of each class, ensuring that underrepresented classes contributed more significantly to the loss during training. This approach helped mitigate bias toward majority classes without altering the data distribution through sampling techniques.
 
-*Learning Rate Scheduling:* Two strategies were employed to adaptively tune learning rates during training:
+==== Learning Rate Scheduling
+Two strategies were employed to adaptively tune learning rates during training:
 - _StepLR:_ Decreases the learning rate by a factor at fixed intervals.
 - _ReduceLROnPlateau:_ Lowers the learning rate when validation metrics stop improving, allowing for more fine-grained convergence.
 
-==== Model Evaluation and Interpretability
-*Model Evaluation:* Performance was measured using standard metrics such as accuracy, precision, recall, and F1-score. Confusion matrices were also generated to evaluate per-class performance and misclassification trends.
+==== Model Evaluation
+Performance was measured using standard metrics such as accuracy, precision, recall, and F1-score. Confusion matrices were also generated to evaluate per-class performance and misclassification trends.
 
-*Visualization:* Plots of training/validation loss, accuracy curves, and confusion matrices were used to monitor and interpret model performance. Techniques such as Grad-CAM may also be explored to visualize model attention and improve transparency.
+==== Visualization
+Plots of training/validation loss, accuracy curves, and confusion matrices were used to monitor and interpret model performance. Techniques such as Grad-CAM may also be explored to visualize model attention and improve transparency.
 
-==== Software Engineering and System Design
-*Modularization:* The system was structured into modular components—data preprocessing, model training, evaluation, and deployment—to facilitate maintenance, experimentation, and scalability.
+==== Modularization
+The system was structured into modular components—data preprocessing, model training, evaluation, and deployment—to facilitate maintenance, experimentation, and scalability.
 
 === Algorithm Analysis
 To assess the performance and computational efficiency of the selected deep learning models, five architectures were evaluated using identical training parameters. Each model was trained for five epochs with a batch size of 32, a learning rate of $1e-4$, and the AdamW optimizer. The loss function employed was Cross Entropy Loss. All experiments were executed under consistent hardware and software environments to ensure comparability.
@@ -1079,6 +1165,8 @@ These reports indicate that while newer models offer significantly improved over
 
 === Data Collection Methods
 The dataset utilized for this study is sourced from a publicly available Nail Disease Detection collection hosed on Roboflow, and is released under the Creative Commons Attribution 4.0 (CC BY 4.0) license. The dataset comprises a total of 7,264 images, annotated using the TensorFlow TFRecord (Raccoon) format, covering 11 classes of nail diseases. However, the researchers have dropped the Lindsay's Nail class due to few number of images.
+
+The researchers also renamed the class "acral lentiginous melanoma" to "melanonychia" for medical accuracy, since all of the images have melanonychia features, but not all images may have been confirmed to be acral lentiginous melanoma. Additionally, acral lentiginous melanoma is a diagnosis itself, making melanonychia the better fit since melanonychia is a nail feature and not a diagnosis.
 
 #show figure: set block(breakable: true, sticky: false)
 #figure(
