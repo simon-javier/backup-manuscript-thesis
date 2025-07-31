@@ -142,7 +142,7 @@
 
 
 
-#show figure: set block(breakable: true, sticky: false)
+#show figure: set block(breakable: true, sticky: true)
 
 #set figure(
   gap: double-spacing,
@@ -272,7 +272,7 @@
     \
     \
     Under the supervision of: \
-    *MIA V. VILLARICA, DIT*
+    *MIA M. VILLARICA, DIT*
     #v(1fr)
     *JUNE 2025*
   ]]
@@ -335,7 +335,7 @@
   \
   #grid(
     columns: (2fr, 1fr, 1fr),
-    [], [], align(center)[*Mia V. Villarica* \ Thesis Adviser],
+    [], [], align(center)[*Mia M. Villarica* \ Thesis Adviser],
   ) #v(0.5em)
 
   #line(length: 100%)
@@ -467,7 +467,7 @@ Some terminologies used in the design and development of the developed system we
   [Training was conducted using mini batches of 32 images per iteration to enhance training efficiency while balancing generalization and convergence speed.],
 
   [*Confidence Intervals*],
-  [Confidence Intervals are an evaluation metric for probabilistic models, with the system providing probabilistic risk assessments, such as "Diabetes Likelihood: 85%," along with recommendations for medical consultation.],
+  [Confidence Intervals are an evaluation metric for probabilistic models, with the system providing probabilistic risk assessments (e.g., "Diabetes Likelihood: 85%") along with recommendations for medical consultation.],
 
   [*Convolutional Neural Networks (CNNs)*],
   [CNNs are the primary architecture for analyzing image data in this study, automatically learning spatial hierarchies of features essential for accurate classification of nail abnormalities, and excel at analyzing visual data to identify patterns that may escape human observation.],
@@ -529,7 +529,7 @@ Some terminologies used in the design and development of the developed system we
   [SwinV2B achieved the highest performance across all evaluated metrics (accuracy, precision, recall, F1 score) among five architectures, despite its computational intensity, and is integrated into the business logic layer for accurate diagnosis.],
 
   [*Transfer Learning*],
-  [Transfer learning involves fine-tuning pre-trained models, such as EfficientNetV2 and RegNetY16GF, initially trained on large-scale datasets, using the nail disease dataset to accelerate training and improve performance, with normalization ensuring consistency for effectiveness.],
+  [Transfer learning involves fine-tuning pre-trained models (e.g., EfficientNetV2 and RegNetY16GF), initially trained on large-scale datasets, using the nail disease dataset to accelerate training and improve performance, with normalization ensuring consistency for effectiveness.],
 
   [*VGG16*],
   [VGG16 is an older architecture benchmarked in the study that demonstrated the lowest accuracy and F1 score with the highest number of parameters, underscoring its inefficiency for fine-grained classification tasks compared to more modern architectures, although a hybrid VGG16 and Random Forest Model achieved 97.02% accuracy.],
@@ -690,7 +690,7 @@ Thus, this study specifically seeks to address the following problems:
 + How can a high-quality, balanced dataset of fingernail images be effectively compiled and preprocessed using standardized techniques such as resizing, and normalization to support accurate disease classification?
 + How do organized shape and lighting changes to fingernail images affect how well deep learning models perform when identifying systemic diseases in different situations?
 + How do the performance outcomes of deep learning models (EfficientNetV2S, VGG16, ResNet50, RegNetY-16GF, and SwinV2-B) compare when trained on the augmented fingernail image dataset for systemic disease classification, as measured by accuracy, precision, recall, and F1-score?
-+ Which deep learning model demonstrates superior performance for systemic disease classification from fingernail images, and how do standard evaluation metrics, such as accuracy, precision, recall, and F1-score for CNNs, or confidence intervals, sensitivity, and specificity for probabilistic models, inform the selection of the optimal model?
++ Which deep learning model demonstrates superior performance for systemic disease classification from fingernail images, and how do standard evaluation metrics (e.g., accuracy, precision, recall, F1-score for CNNs; confidence intervals, sensitivity, specificity for probabilistic models) inform the selection of the optimal model?
 + How can the best-performing model be deployed in a prototype application to provide interpretable systemic disease inference from fingernail images, and what are the key challenges in ensuring its suitability for clinical decision support or health screening?
 
 
@@ -723,6 +723,7 @@ A theoretical framework serves as a foundational structure of concepts, definiti
   )
 }
 
+The process begins with users uploading fingernail images via a user interface, followed by input handling and preprocessing steps such as normalization, resizing, and augmentation to enhance image quality and variability. Feature extraction employs CNNs (e.g., ResNet, MobileNet) to identify visual patterns, while intent recognition classifies nail disorders (e.g., clubbing, pitting) and entity recognition isolates specific biomarkers. A knowledge integration module, populated with clinical literature and health data, supports probabilistic inference using models like Naïve Bayes and Bayesian Inference, generating risk assessments and recommendations. A feedback loop ensures continuous improvement by merging new data into the knowledge base, with third-party services providing external validation to enhance reliability.
 The process begins with users uploading fingernail images through a user interface, followed by preprocessing steps, such as normalization, resizing, and augmentation, to optimize image quality and diversity. Feature extraction employs convolutional neural networks (CNNs), including EfficientNetV2S, VGG16, ResNet50, and RegNetY-16GF, to detect visual patterns, while classification identifies nail disorders, such as clubbing or pitting, and biomarker recognition isolates specific features. A knowledge integration module, incorporating clinical literature and health data, supports probabilistic inference /* using models like Naïve Bayes and Bayesian Inference */ to generate risk assessments and recommendations. A feedback loop continuously improves the system by integrating new data, with third-party services providing external validation to ensure reliability.
 
 #figure(
@@ -815,8 +816,11 @@ The input phase involves collecting fingernail images from datasets like Kaggle 
 
 // (Desktop Application) and Web Application
 
+// The classification of the nail only revolves around 10 labels. 
+// 
 // The classification of the nail only revolves around 10 labels.
 // We have not acquired datasets of the probabilities of systemic diseases based on nail biomarkers. Thus, we resort to probabilities from literature
+// 
 
 === Scope and Limitation of the Study
 The general purpose of this study, titled "Probabilistic Detection of Systemic Diseases Using Deep Learning on Fingernail Biomarkers: A Preventive Healthcare Approach," is to develop an innovative and user-friendly system that leverages deep learning and probabilistic modeling to classify fingernail disorders and infer systemic diseases. The system aims to empower individuals globally by providing a non-invasive, accessible tool for early health screening, promoting preventive healthcare through early detection and actionable recommendations.
@@ -833,11 +837,11 @@ The training set was originally augmented by the author of the dataset. The augm
 On top of the pre-augmented dataset, we further augmented it to fit with PyTorch's compatibility. The images were resized to 224x224 pixels, converted to tensors, then normalized. It is a necessary step to ensure that the images are consistent
 with PyTorch's pre-trained weights.
 
-*Technologies:* The system uses five trained models, four of which are Convolutional Neural Networks. These are ResNet-50, VGG-16, RegNetY-16GF, and EfficientNetV2-S. One is a Vision Transformer (ViT) which is SwinV2-B.
+*Technologies:* The system uses five trained models, four of which are Convolutional Neural Networks. These are ResNet-50, VGG-16, RegNetY-16GF, and EfficientNetV2-S. One is a Vision Transformer (ViT) which is SwinV2-B.  
 
 *Features:* The system features an intuitive user interface that allows users to upload fingernail images, receive probabilistic classifications of nail disorders, and view estimated likelihoods of systemic diseases with recommendations for further medical evaluation. It also includes a feedback loop for continuous improvement.
 
-*System Output:* The system delivers probabilistic risk assessments in text format, such as "Clubbing: 98%" and "Diabetes Likelihood: 85%," accompanied by actionable recommendations, promoting an informative interaction that enhances users’ understanding of their health risks.
+*System Output:* The system provides probabilistic risk assessments in text format (e.g., "Clubbing: 98%, Diabetes Likelihood: 85%"), accompanied by actionable recommendations, fostering an informative interaction that enhances users’ understanding of their health risks.
 
 *Target Audience:* The system targets a local and global audience, including individuals seeking proactive health monitoring, healthcare providers needing screening tools, and public health organizations aiming to monitor disease prevalence.
 
@@ -847,9 +851,9 @@ with PyTorch's pre-trained weights.
 
 ==== Limitations
 However, this study is limited to the following:
-// It does not detect the individual features of the nail (like the lunula, nail bed, color of the nail etc). It relies solely on the power of the CNN models to detect from subtle to distinct features.
+// It does not detect the individual features of the nail (like the lunula, nail bed, color of the nail etc). It relies solely on the power of the CNN models to detect from subtle to distinct features. 
 // The system will not be a diagnosis system, thus it won't try to make a diagnosis out of the user such as asking questions, etc. The inference is solely based on the general probabilities of getting these systemic diseases if you have this certain nail feature.
-// The model learns on whole nail images with background noise.
+// The model learns on whole nail images with background noise. 
 // Severity of diseases requires medical interference/guidance, thus we will not include severity of diseases.
 // Explainability and Interpretability will be a hindrance, but it is workable.
 
@@ -999,7 +1003,7 @@ This study integrates a wide range of machine learning and software engineering 
 
 *Deep Learning:* The system utilizes deep neural networks capable of hierarchical representation learning, enabling end-to-end learning from raw images to disease classification output.
 
-*Transfer Learning:* Pre-trained models, including EfficientNetV2 and RegNetY-16GF, initially trained on large-scale datasets such as ImageNet, were fine-tuned using the Roboflow dataset to accelerate training and enhance performance.
+*Transfer Learning:* Pre-trained models such as EfficientNetV2 and RegNetY16GF, initially trained on large-scale datasets (e.g., ImageNet), were fine-tuned using the nail disease dataset to accelerate training and improve performance.
 
 *Image Classification:* The core task involves classifying images into one of several disease categories, serving as the basis for subsequent probabilistic inference of systemic conditions.
 
@@ -1063,7 +1067,7 @@ In contrast, *VGG16*, the oldest architecture in this benchmark, demonstrated th
 *ResNet50* and *RegNetY-16GF* exhibit balanced trade-offs between performance and computational requirements. *ResNet50*, with its residual connections, offers a solid baseline (F1-score: _76%_), while *RegNetY-16GF* leverages architectural flexibility to achieve higher metrics, albeit at increased parameter complexity.
 
 ==== Classification Breakdown
-Individual classification reports are provided for each model, detailing per-class precision, recall, and F1-scores. These metrics are especially crucial given the dataset’s class imbalance and the medical significance of detecting less common conditions, such as _Koilonychia_ and _Muehrcke’s Lines_.
+Individual classification reports are provided for each model, detailing per-class precision, recall, and F1-scores. These metrics are especially crucial given the dataset’s class imbalance and the medical significance of detecting less common conditions (_e.g., Koilonychia, Muehrcke’s Lines_).
 
 #par(first-line-indent: 0em)[For example:]
 - SwinV2B shows strong and consistent class-wise performance, particularly achieving *1.00 recall* for _Melanonychia_ and _Muehrcke’s Lines_, which is critical in a preventive diagnostic context.
@@ -1072,12 +1076,15 @@ Individual classification reports are provided for each model, detailing per-cla
 
 These reports indicate that while newer models offer significantly improved overall accuracy, their strength also lies in more balanced performance across all classes.
 
+
 === Data Collection Methods
 The dataset utilized for this study is sourced from a publicly available Nail Disease Detection collection hosed on Roboflow, and is released under the Creative Commons Attribution 4.0 (CC BY 4.0) license. The dataset comprises a total of 7,264 images, annotated using the TensorFlow TFRecord (Raccoon) format, covering 11 classes of nail diseases. However, the researchers have dropped the Lindsay's Nail class due to few number of images.
 
-#context {
-  figure(
-    table(
+#show figure: set block(breakable: true, sticky: false)
+#figure(
+  placement: none,
+  text(size: 12pt)[
+    #table(
       inset: 0.3em,
       columns: (1.7fr, 1fr, 1fr, 1fr),
       align: (x, _) => if x == 0 { left + horizon } else { horizon + center },
@@ -1094,9 +1101,11 @@ The dataset utilized for this study is sourced from a publicly available Nail Di
       [Pitting], [657], [61], [32],
       [Terry’s Nail], [894], [81], [42],
     ),
-    caption: [Sample distribution per class across dataset splits.],
-  )
-}
+    #v(-2em)
+  ],
+  caption: [Sample distribution per class across dataset splits.],
+)
+
 
 The final dataset used in this study consists of 7,258 labeled nail images, divided into three subsets: training (6,360 images, 88%), validation (591 images, 8%), and testing (307 images, 4%).
 
@@ -1106,55 +1115,54 @@ The class with the highest representation across all sets is Terry's Nail, while
 
 Weighted loss was used during training to compensate for class imbalance and improve model fairness across underrepresented classes.\
 
-#context {
-  set image(width: 50%)
-  figure(
-    placement: none,
-    table(
-      columns: (1.5fr, 3fr, 2fr),
-      align: (x, y) => if x < 2 and y != 0 { left } else { horizon + center },
-      table.header([Class], [Description], [Sample Image]),
+#set image(width: 50%)
+#show figure: set block(breakable: true, sticky: true)
+#figure(
+  placement: none,
+  table(
+    columns: (1.5fr, 3fr, 1.5fr),
+    align: (x, y) => if x < 2 and y != 0 { left } else { horizon + center },
+    table.header([Class], [Description], [Sample Image]),
 
-      [Beau's Line],
-      [Beau’s lines are horizontal ridges or dents in one or more of the fingernails or toenails.],
-      [#image("img/table-2-beaus-line.jpg")],
-      //https://my.clevelandclinic.org/health/symptoms/22906-beaus-lines
+    [Beau's Line],
+    [Beau’s lines are horizontal ridges or dents in one or more of the fingernails or toenails.],
+    [#image("img/table-2-beaus-line.jpg")],
+    //https://my.clevelandclinic.org/health/symptoms/22906-beaus-lines
 
-      [Blue Finger],
-      [Also known as Cyanosis, is when the nails turn a bluish tone],
-      [#image("img/table-2-blue-finger.jpg")],
+    [Blue Finger],
+    [Also known as Cyanosis, is when the nails turn a bluish tone],
+    [#image("img/table-2-blue-finger.jpg")],
 
-      [Clubbing],
-      [Nails appear wider, spongelike or swollen, like an upside-down spoon],
-      [#image("img/table-2-clubbing.jpg")],
+    [Clubbing],
+    [Nails appear wider, spongelike or swollen, like an upside-down spoon],
+    [#image("img/table-2-clubbing.jpg")],
 
-      [Healthy Nail],
-      [Healthy nails are smooth, consistent in color and consistency],
-      [#image("img/table-2-healthy.jpg")],
+    [Healthy Nail],
+    [Healthy nails are smooth, consistent in color and consistency],
+    [#image("img/table-2-healthy.jpg")],
 
-      [Koilonychia], [Soft nails that have a spoon-shaped dent], [#image("img/table-2-koilonychia.jpg")],
-      [Melanonychia],
-      [Are brown or black discolouration of a nail. It may be diffuse or take the form of a longitudinal band.],
-      [#image("img/table-2-melanonychia.jpg")],
-      //https://dermnetnz.org/topics/melanonychia
-      [Muehrcke’s Lines], [Are horizontal white lines across the nail], [#image("img/table-2-muehrckes-lines.jpg")],
-      //https://my.clevelandclinic.org/health/symptoms/muehrcke-lines
-      [Onychogryphosis],
-      [Characterised by an opaque, yellow-brown thickening of the nail plate with elongation and increased curvature],
-      [#image("img/table-2-onychogryphosis.jpg")],
-      //https://dermnetnz.org/topics/onychogryphosis
-      [Pitting],
-      [May show up as shallow or deep holes in the nail. It can look like white spots or marks],
-      [#image("img/table-2-pitting.jpg")],
+    [Koilonychia], [Soft nails that have a spoon-shaped dent], [#image("img/table-2-koilonychia.jpg")],
+    [Melanonychia],
+    [Are brown or black discolouration of a nail. It may be diffuse or take the form of a longitudinal band.],
+    [#image("img/table-2-melanonychia.jpg")],
+    //https://dermnetnz.org/topics/melanonychia
+    [Muehrcke’s Lines], [Are horizontal white lines across the nail], [#image("img/table-2-muehrckes-lines.jpg")],
+    //https://my.clevelandclinic.org/health/symptoms/muehrcke-lines
+    [Onychogryphosis],
+    [Characterised by an opaque, yellow-brown thickening of the nail plate with elongation and increased curvature],
+    [#image("img/table-2-onychogryphosis.jpg")],
+    //https://dermnetnz.org/topics/onychogryphosis
+    [Pitting],
+    [May show up as shallow or deep holes in the nail. It can look like white spots or marks],
+    [#image("img/table-2-pitting.jpg")],
 
-      [Terry's Nail],
-      [Nail looks white, like frosted glass, except for a thin brown or pink strip at the tip.],
-      [#image("img/table-2-terrys-nail.jpg")],
-      //https://my.clevelandclinic.org/health/symptoms/22890-terrys-nails
-    ),
-    caption: [Description of nail features],
-  )
-}
+    [Terry's Nail],
+    [Nail looks white, like frosted glass, except for a thin brown or pink strip at the tip.],
+    [#image("img/table-2-terrys-nail.jpg")],
+    //https://my.clevelandclinic.org/health/symptoms/22890-terrys-nails
+  ),
+  caption: [Nail features],
+)
 
 The dataset we collected were already pre-processed and augmented. These were the preprocessing step used by the owner of the public dataset:
 - Automatic orientation correction (EXIF metadata removed)
@@ -1169,25 +1177,28 @@ To improve model generalization, data augmentation was also applied, producing t
 - Random brightness adjustment between -20% and +20%
 - Random exposure adjustment between -15% and +15%
 
-#context {
-  set image(width: 25%)
-  show figure: set block(breakable: true, sticky: false)
-  figure(
-    placement: none,
-    table(
-      columns: (1fr, 2fr),
-      align: (x, y) => if x == 0 { left + horizon } else { horizon + center },
-      table.header([Class], [Sample Image]),
-      [Melanonychia], [#image("img/augmentation-melanonychia.jpg")],
-      [Beau's Line], [#image("img/augmentation-beaus-line.jpg")],
-      [Blue Finger], [#image("img/augmentation-blue-finger.jpg")],
-      [Clubbing], [#image("img/augmentation-clubbing.jpg")],
-      [Melanonychia], [#image("img/augmentation-melanonychia.jpg")],
-      [Melanonychia], [#image("img/augmentation-melanonychia.jpg")],
-    ),
-    caption: [Sample Nail Augmentations],
-  )
-}
+#set image(width: 50%)
+#show figure: set block(breakable: true, sticky: true)
+#figure(
+  placement: none,
+  table(
+    columns: (1fr, 0.3fr),
+    align: (x, y) => if x < 0 { left } else { horizon + center },
+    table.header([Class], [Sample Image]),
+    [Beau's Line], [#image("img/augmentation-beaus-line.jpg")],
+    [Blue Finger], [#image("img/augmentation-blue-finger.jpg")],
+    [Clubbing], [#image("img/augmentation-clubbing.jpg")],
+    [Healthy Nail], [#image("img/augmentation-healthy.jpg")],
+    [Koilonychia], [#image("img/augmentation-koilonychia.jpg")],
+    [Melanonychia], [#image("img/augmentation-melanonychia.jpg")],
+    [Muehrcke’s Lines], [#image("img/augmentation-muehrckes-lines.jpg")],
+    [Onychogryphosis], [#image("img/augmentation-onychogryphosis.jpg")],
+    [Pitting], [#image("img/augmentation-pitting.jpg")],
+    [Terry’s Nails], [#image("img/augmentation-terrys-nails.jpg")],
+
+  ),
+  caption: [Sample Nail Augmentations],
+)
 
 Although the dataset was initially preprocessed and augmented through Roboflow's pipeline, additional preprocessing steps were performed to ensure compatibility with the PyTorch deep learning framework. Specifically, all images were resized to $224 × 224$ pixels, which is the standard input dimension for most pre-trained Convolutional Neural Network (CNN) architectures in PyTorch.
 
@@ -1257,7 +1268,7 @@ The development, training, evaluation, and deployment of the proposed system uti
 
 *PyTorch:* A deep learning framework used for implementing, training, and fine-tuning convolutional neural networks (CNNs) and vision transformers. PyTorch enabled seamless integration with pre-trained models, dynamic computation graphs, and GPU acceleration.
 
-*Torchvision:* A PyTorch companion library is used to load pre-trained models, including EfficientNetV2, RegNetY-16GF, and ResNet50, apply standard image transformations, and access utility functions for computer vision tasks.
+*Torchvision:* A PyTorch companion library used for loading pre-trained models (e.g., EfficientNetV2, RegNetY16GF, ResNet50), applying standard image transformations, and accessing utility functions for computer vision tasks.
 
 *Torchmetrics:* A PyTorch-native library for computing evaluation metrics such as accuracy, precision, recall, and F1-score. Its modular design ensured consistent metric computation across training, validation, and testing phases.
 
