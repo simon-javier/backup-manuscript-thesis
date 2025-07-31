@@ -705,7 +705,7 @@ This section outlines the theoretical and conceptual frameworks that underpin th
 
 The theoretical framework integrates deep learning and probabilistic modeling to create a comprehensive system for fingernail-based systemic disease detection, drawing inspiration from AI-driven diagnostic methodologies. It adapts principles from frameworks like #cite(<debnath_framework_2020>, form: "prose"), which emphasize systematic processing, feature extraction, and response generation in AI systems.
 
-The process begins with users uploading fingernail images through a user interface, followed by preprocessing steps, such as normalization, resizing, and augmentation, to optimize image quality and diversity. Feature extraction employs convolutional neural networks (CNNs), including EfficientNetV2S, VGG16, ResNet50, and RegNetY-16GF, to detect visual patterns, while classification identifies nail disorders, such as clubbing or pitting, and biomarker recognition isolates specific features. A knowledge integration module, incorporating clinical literature and health data, supports probabilistic inference using models like Naïve Bayes and Bayesian Inference to generate risk assessments and recommendations. A feedback loop continuously improves the system by integrating new data, with third-party services providing external validation to ensure reliability.
+The process begins with users uploading fingernail images through a user interface, followed by preprocessing steps, such as normalization, resizing, and augmentation, to optimize image quality and diversity. Feature extraction employs convolutional neural networks (CNNs), including EfficientNetV2S, VGG16, ResNet50, and RegNetY-16GF, to detect visual patterns, while classification identifies nail disorders, such as clubbing or pitting, and biomarker recognition isolates specific features. A knowledge integration module, incorporating clinical literature and health data, supports probabilistic inference /* using models like Naïve Bayes and Bayesian Inference */ to generate risk assessments and recommendations. A feedback loop continuously improves the system by integrating new data, with third-party services providing external validation to ensure reliability.
 
 ==== Conceptual Framework
 The conceptual framework provides a practical workflow for implementing the theoretical foundation, detailing the process from data collection to system deployment. It is divided into three phases: input, process, and output.
@@ -739,7 +739,7 @@ with PyTorch's pre-trained weights.
 
 *Features:* The system features an intuitive user interface that allows users to upload fingernail images, receive probabilistic classifications of nail disorders, and view estimated likelihoods of systemic diseases with recommendations for further medical evaluation. It also includes a feedback loop for continuous improvement.
 
-*System Output:* The system provides probabilistic risk assessments in text format (e.g., "Clubbing: 98%, Diabetes Likelihood: 85%"), accompanied by actionable recommendations, fostering an informative interaction that enhances users’ understanding of their health risks.
+*System Output:* The system delivers probabilistic risk assessments in text format, such as "Clubbing: 98%" and "Diabetes Likelihood: 85%," accompanied by actionable recommendations, promoting an informative interaction that enhances users’ understanding of their health risks.
 
 *Target Audience:* The system targets a local and global audience, including individuals seeking proactive health monitoring, healthcare providers needing screening tools, and public health organizations aiming to monitor disease prevalence.
 
@@ -901,7 +901,7 @@ This study integrates a wide range of machine learning and software engineering 
 
 *Deep Learning:* The system utilizes deep neural networks capable of hierarchical representation learning, enabling end-to-end learning from raw images to disease classification output.
 
-*Transfer Learning:* Pre-trained models such as EfficientNetV2 and RegNetY16GF, initially trained on large-scale datasets (e.g., ImageNet), were fine-tuned using the nail disease dataset to accelerate training and improve performance.
+*Transfer Learning:* Pre-trained models, including EfficientNetV2 and RegNetY-16GF, initially trained on large-scale datasets such as ImageNet, were fine-tuned using the Roboflow dataset to accelerate training and enhance performance.
 
 *Image Classification:* The core task involves classifying images into one of several disease categories, serving as the basis for subsequent probabilistic inference of systemic conditions.
 
@@ -965,7 +965,7 @@ In contrast, *VGG16*, the oldest architecture in this benchmark, demonstrated th
 *ResNet50* and *RegNetY-16GF* exhibit balanced trade-offs between performance and computational requirements. *ResNet50*, with its residual connections, offers a solid baseline (F1-score: _76%_), while *RegNetY-16GF* leverages architectural flexibility to achieve higher metrics, albeit at increased parameter complexity.
 
 ==== Classification Breakdown
-Individual classification reports are provided for each model, detailing per-class precision, recall, and F1-scores. These metrics are especially crucial given the dataset’s class imbalance and the medical significance of detecting less common conditions (_e.g., Koilonychia, Muehrcke’s Lines_).
+Individual classification reports are provided for each model, detailing per-class precision, recall, and F1-scores. These metrics are especially crucial given the dataset’s class imbalance and the medical significance of detecting less common conditions, such as _Koilonychia_ and _Muehrcke’s Lines_.
 
 #par(first-line-indent: 0em)[For example:]
 - SwinV2B shows strong and consistent class-wise performance, particularly achieving *1.00 recall* for _Melanonychia_ and _Muehrcke’s Lines_, which is critical in a preventive diagnostic context.
@@ -1159,7 +1159,7 @@ The development, training, evaluation, and deployment of the proposed system uti
 
 *PyTorch:* A deep learning framework used for implementing, training, and fine-tuning convolutional neural networks (CNNs) and vision transformers. PyTorch enabled seamless integration with pre-trained models, dynamic computation graphs, and GPU acceleration.
 
-*Torchvision:* A PyTorch companion library used for loading pre-trained models (e.g., EfficientNetV2, RegNetY16GF, ResNet50), applying standard image transformations, and accessing utility functions for computer vision tasks.
+*Torchvision:* A PyTorch companion library is used to load pre-trained models, including EfficientNetV2, RegNetY-16GF, and ResNet50, apply standard image transformations, and access utility functions for computer vision tasks.
 
 *Torchmetrics:* A PyTorch-native library for computing evaluation metrics such as accuracy, precision, recall, and F1-score. Its modular design ensured consistent metric computation across training, validation, and testing phases.
 
