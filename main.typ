@@ -262,7 +262,7 @@
     \
     \
     Under the supervision of: \
-    *MIA M. VILLARICA, DIT*
+    *MIA V. VILLARICA, DIT*
     #v(1fr)
     *JUNE 2025*
   ]]
@@ -325,7 +325,7 @@
   \
   #grid(
     columns: (2fr, 1fr, 1fr),
-    [], [], align(center)[*Mia M. Villarica* \ Thesis Adviser],
+    [], [], align(center)[*Mia V. Villarica* \ Thesis Adviser],
   ) #v(0.5em)
 
   #line(length: 100%)
@@ -457,7 +457,7 @@ Some terminologies used in the design and development of the developed system we
   [Training was conducted using mini batches of 32 images per iteration to enhance training efficiency while balancing generalization and convergence speed.],
 
   [*Confidence Intervals*],
-  [Confidence Intervals are an evaluation metric for probabilistic models, with the system providing probabilistic risk assessments (e.g., "Diabetes Likelihood: 85%") along with recommendations for medical consultation.],
+  [Confidence Intervals are an evaluation metric for probabilistic models, with the system providing probabilistic risk assessments, such as "Diabetes Likelihood: 85%," along with recommendations for medical consultation.],
 
   [*Convolutional Neural Networks (CNNs)*],
   [CNNs are the primary architecture for analyzing image data in this study, automatically learning spatial hierarchies of features essential for accurate classification of nail abnormalities, and excel at analyzing visual data to identify patterns that may escape human observation.],
@@ -519,7 +519,7 @@ Some terminologies used in the design and development of the developed system we
   [SwinV2B achieved the highest performance across all evaluated metrics (accuracy, precision, recall, F1 score) among five architectures, despite its computational intensity, and is integrated into the business logic layer for accurate diagnosis.],
 
   [*Transfer Learning*],
-  [Transfer learning involves fine-tuning pre-trained models (e.g., EfficientNetV2 and RegNetY16GF), initially trained on large-scale datasets, using the nail disease dataset to accelerate training and improve performance, with normalization ensuring consistency for effectiveness.],
+  [Transfer learning involves fine-tuning pre-trained models, such as EfficientNetV2 and RegNetY16GF, initially trained on large-scale datasets, using the nail disease dataset to accelerate training and improve performance, with normalization ensuring consistency for effectiveness.],
 
   [*VGG16*],
   [VGG16 is an older architecture benchmarked in the study that demonstrated the lowest accuracy and F1 score with the highest number of parameters, underscoring its inefficiency for fine-grained classification tasks compared to more modern architectures, although a hybrid VGG16 and Random Forest Model achieved 97.02% accuracy.],
@@ -680,7 +680,7 @@ Thus, this study specifically seeks to address the following problems:
 + How can a high-quality, balanced dataset of fingernail images be effectively compiled and preprocessed using standardized techniques such as resizing, and normalization to support accurate disease classification?
 + How do organized shape and lighting changes to fingernail images affect how well deep learning models perform when identifying systemic diseases in different situations?
 + How do the performance outcomes of deep learning models (EfficientNetV2S, VGG16, ResNet50, RegNetY-16GF, and SwinV2-B) compare when trained on the augmented fingernail image dataset for systemic disease classification, as measured by accuracy, precision, recall, and F1-score?
-+ Which deep learning model demonstrates superior performance for systemic disease classification from fingernail images, and how do standard evaluation metrics (e.g., accuracy, precision, recall, F1-score for CNNs; confidence intervals, sensitivity, specificity for probabilistic models) inform the selection of the optimal model?
++ Which deep learning model demonstrates superior performance for systemic disease classification from fingernail images, and how do standard evaluation metrics, such as accuracy, precision, recall, and F1-score for CNNs, or confidence intervals, sensitivity, and specificity for probabilistic models, inform the selection of the optimal model?
 + How can the best-performing model be deployed in a prototype application to provide interpretable systemic disease inference from fingernail images, and what are the key challenges in ensuring its suitability for clinical decision support or health screening?
 
 
@@ -705,13 +705,15 @@ This section outlines the theoretical and conceptual frameworks that underpin th
 
 The theoretical framework integrates deep learning and probabilistic modeling to create a comprehensive system for fingernail-based systemic disease detection, drawing inspiration from AI-driven diagnostic methodologies. It adapts principles from frameworks like #cite(<debnath_framework_2020>, form: "prose"), which emphasize systematic processing, feature extraction, and response generation in AI systems.
 
-The process begins with users uploading fingernail images via a user interface, followed by input handling and preprocessing steps such as normalization, resizing, and augmentation to enhance image quality and variability. Feature extraction employs CNNs (e.g., ResNet, MobileNet) to identify visual patterns, while intent recognition classifies nail disorders (e.g., clubbing, pitting) and entity recognition isolates specific biomarkers. A knowledge integration module, populated with clinical literature and health data, supports probabilistic inference using models like Naïve Bayes and Bayesian Inference, generating risk assessments and recommendations. A feedback loop ensures continuous improvement by merging new data into the knowledge base, with third-party services providing external validation to enhance reliability.
+The process begins with users uploading fingernail images through a user interface, followed by preprocessing steps, such as normalization, resizing, and augmentation, to optimize image quality and diversity. Feature extraction employs convolutional neural networks (CNNs), including EfficientNetV2S, VGG16, ResNet50, and RegNetY-16GF, to detect visual patterns, while classification identifies nail disorders, such as clubbing or pitting, and biomarker recognition isolates specific features. A knowledge integration module, incorporating clinical literature and health data, supports probabilistic inference /* using models like Naïve Bayes and Bayesian Inference */ to generate risk assessments and recommendations. A feedback loop continuously improves the system by integrating new data, with third-party services providing external validation to ensure reliability.
 
 ==== Conceptual Framework
 The conceptual framework provides a practical workflow for implementing the theoretical foundation, detailing the process from data collection to system deployment. It is divided into three phases: input, process, and output.
 #figure(image("img/ConceptualFramework.png"), caption: [Conceptual Framework of the Study])
 
-The input phase involves collecting fingernail images from datasets like Kaggle and Roboflow, supplemented by local health data to inform probabilistic inference. The process phase includes data cleaning (normalization, noise reduction) and augmentation (flipping, scaling, brightness adjustment) to enhance dataset diversity. Feature extraction using CNNs (e.g., ResNet, MobileNet, EfficientNet) precedes model training with a split dataset (80% training, 20% testing), employing CNNs for classification and probabilistic models (e.g., Naïve Bayes, Bayesian Inference) for inference. Evaluation metrics (sensitivity, recall, confidence intervals) guide hyperparameter tuning, leading to the selection of the best-performing model. The output phase delivers probabilistic classifications of nail disorders, systemic disease likelihoods (e.g., diabetes: 85%), and recommendations for medical consultation, with deployment into a mobile or web application for global accessibility.
+The input phase involves collecting fingernail images from datasets like Kaggle and Roboflow, supplemented by local health data to inform probabilistic inference. The process phase includes data cleaning (normalization, noise reduction) and augmentation (flipping, scaling, brightness adjustment) to enhance dataset diversity. Feature extraction using CNNs (e.g., ResNet, MobileNet, EfficientNet) precedes model training with a split dataset (80% training, 20% testing), employing CNNs for classification and probabilistic models (e.g., Naïve Bayes, Bayesian Inference) for inference. Evaluation metrics (sensitivity, recall, confidence intervals) guide hyperparameter tuning, leading to the selection of the best-performing model. The output phase delivers probabilistic classifications of nail disorders, systemic disease likelihoods (e.g., diabetes: 85%), and recommendations for medical consultation, with deployment into a web application for global accessibility.
+
+// (Desktop Application) and Web Application
 
 // The classification of the nail only revolves around 10 labels.
 //
@@ -737,7 +739,7 @@ with PyTorch's pre-trained weights.
 
 *Features:* The system features an intuitive user interface that allows users to upload fingernail images, receive probabilistic classifications of nail disorders, and view estimated likelihoods of systemic diseases with recommendations for further medical evaluation. It also includes a feedback loop for continuous improvement.
 
-*System Output:* The system provides probabilistic risk assessments in text format (e.g., "Clubbing: 98%, Diabetes Likelihood: 85%"), accompanied by actionable recommendations, fostering an informative interaction that enhances users’ understanding of their health risks.
+*System Output:* The system delivers probabilistic risk assessments in text format, such as "Clubbing: 98%" and "Diabetes Likelihood: 85%," accompanied by actionable recommendations, promoting an informative interaction that enhances users’ understanding of their health risks.
 
 *Target Audience:* The system targets a local and global audience, including individuals seeking proactive health monitoring, healthcare providers needing screening tools, and public health organizations aiming to monitor disease prevalence.
 
@@ -899,7 +901,7 @@ This study integrates a wide range of machine learning and software engineering 
 
 *Deep Learning:* The system utilizes deep neural networks capable of hierarchical representation learning, enabling end-to-end learning from raw images to disease classification output.
 
-*Transfer Learning:* Pre-trained models such as EfficientNetV2 and RegNetY16GF, initially trained on large-scale datasets (e.g., ImageNet), were fine-tuned using the nail disease dataset to accelerate training and improve performance.
+*Transfer Learning:* Pre-trained models, including EfficientNetV2 and RegNetY-16GF, initially trained on large-scale datasets such as ImageNet, were fine-tuned using the Roboflow dataset to accelerate training and enhance performance.
 
 *Image Classification:* The core task involves classifying images into one of several disease categories, serving as the basis for subsequent probabilistic inference of systemic conditions.
 
@@ -963,7 +965,7 @@ In contrast, *VGG16*, the oldest architecture in this benchmark, demonstrated th
 *ResNet50* and *RegNetY-16GF* exhibit balanced trade-offs between performance and computational requirements. *ResNet50*, with its residual connections, offers a solid baseline (F1-score: _76%_), while *RegNetY-16GF* leverages architectural flexibility to achieve higher metrics, albeit at increased parameter complexity.
 
 ==== Classification Breakdown
-Individual classification reports are provided for each model, detailing per-class precision, recall, and F1-scores. These metrics are especially crucial given the dataset’s class imbalance and the medical significance of detecting less common conditions (_e.g., Koilonychia, Muehrcke’s Lines_).
+Individual classification reports are provided for each model, detailing per-class precision, recall, and F1-scores. These metrics are especially crucial given the dataset’s class imbalance and the medical significance of detecting less common conditions, such as _Koilonychia_ and _Muehrcke’s Lines_.
 
 #par(first-line-indent: 0em)[For example:]
 - SwinV2B shows strong and consistent class-wise performance, particularly achieving *1.00 recall* for _Melanonychia_ and _Muehrcke’s Lines_, which is critical in a preventive diagnostic context.
@@ -1157,7 +1159,7 @@ The development, training, evaluation, and deployment of the proposed system uti
 
 *PyTorch:* A deep learning framework used for implementing, training, and fine-tuning convolutional neural networks (CNNs) and vision transformers. PyTorch enabled seamless integration with pre-trained models, dynamic computation graphs, and GPU acceleration.
 
-*Torchvision:* A PyTorch companion library used for loading pre-trained models (e.g., EfficientNetV2, RegNetY16GF, ResNet50), applying standard image transformations, and accessing utility functions for computer vision tasks.
+*Torchvision:* A PyTorch companion library is used to load pre-trained models, including EfficientNetV2, RegNetY-16GF, and ResNet50, apply standard image transformations, and access utility functions for computer vision tasks.
 
 *Torchmetrics:* A PyTorch-native library for computing evaluation metrics such as accuracy, precision, recall, and F1-score. Its modular design ensured consistent metric computation across training, validation, and testing phases.
 
