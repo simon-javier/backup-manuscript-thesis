@@ -262,7 +262,7 @@
     \
     \
     Under the supervision of: \
-    *MIA M. VILLARICA, DIT*
+    *MIA V. VILLARICA, DIT*
     #v(1fr)
     *JUNE 2025*
   ]]
@@ -325,7 +325,7 @@
   \
   #grid(
     columns: (2fr, 1fr, 1fr),
-    [], [], align(center)[*Mia M. Villarica* \ Thesis Adviser],
+    [], [], align(center)[*Mia V. Villarica* \ Thesis Adviser],
   ) #v(0.5em)
 
   #line(length: 100%)
