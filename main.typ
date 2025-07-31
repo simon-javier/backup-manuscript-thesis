@@ -457,7 +457,7 @@ Some terminologies used in the design and development of the developed system we
   [Training was conducted using mini batches of 32 images per iteration to enhance training efficiency while balancing generalization and convergence speed.],
 
   [*Confidence Intervals*],
-  [Confidence Intervals are an evaluation metric for probabilistic models, with the system providing probabilistic risk assessments (e.g., "Diabetes Likelihood: 85%") along with recommendations for medical consultation.],
+  [Confidence Intervals are an evaluation metric for probabilistic models, with the system providing probabilistic risk assessments, such as "Diabetes Likelihood: 85%," along with recommendations for medical consultation.],
 
   [*Convolutional Neural Networks (CNNs)*],
   [CNNs are the primary architecture for analyzing image data in this study, automatically learning spatial hierarchies of features essential for accurate classification of nail abnormalities, and excel at analyzing visual data to identify patterns that may escape human observation.],
@@ -519,7 +519,7 @@ Some terminologies used in the design and development of the developed system we
   [SwinV2B achieved the highest performance across all evaluated metrics (accuracy, precision, recall, F1 score) among five architectures, despite its computational intensity, and is integrated into the business logic layer for accurate diagnosis.],
 
   [*Transfer Learning*],
-  [Transfer learning involves fine-tuning pre-trained models (e.g., EfficientNetV2 and RegNetY16GF), initially trained on large-scale datasets, using the nail disease dataset to accelerate training and improve performance, with normalization ensuring consistency for effectiveness.],
+  [Transfer learning involves fine-tuning pre-trained models, such as EfficientNetV2 and RegNetY16GF, initially trained on large-scale datasets, using the nail disease dataset to accelerate training and improve performance, with normalization ensuring consistency for effectiveness.],
 
   [*VGG16*],
   [VGG16 is an older architecture benchmarked in the study that demonstrated the lowest accuracy and F1 score with the highest number of parameters, underscoring its inefficiency for fine-grained classification tasks compared to more modern architectures, although a hybrid VGG16 and Random Forest Model achieved 97.02% accuracy.],
@@ -680,7 +680,7 @@ Thus, this study specifically seeks to address the following problems:
 + How can a high-quality, balanced dataset of fingernail images be effectively compiled and preprocessed using standardized techniques such as resizing, and normalization to support accurate disease classification?
 + How do organized shape and lighting changes to fingernail images affect how well deep learning models perform when identifying systemic diseases in different situations?
 + How do the performance outcomes of deep learning models (EfficientNetV2S, VGG16, ResNet50, RegNetY-16GF, and SwinV2-B) compare when trained on the augmented fingernail image dataset for systemic disease classification, as measured by accuracy, precision, recall, and F1-score?
-+ Which deep learning model demonstrates superior performance for systemic disease classification from fingernail images, and how do standard evaluation metrics (e.g., accuracy, precision, recall, F1-score for CNNs; confidence intervals, sensitivity, specificity for probabilistic models) inform the selection of the optimal model?
++ Which deep learning model demonstrates superior performance for systemic disease classification from fingernail images, and how do standard evaluation metrics, such as accuracy, precision, recall, and F1-score for CNNs, or confidence intervals, sensitivity, and specificity for probabilistic models, inform the selection of the optimal model?
 + How can the best-performing model be deployed in a prototype application to provide interpretable systemic disease inference from fingernail images, and what are the key challenges in ensuring its suitability for clinical decision support or health screening?
 
 
@@ -705,7 +705,7 @@ This section outlines the theoretical and conceptual frameworks that underpin th
 
 The theoretical framework integrates deep learning and probabilistic modeling to create a comprehensive system for fingernail-based systemic disease detection, drawing inspiration from AI-driven diagnostic methodologies. It adapts principles from frameworks like #cite(<debnath_framework_2020>, form: "prose"), which emphasize systematic processing, feature extraction, and response generation in AI systems.
 
-The process begins with users uploading fingernail images via a user interface, followed by input handling and preprocessing steps such as normalization, resizing, and augmentation to enhance image quality and variability. Feature extraction employs CNNs (e.g., ResNet, MobileNet) to identify visual patterns, while intent recognition classifies nail disorders (e.g., clubbing, pitting) and entity recognition isolates specific biomarkers. A knowledge integration module, populated with clinical literature and health data, supports probabilistic inference using models like Naïve Bayes and Bayesian Inference, generating risk assessments and recommendations. A feedback loop ensures continuous improvement by merging new data into the knowledge base, with third-party services providing external validation to enhance reliability.
+The process begins with users uploading fingernail images through a user interface, followed by preprocessing steps, such as normalization, resizing, and augmentation, to optimize image quality and diversity. Feature extraction employs convolutional neural networks (CNNs), including EfficientNetV2S, VGG16, ResNet50, and RegNetY-16GF, to detect visual patterns, while classification identifies nail disorders, such as clubbing or pitting, and biomarker recognition isolates specific features. A knowledge integration module, incorporating clinical literature and health data, supports probabilistic inference using models like Naïve Bayes and Bayesian Inference to generate risk assessments and recommendations. A feedback loop continuously improves the system by integrating new data, with third-party services providing external validation to ensure reliability.
 
 ==== Conceptual Framework
 The conceptual framework provides a practical workflow for implementing the theoretical foundation, detailing the process from data collection to system deployment. It is divided into three phases: input, process, and output.
