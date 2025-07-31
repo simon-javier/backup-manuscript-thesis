@@ -1043,7 +1043,7 @@ In this study, the researchers utilized neural networks because of their strong 
   ]
 }
 
-@cnn-architecture2 shows the architecture of a neural network. Every neural network consists of layers of nodes or artificial neurons, an input layer, one or more hidden layers, and an output layer. Each node connects to others, and has its own associated weight and threshold. If the output of any individual node is above the specified threshold value, that node is activated, sending data to the next layer of the network. Otherwise, no data is passed along to the next layer of the network.
+@cnn-architecture2 shows the architecture of a neural network. The figure is adapted from #cite(<geeksforgeeks-2025c>) and illustrates that every neural network consists of layers of nodes or artificial neurons, an input layer, one or more hidden layers, and an output layer. Each node connects to others, and has its own associated weight and threshold. If the output of any individual node is above the specified threshold value, that node is activated, sending data to the next layer of the network. Otherwise, no data is passed along to the next layer of the network.
 
 ==== Deep Learning
 Deep learning is a subset of machine learning that uses multilayered neural networks, called deep neural networks, to simulate the complex decision-making power of the human brain #cite(<holdsworth-2025>, form: "normal").
