@@ -132,7 +132,7 @@
 
 
 
-#show figure: set block(breakable: true, sticky: false)
+#show figure: set block(breakable: true, sticky: true)
 
 #set figure(
   gap: double-spacing,
@@ -243,9 +243,7 @@
     \
     \
     In Partial Fulfillment of the requirements for the Degree \
-    *BACHELOR OF SCIENCE IN COMPUTER SCIENCE* \
-    *Major in Intelligent System*
-
+    *BACHELOR OF SCIENCE IN COMPUTER SCIENCE*
     \
     \
     \
@@ -456,6 +454,9 @@ Some terminologies used in the design and development of the developed system we
   [*Batch Learning / Mini Batches*],
   [Training was conducted using mini batches of 32 images per iteration to enhance training efficiency while balancing generalization and convergence speed.],
 
+  [*Clinical Health Data*],
+  [Clinical health data is used to augment publicly available datasets from Kaggle and Roboflow to inform probabilistic inference.],
+
   [*Confidence Intervals*],
   [Confidence Intervals are an evaluation metric for probabilistic models, with the system providing probabilistic risk assessments (e.g., "Diabetes Likelihood: 85%") along with recommendations for medical consultation.],
 
@@ -491,6 +492,8 @@ Some terminologies used in the design and development of the developed system we
 
   [*Machine Learning (ML)*],
   [Machine Learning is a broader field encompassing deep learning, with techniques like Support Vector Machines and CNNs employed in studies to enhance classification accuracy for nails, and is integrated into the study.],
+
+  [*MobileNet*], [MobileNet is a CNN model considered for use in the system.],
 
   [*Naïve Bayes*],
   [Naïve Bayes is a probabilistic model used in the study, alongside Bayesian Inference, to infer systemic disease probabilities, and is supported by the knowledge integration module.],
@@ -677,8 +680,8 @@ The potential of AI extends beyond healthcare into various sectors, demonstratin
 Moreover, the field of medical diagnostics has long sought non-invasive methods to improve early detection, with fingernails emerging as a promising biomarker due to their accessibility. #cite(<pinoliad_onyxray_2020>, form: "prose") demonstrated the feasibility of using machine learning for nail-based disease detection in the Philippines, but their system did not incorporate probabilistic inference for systemic diseases. This highlights the need for a more integrated approach that not only classifies nail disorders but also estimates the likelihood of underlying conditions, empowering users with actionable health insights.
 
 Thus, this study specifically seeks to address the following problems:
-+ How can a high-quality, balanced dataset of fingernail images be effectively compiled and preprocessed using standardized techniques such as resizing, and normalization to support accurate disease classification?
-+ How do organized shape and lighting changes to fingernail images affect how well deep learning models perform when identifying systemic diseases in different situations?
++ How can a high-quality, balanced dataset of fingernail images, annotated with confirmed systemic disease labels, be effectively compiled and preprocessed using standardized techniques such as resizing, and normalization to support accurate disease classification?
++ What is the impact of applying systematic geometric and photometric transformations to increase the dataset size by at least 30% on the generalization and robustness of deep learning models for systemic disease classification?
 + How do the performance outcomes of deep learning models (EfficientNetV2S, VGG16, ResNet50, RegNetY-16GF, and SwinV2-B) compare when trained on the augmented fingernail image dataset for systemic disease classification, as measured by accuracy, precision, recall, and F1-score?
 + Which deep learning model demonstrates superior performance for systemic disease classification from fingernail images, and how do standard evaluation metrics (e.g., accuracy, precision, recall, F1-score for CNNs; confidence intervals, sensitivity, specificity for probabilistic models) inform the selection of the optimal model?
 + How can the best-performing model be deployed in a prototype application to provide interpretable systemic disease inference from fingernail images, and what are the key challenges in ensuring its suitability for clinical decision support or health screening?
@@ -713,10 +716,11 @@ The conceptual framework provides a practical workflow for implementing the theo
 
 The input phase involves collecting fingernail images from datasets like Kaggle and Roboflow, supplemented by local health data to inform probabilistic inference. The process phase includes data cleaning (normalization, noise reduction) and augmentation (flipping, scaling, brightness adjustment) to enhance dataset diversity. Feature extraction using CNNs (e.g., ResNet, MobileNet, EfficientNet) precedes model training with a split dataset (80% training, 20% testing), employing CNNs for classification and probabilistic models (e.g., Naïve Bayes, Bayesian Inference) for inference. Evaluation metrics (sensitivity, recall, confidence intervals) guide hyperparameter tuning, leading to the selection of the best-performing model. The output phase delivers probabilistic classifications of nail disorders, systemic disease likelihoods (e.g., diabetes: 85%), and recommendations for medical consultation, with deployment into a mobile or web application for global accessibility.
 
-// The classification of the nail only revolves around 10 labels.
-//
+// The classification of the nail only revolves around 10 labels. It does not detect the individual features of the nail (like the lunula, nail bed, etc).
+// The model learns on whole nail images with background noise. 
+// 
 // We have not acquired datasets of the probabilities of systemic diseases based on nail biomarkers. Thus, we resort to probabilities from literature
-//
+// 
 
 === Scope and Limitation of the Study
 The general purpose of this study, titled "Probabilistic Detection of Systemic Diseases Using Deep Learning on Fingernail Biomarkers: A Preventive Healthcare Approach," is to develop an innovative and user-friendly system that leverages deep learning and probabilistic modeling to classify fingernail disorders and infer systemic diseases. The system aims to empower individuals globally by providing a non-invasive, accessible tool for early health screening, promoting preventive healthcare through early detection and actionable recommendations.
@@ -726,14 +730,16 @@ The following identifies the scope and coverage of the study in terms of subject
 
 *Subject:* The research focuses on the classification of fingernail disorders and the probabilistic inference of systemic diseases using fingernail biomarkers as a non-invasive diagnostic approach.
 
-*Data Collection:* The study utilizes a publicly available dataset from Roboflow, consisting of fingernail images with corresponding labels. The dataset used consists of 7,258 images divided into training, testing, and validation set. The classes consist of 10 labels, namely, Beau's Line, Blue Finger, Clubbing, Healthy Nail, Koilonychia, Melanonychia, Muehrcke's Lines, Onychogryphosis, Pitting, and Terry's Nail.
+*Data Collection:* The study utilizes a publicly available dataset from Roboflow, consisting of fingernail images with corresponding labels. The original dataset comprises a total of 7,264 images covering 11 classes of nail diseases. However, the researchers have dropped the Lindsay's Nail class due to exretemely few number of images. The researchers also
+renamed the class "acral lentiginous melanoma" to "melanonychia" for medical accuracy, since all of the images have melanonychia features, but not all images may have been confirmed to be acral lentiginous melanoma. Additionally, acral lentiginous melanoma is a diagnosis itself, making melanonychia the better fit since melanonychia is a nail feature and not a diagnosis.
+The final dataset used consists of 7,258 images divided into training, testing, and validation set. The classes consist of 10 labels, namely, Beau's Line, Blue Finger, Clubbing, Healthy Nail, Koilonychia, Melanonychia, Muehrcke's Lines, Onychogryphosis, Pitting, and Terry's Nail.
 The training set was originally augmented by the author of the dataset. The augmentations include resizing to 416x416 pixels, 50% chance of horizontal flip, 50% chance of vertical flip, equal probability of a 90-degree rotation (none, clockwise, counter-clockwise, or 180°), random rotation within the range of −15° to +15°, random shear transformations between
 −15° and +15° in both horizontal and vertical directions, random brightness adjustment between −20% and +20%, and random exposure adjustment between −15% and +15%.
 
 On top of the pre-augmented dataset, we further augmented it to fit with PyTorch's compatibility. The images were resized to 224x224 pixels, converted to tensors, then normalized. It is a necessary step to ensure that the images are consistent
 with PyTorch's pre-trained weights.
 
-*Technologies:* The system uses five trained models, four of which are Convolutional Neural Networks. These are ResNet-50, VGG-16, RegNetY-16GF, and EfficientNetV2-S. One is a Vision Transformer (ViT) which is SwinV2-B.
+*Technologies:* The system uses five trained models, four of which are Convolutional Neural Networks. These are ResNet-50, VGG-16, RegNetY-16GF, and EfficientNetV2-S. One is a Vision Transformer (ViT) which is SwinV2-B.  
 
 *Features:* The system features an intuitive user interface that allows users to upload fingernail images, receive probabilistic classifications of nail disorders, and view estimated likelihoods of systemic diseases with recommendations for further medical evaluation. It also includes a feedback loop for continuous improvement.
 
@@ -747,12 +753,10 @@ with PyTorch's pre-trained weights.
 
 ==== Limitations
 However, this study is limited to the following:
-// It does not detect the individual features of the nail (like the lunula, nail bed, color of the nail etc). It relies solely on the power of the CNN models to detect from subtle to distinct features.
-// The system will not be a diagnosis system, thus it won't try to make a diagnosis out of the user such as asking questions, etc. The inference is solely based on the general probabilities of getting these systemic diseases if you have this certain nail feature.
-// The model learns on whole nail images with background noise.
-// Severity of diseases requires medical interference/guidance, thus we will not include severity of diseases.
-// Explainability and Interpretability will be a hindrance, but it is workable.
+// It does not detect the individual features of the nail (like the lunula, nail bed, etc).
+// The model learns on whole nail images with background noise. 
 
+// Severity of diseases requires medical interference/guidance, thus we will not include severity of diseases.
 *Dataset Quality and Balance:* The system’s performance relies on the quality and diversity of the training datasets, which may contain noise, inconsistencies, or class imbalances, potentially affecting its ability to generalize across diverse populations.
 
 *Unverified Medical Annotations:* Publicly sourced datasets may lack formal verification from licensed medical professionals, introducing risks of inaccurate labels that could impact classification and inference reliability.
@@ -891,7 +895,7 @@ Moreover, the research may serve as a valuable reference for future researchers,
 === Applied Concepts and Techniques
 This study integrates a wide range of machine learning and software engineering techniques to develop a reliable, scalable system for the probabilistic detection of systemic diseases through nail image classification. The applied concepts are grouped thematically to emphasize their specific roles in the system development lifecycle.
 
-==== Deep Learning
+==== Deep Learning Fundamentals
 
 *Convolutional Neural Networks (CNNs):* CNNs are the primary architecture for analyzing image data. They automatically learn spatial hierarchies of features—edges, textures, and shapes—that are essential for accurate classification of nail abnormalities.
 
@@ -972,43 +976,40 @@ Individual classification reports are provided for each model, detailing per-cla
 
 These reports indicate that while newer models offer significantly improved overall accuracy, their strength also lies in more balanced performance across all classes.
 
+
 === Data Collection Methods
 The dataset utilized for this study is sourced from a publicly available Nail Disease Detection collection hosed on Roboflow, and is released under the Creative Commons Attribution 4.0 (CC BY 4.0) license. The dataset comprises a total of 7,264 images, annotated using the TensorFlow TFRecord (Raccoon) format, covering 11 classes of nail diseases. However, the researchers have dropped the Lindsay's Nail class due to few number of images.
+The researchers also renamed the class "acral lentiginous melanoma" to "melanonychia" for medical accuracy, since all of the images have melanonychia features, but not all images may have been confirmed to be acral lentiginous melanoma. Additionally, acral lentiginous melanoma is a diagnosis itself, making melanonychia the better fit since melanonychia is a nail feature and not a diagnosis.
+#[
+  #show figure: set block(breakable: true, sticky: false)
+  #figure(
+    placement: none,
+    text(size: 12pt)[
+      #table(
+        inset: 0.3em,
+        columns: (1.7fr, 1fr, 1fr, 1fr),
+        align: (x, _) => if x == 0 { left + horizon } else { horizon + center },
+        table.header([Class], [Train], [Validation], [Test]),
 
-#context {
-  figure(
-    table(
-      inset: 0.3em,
-      columns: (1.7fr, 1fr, 1fr, 1fr),
-      align: (x, _) => if x == 0 { left + horizon } else { horizon + center },
-      table.header([Class], [Train], [Validation], [Test]),
-
-      [Beau's Line], [456], [44], [22],
-      [Blue Finger], [612], [59], [29],
-      [Clubbing], [783], [74], [38],
-      [Healthy Nail], [642], [54], [30],
-      [Koilonychia], [537], [52], [28],
-      [Melanonychia], [753], [70], [36],
-      [Muehrcke’s Lines], [336], [31], [16],
-      [Onychogryphosis], [690], [65], [34],
-      [Pitting], [657], [61], [32],
-      [Terry’s Nail], [894], [81], [42],
-    ),
+        [Beau's Line], [456], [44], [22],
+        [Blue Finger], [612], [59], [29],
+        [Clubbing], [783], [74], [38],
+        [Healthy Nail], [642], [54], [30],
+        [Koilonychia], [537], [52], [28],
+        [Melanonychia], [753], [70], [36],
+        [Muehrcke’s Lines], [336], [31], [16],
+        [Onychogryphosis], [690], [65], [34],
+        [Pitting], [657], [61], [32],
+        [Terry’s Nail], [894], [81], [42],
+      ),
+      #v(-2em)
+    ],
     caption: [Sample distribution per class across dataset splits.],
   )
-}
 
-The final dataset used in this study consists of 7,258 labeled nail images, divided into three subsets: training (6,360 images, 88%), validation (591 images, 8%), and testing (307 images, 4%).
-
-Each subset contains images from ten nail disease classes, with class distributions reflecting a natural imbalance. The training set is used for model learning, the validation set for hyperparameter tuning and early stopping, and the test set for final evaluation.
-
-The class with the highest representation across all sets is Terry's Nail, while Muehrcke’s Lines is the most underrepresented.
-
-Weighted loss was used during training to compensate for class imbalance and improve model fairness across underrepresented classes.\
-
-#context {
-  set image(width: 50%)
-  figure(
+  #set image(width: 50%)
+  #show figure: set block(breakable: true, sticky: true)
+  #figure(
     placement: none,
     table(
       columns: (1.5fr, 3fr, 2fr),
@@ -1052,9 +1053,17 @@ Weighted loss was used during training to compensate for class imbalance and imp
       [#image("img/table-2-terrys-nail.jpg")],
       //https://my.clevelandclinic.org/health/symptoms/22890-terrys-nails
     ),
-    caption: [Description of nail features],
+    caption: [Nail features],
   )
-}
+]
+The final dataset used in this study consists of 7,258 labeled nail images, divided into three subsets: training (6,360 images, 88%), validation (591 images, 8%), and testing (307 images, 4%).
+
+Each subset contains images from ten nail disease classes, with class distributions reflecting a natural imbalance. The training set is used for model learning, the validation set for hyperparameter tuning and early stopping, and the test set for final evaluation.
+
+The class with the highest representation across all sets is Terry's Nail, while Muehrcke’s Lines is the most underrepresented.
+
+
+Weighted loss was used during training to compensate for class imbalance and improve model fairness across underrepresented classes.
 
 The dataset we collected were already pre-processed and augmented. These were the preprocessing step used by the owner of the public dataset:
 - Automatic orientation correction (EXIF metadata removed)
@@ -1069,25 +1078,6 @@ To improve model generalization, data augmentation was also applied, producing t
 - Random brightness adjustment between -20% and +20%
 - Random exposure adjustment between -15% and +15%
 
-#context {
-  set image(width: 25%)
-  show figure: set block(breakable: true, sticky: false)
-  figure(
-    placement: none,
-    table(
-      columns: (1fr, 2fr),
-      align: (x, y) => if x == 0 { left + horizon } else { horizon + center },
-      table.header([Class], [Sample Image]),
-      [Melanonychia], [#image("img/augmentation-melanonychia.jpg")],
-      [Beau's Line], [#image("img/augmentation-beaus-line.jpg")],
-      [Blue Finger], [#image("img/augmentation-blue-finger.jpg")],
-      [Clubbing], [#image("img/augmentation-clubbing.jpg")],
-      [Melanonychia], [#image("img/augmentation-melanonychia.jpg")],
-      [Melanonychia], [#image("img/augmentation-melanonychia.jpg")],
-    ),
-    caption: [Sample Nail Augmentations],
-  )
-}
 
 Although the dataset was initially preprocessed and augmented through Roboflow's pipeline, additional preprocessing steps were performed to ensure compatibility with the PyTorch deep learning framework. Specifically, all images were resized to $224 × 224$ pixels, which is the standard input dimension for most pre-trained Convolutional Neural Network (CNN) architectures in PyTorch.
 
