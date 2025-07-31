@@ -107,6 +107,16 @@
     }
   },
 )
+
+#let in-outline = state("in-outline", false)
+#show outline: it => {
+  in-outline.update(true)
+  it
+  in-outline.update(false)
+}
+
+#let flex-caption(long, short) = context if in-outline.get() { short } else { long }
+
 #set par(
   justify: true,
   first-line-indent: (
@@ -221,7 +231,7 @@
 
 #metadata("group 1 start") <prelim-s>
 #set page(numbering: "i", number-align: top + right)
-#let title = [PROBABILISTIC DETECTION OF SYSTEMIC DISEASES USING DEEP LEARNING ON FINGERNAIL BIOMARKERS]
+#let title = [Probabilistic Detection of Systemic Diseases Using Deep Learning on Fingernail Biomarkers]
 
 #let title_page = context counter(page).display()
 #page(header: none)[#align(center)[
@@ -230,7 +240,7 @@
       [== Title Page]
     }
 
-    #singleSpacing[*#title*]
+    #singleSpacing[*#upper(title)*]
     \
     \
     \
@@ -319,7 +329,7 @@
 
   \
 
-  The thesis entitled *"#title"* prepared and submitted by *GERON SIMON A. JAVIER*, *MHAR ANDREI C. MACAPALLAG*, and *SEANREI ETHAN M. VALDEABELLA* in partial fulfillment of the requirements for the degree of *BACHELOR OF SCIENCE IN COMPUTER SCIENCE*, major in *INTELLIGENT SYSTEM* is hereby recommended for approval and acceptance.
+  The thesis entitled *"#upper(title)"* prepared and submitted by *GERON SIMON A. JAVIER*, *MHAR ANDREI C. MACAPALLAG*, and *SEANREI ETHAN M. VALDEABELLA* in partial fulfillment of the requirements for the degree of *BACHELOR OF SCIENCE IN COMPUTER SCIENCE*, major in *INTELLIGENT SYSTEM* is hereby recommended for approval and acceptance.
   \
   \
   \
@@ -698,27 +708,115 @@ Specifically, this study seeks to achieve the following objectives:
 This section outlines the theoretical and conceptual frameworks that underpin the study, providing a structured approach to developing the proposed system.
 
 ==== Theoretical Framework
-#figure(
-  image("img/theoretical-framework.png"),
-  caption: [Integrated Deep Learning and Probabilistic Diagnostic Framework for Fingernail-Based Systemic Disease Detection #cite(<debnath_framework_2020>, form: "normal")],
-)
+// NOTE: nacorrelate ko na ata??? ang fingernail and systemic diseases
 
-The theoretical framework integrates deep learning and probabilistic modeling to create a comprehensive system for fingernail-based systemic disease detection, drawing inspiration from AI-driven diagnostic methodologies. It adapts principles from frameworks like #cite(<debnath_framework_2020>, form: "prose"), which emphasize systematic processing, feature extraction, and response generation in AI systems.
+A theoretical framework serves as a foundational structure of concepts, definitions, and propositions that guide research by explaining or predicting phenomena and the relationships between them. #cite(<vinz_what_2022>) states that a theoretical framework serves as a foundational review of existing theories that functions as a guiding structure for developing arguments within a researcher's own work. It explains the established theories that underpin a research study, thereby demonstrating the relevance of the paper and its grounding in existing ideas. Essentially, it justifies and contextualizes the research, representing a crucial initial step for a research paper.  The diagram below integrates deep learning and probabilistic modeling to create a comprehensive system for fingernail-based systemic disease detection, drawing inspiration from AI-driven diagnostic methodologies. It adapts principles from frameworks like #cite(<debnath_framework_2020>, form: "prose"), which emphasize systematic processing, feature extraction, and response generation in AI systems.
+
+#context {
+  figure(
+    placement: none,
+    image("img/theoretical-framework.png", width: 64%),
+    caption: flex-caption(
+      [Integrated Deep Learning and Probabilistic Diagnostic Framework for Fingernail-Based Systemic Disease Detection #cite(<debnath_framework_2020>, form: "normal")],
+      [Integrated Deep Learning and Probabilistic Diagnostic Framework for Fingernail-Based Systemic Disease Detection],
+    ),
+  )
+}
 
 The process begins with users uploading fingernail images through a user interface, followed by preprocessing steps, such as normalization, resizing, and augmentation, to optimize image quality and diversity. Feature extraction employs convolutional neural networks (CNNs), including EfficientNetV2S, VGG16, ResNet50, and RegNetY-16GF, to detect visual patterns, while classification identifies nail disorders, such as clubbing or pitting, and biomarker recognition isolates specific features. A knowledge integration module, incorporating clinical literature and health data, supports probabilistic inference /* using models like Naïve Bayes and Bayesian Inference */ to generate risk assessments and recommendations. A feedback loop continuously improves the system by integrating new data, with third-party services providing external validation to ensure reliability.
 
+#figure(
+  placement: none,
+  image("./img/shandilya-theoretical.jpg", width: 75%),
+  caption: flex-caption(
+    [End-to-end framework for nail image classification using deep learning models. #cite(<shandilya_autonomous_2024>, form: "normal")],
+    [End-to-end framework for nail image classification using deep learning models.],
+  ),
+) <theo-shandilya>
+
+@theo-shandilya is a descriptive figure of the framework used to achieve the process of nail disease classification. From the figure, it can be noticed that data gathering is the very first step in the proposed process, which means a collection of images of nails with different conditions to prepare a dataset for testing and training purposes. For this study, the Nail Disease Detection dataset has been used to gather different nail disease images. These preprocessed images are resized to a resolution and, subsequently, undergo several data augmentation techniques like shearing, rotation by 20 degrees, shifting based on width and height, zooming, and horizontal flipping to diversify the dataset. The images are standardized so that they become suitably fit for the model and are then divided into three subsets: training, validation, and testing sets.
+
+In the study, the researchers based their work on a framework by #cite(<shandilya_autonomous_2024>), where a deep learning system using CNN and CapsNet was used to detect nail diseases from images. Their model first learned important patterns using a Convolutional Neural Network (CNN), and then used Capsule Networks (CapsNet) to better understand shapes and features in the images.
+
+The researchers improved this framework by replacing the CNN-CapsNet model with a Vision Transformer (ViT). Vision Transformers divide images into smaller patches and learn how these patches are related. This helps the model understand both the small details and the overall structure of the image. Unlike CNNs, which focus on nearby pixels, Vision Transformers can look across the whole image at once.
+
+The study also expanded the types of nail conditions that the model can detect. Instead of just a 6 nail classifications, the researchers included 11 different nail classifications, specifically acral lentiginous melanoma, beau’s line, blue finger, clubbing, healthy nail, koilonychia, muehrcke’s lines, onychogryphosis, pitting, and terry’s nail.
+
+The study also went a step further by connecting each nail condition to possible systemic diseases. For example, some nail problems might be linked to heart disease, anemia, or cancer. This connection helps the model not just recognize the nail condition, but also suggest what health issue might be related.
+
+#figure(
+  placement: none,
+  image("./img/ANN-architecture.png"),
+  caption: flex-caption(
+    [
+      Artificial neural network architectures with feed-forward and backpropagation algorithm #cite(<jentzen_mathematical_2025>, form: "normal")],
+    [Artificial neural network architectures with feed-forward and backpropagation algorithm],
+  ),
+) <ann-architecture>
+
+@ann-architecture shows the architecture of an artificial neural network (ANN) from the book of #cite(<jentzen_mathematical_2025>) titled "Mathematical Introduction to Deep Learning: Methods, Implementations, and Theory." According to #cite(<jentzen_mathematical_2025>), the structure of an ANN involves several layers. The Input Layer is the first layer where the initial data is fed into the network. Hidden Layers are intermediate layers located between the input and output layers. The Output Layer is the final layer that produces the network's result.
+
+Within these layers, operations involve affine functions, which use linear transformation matrices (weight matrices) and translation vectors (bias vectors) as their trainable parameters. These are followed by nonlinear activation functions, which introduce complexity, enabling the network to learn intricate patterns. Examples of such activation functions include the Rectified Linear Unit (ReLU), Gaussian Error Linear Unit (GELU), standard logistic (sigmoid), hyperbolic tangent (tanh), softplus, swish, clipping, softsign, leaky ReLU, exponential linear unit (ELU), rectified power unit (RePU), sine, and Heaviside.
+
+In the study, the researchers chose ANN as the main method because of their ability to learn patterns from data. A specific type of ANN called a Convolutional Neural Network (CNN) is used to analyze fingernail images and detect visual features known as fingernail biomarkers, such as color, shape, and texture. These features may reveal signs of systemic diseases. Once the CNN identifies these biomarkers, probabilistic models are applied to estimate the likelihood of a person having a certain disease. This allows the system to give predictions like "there is an 85% chance of anemia," making the approach useful for early detection and preventive healthcare.
+
+#figure(
+  placement: none,
+  image("./img/cnn-architecture.png"),
+  caption: flex-caption(
+    [Visual representation of a Convolutional Neural Network (CNN) architecture #cite(<zhou_classification_2017>, form: "normal").],
+    [Visual representation of a Convolutional Neural Network (CNN) architecture.],
+  ),
+) <cnn-architecture>
+
+@cnn-architecture shows the architecture of CNN from the study of #cite(<zhou_classification_2017>). According to #cite(<zhou_classification_2017>), a Deep Convolutional Neural Network (CNN) is a specific type of Deep Neural Network (DNN) designed to leverage the local connectivity of images as prior knowledge, which is particularly beneficial for large image processing tasks. While a conventional DNN connects all nodes in a previous layer to all nodes in the next, leading to a very large number of parameters, a CNN significantly reduces the model size by having each node connected only to its neighborhood nodes in the previous layer. In a convolutional layer, each node connects to a local region in the input, known as a receptive field. Although these nodes form an output layer, they utilize different kernels but share the same weights when computing the activation function. An example of a CNN structure like LeNet-5 illustrates this, featuring convolutional layers and pooling layers as its core convolutional components, followed by flatten and fully connected layers inherited from conventional DNNs.
+
+In the study, the researchers used Convolutional Neural Networks (CNNs) because they are well-known for their strong performance in image processing tasks. According to #cite(<zhou_classification_2017>), CNNs are a type of Deep Neural Network (DNN) designed to take advantage of the way images work by focusing on small local areas rather than connecting every node to each other like in regular DNNs. This makes CNNs more efficient and better at recognizing important features, especially in large images. In this research, CNNs were used to detect nail biomarkers from fingernail images by learning patterns such as shapes, textures, and color differences. Their ability to capture local visual details through convolutional and pooling layers made them a reliable choice for comparing different models in nail image analysis.
+
+
+#figure(placement: none, image("./img/transformer-architecture.png"), caption: flex-caption(
+  [
+    Vision Transformer (ViT) Architecture for Image Classification #cite(<dosovitskiy_image_2020>, form: "normal").],
+  [Vision Transformer (ViT) Architecture for Image Classification.],
+)) <transformer-architecture>
+
+
+@transformer-architecture shows the architecture of ViT from the study of #cite(<dosovitskiy_image_2020>). In their study, they state that the Vision Transformer (ViT) architecture adapts a standard Transformer, commonly used in Natural Language Processing, for image recognition tasks by treating images as sequences of image patches. To achieve this, an input image is first split into a sequence of fixed-size, non-overlapping 2D patches, which are then flattened. These flattened patches are subsequently mapped to a constant latent dimension through a trainable linear projection, resulting in "patch embeddings". To preserve positional information, learnable 1D position embeddings are added to these patch embeddings. Similar to BERT's [class] token, an extra learnable "classification token" is prepended to this sequence of embedded patches, and its state at the output of the Transformer encoder serves as the image representation for classification. This entire sequence of vectors is then fed into a standard Transformer encoder, which consists of alternating layers of multi-headed self-attention (MSA) and MLP blocks, with Layer Normalization applied before each block and residual connections after. Finally, a classification head, implemented as a Multi-Layer Perceptron (MLP) at pre-training and a single linear layer at fine-tuning, is attached to the output of the classification token to perform the classification task. This design incorporates very few image-specific inductive biases, unlike Convolutional Neural Networks (CNNs).
+
+In the study, the researchers used a Vision Transformer (ViT) model because it offers a new way to analyze images by treating them as sequences of patches, similar to how text is processed in Natural Language Processing. Based on #cite(<dosovitskiy_image_2020>), this design allows the model to focus on different parts of the image and capture important visual patterns without relying on built-in image rules like in CNNs. This makes ViT especially useful for detecting fine details in fingernail images, such as color or texture changes, which are important for identifying nail biomarkers. By using ViT, the researchers aimed to explore whether this newer method could better detect subtle features in the nails that may not be as easily captured by traditional CNNs.
+
+#figure(
+  placement: none,
+  image("./img/bayesian-architecture.png"),
+  caption: flex-caption(
+    [A Bayesian network illustrating the dependencies between various parameters within a system #cite(<hall_ginns_2021>, form: "normal").],
+    [A Bayesian network illustrating the dependencies between various parameters within a system.],
+  ),
+) <bayesian-architecture>
+
+@bayesian-architecture shows the architecture of a Bayesian network. According to #cite(<hall_ginns_2021>),  Bayesian Network (BN) is a type of probabilistic graphical model (PGM) that is structured as a directed acyclic graph. In this graph, nodes represent random variables, and edges represent conditional dependencies between these variables. The directed nature of the edges makes it intuitive to describe these dependencies, which is particularly well-suited for physics-based modeling. Formally, a BN defines a probability model for the joint probability density function (PDF) of a set of model variables, systematically capturing their correlations and constraints. This joint PDF is expressed as a product of conditional probability distributions (CPDs) for each variable, dependent on its "parent" variables, which are the variables that directly influence it. This structure allows for the modeling of large and complex joint distributions and helps identify conditionally independent variables, which significantly reduces the dimensionality for parameter inference from data.
+
+In the study, the researchers used a Bayesian Network (BN) as a probabilistic model to link detected nail biomarkers to possible systemic diseases. According to #cite(<hall_ginns_2021>), a BN is a type of graphical model that represents variables as nodes and their relationships as directed connections, which helps show how certain features influence others. This structure makes it easier to model uncertainty and complex dependencies between health-related factors. After the Vision Transformer (ViT) or Convolutional Neural Networks (CNNs) detect the nail biomarkers, the BN uses conditional probability to estimate the chances of different systemic diseases based on those findings. This approach allows the system to give predictions with confidence levels, which is useful in preventive healthcare where early risk assessment is important.
+
+
+#figure(placement: none, image("/img/agile.png"), caption: flex-caption(
+  [AGILE Development Cycle #cite(<okeke_agile_2021>)],
+  [AGILE Development Cycle],
+)) <agile>
+
+@agile shows the AGILE development cycle, consisting of six phases: Requirements, Design, Development, Testing, Deployment, and Review. In the study, the researchers used the Agile development cycle to manage the project efficiently and adapt to changes throughout the research process. This approach was chosen because it supports step-by-step progress and allows the researchers to make improvements based on testing and feedback. During the Development phase, the models for detecting nail biomarkers (ViT and CNNs) and predicting disease risk (Bayesian Network) were built. In the Testing phase, model accuracy and performance were evaluated. For Deployment, the researchers used Flask, a lightweight web framework, to create a simple and accessible interface where users can upload fingernail images and get predictions. The Review phase helped the researchers assess results and plan refinements. Using Agile helped ensure that each part of the system was built, tested, and improved in cycles, leading to a more reliable and responsive final product.
+
 ==== Conceptual Framework
 The conceptual framework provides a practical workflow for implementing the theoretical foundation, detailing the process from data collection to system deployment. It is divided into three phases: input, process, and output.
-#figure(image("img/ConceptualFramework.png"), caption: [Conceptual Framework of the Study])
+
+#figure(placement: none, image("img/ConceptualFramework.png", width: 94%), caption: [Conceptual Framework of the Study])
 
 The input phase involves collecting fingernail images from datasets like Kaggle and Roboflow, supplemented by local health data to inform probabilistic inference. The process phase includes data cleaning (normalization, noise reduction) and augmentation (flipping, scaling, brightness adjustment) to enhance dataset diversity. Feature extraction using CNNs (e.g., ResNet, MobileNet, EfficientNet) precedes model training with a split dataset (80% training, 20% testing), employing CNNs for classification and probabilistic models (e.g., Naïve Bayes, Bayesian Inference) for inference. Evaluation metrics (sensitivity, recall, confidence intervals) guide hyperparameter tuning, leading to the selection of the best-performing model. The output phase delivers probabilistic classifications of nail disorders, systemic disease likelihoods (e.g., diabetes: 85%), and recommendations for medical consultation, with deployment into a web application for global accessibility.
 
 // (Desktop Application) and Web Application
 
 // The classification of the nail only revolves around 10 labels.
-//
 // We have not acquired datasets of the probabilities of systemic diseases based on nail biomarkers. Thus, we resort to probabilities from literature
-//
 
 === Scope and Limitation of the Study
 The general purpose of this study, titled "Probabilistic Detection of Systemic Diseases Using Deep Learning on Fingernail Biomarkers: A Preventive Healthcare Approach," is to develop an innovative and user-friendly system that leverages deep learning and probabilistic modeling to classify fingernail disorders and infer systemic diseases. The system aims to empower individuals globally by providing a non-invasive, accessible tool for early health screening, promoting preventive healthcare through early detection and actionable recommendations.
