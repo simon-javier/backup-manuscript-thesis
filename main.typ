@@ -1092,7 +1092,24 @@ The researchers considered testing ViTs due to their ability to model global rel
 @vit shows the architecutre of ViTs. The input image is divided into patches which are flattened and embedded using linear projection. Positional encodings are then added to the patch embeddings to retain spatial information. The patch embeddings are passed through multiple transformer encoder layers, which include multi-head self-attention and feed-forward networks. Lastly, the CLS token's output is extracted and fed into Multi-Layer Perceptrons (MLP) for the final classification.
 
 ==== Transfer Learning
-Pre-trained models such as EfficientNetV2 and RegNetY16GF, initially trained on large-scale datasets (e.g., ImageNet), were fine-tuned using the nail disease dataset to accelerate training and improve performance.
+According to #cite(<murel-jacob-2025>), transfer learning uses pre-trained models from one machine learning task or dataset to improve performance and generalizability on a related task or dataset. 
+
+The researchers utilized and made use of transfer learning to gain several advantages in training. It helped the researchers reduce computational costs like model training time and training data. Using transfer learning also helps improve generalizability because it involves retraining an existing model with new dataset, and the re-trained model will consist of knowledge gained from multiple datasets. In this case, the pre-trained models from `torchvision` were trained on ImageNet, enabling the model to benefit from features that were already learned from a wide range of images in ImageNet.
+
+#context {
+  [
+    #figure(image("img/transfer-learning.png"), caption: flex-caption(
+      [Transfer Learning #cite(<kaya-2022>, form: "normal")],
+      [Transfer Learning],
+    )) <transfer-learning>
+  ]
+}
+
+==== Fine-Tuning
+
+Fine-tuning and transfer learning are related but distinct techniques. According to #cite(<murel-jacob-2025>), while both approaches involve reusing pre-existing models instead of training from scratch, they differ in how the pre-trained models are adapted. Transfer learning typically involves using the pre-trained model as a fixed feature extractor by freezing its weights and training only a new classifier layer on top. In contrast, fine-tuning refers to unfreezing part or all of the pre-trained model and continuing the training process on a new, task-specific dataset. This allows the model to adapt its internal representations to better fit the characteristics of the target domain.
+
+In the researchers case, they further trained pre-trained models on their nail dataset. This was done to allow the model to refine general visual features it learned from Imagenet and adapt them to visual cues present in nail images.
 
 ==== Image Classification
 The core task involves classifying images into one of several disease categories, serving as the basis for subsequent probabilistic inference of systemic conditions.
@@ -1254,7 +1271,7 @@ Weighted loss was used during training to compensate for class imbalance and imp
       [#image("img/table-2-pitting.jpg")],
 
       [Terry's Nail],
-      [Nail looks white, like frosted glass, except for a thin brown or pink strip at the tip.],
+      [Nail looks white, like frosted glass, except for a thin brown or pink strip at the tip. Lunula is obliterated.],
       [#image("img/table-2-terrys-nail.jpg")],
       //https://my.clevelandclinic.org/health/symptoms/22890-terrys-nails
     ),
