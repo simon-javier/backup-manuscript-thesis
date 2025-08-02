@@ -985,9 +985,7 @@ This study adopts a quantitative research approach, emphasizing measurable outco
 Through systematic experimentation, model benchmarking, and iterative improvement, the study aims to determine the most effective neural network architectures for the classification task and integrate them into a functional web-based application for real-world use.
 
 === Locale of the Study
-This study will be conducted at Laguna State Polytechnic University (LSPU), a state university located in the province of Laguna, Philippines. LSPU provides an academic environment conducive to scientific research, technological development, and community-centered innovation. The university's resources and academic community offer an appropriate setting for research involving artificial intelligence applications in public health.
-
-The study focuses on the probabilistic detection of systemic diseases using deep learning on fingernail biomarkers, aiming to develop an application that enables early health risk screening. Conducting the research at LSPU ensures access to necessary computational tools, academic supervision, and local data insights relevant to the community.
+This study was conducted at Laguna State Polytechnic University Santa Crus Campus, a state university located in the province of Laguna, Philippines. The study focuses on the probabilistic detection of systemic diseases using deep learning on fingernail biomarkers, aiming to develop an application that enables early health risk screening. Conducting the research at LSPU ensures access to necessary necessary tools and academic supervision.
 
 The primary beneficiaries of this study are individuals seeking preventive healthcare in a convenient, accessible form. By designing the system to be user-friendly and deployable on digital platforms, the research addresses the growing demand for proactive health monitoring solutions. This includes not only residents of Sta. Cruz, Laguna and nearby areas but also any users with internet access who want to perform preliminary health assessments on the go.
 
