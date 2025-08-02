@@ -1000,6 +1000,7 @@ According to #cite(<geeksforgeeks-2025a>), machine learning is a branch of artif
 In this study, the researchers utilized machine learning to detect subtle to distinct nail changes. These nail features, such as discoloration for blue finger (Cyanosis) and shape abnormalities for clubbing, can be difficult to interpret using rule-based methods or traditional programming techniques. By using machine learning, particularly deep learning models, the system can learn to recognize patterns in nail images without explicitly programming what each nail feature would look like.
 
 #context {
+  
   [
     #figure(image("img/machine-learning-geek-for-geeks.png"), caption: flex-caption(
       [Machine Learning #cite(<geeksforgeeks-2025a>, form: "normal")],
@@ -1034,11 +1035,11 @@ In this study, the researchers utilized neural networks because of their strong 
     #figure(image("img/neural-networks-geeks-for-geeks.png"), caption: flex-caption(
       [Neural Network Architecture #cite(<geeksforgeeks-2025c>, form: "normal")],
       [Neural Network Architecture],
-    )) <cnn-architecture2>
+    )) <neural-network>
   ]
 }
 
-@cnn-architecture2 shows the architecture of a neural network. The figure is adapted from #cite(<geeksforgeeks-2025c>) and illustrates that every neural network consists of layers of nodes or artificial neurons, an input layer, one or more hidden layers, and an output layer. Each node connects to others, and has its own associated weight and threshold. If the output of any individual node is above the specified threshold value, that node is activated, sending data to the next layer of the network. Otherwise, no data is passed along to the next layer of the network.
+@neural-network shows the architecture of a neural network. The figure is adapted from #cite(<geeksforgeeks-2025c>) and illustrates that every neural network consists of layers of nodes or artificial neurons, an input layer, one or more hidden layers, and an output layer. Each node connects to others, and has its own associated weight and threshold. If the output of any individual node is above the specified threshold value, that node is activated, sending data to the next layer of the network. Otherwise, no data is passed along to the next layer of the network.
 
 ==== Deep Learning
 Deep learning is a subset of machine learning that uses multilayered neural networks, called deep neural networks, to simulate the complex decision-making power of the human brain #cite(<holdsworth-2025>, form: "normal").
@@ -1065,17 +1066,30 @@ This nature of superior performance in images is the primary reason the research
 
 #context {
   [#figure(image("img/cnn-developer-breach.png"), caption: flex-caption(
-      [Deep Neural Network Architecture #cite(<swapna-2025>, form: "normal")],
-      [Deep Neural Network Architecture],
+      [Convolutional Neural Network Architecture #cite(<swapna-2025>, form: "normal")],
+      [Convolutional Neural Network Architecture],
     ))<cnn>]
 }
 
-@cnn illustrates the architecture of a Convolutional Neural Network (CNN), which consists of two primary components: feature extraction and classification. The input image is processed through a series of convolutional layers with ReLU activation, followed by pooling layers that progressively reduce spatial dimensions while retaining important features. These operations generate hierarchical feature maps that capture visual patterns from the image. The output of the feature extraction stage is then flattened and passed through fully connected layers, which act as the classification component. Finally, a softmax activation function produces a probabilistic distribution over predefined classes, enabling the model to make predictions based on the learned features. 
+@cnn illustrates the architecture of a CNN, which consists of two primary components: feature extraction and classification. The input image is processed through a series of convolutional layers with ReLU activation, followed by pooling layers that progressively reduce spatial dimensions while retaining important features. These operations generate hierarchical feature maps that capture visual patterns from the image. The output of the feature extraction stage is then flattened and passed through fully connected layers, which act as the classification component. Finally, a softmax activation function produces a probabilistic distribution over predefined classes, enabling the model to make predictions based on the learned features. 
 
 All the CNNs in this study follow this same fundamental procedure, only having differences in depth and complexity of their architecture like the number of convolutional and pooling layers, the size and the number of filters, and the structure of the fully connected layers.
 
 ==== Vision Transformers (ViTs)
-In addition to CNNs, Vision Transformers are explored for their ability to capture long-range dependencies and attention-based representations, which may enhance classification in complex image scenarios.
+According to #cite(<shah-2022>), in ViTs, images are represented as sequences, and class labels for the image are predicted, which allows models to learn image structure independently. Input images are treated as a sequence of patches where every patch is flattened into a single vector by concatenating the channels of all pixels in a patch and then linearly projecting it to the desired input dimension.
+
+The researchers considered testing ViTs due to their ability to model global relationships across an image rather than relying on local feature extractions. The researchers explored whether the unique architecture of ViTs can offer advantages over CNN models in classifying nail features. Testing it allowed researchers to compare performance, generalization, and representation against CNNs, contributing to a more comprehensive evaluation of model effectiveness. However, ViTs are more computationally expensive and harder to interpret, so it's a matter of trade-offs.
+
+#context {
+  [
+    #figure(image("img/vit-geek-for-geeks.png"), caption: flex-caption(
+      [Architecture and Working of Vision Transformer #cite(<geeksforgeeks-2025d>, form: "normal")],
+      [Architecture and Working of Vision Transformer],
+    )) <vit>
+  ]
+}
+
+@vit shows the architecutre of ViTs. The input image is divided into patches which are flattened and embedded using linear projection. Positional encodings are then added to the patch embeddings to retain spatial information. The patch embeddings are passed through multiple transformer encoder layers, which include multi-head self-attention and feed-forward networks. Lastly, the CLS token's output is extracted and fed into Multi-Layer Perceptrons (MLP) for the final classification.
 
 ==== Transfer Learning
 Pre-trained models such as EfficientNetV2 and RegNetY16GF, initially trained on large-scale datasets (e.g., ImageNet), were fine-tuned using the nail disease dataset to accelerate training and improve performance.
