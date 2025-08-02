@@ -143,6 +143,8 @@
 
 
 #show figure: set block(breakable: true, sticky: true)
+#show figure.where(kind: table): set block(breakable: true, sticky: false)
+#show figure.where(kind: table): set figure(placement: none)
 
 #set figure(
   gap: double-spacing,
@@ -713,21 +715,18 @@ This section outlines the theoretical and conceptual frameworks that underpin th
 A theoretical framework serves as a foundational structure of concepts, definitions, and propositions that guide research by explaining or predicting phenomena and the relationships between them. #cite(<vinz_what_2022>) states that a theoretical framework serves as a foundational review of existing theories that functions as a guiding structure for developing arguments within a researcher's own work. It explains the established theories that underpin a research study, thereby demonstrating the relevance of the paper and its grounding in existing ideas. Essentially, it justifies and contextualizes the research, representing a crucial initial step for a research paper.  The diagram below integrates deep learning and probabilistic modeling to create a comprehensive system for fingernail-based systemic disease detection, drawing inspiration from AI-driven diagnostic methodologies. It adapts principles from frameworks like #cite(<debnath_framework_2020>, form: "prose"), which emphasize systematic processing, feature extraction, and response generation in AI systems.
 
 #context {
-  figure(
-    placement: none,
-    image("img/theoretical-framework.png", width: 64%),
-    caption: flex-caption(
-      [Integrated Deep Learning and Probabilistic Diagnostic Framework for Fingernail-Based Systemic Disease Detection #cite(<debnath_framework_2020>, form: "normal")],
-      [Integrated Deep Learning and Probabilistic Diagnostic Framework for Fingernail-Based Systemic Disease Detection],
-    ),
-  )
+  [#figure(
+      image("img/theoretical-framework.png"),
+      caption: flex-caption(
+        [Integrated Deep Learning and Probabilistic Diagnostic Framework for Fingernail-Based Systemic Disease Detection #cite(<debnath_framework_2020>, form: "normal")],
+        [Integrated Deep Learning and Probabilistic Diagnostic Framework for Fingernail-Based Systemic Disease Detection],
+      ),
+    )<debnath-archi>]
 }
 
-The process begins with users uploading fingernail images via a user interface, followed by input handling and preprocessing steps such as normalization, resizing, and augmentation to enhance image quality and variability. Feature extraction employs CNNs (e.g., ResNet, MobileNet) to identify visual patterns, while intent recognition classifies nail disorders (e.g., clubbing, pitting) and entity recognition isolates specific biomarkers. A knowledge integration module, populated with clinical literature and health data, supports probabilistic inference using models like Naïve Bayes and Bayesian Inference, generating risk assessments and recommendations. A feedback loop ensures continuous improvement by merging new data into the knowledge base, with third-party services providing external validation to enhance reliability.
-The process begins with users uploading fingernail images through a user interface, followed by preprocessing steps, such as normalization, resizing, and augmentation, to optimize image quality and diversity. Feature extraction employs convolutional neural networks (CNNs), including EfficientNetV2S, VGG16, ResNet50, and RegNetY-16GF, to detect visual patterns, while classification identifies nail disorders, such as clubbing or pitting, and biomarker recognition isolates specific features. A knowledge integration module, incorporating clinical literature and health data, supports probabilistic inference /* using models like Naïve Bayes and Bayesian Inference */ to generate risk assessments and recommendations. A feedback loop continuously improves the system by integrating new data, with third-party services providing external validation to ensure reliability.
+@debnath-archi shows that the process begins with users uploading fingernail images through a user interface, followed by preprocessing steps, such as normalization, resizing, and augmentation, to optimize image quality and diversity. Feature extraction employs convolutional neural networks (CNNs), including EfficientNetV2S, VGG16, ResNet50, and RegNetY-16GF, to detect visual patterns, while classification identifies nail disorders, such as clubbing or pitting, and biomarker recognition isolates specific features. A knowledge integration module, incorporating clinical literature and health data, supports probabilistic inference /* using models like Naïve Bayes and Bayesian Inference */ to generate risk assessments and recommendations. A feedback loop continuously improves the system by integrating new data, with third-party services providing external validation to ensure reliability.
 
 #figure(
-  placement: none,
   image("./img/shandilya-theoretical.jpg", width: 75%),
   caption: flex-caption(
     [End-to-end framework for nail image classification using deep learning models. #cite(<shandilya_autonomous_2024>, form: "normal")],
@@ -746,7 +745,6 @@ The study also expanded the types of nail conditions that the model can detect. 
 The study also went a step further by connecting each nail condition to possible systemic diseases. For example, some nail problems might be linked to heart disease, anemia, or cancer. This connection helps the model not just recognize the nail condition, but also suggest what health issue might be related.
 
 #figure(
-  placement: none,
   image("./img/ANN-architecture.png"),
   caption: flex-caption(
     [
@@ -762,7 +760,6 @@ Within these layers, operations involve affine functions, which use linear trans
 In the study, the researchers chose ANN as the main method because of their ability to learn patterns from data. A specific type of ANN called a Convolutional Neural Network (CNN) is used to analyze fingernail images and detect visual features known as fingernail biomarkers, such as color, shape, and texture. These features may reveal signs of systemic diseases. Once the CNN identifies these biomarkers, probabilistic models are applied to estimate the likelihood of a person having a certain disease. This allows the system to give predictions like "there is an 85% chance of anemia," making the approach useful for early detection and preventive healthcare.
 
 #figure(
-  placement: none,
   image("./img/cnn-architecture.png"),
   caption: flex-caption(
     [Visual representation of a Convolutional Neural Network (CNN) architecture #cite(<zhou_classification_2017>, form: "normal").],
@@ -774,8 +771,7 @@ In the study, the researchers chose ANN as the main method because of their abil
 
 In the study, the researchers used Convolutional Neural Networks (CNNs) because they are well-known for their strong performance in image processing tasks. According to #cite(<zhou_classification_2017>), CNNs are a type of Deep Neural Network (DNN) designed to take advantage of the way images work by focusing on small local areas rather than connecting every node to each other like in regular DNNs. This makes CNNs more efficient and better at recognizing important features, especially in large images. In this research, CNNs were used to detect nail biomarkers from fingernail images by learning patterns such as shapes, textures, and color differences. Their ability to capture local visual details through convolutional and pooling layers made them a reliable choice for comparing different models in nail image analysis.
 
-
-#figure(placement: none, image("./img/transformer-architecture.png"), caption: flex-caption(
+#figure(image("./img/transformer-architecture.png"), caption: flex-caption(
   [
     Vision Transformer (ViT) Architecture for Image Classification #cite(<dosovitskiy_image_2020>, form: "normal").],
   [Vision Transformer (ViT) Architecture for Image Classification.],
@@ -787,7 +783,6 @@ In the study, the researchers used Convolutional Neural Networks (CNNs) because 
 In the study, the researchers used a Vision Transformer (ViT) model because it offers a new way to analyze images by treating them as sequences of patches, similar to how text is processed in Natural Language Processing. Based on #cite(<dosovitskiy_image_2020>), this design allows the model to focus on different parts of the image and capture important visual patterns without relying on built-in image rules like in CNNs. This makes ViT especially useful for detecting fine details in fingernail images, such as color or texture changes, which are important for identifying nail biomarkers. By using ViT, the researchers aimed to explore whether this newer method could better detect subtle features in the nails that may not be as easily captured by traditional CNNs.
 
 #figure(
-  placement: none,
   image("./img/bayesian-architecture.png"),
   caption: flex-caption(
     [A Bayesian network illustrating the dependencies between various parameters within a system #cite(<hall_ginns_2021>, form: "normal").],
@@ -800,7 +795,7 @@ In the study, the researchers used a Vision Transformer (ViT) model because it o
 In the study, the researchers used a Bayesian Network (BN) as a probabilistic model to link detected nail biomarkers to possible systemic diseases. According to #cite(<hall_ginns_2021>), a BN is a type of graphical model that represents variables as nodes and their relationships as directed connections, which helps show how certain features influence others. This structure makes it easier to model uncertainty and complex dependencies between health-related factors. After the Vision Transformer (ViT) or Convolutional Neural Networks (CNNs) detect the nail biomarkers, the BN uses conditional probability to estimate the chances of different systemic diseases based on those findings. This approach allows the system to give predictions with confidence levels, which is useful in preventive healthcare where early risk assessment is important.
 
 
-#figure(placement: none, image("/img/agile.png"), caption: flex-caption(
+#figure(image("/img/agile.png"), caption: flex-caption(
   [AGILE Development Cycle #cite(<okeke_agile_2021>)],
   [AGILE Development Cycle],
 )) <agile>
@@ -810,9 +805,11 @@ In the study, the researchers used a Bayesian Network (BN) as a probabilistic mo
 ==== Conceptual Framework
 The conceptual framework provides a practical workflow for implementing the theoretical foundation, detailing the process from data collection to system deployment. It is divided into three phases: input, process, and output.
 
-#figure(placement: none, image("img/ConceptualFramework.png", width: 94%), caption: [Conceptual Framework of the Study])
+#context {
+  [#figure(image("img/ConceptualFramework.png"), caption: [Conceptual Framework of the Study]) <conceptual-framework>]
+}
 
-The input phase involves collecting fingernail images from datasets like Kaggle and Roboflow, supplemented by local health data to inform probabilistic inference. The process phase includes data cleaning (normalization, noise reduction) and augmentation (flipping, scaling, brightness adjustment) to enhance dataset diversity. Feature extraction using CNNs (e.g., ResNet, MobileNet, EfficientNet) precedes model training with a split dataset (80% training, 20% testing), employing CNNs for classification and probabilistic models (e.g., Naïve Bayes, Bayesian Inference) for inference. Evaluation metrics (sensitivity, recall, confidence intervals) guide hyperparameter tuning, leading to the selection of the best-performing model. The output phase delivers probabilistic classifications of nail disorders, systemic disease likelihoods (e.g., diabetes: 85%), and recommendations for medical consultation, with deployment into a web application for global accessibility.
+As illustrated in @conceptual-framework, input phase involves collecting fingernail images from datasets like Kaggle and Roboflow, supplemented by local health data to inform probabilistic inference. The process phase includes data cleaning (normalization, noise reduction) and augmentation (flipping, scaling, brightness adjustment) to enhance dataset diversity. Feature extraction using CNNs (e.g., ResNet, MobileNet, EfficientNet) precedes model training with a split dataset (80% training, 20% testing), employing CNNs for classification and probabilistic models (e.g., Naïve Bayes, Bayesian Inference) for inference. Evaluation metrics (sensitivity, recall, confidence intervals) guide hyperparameter tuning, leading to the selection of the best-performing model. The output phase delivers probabilistic classifications of nail disorders, systemic disease likelihoods (e.g., diabetes: 85%), and recommendations for medical consultation, with deployment into a web application for global accessibility.
 
 // (Desktop Application) and Web Application
 
@@ -1006,7 +1003,7 @@ In this study, the researchers utilized machine learning to detect subtle to dis
 
 #context {
   [
-    #figure(placement: none, image("img/machine-learning-geek-for-geeks.png"), caption: flex-caption(
+    #figure(image("img/machine-learning-geek-for-geeks.png"), caption: flex-caption(
       [Machine Learning #cite(<geeksforgeeks-2025a>, form: "normal")],
       [Machine Learning],
     )) <machine-learning>]
@@ -1020,7 +1017,7 @@ According to #cite(<geeksforgeeks-2025b>), supervised machine learning is a fund
 This study involves a classification problem and falls under the category of supervised machine learning. The model is trained on labeled data which are nail images paired with corresponding nail disease labels. Then it learns to classify new, unseen nail images into their respective categories based on learned features.
 
 #context {
-  [#figure(placement: none, image("img/supervised-machine-learning-geek-for-geeks.png"), caption: flex-caption(
+  [#figure(image("img/supervised-machine-learning-geek-for-geeks.png"), caption: flex-caption(
       [Supervised Machine Learning #cite(<geeksforgeeks-2025a>, form: "normal")],
       [Supervised Machine Learning],
     ))<supervised>]
@@ -1036,7 +1033,7 @@ In this study, the researchers utilized neural networks because of their strong 
 
 #context {
   [
-    #figure(placement: none, image("img/neural-networks-geeks-for-geeks.png"), caption: flex-caption(
+    #figure(image("img/neural-networks-geeks-for-geeks.png"), caption: flex-caption(
       [Neural Network Architecture #cite(<geeksforgeeks-2025c>, form: "normal")],
       [Neural Network Architecture],
     )) <cnn-architecture2>
@@ -1053,7 +1050,7 @@ According to #cite(<ibm-2025>), deep learning and neural networks tend to be use
 The neural networks used in this study are considered deep neural networks, since images of nails are very complex and has variations such as texture, color, and spatial patterns, which will require multiple hidden layers to effectively extract and learn these features for accurate classification.
 
 #context {
-  [#figure(placement: none, image("img/deep-neural-network-ibm.png"), caption: flex-caption(
+  [#figure(image("img/deep-neural-network-ibm.png"), caption: flex-caption(
       [Deep Neural Network Architecture #cite(<ibm-2025>, form: "normal")],
       [Deep Neural Network Architecture],
     ))<dnn>]
@@ -1107,31 +1104,32 @@ The system was structured into modular components—data preprocessing, model tr
 === Algorithm Analysis
 To assess the performance and computational efficiency of the selected deep learning models, five architectures were evaluated using identical training parameters. Each model was trained for five epochs with a batch size of 32, a learning rate of $1e-4$, and the AdamW optimizer. The loss function employed was Cross Entropy Loss. All experiments were executed under consistent hardware and software environments to ensure comparability.
 
-#figure(
-  placement: none,
-  text(size: 7pt)[
-    #table(
-      columns: (1fr,) * 8,
-      align: (x, _) => if x == 0 { left + horizon } else { horizon + center },
-      table.header(
-        [Model], [Parameters], [Epochs], [Training Time (min)], [Accuracy], [Precision], [Recall], [F1-Score]
-      ),
+#context {
+  [#figure(
+      text(size: 7pt)[
+        #table(
+          columns: (1fr,) * 8,
+          align: (x, _) => if x == 0 { left + horizon } else { horizon + center },
+          table.header(
+            [Model], [Parameters], [Epochs], [Training Time (min)], [Accuracy], [Precision], [Recall], [F1-Score]
+          ),
 
-      [EfficientNetV2S], [20,190,298], [5], [21.22], [88%], [90%], [88%], [88%],
+          [EfficientNetV2S], [20,190,298], [5], [21.22], [88%], [90%], [88%], [88%],
 
-      [VGG16], [134,301,514], [5], [27.06], [66%], [77%], [66%], [67%],
+          [VGG16], [134,301,514], [5], [27.06], [66%], [77%], [66%], [67%],
 
-      [ResNet50], [23,528,522], [5], [22.86], [75%], [80%], [75%], [76%],
+          [ResNet50], [23,528,522], [5], [22.86], [75%], [80%], [75%], [76%],
 
-      [RegNetY-16GF], [80,595,390], [5], [24.33], [85%], [88%], [85%], [85%],
+          [RegNetY-16GF], [80,595,390], [5], [24.33], [85%], [88%], [85%], [85%],
 
-      [SwinV2B], [86,916,068], [5], [62.13], [90%], [90%], [90%], [89%],
-    )],
-  caption: [Comparison of model performance metrics and training efficiency across nail conditions.],
-)
+          [SwinV2B], [86,916,068], [5], [62.13], [90%], [90%], [90%], [89%],
+        )],
+      caption: [Comparison of model performance metrics and training efficiency across nail conditions.],
+    )<model-table>]
+}
 
 // ==== Comparative Analysis
-Among the five architectures, *SwinV2B* achieved the highest performance across all evaluated metrics, obtaining an accuracy of _90%_, precision of _90%_, recall of _90%_, and an F1-score of _89%_. Despite its computational intensity—demonstrated by the highest training time of _62.13 minutes_—its superior classification performance justifies the resource cost in scenarios where accuracy is prioritized.
+@model-table illustrates that among the five architectures, *SwinV2B* achieved the highest performance across all evaluated metrics, obtaining an accuracy of _90%_, precision of _90%_, recall of _90%_, and an F1-score of _89%_. Despite its computational intensity—demonstrated by the highest training time of _62.13 minutes_—its superior classification performance justifies the resource cost in scenarios where accuracy is prioritized.
 
 *EfficientNetV2S* follows closely, with a relatively lower parameter count and faster training time, making it a competitive choice for lightweight applications. It achieves an F1-score of _88%_, while maintaining strong recall and precision.
 
@@ -1155,34 +1153,34 @@ The dataset utilized for this study is sourced from a publicly available Nail Di
 
 The researchers also renamed the class "acral lentiginous melanoma" to "melanonychia" for medical accuracy, since all of the images have melanonychia features, but not all images may have been confirmed to be acral lentiginous melanoma. Additionally, acral lentiginous melanoma is a diagnosis itself, making melanonychia the better fit since melanonychia is a nail feature and not a diagnosis.
 
-#show figure: set block(breakable: true, sticky: false)
-#figure(
-  placement: none,
-  text(size: 12pt)[
-    #table(
-      inset: 0.3em,
-      columns: (1.7fr, 1fr, 1fr, 1fr),
-      align: (x, _) => if x == 0 { left + horizon } else { horizon + center },
-      table.header([Class], [Train], [Validation], [Test]),
+#context (
+  [#figure(
+      text(size: 12pt)[
+        #table(
+          inset: 0.3em,
+          columns: (1.7fr, 1fr, 1fr, 1fr),
+          align: (x, _) => if x == 0 { left + horizon } else { horizon + center },
+          table.header([Class], [Train], [Validation], [Test]),
 
-      [Beau's Line], [456], [44], [22],
-      [Blue Finger], [612], [59], [29],
-      [Clubbing], [783], [74], [38],
-      [Healthy Nail], [642], [54], [30],
-      [Koilonychia], [537], [52], [28],
-      [Melanonychia], [753], [70], [36],
-      [Muehrcke’s Lines], [336], [31], [16],
-      [Onychogryphosis], [690], [65], [34],
-      [Pitting], [657], [61], [32],
-      [Terry’s Nail], [894], [81], [42],
-    ),
-    #v(-2em)
-  ],
-  caption: [Sample distribution per class across dataset splits.],
+          [Beau's Line], [456], [44], [22],
+          [Blue Finger], [612], [59], [29],
+          [Clubbing], [783], [74], [38],
+          [Healthy Nail], [642], [54], [30],
+          [Koilonychia], [537], [52], [28],
+          [Melanonychia], [753], [70], [36],
+          [Muehrcke’s Lines], [336], [31], [16],
+          [Onychogryphosis], [690], [65], [34],
+          [Pitting], [657], [61], [32],
+          [Terry’s Nail], [894], [81], [42],
+        ),
+        #v(-2em)
+      ],
+      caption: [Sample distribution per class across dataset splits.],
+    )<class-distribution>]
 )
 
 
-The final dataset used in this study consists of 7,258 labeled nail images, divided into three subsets: training (6,360 images, 88%), validation (591 images, 8%), and testing (307 images, 4%).
+The final dataset used in this study consists of 7,258 labeled nail images, divided into three subsets: training (6,360 images, 88%), validation (591 images, 8%), and testing (307 images, 4%) as illustrated in @class-distribution.
 
 Each subset contains images from ten nail disease classes, with class distributions reflecting a natural imbalance. The training set is used for model learning, the validation set for hyperparameter tuning and early stopping, and the test set for final evaluation.
 
@@ -1190,54 +1188,54 @@ The class with the highest representation across all sets is Terry's Nail, while
 
 Weighted loss was used during training to compensate for class imbalance and improve model fairness across underrepresented classes.\
 
-#set image(width: 50%)
-#show figure: set block(breakable: true, sticky: true)
-#figure(
-  placement: none,
-  table(
-    columns: (1.5fr, 3fr, 1.5fr),
-    align: (x, y) => if x < 2 and y != 0 { left } else { horizon + center },
-    table.header([Class], [Description], [Sample Image]),
+#context {
+  set image(width: 50%)
+  figure(
+    table(
+      columns: (1.5fr, 3fr, 1.5fr),
+      align: (x, y) => if x < 2 and y != 0 { left } else { horizon + center },
+      table.header([Class], [Description], [Sample Image]),
 
-    [Beau's Line],
-    [Beau’s lines are horizontal ridges or dents in one or more of the fingernails or toenails.],
-    [#image("img/table-2-beaus-line.jpg")],
-    //https://my.clevelandclinic.org/health/symptoms/22906-beaus-lines
+      [Beau's Line],
+      [Beau’s lines are horizontal ridges or dents in one or more of the fingernails or toenails.],
+      [#image("img/table-2-beaus-line.jpg")],
+      //https://my.clevelandclinic.org/health/symptoms/22906-beaus-lines
 
-    [Blue Finger],
-    [Also known as Cyanosis, is when the nails turn a bluish tone],
-    [#image("img/table-2-blue-finger.jpg")],
+      [Blue Finger],
+      [Also known as Cyanosis, is when the nails turn a bluish tone],
+      [#image("img/table-2-blue-finger.jpg")],
 
-    [Clubbing],
-    [Nails appear wider, spongelike or swollen, like an upside-down spoon],
-    [#image("img/table-2-clubbing.jpg")],
+      [Clubbing],
+      [Nails appear wider, spongelike or swollen, like an upside-down spoon],
+      [#image("img/table-2-clubbing.jpg")],
 
-    [Healthy Nail],
-    [Healthy nails are smooth, consistent in color and consistency],
-    [#image("img/table-2-healthy.jpg")],
+      [Healthy Nail],
+      [Healthy nails are smooth, consistent in color and consistency],
+      [#image("img/table-2-healthy.jpg")],
 
-    [Koilonychia], [Soft nails that have a spoon-shaped dent], [#image("img/table-2-koilonychia.jpg")],
-    [Melanonychia],
-    [Are brown or black discolouration of a nail. It may be diffuse or take the form of a longitudinal band.],
-    [#image("img/table-2-melanonychia.jpg")],
-    //https://dermnetnz.org/topics/melanonychia
-    [Muehrcke’s Lines], [Are horizontal white lines across the nail], [#image("img/table-2-muehrckes-lines.jpg")],
-    //https://my.clevelandclinic.org/health/symptoms/muehrcke-lines
-    [Onychogryphosis],
-    [Characterised by an opaque, yellow-brown thickening of the nail plate with elongation and increased curvature],
-    [#image("img/table-2-onychogryphosis.jpg")],
-    //https://dermnetnz.org/topics/onychogryphosis
-    [Pitting],
-    [May show up as shallow or deep holes in the nail. It can look like white spots or marks],
-    [#image("img/table-2-pitting.jpg")],
+      [Koilonychia], [Soft nails that have a spoon-shaped dent], [#image("img/table-2-koilonychia.jpg")],
+      [Melanonychia],
+      [Are brown or black discolouration of a nail. It may be diffuse or take the form of a longitudinal band.],
+      [#image("img/table-2-melanonychia.jpg")],
+      //https://dermnetnz.org/topics/melanonychia
+      [Muehrcke’s Lines], [Are horizontal white lines across the nail], [#image("img/table-2-muehrckes-lines.jpg")],
+      //https://my.clevelandclinic.org/health/symptoms/muehrcke-lines
+      [Onychogryphosis],
+      [Characterised by an opaque, yellow-brown thickening of the nail plate with elongation and increased curvature],
+      [#image("img/table-2-onychogryphosis.jpg")],
+      //https://dermnetnz.org/topics/onychogryphosis
+      [Pitting],
+      [May show up as shallow or deep holes in the nail. It can look like white spots or marks],
+      [#image("img/table-2-pitting.jpg")],
 
-    [Terry's Nail],
-    [Nail looks white, like frosted glass, except for a thin brown or pink strip at the tip.],
-    [#image("img/table-2-terrys-nail.jpg")],
-    //https://my.clevelandclinic.org/health/symptoms/22890-terrys-nails
-  ),
-  caption: [Nail features],
-)
+      [Terry's Nail],
+      [Nail looks white, like frosted glass, except for a thin brown or pink strip at the tip.],
+      [#image("img/table-2-terrys-nail.jpg")],
+      //https://my.clevelandclinic.org/health/symptoms/22890-terrys-nails
+    ),
+    caption: [Description of nail features],
+  )
+}
 
 The dataset we collected were already pre-processed and augmented. These were the preprocessing step used by the owner of the public dataset:
 - Automatic orientation correction (EXIF metadata removed)
@@ -1252,27 +1250,27 @@ To improve model generalization, data augmentation was also applied, producing t
 - Random brightness adjustment between -20% and +20%
 - Random exposure adjustment between -15% and +15%
 
-#set image(width: 50%)
-#show figure: set block(breakable: true, sticky: true)
-#figure(
-  placement: none,
-  table(
-    columns: (1fr, 0.3fr),
-    align: (x, y) => if x < 0 { left } else { horizon + center },
-    table.header([Class], [Sample Image]),
-    [Beau's Line], [#image("img/augmentation-beaus-line.jpg")],
-    [Blue Finger], [#image("img/augmentation-blue-finger.jpg")],
-    [Clubbing], [#image("img/augmentation-clubbing.jpg")],
-    [Healthy Nail], [#image("img/augmentation-healthy.jpg")],
-    [Koilonychia], [#image("img/augmentation-koilonychia.jpg")],
-    [Melanonychia], [#image("img/augmentation-melanonychia.jpg")],
-    [Muehrcke’s Lines], [#image("img/augmentation-muehrckes-lines.jpg")],
-    [Onychogryphosis], [#image("img/augmentation-onychogryphosis.jpg")],
-    [Pitting], [#image("img/augmentation-pitting.jpg")],
-    [Terry’s Nails], [#image("img/augmentation-terrys-nails.jpg")],
-  ),
-  caption: [Sample Nail Augmentations],
-)
+#context {
+  set image(width: 50%)
+  figure(
+    table(
+      columns: (1fr, 0.3fr),
+      align: (x, y) => if x < 0 { left } else { horizon + center },
+      table.header([Class], [Sample Image]),
+      [Beau's Line], [#image("img/augmentation-beaus-line.jpg")],
+      [Blue Finger], [#image("img/augmentation-blue-finger.jpg")],
+      [Clubbing], [#image("img/augmentation-clubbing.jpg")],
+      [Healthy Nail], [#image("img/augmentation-healthy.jpg")],
+      [Koilonychia], [#image("img/augmentation-koilonychia.jpg")],
+      [Melanonychia], [#image("img/augmentation-melanonychia.jpg")],
+      [Muehrcke’s Lines], [#image("img/augmentation-muehrckes-lines.jpg")],
+      [Onychogryphosis], [#image("img/augmentation-onychogryphosis.jpg")],
+      [Pitting], [#image("img/augmentation-pitting.jpg")],
+      [Terry’s Nails], [#image("img/augmentation-terrys-nails.jpg")],
+    ),
+    caption: [Sample Nail Augmentations],
+  )
+}
 
 Although the dataset was initially preprocessed and augmented through Roboflow's pipeline, additional preprocessing steps were performed to ensure compatibility with the PyTorch deep learning framework. Specifically, all images were resized to $224 × 224$ pixels, which is the standard input dimension for most pre-trained Convolutional Neural Network (CNN) architectures in PyTorch.
 
