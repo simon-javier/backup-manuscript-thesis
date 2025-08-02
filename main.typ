@@ -796,7 +796,7 @@ In the study, the researchers used a Bayesian Network (BN) as a probabilistic mo
 
 
 #figure(image("/img/agile.png"), caption: flex-caption(
-  [AGILE Development Cycle #cite(<okeke_agile_2021>)],
+  [AGILE Development Cycle #cite(<okeke_agile_2021>, form: "normal")],
   [AGILE Development Cycle],
 )) <agile>
 
