@@ -1027,7 +1027,7 @@ This study involves a classification problem and falls under the category of sup
 
 
 ==== Neural Networks
-According to #cite(<ibm-2025>), a neural network is a machine learning program, or model, that makes decisions in a manner similar to the human brain, by using processes that mimic the way biological neurons work together to identify phenomena, weigh options and arrive at conclusions.
+According to #cite(<ibm-2025a>), a neural network is a machine learning program, or model, that makes decisions in a manner similar to the human brain, by using processes that mimic the way biological neurons work together to identify phenomena, weigh options and arrive at conclusions.
 
 In this study, the researchers utilized neural networks because of their strong ability to detect complex patterns in data like images of nails. Unlike traditional machine learning algorithms that often require manual feature extraction, neural networks can automatically learn hierarchical representations of features like color and texture by analyzing images pixels by pixels.
 
@@ -1045,13 +1045,13 @@ In this study, the researchers utilized neural networks because of their strong 
 ==== Deep Learning
 Deep learning is a subset of machine learning that uses multilayered neural networks, called deep neural networks, to simulate the complex decision-making power of the human brain #cite(<holdsworth-2025>, form: "normal").
 
-According to #cite(<ibm-2025>), deep learning and neural networks tend to be used interchangeably in conversation, which can be confusing. It is important to note that the term “deep” in deep learning refers specifically to the number of layers within a neural network. A neural network with more than three layers, including the input and output layers, is typically classified as a deep learning algorithm. In contrast, networks with only two or three layers are considered basic neural networks.
+According to #cite(<ibm-2025a>), deep learning and neural networks tend to be used interchangeably in conversation, which can be confusing. It is important to note that the term “deep” in deep learning refers specifically to the number of layers within a neural network. A neural network with more than three layers, including the input and output layers, is typically classified as a deep learning algorithm. In contrast, networks with only two or three layers are considered basic neural networks.
 
 The neural networks used in this study are considered deep neural networks, since images of nails are very complex and has variations such as texture, color, and spatial patterns, which will require multiple hidden layers to effectively extract and learn these features for accurate classification.
 
 #context {
   [#figure(image("img/deep-neural-network-ibm.png"), caption: flex-caption(
-      [Deep Neural Network Architecture #cite(<ibm-2025>, form: "normal")],
+      [Deep Neural Network Architecture #cite(<ibm-2025a>, form: "normal")],
       [Deep Neural Network Architecture],
     ))<dnn>]
 }
@@ -1061,7 +1061,20 @@ The neural networks used in this study are considered deep neural networks, sinc
 
 
 ==== Convolutional Neural Networks (CNNs)
-CNNs are the primary architecture for analyzing image data. They automatically learn spatial hierarchies of features—edges, textures, and shapes—that are essential for accurate classification of nail abnormalities.
+According to #cite(<ibm-2025b>), convolutional neural networks are distinguished from other neural networks by their superior performance with image, speech or audio signal inputs. They have three main types of layers, which are the convolutional layer, pooling layer, and fully-connected (FC) layer.
+
+This nature of superior performance in images is the primary reason the researchers chose this type of neural networks. Convolutional neural networks are particularly well-suited for visual recognition tasks due to their ability to capture spatial hierarchies and local dependecies in images. The convolutional layers automatically learn relevant patterns such as edges, textures, and shapes, while deeper layers can abstrract more complex features like structures or the anomalies present in the nail photos.
+
+#context {
+  [#figure(image("img/cnn-developer-breach.png"), caption: flex-caption(
+      [Deep Neural Network Architecture #cite(<swapna-2025>, form: "normal")],
+      [Deep Neural Network Architecture],
+    ))<cnn>]
+}
+
+@cnn illustrates the architecture of a Convolutional Neural Network (CNN), which consists of two primary components: feature extraction and classification. The input image is processed through a series of convolutional layers with ReLU activation, followed by pooling layers that progressively reduce spatial dimensions while retaining important features. These operations generate hierarchical feature maps that capture visual patterns from the image. The output of the feature extraction stage is then flattened and passed through fully connected layers, which act as the classification component. Finally, a softmax activation function produces a probabilistic distribution over predefined classes, enabling the model to make predictions based on the learned features. 
+
+All the CNNs in this study follow this same fundamental procedure, only having differences in depth and complexity of their architecture like the number of convolutional and pooling layers, the size and the number of filters, and the structure of the fully connected layers.
 
 ==== Vision Transformers (ViTs)
 In addition to CNNs, Vision Transformers are explored for their ability to capture long-range dependencies and attention-based representations, which may enhance classification in complex image scenarios.
