@@ -1125,9 +1125,10 @@ Multiclass classification is a machine learning classification task that consist
 
 Figure @multiclass-classification shows an example of an illustration of multiclass classification. Each shape is its own label or class. In this illustration, the model would take an image of an object as input and predict one of the three possible classes which are "triangle", "cross", or "circle", to which the object belongs.
 
-
 ==== Image Preprocessing
+According to #cite(<geeksforgeeks-2025e>), image preprocessing is a crucial step that involves transforming raw image data into a format that can be effectively utilized by machine learning algorithms. Proper preprocessing can significantly enhance the accuracy and efficiency of image recognition tasks.
 
+In this study, the researchers applied image preprocessing techniques in order to transform images to numbers or tensors, since machine learning and deep learning models only understand numbers, and not images. The preprocessing steps applied in this study are resizing, normalization, and conversion of image to tensors.
 
 ==== Image Normalization
 Input images were normalized using the standard ImageNet mean and standard deviation values: $"mean" = [0.485, 0.456, 0.406]$ and $"std" = [0.229, 0.224, 0.225]$. This normalization ensures compatibility with pre-trained models from PyTorch’s torchvision library, which were originally trained on the ImageNet dataset. By aligning the data distributions, normalization enables more effective transfer learning and stable gradient flow during training.
