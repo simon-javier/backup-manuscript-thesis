@@ -1017,7 +1017,7 @@ This study involves a classification problem and falls under the category of sup
 
 #context {
   [#figure(image("img/supervised-machine-learning-geek-for-geeks.png"), caption: flex-caption(
-      [Supervised Machine Learning #cite(<geeksforgeeks-2025a>, form: "normal")],
+      [Supervised Machine Learning #cite(<geeksforgeeks-2025b>, form: "normal")],
       [Supervised Machine Learning],
     ))<supervised>]
 }
@@ -1039,7 +1039,7 @@ In this study, the researchers utilized neural networks because of their strong 
   ]
 }
 
-@neural-network shows the architecture of a neural network. The figure is adapted from #cite(<geeksforgeeks-2025c>) and illustrates that every neural network consists of layers of nodes or artificial neurons, an input layer, one or more hidden layers, and an output layer. Each node connects to others, and has its own associated weight and threshold. If the output of any individual node is above the specified threshold value, that node is activated, sending data to the next layer of the network. Otherwise, no data is passed along to the next layer of the network.
+@neural-network shows the architecture of a neural network. The figure is from #cite(<geeksforgeeks-2025c>) and illustrates that every neural network consists of layers of nodes or artificial neurons, an input layer, one or more hidden layers, and an output layer. Each node connects to others, and has its own associated weight and threshold. If the output of any individual node is above the specified threshold value, that node is activated, sending data to the next layer of the network. Otherwise, no data is passed along to the next layer of the network.
 
 ==== Deep Learning
 Deep learning is a subset of machine learning that uses multilayered neural networks, called deep neural networks, to simulate the complex decision-making power of the human brain #cite(<holdsworth-2025>, form: "normal").
@@ -1089,7 +1089,7 @@ The researchers considered testing ViTs due to their ability to model global rel
   ]
 }
 
-@vit shows the architecutre of ViTs. The input image is divided into patches which are flattened and embedded using linear projection. Positional encodings are then added to the patch embeddings to retain spatial information. The patch embeddings are passed through multiple transformer encoder layers, which include multi-head self-attention and feed-forward networks. Lastly, the CLS token's output is extracted and fed into Multi-Layer Perceptrons (MLP) for the final classification.
+@vit shows the architecutre of ViTs. The figure is from #cite(<geeksforgeeks-2025d>). The input image is divided into patches which are flattened and embedded using linear projection. Positional encodings are then added to the patch embeddings to retain spatial information. The patch embeddings are passed through multiple transformer encoder layers, which include multi-head self-attention and feed-forward networks. Lastly, the CLS token's output is extracted and fed into Multi-Layer Perceptrons (MLP) for the final classification.
 
 ==== Transfer Learning
 According to #cite(<murel-jacob-2025>), transfer learning uses pre-trained models from one machine learning task or dataset to improve performance and generalizability on a related task or dataset. 
@@ -1131,7 +1131,7 @@ According to #cite(<geeksforgeeks-2025e>), image preprocessing is a crucial step
 In this study, the researchers applied image preprocessing techniques in order to transform images to numbers or tensors, since machine learning and deep learning models only understand numbers, and not images. The preprocessing steps applied in this study are resizing, normalization, and conversion of image to tensors.
 
 ==== Image Normalization
-Input images were normalized using the standard ImageNet mean and standard deviation values: $"mean" = [0.485, 0.456, 0.406]$ and $"std" = [0.229, 0.224, 0.225]$. This normalization ensures compatibility with pre-trained models from PyTorch’s torchvision library, which were originally trained on the ImageNet dataset. By aligning the data distributions, normalization enables more effective transfer learning and stable gradient flow during training.
+Normalization adjusts pixel intensity values to a standard scale #cite(<geeksforgeeks-2025e>, form: "normal"). In this research, input images were normalized using the standard ImageNet mean and standard deviation values: $"mean" = [0.485, 0.456, 0.406]$ and $"std" = [0.229, 0.224, 0.225]$. This normalization ensures compatibility with pre-trained models from PyTorch’s torchvision library, which were originally trained on the ImageNet dataset. By aligning the data distributions, normalization enables more effective transfer learning and stable gradient flow during training.
 
 ==== Data Augmentation
 Techniques such as horizontal flipping, rotation, and brightness adjustment were applied to increase dataset diversity and reduce overfitting.
