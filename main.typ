@@ -1111,13 +1111,25 @@ Fine-tuning and transfer learning are related but distinct techniques. According
 
 In the researchers case, they further trained pre-trained models on their nail dataset. This was done to allow the model to refine general visual features it learned from Imagenet and adapt them to visual cues present in nail images.
 
-==== Image Classification
-The core task involves classifying images into one of several disease categories, serving as the basis for subsequent probabilistic inference of systemic conditions.
+==== Multiclass Classification
+Multiclass classification is a machine learning classification task that consists of more than two classes, or outputs #cite(<data-robot-2025>, form: "normal"). In this study, the researchers adopted multiclass classification approach because there are a total of 10 distinct classes of nail features in their dataset. The model is trained to identify which specific nail feature is present in a given input image. Since each image belongs to only one category and the task requires distinguishing among multiple possibilities, multiclass classification was the appropriate and necessary framework.
 
-==== Image Data Handling and Preprocessing
-Image Preprocessing:  Prior to training, images underwent resizing format conversion, augmentation, and normalization to ensure consistency across inputs and compatibility with model architectures.
+#context {
+  [
+    #figure(image("img/multiclass-classification.png"), caption: flex-caption(
+      [Multiclass Classification #cite(<kainat-2023>, form: "normal")],
+      [Multiclass Classification],
+    )) <multiclass-classification>
+  ]
+}
 
-==== Normalization
+Figure @multiclass-classification shows an example of an illustration of multiclass classification. Each shape is its own label or class. In this illustration, the model would take an image of an object as input and predict one of the three possible classes which are "triangle", "cross", or "circle", to which the object belongs.
+
+
+==== Image Preprocessing
+
+
+==== Image Normalization
 Input images were normalized using the standard ImageNet mean and standard deviation values: $"mean" = [0.485, 0.456, 0.406]$ and $"std" = [0.229, 0.224, 0.225]$. This normalization ensures compatibility with pre-trained models from PyTorch’s torchvision library, which were originally trained on the ImageNet dataset. By aligning the data distributions, normalization enables more effective transfer learning and stable gradient flow during training.
 
 ==== Data Augmentation
