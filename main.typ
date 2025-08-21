@@ -1518,6 +1518,12 @@ A comprehensive multi-level testing strategy ensures the system’s reliability 
   )
 ]
 #pagebreak()
+#h3(hidden: true)[RC Defense Transcription]
+#[
+#set par(spacing: 1em, leading: 1em)
+#include("./rc-defense-transcription.typ")
+]
+#pagebreak()
 
 #h2(hidden: true, outlined: false)[Appendix B]
 #align(center + horizon)[
