@@ -237,47 +237,47 @@
 
 #let title_page = context counter(page).display()
 #page(header: none)[#align(center)[
-    #{
-      show heading: none
-      [== Title Page]
-    }
+  #{
+    show heading: none
+    [== Title Page]
+  }
 
-    #singleSpacing[*#upper(title)*]
-    \
-    \
-    \
-    An Undergraduate Thesis \
-    Presented to the \
-    Faculty of College of Computer Studies \
-    Laguna State Polytechnic University \
-    Santa Cruz Campus
-    \
-    \
-    \
-    In Partial Fulfillment of the requirements for the Degree \
-    *BACHELOR OF SCIENCE IN COMPUTER SCIENCE* \
-    *Major in Intelligent System*
+  #singleSpacing[*#upper(title)*]
+  \
+  \
+  \
+  An Undergraduate Thesis \
+  Presented to the \
+  Faculty of College of Computer Studies \
+  Laguna State Polytechnic University \
+  Santa Cruz Campus
+  \
+  \
+  \
+  In Partial Fulfillment of the requirements for the Degree \
+  *BACHELOR OF SCIENCE IN COMPUTER SCIENCE* \
+  *Major in Intelligent System*
 
-    \
-    \
-    \
-    \
-    #oneHalfSpacing[
-      By: \
-      *
+  \
+  \
+  \
+  \
+  #oneHalfSpacing[
+    By: \
+    *
       JAVIER, GERON SIMON A. \
       MACAPALLAG, MHAR ANDREI C. \
       VALDEABELLA, SEANREI ETHAN M.
       \
-      *
-    ]
-    \
-    \
-    Under the supervision of: \
-    *MIA M. VILLARICA, DIT*
-    #v(1fr)
-    *JUNE 2025*
-  ]]
+    *
+  ]
+  \
+  \
+  Under the supervision of: \
+  *MIA M. VILLARICA, DIT*
+  #v(1fr)
+  *JUNE 2025*
+]]
 #pagebreak()
 
 #singleSpacing[
@@ -691,7 +691,8 @@ Moreover, the field of medical diagnostics has long sought non-invasive methods 
 Thus, this study specifically seeks to address the following problems:
 + How does the use of a high-quality dataset of fingernail images with a minimum resolution of 224x224, sourced from publicly available images on Roboflow and containing at least 3,000 labeled nail images with standardized preprocessing techniques such as resizing and normalization, impact the performance of deep learning models in detecting nail-related conditions across diverse scenarios?
 // + How can a high-quality, balanced dataset of fingernail images be effectively compiled and preprocessed using standardized techniques such as resizing, and normalization to support accurate disease classification?
-+ How do organized shape and lighting changes to fingernail images affect how well deep learning models perform when identifying systemic diseases in different situations?
+// + How do organized shape and lighting changes to fingernail images affect how well deep learning models perform when identifying systemic diseases in different situations?
++ What approaches can be used to make the model more reliable and accurate in detecting nail features across different conditions?
 + How do the performance outcomes of deep learning models (EfficientNetV2S, VGG16, ResNet50, RegNetY-16GF, and SwinV2-B) compare when trained on the augmented fingernail image dataset for systemic disease classification, as measured by accuracy, precision, recall, and F1-score?
 + Which deep learning model demonstrates superior performance for systemic disease classification from fingernail images, and how do standard evaluation metrics (e.g., accuracy, precision, recall, F1-score for CNNs; confidence intervals, sensitivity, specificity for probabilistic models) inform the selection of the optimal model?
 + How can the best-performing model be deployed in a prototype application to provide interpretable systemic disease inference from fingernail images, and what are the key challenges in ensuring its suitability for clinical decision support or health screening?
@@ -718,12 +719,12 @@ A theoretical framework serves as a foundational structure of concepts, definiti
 
 #context {
   [#figure(
-      image("img/theoretical-framework.png"),
-      caption: flex-caption(
-        [Integrated Deep Learning and Probabilistic Diagnostic Framework for Fingernail-Based Systemic Disease Detection #cite(<debnath_framework_2020>, form: "normal")],
-        [Integrated Deep Learning and Probabilistic Diagnostic Framework for Fingernail-Based Systemic Disease Detection],
-      ),
-    )<debnath-archi>]
+    image("img/theoretical-framework.png"),
+    caption: flex-caption(
+      [Integrated Deep Learning and Probabilistic Diagnostic Framework for Fingernail-Based Systemic Disease Detection #cite(<debnath_framework_2020>, form: "normal")],
+      [Integrated Deep Learning and Probabilistic Diagnostic Framework for Fingernail-Based Systemic Disease Detection],
+    ),
+  )<debnath-archi>]
 }
 
 @debnath-archi shows that the process begins with users uploading fingernail images through a user interface, followed by preprocessing steps, such as normalization, resizing, and augmentation, to optimize image quality and diversity. Feature extraction employs convolutional neural networks (CNNs), including EfficientNetV2S, VGG16, ResNet50, and RegNetY-16GF, to detect visual patterns, while classification identifies nail disorders, such as clubbing or pitting, and biomarker recognition isolates specific features. A knowledge integration module, incorporating clinical literature and health data, supports probabilistic inference /* using models like Naïve Bayes and Bayesian Inference */ to generate risk assessments and recommendations. A feedback loop continuously improves the system by integrating new data, with third-party services providing external validation to ensure reliability.
@@ -784,23 +785,36 @@ In the study, the researchers used Convolutional Neural Networks (CNNs) because 
 
 In the study, the researchers used a Vision Transformer (ViT) model because it offers a new way to analyze images by treating them as sequences of patches, similar to how text is processed in Natural Language Processing. Based on #cite(<dosovitskiy_image_2020>), this design allows the model to focus on different parts of the image and capture important visual patterns without relying on built-in image rules like in CNNs. This makes ViT especially useful for detecting fine details in fingernail images, such as color or texture changes, which are important for identifying nail biomarkers. By using ViT, the researchers aimed to explore whether this newer method could better detect subtle features in the nails that may not be as easily captured by traditional CNNs.
 
-#figure(
-  image("./img/bayesian-architecture.png"),
-  caption: flex-caption(
-    [A Bayesian network illustrating the dependencies between various parameters within a system #cite(<hall_ginns_2021>, form: "normal").],
-    [A Bayesian network illustrating the dependencies between various parameters within a system.],
-  ),
-) <bayesian-architecture>
+#show math.equation: set text(size: 16pt)
+#grid(
+  columns: 1fr,
+  row-gutter: 1em,
+  [#figure(
+    [
+      $P(A|B)=P(A inter B)/P(B) = (P(A) dot P(B|A))/P(B)$
+    ],
+    caption: flex-caption(
+      [Formula of Bayes' Theorem #cite(<hayes_bayes_2025>, form: "normal")],
+      [Formula of Bayes' Theorem],
+    ),
+  ) <bayes-formula>],
+  [*where:*],
+  [$P(A)=$ The probability of A occuring],
+  [$P(B)=$ The probability of B occuring],
+  [$P(A|B)=$ The probability of A given B],
+  [$P(B|A)=$ The probability of B given A],
+  [$P(A inter B)=$ The probability of both A and B occuring],
+)
 
-@bayesian-architecture shows the architecture of a Bayesian network. According to #cite(<hall_ginns_2021>),  Bayesian Network (BN) is a type of probabilistic graphical model (PGM) that is structured as a directed acyclic graph. In this graph, nodes represent random variables, and edges represent conditional dependencies between these variables. The directed nature of the edges makes it intuitive to describe these dependencies, which is particularly well-suited for physics-based modeling. Formally, a BN defines a probability model for the joint probability density function (PDF) of a set of model variables, systematically capturing their correlations and constraints. This joint PDF is expressed as a product of conditional probability distributions (CPDs) for each variable, dependent on its "parent" variables, which are the variables that directly influence it. This structure allows for the modeling of large and complex joint distributions and helps identify conditionally independent variables, which significantly reduces the dimensionality for parameter inference from data.
+@bayes-formula shows the formula of the foundation of the researchers' probability model. According @hayes_bayes_2025, Bayes' Theorem is a mathematical formula for determining conditional probability. Conditional probability is the likelihood of an outcome occurring based on a previous outcome in similar circumstances. Thus, Bayes' Theorem provides a way to revise or update an existing prediction or theory given new evidence.
 
-In the study, the researchers used a Bayesian Network (BN) as a probabilistic model to link detected nail biomarkers to possible systemic diseases. According to #cite(<hall_ginns_2021>), a BN is a type of graphical model that represents variables as nodes and their relationships as directed connections, which helps show how certain features influence others. This structure makes it easier to model uncertainty and complex dependencies between health-related factors. After the Vision Transformer (ViT) or Convolutional Neural Networks (CNNs) detect the nail biomarkers, the BN uses conditional probability to estimate the chances of different systemic diseases based on those findings. This approach allows the system to give predictions with confidence levels, which is useful in preventive healthcare where early risk assessment is important.
-
-
-#figure(image("/img/agile.png"), caption: flex-caption(
-  [AGILE Development Cycle #cite(<okeke_agile_2021>, form: "normal")],
-  [AGILE Development Cycle],
-)) <agile>
+#grid(
+  columns: 1fr,
+  [#figure(image("/img/agile.png"), caption: flex-caption(
+    [AGILE Development Cycle #cite(<okeke_agile_2021>, form: "normal")],
+    [AGILE Development Cycle],
+  )) <agile>]
+)
 
 @agile shows the AGILE development cycle, consisting of six phases: Requirements, Design, Development, Testing, Deployment, and Review. In the study, the researchers used the Agile development cycle to manage the project efficiently and adapt to changes throughout the research process. This approach was chosen because it supports step-by-step progress and allows the researchers to make improvements based on testing and feedback. During the Development phase, the models for detecting nail biomarkers (ViT and CNNs) and predicting disease risk (Bayesian Network) were built. In the Testing phase, model accuracy and performance were evaluated. For Deployment, the researchers used Flask, a lightweight web framework, to create a simple and accessible interface where users can upload fingernail images and get predictions. The Review phase helped the researchers assess results and plan refinements. Using Agile helped ensure that each part of the system was built, tested, and improved in cycles, leading to a more reliable and responsive final product.
 
@@ -1049,9 +1063,9 @@ This study involves a classification problem and falls under the category of sup
 
 #context {
   [#figure(image("img/supervised-machine-learning-geek-for-geeks.png"), caption: flex-caption(
-      [Supervised Machine Learning #cite(<geeksforgeeks-2025b>, form: "normal")],
-      [Supervised Machine Learning],
-    ))<supervised>]
+    [Supervised Machine Learning #cite(<geeksforgeeks-2025b>, form: "normal")],
+    [Supervised Machine Learning],
+  ))<supervised>]
 }
 
 @supervised illustrates how supervised learning works. The input data contains data that are labeled. Each labeled data are then fed into the algorithm. The algorithm learns the associations and patterns between the data and its label. It finds out what patterns likely leads to each label. Finally, the model predicts labels based on inputs.
@@ -1082,9 +1096,9 @@ The neural networks used in this study are considered deep neural networks, sinc
 
 #context {
   [#figure(image("img/deep-neural-network-ibm.png"), caption: flex-caption(
-      [Deep Neural Network Architecture #cite(<ibm-2025a>, form: "normal")],
-      [Deep Neural Network Architecture],
-    ))<dnn>]
+    [Deep Neural Network Architecture #cite(<ibm-2025a>, form: "normal")],
+    [Deep Neural Network Architecture],
+  ))<dnn>]
 }
 
 @dnn shows the architecture of a deep neural network. Unlike basic neural networks, deep neural networks consists of many more hidden layers. Machine learning on these deep neural networks is called deep learning.
@@ -1098,9 +1112,9 @@ This nature of superior performance in images is the primary reason the research
 
 #context {
   [#figure(image("img/cnn-developer-breach.png"), caption: flex-caption(
-      [Convolutional Neural Network Architecture #cite(<swapna-2025>, form: "normal")],
-      [Convolutional Neural Network Architecture],
-    ))<cnn>]
+    [Convolutional Neural Network Architecture #cite(<swapna-2025>, form: "normal")],
+    [Convolutional Neural Network Architecture],
+  ))<cnn>]
 }
 
 @cnn illustrates the architecture of a CNN, which consists of two primary components: feature extraction and classification. The input image is processed through a series of convolutional layers with ReLU activation, followed by pooling layers that progressively reduce spatial dimensions while retaining important features. These operations generate hierarchical feature maps that capture visual patterns from the image. The output of the feature extraction stage is then flattened and passed through fully connected layers, which act as the classification component. Finally, a softmax activation function produces a probabilistic distribution over predefined classes, enabling the model to make predictions based on the learned features.
@@ -1193,26 +1207,26 @@ To assess the performance and computational efficiency of the selected deep lear
 
 #context {
   [#figure(
-      text(size: 7pt)[
-        #table(
-          columns: (1fr,) * 8,
-          align: (x, _) => if x == 0 { left + horizon } else { horizon + center },
-          table.header(
-            [Model], [Parameters], [Epochs], [Training Time (min)], [Accuracy], [Precision], [Recall], [F1-Score]
-          ),
+    text(size: 7pt)[
+      #table(
+        columns: (1fr,) * 8,
+        align: (x, _) => if x == 0 { left + horizon } else { horizon + center },
+        table.header(
+          [Model], [Parameters], [Epochs], [Training Time (min)], [Accuracy], [Precision], [Recall], [F1-Score]
+        ),
 
-          [EfficientNetV2S], [20,190,298], [5], [21.22], [88%], [90%], [88%], [88%],
+        [EfficientNetV2S], [20,190,298], [5], [21.22], [88%], [90%], [88%], [88%],
 
-          [VGG16], [134,301,514], [5], [27.06], [66%], [77%], [66%], [67%],
+        [VGG16], [134,301,514], [5], [27.06], [66%], [77%], [66%], [67%],
 
-          [ResNet50], [23,528,522], [5], [22.86], [75%], [80%], [75%], [76%],
+        [ResNet50], [23,528,522], [5], [22.86], [75%], [80%], [75%], [76%],
 
-          [RegNetY-16GF], [80,595,390], [5], [24.33], [85%], [88%], [85%], [85%],
+        [RegNetY-16GF], [80,595,390], [5], [24.33], [85%], [88%], [85%], [85%],
 
-          [SwinV2B], [86,916,068], [5], [62.13], [90%], [90%], [90%], [89%],
-        )],
-      caption: [Comparison of model performance metrics and training efficiency across nail conditions.],
-    )<model-table>]
+        [SwinV2B], [86,916,068], [5], [62.13], [90%], [90%], [90%], [89%],
+      )],
+    caption: [Comparison of model performance metrics and training efficiency across nail conditions.],
+  )<model-table>]
 }
 
 // ==== Comparative Analysis
@@ -1242,28 +1256,28 @@ The researchers also renamed the class "acral lentiginous melanoma" to "melanony
 
 #context (
   [#figure(
-      text(size: 12pt)[
-        #table(
-          inset: 0.3em,
-          columns: (1.7fr, 1fr, 1fr, 1fr),
-          align: (x, _) => if x == 0 { left + horizon } else { horizon + center },
-          table.header([Class], [Train], [Validation], [Test]),
+    text(size: 12pt)[
+      #table(
+        inset: 0.3em,
+        columns: (1.7fr, 1fr, 1fr, 1fr),
+        align: (x, _) => if x == 0 { left + horizon } else { horizon + center },
+        table.header([Class], [Train], [Validation], [Test]),
 
-          [Beau's Line], [456], [44], [22],
-          [Blue Finger], [612], [59], [29],
-          [Clubbing], [783], [74], [38],
-          [Healthy Nail], [642], [54], [30],
-          [Koilonychia], [537], [52], [28],
-          [Melanonychia], [753], [70], [36],
-          [Muehrcke’s Lines], [336], [31], [16],
-          [Onychogryphosis], [690], [65], [34],
-          [Pitting], [657], [61], [32],
-          [Terry’s Nail], [894], [81], [42],
-        ),
-        #v(-2em)
-      ],
-      caption: [Sample distribution per class across dataset splits.],
-    )<class-distribution>]
+        [Beau's Line], [456], [44], [22],
+        [Blue Finger], [612], [59], [29],
+        [Clubbing], [783], [74], [38],
+        [Healthy Nail], [642], [54], [30],
+        [Koilonychia], [537], [52], [28],
+        [Melanonychia], [753], [70], [36],
+        [Muehrcke’s Lines], [336], [31], [16],
+        [Onychogryphosis], [690], [65], [34],
+        [Pitting], [657], [61], [32],
+        [Terry’s Nail], [894], [81], [42],
+      ),
+      #v(-2em)
+    ],
+    caption: [Sample distribution per class across dataset splits.],
+  )<class-distribution>]
 )
 
 
@@ -1533,8 +1547,8 @@ A comprehensive multi-level testing strategy ensures the system’s reliability 
 #pagebreak()
 #h3(hidden: true)[RC Defense Transcription]
 #[
-#set par(spacing: 1em, leading: 1em)
-#include("./rc-defense-transcription.typ")
+  #set par(spacing: 1em, leading: 1em)
+  #include "./rc-defense-transcription.typ"
 ]
 #pagebreak()
 
