@@ -837,7 +837,7 @@ As illustrated in @conceptual-framework, the input phase involves collecting a d
 //
 
 === Scope and Limitation of the Study
-The general purpose of this study, titled "Probabilistic Detection of Systemic Diseases Using Deep Learning on Fingernail Biomarkers: A Preventive Healthcare Approach," is to develop an innovative and user-friendly system that leverages deep learning and probabilistic modeling to classify fingernail disorders and infer systemic diseases. The system aims to empower individuals globally by providing a non-invasive, accessible tool for early health screening, promoting preventive healthcare through early detection and actionable recommendations.
+The general purpose of this study, titled "Probabilistic Detection of Systemic Diseases Using Deep Learning on Fingernail Biomarkers," is to develop an innovative and user-friendly system that leverages deep learning and probabilistic modeling to classify fingernail disorders and infer systemic diseases. The system aims to empower individuals globally by providing a non-invasive, accessible tool for early health screening, promoting preventive healthcare through early detection and actionable recommendations.
 
 ==== Scope and Coverage
 The following identifies the scope and coverage of the study in terms of subject, methods, advanced technologies, features, output, target audience, and duration:
@@ -846,6 +846,8 @@ The following identifies the scope and coverage of the study in terms of subject
 
 *Data Collection:* The study utilizes a publicly available dataset from Roboflow, consisting of fingernail images with corresponding labels. The original dataset comprises a total of 7,264 images covering 11 classes of nail diseases. However, the researchers have dropped the Lindsay's Nail class due to exretemely few number of images. The researchers also
 renamed the class "acral lentiginous melanoma" to "melanonychia" for medical accuracy, since all of the images have melanonychia features, but not all images may have been confirmed to be acral lentiginous melanoma. Additionally, acral lentiginous melanoma is a diagnosis itself, making melanonychia the better fit since melanonychia is a nail feature and not a diagnosis.
+
+// Need citation from expert or literature to confirm the renaming of the class "acral lentiginous melanoma" to "melanonychia"?
 
 The final dataset used consists of 7,258 images divided into training, testing, and validation set. The classes consist of 10 labels, namely, Beau's Line, Blue Finger, Clubbing, Healthy Nail, Koilonychia, Melanonychia, Muehrcke's Lines, Onychogryphosis, Pitting, and Terry's Nail.
 
@@ -874,6 +876,16 @@ However, this study is limited to the following:
 // The model learns on whole nail images with background noise.
 // Severity of diseases requires medical interference/guidance, thus we will not include severity of diseases.
 // Explainability and Interpretability will be a hindrance, but it is workable.
+
+*Lack of Feature-Specific Detection:* The system does not detect individual nail features (e.g., lunula, nail bed, or color), relying entirely on CNN models to identify subtle to distinct features, which may limit its precision in pinpointing specific nail characteristics.
+
+*Non-Diagnostic Nature:* The system is not designed to provide medical diagnoses or engage users with diagnostic questions, relying solely on general probabilities of systemic diseases based on nail features, which may oversimplify complex medical conditions.
+
+*Background Noise in Images:* The model is trained on whole nail images that include background noise, potentially affecting its ability to isolate relevant nail features and reducing classification accuracy.
+
+*Exclusion of Disease Severity:* The system does not assess the severity of diseases, as this requires medical intervention or guidance, limiting its utility in providing comprehensive health insights.
+
+*Limited Explainability:* The system’s reliance on CNN models hinders explainability and interpretability, which may reduce user trust and make it challenging to understand the basis for specific predictions, though efforts can be made to address this limitation.
 
 *Dataset Quality and Balance:* The system’s performance relies on the quality and diversity of the training datasets, which may contain noise, inconsistencies, or class imbalances, potentially affecting its ability to generalize across diverse populations.
 
