@@ -145,6 +145,7 @@
 #show figure: set block(breakable: true, sticky: true)
 #show figure.where(kind: table): set block(breakable: true, sticky: false)
 #show figure.where(kind: table): set figure(placement: none)
+#show figure.where(kind: table): set figure.caption(position: top)
 
 #set figure(
   gap: double-spacing,
@@ -156,7 +157,7 @@
 
 #show outline.entry.where(level: 1): it => link(it.element.location(), it.indented(strong(it.prefix()), it.inner()))
 
-#show figure.caption: set align(center)
+#show figure.caption.where(kind: table): set align(left)
 #show figure.caption: set par(first-line-indent: 0em)
 #show figure.caption: it => {
   [*#it.supplement #context it.counter.display(it.numbering)#it.separator* #it.body]
@@ -808,21 +809,23 @@ In the study, the researchers used a Vision Transformer (ViT) model because it o
 
 @bayes-formula shows the formula of the foundation of the researchers' probability model. According @hayes_bayes_2025, Bayes' Theorem is a mathematical formula for determining conditional probability. Conditional probability is the likelihood of an outcome occurring based on a previous outcome in similar circumstances. Thus, Bayes' Theorem provides a way to revise or update an existing prediction or theory given new evidence.
 
-#grid(
-  columns: 1fr,
-  [#figure(image("/img/agile.png"), caption: flex-caption(
-    [AGILE Development Cycle #cite(<okeke_agile_2021>, form: "normal")],
-    [AGILE Development Cycle],
-  )) <agile>]
-)
+#figure(image("/img/agile.png"), caption: flex-caption(
+  [AGILE Development Cycle #cite(<okeke_agile_2021>, form: "normal")],
+  [AGILE Development Cycle],
+)) <agile>
 
 @agile shows the AGILE development cycle, consisting of six phases: Requirements, Design, Development, Testing, Deployment, and Review. In the study, the researchers used the Agile development cycle to manage the project efficiently and adapt to changes throughout the research process. This approach was chosen because it supports step-by-step progress and allows the researchers to make improvements based on testing and feedback. During the Development phase, the models for detecting nail biomarkers (ViT and CNNs) and predicting disease risk (Bayesian Network) were built. In the Testing phase, model accuracy and performance were evaluated. For Deployment, the researchers used Flask, a lightweight web framework, to create a simple and accessible interface where users can upload fingernail images and get predictions. The Review phase helped the researchers assess results and plan refinements. Using Agile helped ensure that each part of the system was built, tested, and improved in cycles, leading to a more reliable and responsive final product.
 
 ==== Conceptual Framework
 The conceptual framework provides a practical workflow for implementing the theoretical foundation, detailing the process from data collection to system deployment. It is divided into three phases: input, process, and output.
 
+
 #context {
-  [#figure(image("img/ConceptualFramework.png"), caption: [Conceptual Framework of the Study]) <conceptual-framework>]
+  [#figure(
+    image("img/ConceptualFramework.png"),
+    caption: [Conceptual Framework of the Study],
+    placement: bottom,
+  ) <conceptual-framework>]
 }
 
 As illustrated in @conceptual-framework, the input phase involves collecting a dataset of at least 3,000 labeled fingernail images with a minimum resolution of 224x224 from Roboflow. The processing phase includes data cleaning (resizing and normalization) and augmentation (flipping, scaling, and brightness adjustment) to enhance dataset diversity. Feature extraction using CNNs, such as ResNet-50, VGG-16, RegNetY-16GF, and EfficientNetV2, precedes model training with a split dataset (80% training, 20% testing), employing CNNs for classification and literature-based inference. Evaluation metrics (sensitivity, recall, and confidence intervals) guide hyperparameter tuning, leading to the selection of the best-performing model. The output phase delivers probabilistic classifications of nail disorders, systemic disease likelihoods (e.g., diabetes: 85%), and recommendations for medical consultation, with deployment in a web application for global accessibility.
