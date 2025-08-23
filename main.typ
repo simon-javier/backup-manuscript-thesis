@@ -685,16 +685,23 @@ Systemic diseases such as diabetes, cardiovascular disorders, and liver conditio
 
 The advent of AI-driven technologies has shown promise in addressing this challenge by enabling accurate classification of fingernail disorders. For instance, a 2016 study achieved 65% accuracy in detecting diseases based on nail color analysis, but its scope was limited by ignoring texture and shape features #cite(<indi_early_2016>, form: "normal"). More recent studies, such as those employing advanced CNN models, have achieved higher accuracy in nail disorder classification, up to 99.40% in some cases, but they often stop at identifying nail conditions without linking them to systemic diseases #cite(<shandilya_autonomous_2024>, form: "normal"). This gap reduces the clinical utility of these systems, as they fail to provide comprehensive insights that could guide users toward appropriate medical action.
 
-The potential of AI extends beyond healthcare into various sectors, demonstrating its versatility in addressing complex problems. In education, AI tools facilitate personalized learning experiences; in social services, they provide accessible resources to underserved populations; and in healthcare, they can enhance diagnostic accuracy, as seen in studies where CNNs outperformed dermatologists in diagnosing nail conditions #cite(<han_deep_2018>, form: "normal"). A system that integrates deep learning with probabilistic modeling could similarly revolutionize preventive healthcare by offering non-invasive screening to individuals worldwide, particularly those who lack access to specialized medical services. However, existing approaches often lack the ability to handle diagnostic uncertainty or provide interpretable results, limiting their effectiveness in real-world applications.
+The potential of AI extends beyond healthcare into various sectors, demonstrating its versatility in addressing complex problems. In education, AI tools facilitate personalized learning experiences; in social services, they provide accessible resources to underserved populations; and in healthcare, they can enhance diagnostic accuracy, as seen in studies where CNNs outperformed dermatologists in diagnosing nail conditions #cite(<han_deep_2018>, form: "normal"). A system that integrates deep learning with probabilistic inference could similarly revolutionize preventive healthcare by offering non-invasive screening to individuals worldwide, particularly those who lack access to specialized medical services. However, existing approaches often lack the ability to handle diagnostic uncertainty or provide interpretable results, limiting their effectiveness in real-world applications.
 
 Moreover, the field of medical diagnostics has long sought non-invasive methods to improve early detection, with fingernails emerging as a promising biomarker due to their accessibility. #cite(<pinoliad_onyxray_2020>, form: "prose") demonstrated the feasibility of using machine learning for nail-based disease detection in the Philippines, but their system did not incorporate probabilistic inference for systemic diseases. This highlights the need for a more integrated approach that not only classifies nail disorders but also estimates the likelihood of underlying conditions, empowering users with actionable health insights.
 
+// Existing research only focuses on classifying nails without linking to systemic diseases
+// Existing research using deep-learning on nails lack explainability.
+// Existing research lack integration of the model for public use.
+
 Thus, this study specifically seeks to address the following problems:
-+ How does the use of a high-quality dataset of fingernail images with a minimum resolution of 224x224, sourced from publicly available images on Roboflow and containing at least 3,000 labeled nail images with standardized preprocessing techniques such as resizing and normalization, impact the performance of deep learning models in detecting nail-related conditions across diverse scenarios?
-// + How can a high-quality, balanced dataset of fingernail images be effectively compiled and preprocessed using standardized techniques such as resizing, and normalization to support accurate disease classification?
-// + How do organized shape and lighting changes to fingernail images affect how well deep learning models perform when identifying systemic diseases in different situations?
-+ What approaches can be used to make the model more reliable and accurate in detecting nail features across different conditions?
-+ How do the performance outcomes of deep learning models (EfficientNetV2S, VGG16, ResNet50, RegNetY-16GF, and SwinV2-B) compare when trained on the augmented fingernail image dataset for systemic disease classification, as measured by accuracy, precision, recall, and F1-score?
+
+// How can the use of nails estimate the probability of getting certain diseases?
+// How can the researchers gather dataset of atleast 3000 nail images with diverse classes and how can they prepare, preprocess, and etc.
+// How can the researchers ensure the model is reliable and accurate
+// How can the researcers implement explainability methods for deep learning models
+// How can the researchers pick the best models suitable for certain situations?
+// 
+
 + Which deep learning model demonstrates superior performance for systemic disease classification from fingernail images, and how do standard evaluation metrics (e.g., accuracy, precision, recall, F1-score for CNNs; confidence intervals, sensitivity, specificity for probabilistic models) inform the selection of the optimal model?
 + How can the best-performing model be deployed in a prototype application to provide interpretable systemic disease inference from fingernail images, and what are the key challenges in ensuring its suitability for clinical decision support or health screening?
 
@@ -704,7 +711,6 @@ The main objective of the study is to design, develop  and evaluate a deep learn
 
 Specifically, this study seeks to achieve the following objectives:
 + To obtain a high-quality dataset with a minimum resolution of 224x224, sourced from publicly available fingernail images on Roboflow, containing at least 3,000 labeled nail images, and applying standardized preprocessing techniques, including resizing and normalization, to ensure data consistency and suitability for deep learning.
-// + To curate a high-quality, diverse dataset of fingernail images with verified systemic disease labels, applying standardized preprocessing techniques, including resizing, and normalization to ensure data consistency and suitability for deep learning.
 + To augment the dataset by at least 30% using systematic geometric and photometric transformations to enhance model generalization and robustness for systemic disease classification.
 + To develop and train multiple deep learning models (EfficientNetV2S, VGG16, ResNet50, RegNetY-16GF, and SwinV2-B) on the augmented dataset to classify systemic diseases from fingernail images.
 + To evaluate and compare the performance of the trained models using standard metrics, including accuracy, precision, recall, and F1-score for convolutional neural networks (CNNs), and confidence intervals, sensitivity, and specificity for probabilistic models, to identify the most effective model for systemic disease classification.
