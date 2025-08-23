@@ -1262,7 +1262,7 @@ These reports indicate that while newer models offer significantly improved over
 
 
 === Data Collection Methods
-The dataset utilized for this study is sourced from a publicly available Nail Disease Detection collection hosed on Roboflow, and is released under the Creative Commons Attribution 4.0 (CC BY 4.0) license. The dataset comprises a total of 7,264 images, annotated using the TensorFlow TFRecord (Raccoon) format, covering 11 classes of nail diseases. However, the researchers have dropped the Lindsay's Nail class due to few number of images.
+The dataset utilized for this study is sourced from a publicly available Nail Disease Detection collection hosted on Roboflow, and is released under the Creative Commons Attribution 4.0 (CC BY 4.0) license. The dataset comprises a total of 7,264 images, annotated using the TensorFlow TFRecord (Raccoon) format, covering 11 classes of nail diseases. However, the researchers have dropped the Lindsay's Nail class due to few number of images.
 
 The researchers also renamed the class "acral lentiginous melanoma" to "melanonychia" for medical accuracy, since all of the images have melanonychia features, but not all images may have been confirmed to be acral lentiginous melanoma. Additionally, acral lentiginous melanoma is a diagnosis itself, making melanonychia the better fit since melanonychia is a nail feature and not a diagnosis.
 
