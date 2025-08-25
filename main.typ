@@ -707,13 +707,13 @@ Thus, this study specifically seeks to address the following problems:
 
 
 === Research Objectives
-The main objective of the study is to design, develop  and evaluate a deep learning-based system for the probabilistic detection of systemic diseases using fingernail biomarkers that achieves at least 90% overall detection accuracy by December 2025, providing a non-invasive, accessible, and cost-effective tool to enhance preventive healthcare for individuals globally.
+The main objective of the study is to design, develop  and evaluate a deep learning-based system for the classification of the fingernail biomarker that achieves at least 80% accuracy by December, and integrating Bayesian inference for the detection of the probabilities of systemic diseases, providing a non-invasive, accessible, and cost-effective tool to enhance preventive healthcare for individuals globally.
 
 Specifically, this study seeks to achieve the following objectives:
-+ To obtain a high-quality dataset with a minimum resolution of 224x224, sourced from publicly available fingernail images on Roboflow, containing at least 3,000 labeled nail images, and applying standardized preprocessing techniques, including resizing and normalization, to ensure data consistency and suitability for deep learning.
++ To obtain a dataset with a minimum resolution of 224x224, sourced from publicly available fingernail images on Roboflow, containing at least 3,000 labeled nail images, and applying standardized preprocessing techniques, including resizing and normalization, to ensure data consistency and suitability for deep learning.
 + To augment the dataset by at least 30% using systematic geometric and photometric transformations to enhance model generalization and robustness for systemic disease classification.
 + To develop and train multiple deep learning models (EfficientNetV2S, VGG16, ResNet50, RegNetY-16GF, and SwinV2-B) on the augmented dataset to classify systemic diseases from fingernail images.
-+ To evaluate and compare the performance of the trained models using standard metrics, including accuracy, precision, recall, and F1-score for convolutional neural networks (CNNs), and confidence intervals, sensitivity, and specificity for probabilistic models, to identify the most effective model for systemic disease classification.
++ To evaluate and compare the performance of the trained models using standard metrics, including accuracy, precision, recall, and F1-score for convolutional neural networks (CNNs), 
 + To deploy the top-performing model in a prototype application that provides interpretable systemic disease predictions from fingernail images, designed for potential use in clinical decision support or health screening applications.
 
 === Research Framework
