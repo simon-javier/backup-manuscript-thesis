@@ -702,6 +702,12 @@ Thus, this study specifically seeks to address the following problems:
 // How can the researchers pick the best models suitable for certain situations?
 // 
 
+// Specific problem reference
+
+// + How can a diverse dataset of at least 3,000 fingernail images across multiple classes be gathered, prepared, preprocessed, and curated to ensure compatibility with deep learning frameworks while addressing issues like class imbalance and data quality?
+// + How can the reliability and accuracy of the deep learning model be ensured through rigorous evaluation, including cross-validation, handling of diagnostic uncertainty, and comparison against benchmarks from existing studies?
+// + How can explainability methods, such as Grad-CAM or attention-based visualizations, be implemented in deep learning models for fingernail analysis to provide interpretable results that link visual features to systemic disease inferences?
+// + How can the best-performing deep learning models be selected and adapted for different deployment scenarios, such as resource-constrained environments or high-accuracy clinical settings, considering trade-offs in computational efficiency, parameter count, and performance metrics?
 + Which deep learning model demonstrates superior performance for systemic disease classification from fingernail images, and how do standard evaluation metrics (e.g., accuracy, precision, recall, F1-score for CNNs; confidence intervals, sensitivity, specificity for probabilistic models) inform the selection of the optimal model?
 + How can the best-performing model be deployed in a prototype application to provide interpretable systemic disease inference from fingernail images, and what are the key challenges in ensuring its suitability for clinical decision support or health screening?
 
