@@ -854,69 +854,34 @@ As illustrated in @conceptual-framework, the input phase involves collecting a d
 //
 
 === Scope and Limitation of the Study
-The general purpose of this study, titled "Probabilistic Detection of Systemic Diseases Using Deep Learning on Fingernail Biomarkers," is to develop an innovative and user-friendly system that leverages deep learning and probabilistic modeling to classify fingernail disorders and infer systemic diseases. The system aims to empower individuals globally by providing a non-invasive, accessible tool for early health screening, promoting preventive healthcare through early detection and actionable recommendations.
+The scope is the domain of the research. It describes the extent to which the research question will be explored in the study. Delimitations are the factors or aspects of the research area that the researchers exclude from the research. #cite(<aje-scope>, form: "normal"). The research limitations are the practical or theoretical shortcomings of a study that are often outside of the researchers' control#cite(<aje-limitations>, form: "normal")
 
-==== Scope and Coverage
-The following identifies the scope and coverage of the study in terms of subject, methods, advanced technologies, features, output, target audience, and duration:
+==== Scope
+The following scope are set by the researchers:
+- The research is scheduled over a seven-month period, covering phases such as data collection, preprocessing, model development, evaluation, and deployment
+- The study will cover classifying nail features ranging 10 classes: Beau's Lines, Blue Nails, Clubbing, Healthy Nail, Koilonychia, Melanonychia, Muehrcke's Lines, Onychogryphosis, and Terry's Nails.
+- The image dataset will be trained on five models: Resnet-50, VGG-16, RegNetY-16GF, EfficientNetV2-S, and SwinV2-B. The researchers will improve the model through iterative experimentations.
+// To be updated to be more specific
+- The researchers will implement explainability tehcniques such as Grad-CAM to understand how the model came up with the classified nail.
+- The study makes inferences using Bayes’ theorem with probabilities derived from the curated statistical dataset.
+- The study will be developed on the web using frameworks like Flask.
 
-*Subject:* The research focuses on the classification of fingernail disorders and the probabilistic inference of systemic diseases using fingernail biomarkers as a non-invasive diagnostic approach.
+==== Delimitations
+The following delimitations are set by the researchers:
+// Include ba natin nail segmentation?
+- The developed model does not detect individual features of the nail (like the lunula, nail bed, or color of the nail). It relies solely on the power of the CNN and ViT Models to detect from subtle to distinct features from the labeled dataset.
+- The developed system will not be a diagnosis system, thus it won't try to make a diagnosis out of the user by asking questions about the user's medical history to make a further accurate systemic disease inference as how the dermatologists and internal medicine doctors would do it, solely relying on general probabilities of systemic diseases on nail features, which may oversimplify complex medical conditions.
+- The model will not analyze how severe a nail feature has become. It will only classify which nail feature it is.
 
-*Data Collection:* The study utilizes a publicly available dataset from Roboflow, consisting of fingernail images with corresponding labels. The original dataset comprises a total of 7,264 images covering 11 classes of nail diseases. However, the researchers have dropped the Lindsay's Nail class due to exretemely few number of images. The researchers also
-renamed the class "acral lentiginous melanoma" to "melanonychia" for medical accuracy, since all of the images have melanonychia features, but not all images may have been confirmed to be acral lentiginous melanoma. Additionally, acral lentiginous melanoma is a diagnosis itself, making melanonychia the better fit since melanonychia is a nail feature and not a diagnosis.
-
-// Need citation from expert or literature to confirm the renaming of the class "acral lentiginous melanoma" to "melanonychia"?
-
-The final dataset used consists of 7,258 images divided into training, testing, and validation set. The classes consist of 10 labels, namely, Beau's Line, Blue Finger, Clubbing, Healthy Nail, Koilonychia, Melanonychia, Muehrcke's Lines, Onychogryphosis, Pitting, and Terry's Nail.
-
-The training set was originally augmented by the author of the dataset. The augmentations include resizing to 416x416 pixels, 50% chance of horizontal flip, 50% chance of vertical flip, equal probability of a 90-degree rotation (none, clockwise, counter-clockwise, or 180°), random rotation within the range of −15° to +15°, random shear transformations between
-−15° and +15° in both horizontal and vertical directions, random brightness adjustment between −20% and +20%, and random exposure adjustment between −15% and +15%.
-
-On top of the pre-augmented dataset, we further augmented it to fit with PyTorch's compatibility. The images were resized to 224x224 pixels, converted to tensors, then normalized. It is a necessary step to ensure that the images are consistent
-with PyTorch's pre-trained weights.
-
-*Technologies:* The system uses five trained models, four of which are Convolutional Neural Networks. These are ResNet-50, VGG-16, RegNetY-16GF, and EfficientNetV2-S. One is a Vision Transformer (ViT) which is SwinV2-B.
-
-*Features:* The system features an intuitive user interface that allows users to upload fingernail images, receive probabilistic classifications of nail disorders, and view estimated likelihoods of systemic diseases with recommendations for further medical evaluation. It also includes a feedback loop for continuous improvement.
-
-*System Output:* The system provides probabilistic risk assessments in text format (e.g., "Clubbing: 98%, Diabetes Likelihood: 85%"), accompanied by actionable recommendations, fostering an informative interaction that enhances users’ understanding of their health risks.
-
-*Target Audience:* The system targets a local and global audience, including individuals seeking proactive health monitoring, healthcare providers needing screening tools, and public health organizations aiming to monitor disease prevalence.
-
-*Testing Group:* To assess its usability and reliability, the system will undergo testing with a diverse group, including non-medical individuals, healthcare professionals, and public health experts, ensuring it meets varied user needs.
-
-*Time Duration:* The research is scheduled over a seven-month period, covering phases such as data collection, preprocessing, model development, training, testing, integration, evaluation, and deployment.
 
 ==== Limitations
-However, this study is limited to the following:
-// It does not detect the individual features of the nail (like the lunula, nail bed, color of the nail etc). It relies solely on the power of the CNN models to detect from subtle to distinct features.
-// The system will not be a diagnosis system, thus it won't try to make a diagnosis out of the user such as asking questions, etc. The inference is solely based on the general probabilities of getting these systemic diseases if you have this certain nail feature.
-// The model learns on whole nail images with background noise.
-// Severity of diseases requires medical interference/guidance, thus we will not include severity of diseases.
-// Explainability and Interpretability will be a hindrance, but it is workable.
+This study is limited to the following:
+- The reliability of nails as a systemic disease detector is tricky and requires more information such as the user's history, work, and pathology.
+- The dataset quality and balance can impact the model's ability to make predictions
+- Publicly sourced datasets may lack formal verification from licensed medical professionals, introducing risks of inaccurate labels that could impact classification and inference reliability.
+- Due to the blackbox nature of deep learning models, the models employed have limited interpretability and explainability, which may affect clinical trust and adoption despite strong predictive performance #cite(<doshi_2017_towards>, form: "normal")
+- Training complex models require substantial computational resources which may limit the ability to perform extensive hyperparameter tuning.
 
-*Lack of Feature-Specific Detection:* The system does not detect individual nail features (e.g., lunula, nail bed, or color), relying entirely on CNN models to identify subtle to distinct features, which may limit its precision in pinpointing specific nail characteristics.
-
-*Non-Diagnostic Nature:* The system is not designed to provide medical diagnoses or engage users with diagnostic questions, relying solely on general probabilities of systemic diseases based on nail features, which may oversimplify complex medical conditions.
-
-*Background Noise in Images:* The model is trained on whole nail images that include background noise, potentially affecting its ability to isolate relevant nail features and reducing classification accuracy.
-
-*Exclusion of Disease Severity:* The system does not assess the severity of diseases, as this requires medical intervention or guidance, limiting its utility in providing comprehensive health insights.
-
-*Limited Explainability:* The system’s reliance on CNN models hinders explainability and interpretability, which may reduce user trust and make it challenging to understand the basis for specific predictions, though efforts can be made to address this limitation.
-
-*Dataset Quality and Balance:* The system’s performance relies on the quality and diversity of the training datasets, which may contain noise, inconsistencies, or class imbalances, potentially affecting its ability to generalize across diverse populations.
-
-*Unverified Medical Annotations:* Publicly sourced datasets may lack formal verification from licensed medical professionals, introducing risks of inaccurate labels that could impact classification and inference reliability.
-
-*Risk of Misclassification:* Errors in nail disorder classification may lead to inaccurate systemic disease probabilities, necessitating clear communication that the system serves as a preliminary screening tool, not a definitive diagnostic substitute.
-
-*Computational Constraints:* Training complex CNN models requires substantial computational resources, which may limit the ability to explore advanced architectures, perform extensive hyperparameter tuning, or train for longer periods.
-
-*Reliance on Image-Based Biomarkers:* The system depends solely on visual features from fingernail images, excluding other clinical indicators such as patient history, symptoms, or lab results, which are typically used in comprehensive medical diagnostics.
-
-*Language Barrier:* While the system will include multilingual support, translation accuracy may vary, potentially affecting user understanding in non-English-speaking regions.
-
-*Researcher Expertise:* The student-researcher’s current knowledge and programming skills may limit the system’s sophistication compared to state-of-the-art models developed by experienced professionals.
 
 === Significance of the Research
 The findings of this study are beneficial to individuals and organizations worldwide, offering a non-invasive, accessible tool for early detection of systemic diseases through fingernail biomarkers. By addressing critical gaps in preventive healthcare, the system empowers users to take proactive steps toward better health outcomes. Specifically, the results of this study provide advantages to the following:
