@@ -870,7 +870,7 @@ The following scope are set by the researchers:
 The following delimitations are set by the researchers:
 // Include ba natin nail segmentation?
 - The developed model does not detect individual features of the nail (like the lunula, nail bed, or color of the nail). It relies solely on the power of the CNN and ViT Models to detect from subtle to distinct features from the labeled dataset.
-- The developed system will not be a diagnosis system, thus it won't try to make a diagnosis out of the user by asking questions about the user's medical history to make a further accurate systemic disease inference as how the dermatologists and internal medicine doctors would do it, solely relying on general probabilities of systemic diseases on nail features, which may oversimplify complex medical conditions.
+- The developed system is not intended to function as a diagnostic tool. Unlike dermatologists or internal medicine physicians who incorporate a patient’s full medical history, laboratory results, and clinical examinations into their assessment, this system relies exclusively on statistical associations between nail features and systemic diseases. Consequently, its inferences are based on general probabilities rather than individualized medical data, which may oversimplify the complexity and multifactorial nature of systemic diseases.
 - The model will not analyze how severe a nail feature has become. It will only classify which nail feature it is.
 
 
