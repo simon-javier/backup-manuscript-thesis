@@ -1528,6 +1528,12 @@ A comprehensive multi-level testing strategy ensures the system’s reliability 
   )
 ]
 #pagebreak()
+#h3(hidden: true)[Expert Interview Transcription]
+#[
+#set par(spacing: 1em, leading: 1em)
+#include("./expert-interview.typ")
+]
+
 #h3(hidden: true)[RC Defense Transcription]
 #[
 #set par(spacing: 1em, leading: 1em)
