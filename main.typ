@@ -700,7 +700,7 @@ Thus, this study specifically seeks to address the following problems:
 // How can the researchers ensure the model is reliable and accurate
 // How can the researcers implement explainability methods for deep learning models
 // How can the researchers pick the best models suitable for certain situations?
-// 
+//
 
 // Specific problem reference
 
@@ -719,7 +719,7 @@ Specifically, this study seeks to achieve the following objectives:
 + To obtain a publicly available fingernail image dataset from Roboflow, consisting of at least 3,000 labeled images across a minimum of 5 distinct nail feature classes, with each image meeting a minimum resolution of 224×224 pixels. In parallel, to curate a statistical dataset to be used for inference using Bayes' theorem, containing percentage-based associations between these nail feature classes and systemic diseases derived from published clinical, epidemiological studies, and literature.
 + To apply standardized preprocessing steps including resizing and normalization to ensure consistency and suitability for deep learning, and to augment the dataset by at least 30% using systematic geometric and photometric transformations to enhance model generalization and robustness for systemic disease classification.
 + To develop and train multiple deep learning models (EfficientNetV2S, VGG16, ResNet50, RegNetY-16GF, and SwinV2-B) on the augmented dataset to classify nail features and to make systemic diseases inferences using Bayes' theorem from the statistical dataset of systemic diseases.
-+ To evaluate and compare the performance of the trained models using standard metrics, including accuracy, precision, recall, and F1-score for convolutional neural networks (CNNs) and apply explainability and interpretability methods for the algorithms. 
++ To evaluate and compare the performance of the trained models using standard metrics, including accuracy, precision, recall, and F1-score for convolutional neural networks (CNNs) and apply explainability and interpretability methods for the algorithms.
 + To deploy the top-performing model in a prototype application that provides interpretable systemic disease predictions from fingernail images, designed for potential use in clinical decision support or health screening applications.
 
 === Research Framework
@@ -799,26 +799,26 @@ In the study, the researchers used Convolutional Neural Networks (CNNs) because 
 In the study, the researchers used a Vision Transformer (ViT) model because it offers a new way to analyze images by treating them as sequences of patches, similar to how text is processed in Natural Language Processing. Based on #cite(<dosovitskiy_image_2020>), this design allows the model to focus on different parts of the image and capture important visual patterns without relying on built-in image rules like in CNNs. This makes ViT especially useful for detecting fine details in fingernail images, such as color or texture changes, which are important for identifying nail biomarkers. By using ViT, the researchers aimed to explore whether this newer method could better detect subtle features in the nails that may not be as easily captured by traditional CNNs.
 
 #[
-#show math.equation: set text(size: 16pt)
-#grid(
-  columns: 1fr,
-  row-gutter: 1em,
-  [#figure(
-    [
-      $P(A|B)=P(A inter B)/P(B) = (P(A) dot P(B|A))/P(B)$
-    ],
-    caption: flex-caption(
-      [Formula of Bayes' Theorem #cite(<hayes_bayes_2025>, form: "normal")],
-      [Formula of Bayes' Theorem],
-    ),
-  ) <bayes-formula>],
-  [*where:*],
-  [$P(A)=$ The probability of A occuring],
-  [$P(B)=$ The probability of B occuring],
-  [$P(A|B)=$ The probability of A given B],
-  [$P(B|A)=$ The probability of B given A],
-  [$P(A inter B)=$ The probability of both A and B occuring],
-)
+  #show math.equation: set text(size: 16pt)
+  #grid(
+    columns: 1fr,
+    row-gutter: 1em,
+    [#figure(
+      [
+        $P(A|B)=P(A inter B)/P(B) = (P(A) dot P(B|A))/P(B)$
+      ],
+      caption: flex-caption(
+        [Formula of Bayes' Theorem #cite(<hayes_bayes_2025>, form: "normal")],
+        [Formula of Bayes' Theorem],
+      ),
+    ) <bayes-formula>],
+    [*where:*],
+    [$P(A)=$ The probability of A occuring],
+    [$P(B)=$ The probability of B occuring],
+    [$P(A|B)=$ The probability of A given B],
+    [$P(B|A)=$ The probability of B given A],
+    [$P(A inter B)=$ The probability of both A and B occuring],
+  )
 ]
 
 @bayes-formula shows the formula of the foundation of the researchers' probability model. According @hayes_bayes_2025, Bayes' Theorem is a mathematical formula for determining conditional probability. Conditional probability is the likelihood of an outcome occurring based on a previous outcome in similar circumstances. Thus, Bayes' Theorem provides a way to revise or update an existing prediction or theory given new evidence.
@@ -833,14 +833,10 @@ In the study, the researchers used a Vision Transformer (ViT) model because it o
 ==== Conceptual Framework
 The conceptual framework provides a practical workflow for implementing the theoretical foundation, detailing the process from data collection to system deployment. It is divided into three phases: input, process, and output.
 
-
-#context {
-  [#figure(
-    image("img/ConceptualFramework.png"),
-    caption: [Conceptual Framework of the Study],
-    placement: bottom,
-  ) <conceptual-framework>]
-}
+#figure(
+  image("img/ConceptualFramework.png"),
+  caption: [Conceptual Framework of the Study],
+) <conceptual-framework>
 
 As illustrated in @conceptual-framework, the input phase involves collecting a dataset of at least 3,000 labeled fingernail images with a minimum resolution of 224x224 from Roboflow. The processing phase includes data cleaning (resizing and normalization) and augmentation (flipping, scaling, and brightness adjustment) to enhance dataset diversity. Feature extraction using CNNs, such as ResNet-50, VGG-16, RegNetY-16GF, and EfficientNetV2, precedes model training with a split dataset (80% training, 20% testing), employing CNNs for classification and literature-based inference. Evaluation metrics (sensitivity, recall, and confidence intervals) guide hyperparameter tuning, leading to the selection of the best-performing model. The output phase delivers probabilistic classifications of nail disorders, systemic disease likelihoods (e.g., diabetes: 85%), and recommendations for medical consultation, with deployment in a web application for global accessibility.
 // As illustrated in @conceptual-framework, input phase involves collecting a minimum of 3,000, 224x224 Resolution labeled fingernail images dataset from Roboflow. The process phase includes data cleaning (resizing and normalization) and augmentation (flipping, scaling, brightness adjustment) to enhance dataset diversity. Feature extraction using CNNs including ResNet-50, VGG-16, RegNetY-16GF, and EfficientNetV2, precedes model training with a split dataset (80% training, 20% testing), employing CNNs for classification and literature based inference. Evaluation metrics (sensitivity, recall, confidence intervals) guide hyperparameter tuning, leading to the selection of the best-performing model. The output phase delivers probabilistic classifications of nail disorders, systemic disease likelihoods (e.g., diabetes: 85%), and recommendations for medical consultation, with deployment into a web application for global accessibility.
@@ -1596,8 +1592,8 @@ A comprehensive multi-level testing strategy ensures the system’s reliability 
 #pagebreak()
 #h3(hidden: true)[Expert Interview Transcription]
 #[
-#set par(spacing: 1em, leading: 1em)
-#include("./expert-interview.typ")
+  #set par(spacing: 1em, leading: 1em)
+  #include "./expert-interview.typ"
 ]
 
 #h3(hidden: true)[RC Defense Transcription]
