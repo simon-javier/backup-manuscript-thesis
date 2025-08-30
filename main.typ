@@ -726,39 +726,15 @@ Specifically, this study seeks to achieve the following objectives:
 This section outlines the theoretical and conceptual frameworks that underpin the study, providing a structured approach to developing the proposed system.
 
 ==== Theoretical Framework
-// NOTE: nacorrelate ko na ata??? ang fingernail and systemic diseases
+A theoretical framework serves as a foundational structure of concepts, definitions, and propositions that guide research by explaining or predicting phenomena and the relationships between them. #cite(<vinz_what_2022>) states that a theoretical framework serves as a foundational review of existing theories that functions as a guiding structure for developing arguments within a researcher's own work. It explains the established theories that underpin a research study, thereby demonstrating the relevance of the paper and its grounding in existing ideas. Essentially, it justifies and contextualizes the research, representing a crucial initial step for a research paper.
 
-A theoretical framework serves as a foundational structure of concepts, definitions, and propositions that guide research by explaining or predicting phenomena and the relationships between them. #cite(<vinz_what_2022>) states that a theoretical framework serves as a foundational review of existing theories that functions as a guiding structure for developing arguments within a researcher's own work. It explains the established theories that underpin a research study, thereby demonstrating the relevance of the paper and its grounding in existing ideas. Essentially, it justifies and contextualizes the research, representing a crucial initial step for a research paper.  The diagram below integrates deep learning and probabilistic modeling to create a comprehensive system for fingernail-based systemic disease detection, drawing inspiration from AI-driven diagnostic methodologies. It adapts principles from frameworks like #cite(<debnath_framework_2020>, form: "prose"), which emphasize systematic processing, feature extraction, and response generation in AI systems.
+According to #cite(<jaramillo_ortiz_biomarkers_2022>), nails are seen as a useful and practical way to study health markers in the body for several reasons. First, nail clippings are easy to collect without causing pain. Unlike blood tests, they don’t need trained staff, and they avoid stress that can change test results. #cite(<jaramillo_ortiz_biomarkers_2022>, supplement: [p.~20], form: "normal") Once collected, nails are stable, making them cheaper and easier to store and transport, even without refrigeration. #cite(<jaramillo_ortiz_biomarkers_2022>, supplement: [pp.~1-2], form: "normal") This is especially helpful for large studies or in places with limited healthcare resources. For example, levels of fructosamine in nails stayed stable after two weeks at 37°C, and cortisol levels were not affected by room temperature storage over long periods. #cite(<jaramillo_ortiz_biomarkers_2022>, supplement: [pp.~26-27], form: "normal")
 
-#context {
-  [#figure(
-    image("img/theoretical-framework.png"),
-    caption: flex-caption(
-      [Integrated Deep Learning and Probabilistic Diagnostic Framework for Fingernail-Based Systemic Disease Detection #cite(<debnath_framework_2020>, form: "normal")],
-      [Integrated Deep Learning and Probabilistic Diagnostic Framework for Fingernail-Based Systemic Disease Detection],
-    ),
-  )<debnath-archi>]
-}
+Second, nails give insight into long-term changes in the body. They grow slowly over months (fingernails 3–5 months, toenails 6–12 months) and absorb molecules from the blood as they grow . These absorbed markers stay in the nail even if their levels drop in the blood, making it possible to study long-term biological processes, such as protein changes over time. Since nails are made mostly of keratin proteins, they can hold onto these changes for longer. Biomarkers enter nails mainly from the root (germinal matrix) and from blood vessels in the nail bed, with smaller contributions from sweat and oil #cite(<jaramillo_ortiz_biomarkers_2022>, supplement: [p.~3], form: "normal").
 
-@debnath-archi shows that the process begins with users uploading fingernail images through a user interface, followed by preprocessing steps, such as normalization, resizing, and augmentation, to optimize image quality and diversity. Feature extraction employs convolutional neural networks (CNNs), including EfficientNetV2S, VGG16, ResNet50, and RegNetY-16GF, to detect visual patterns, while classification identifies nail disorders, such as clubbing or pitting, and biomarker recognition isolates specific features. A knowledge integration module, incorporating clinical literature and health data, supports probabilistic inference /* using models like Naïve Bayes and Bayesian Inference */ to generate risk assessments and recommendations. A feedback loop continuously improves the system by integrating new data, with third-party services providing external validation to ensure reliability.
+Finally, @jaramillo_ortiz_biomarkers_2022 show that markers found in nails often match those found in other samples. For example, ungual furosine, which shows early glycation, is linked with HbA1c levels in blood. Similarly, protein levels in nails match those in the eye lens for both diabetic and non-diabetic people #cite(<jaramillo_ortiz_biomarkers_2022>, supplement: [pp.~5-8], form: "normal").
 
-#figure(
-  image("./img/shandilya-theoretical.jpg", width: 75%),
-  caption: flex-caption(
-    [End-to-end framework for nail image classification using deep learning models. #cite(<shandilya_autonomous_2024>, form: "normal")],
-    [End-to-end framework for nail image classification using deep learning models.],
-  ),
-) <theo-shandilya>
-
-@theo-shandilya is a descriptive figure of the framework used to achieve the process of nail disease classification. From the figure, it can be noticed that data gathering is the very first step in the proposed process, which means a collection of images of nails with different conditions to prepare a dataset for testing and training purposes. For this study, the Nail Disease Detection dataset has been used to gather different nail disease images. These preprocessed images are resized to a resolution and, subsequently, undergo several data augmentation techniques like shearing, rotation by 20 degrees, shifting based on width and height, zooming, and horizontal flipping to diversify the dataset. The images are standardized so that they become suitably fit for the model and are then divided into three subsets: training, validation, and testing sets.
-
-In the study, the researchers based their work on a framework by #cite(<shandilya_autonomous_2024>), where a deep learning system using CNN and CapsNet was used to detect nail diseases from images. Their model first learned important patterns using a Convolutional Neural Network (CNN), and then used Capsule Networks (CapsNet) to better understand shapes and features in the images.
-
-The researchers improved this framework by replacing the CNN-CapsNet model with a Vision Transformer (ViT). Vision Transformers divide images into smaller patches and learn how these patches are related. This helps the model understand both the small details and the overall structure of the image. Unlike CNNs, which focus on nearby pixels, Vision Transformers can look across the whole image at once.
-
-The study also expanded the types of nail conditions that the model can detect. Instead of just a 6 nail classifications, the researchers included 11 different nail classifications, specifically acral lentiginous melanoma, beau’s line, blue finger, clubbing, healthy nail, koilonychia, muehrcke’s lines, onychogryphosis, pitting, and terry’s nail.
-
-The study also went a step further by connecting each nail condition to possible systemic diseases. For example, some nail problems might be linked to heart disease, anemia, or cancer. This connection helps the model not just recognize the nail condition, but also suggest what health issue might be related.
+These benefits make nails a good, low-cost option for large-scale health testing and follow-up, especially for common conditions like Type 2 Diabetes Mellitus (T2DM) and Chronic Kidney Disease (CKD) #cite(<jaramillo_ortiz_biomarkers_2022>, supplement: [p.~13], form: "normal").
 
 #figure(
   image("./img/ANN-architecture.png"),
@@ -830,6 +806,24 @@ In the study, the researchers used a Vision Transformer (ViT) model because it o
 
 @agile shows the AGILE development cycle, consisting of six phases: Requirements, Design, Development, Testing, Deployment, and Review. In the study, the researchers used the Agile development cycle to manage the project efficiently and adapt to changes throughout the research process. This approach was chosen because it supports step-by-step progress and allows the researchers to make improvements based on testing and feedback. During the Development phase, the models for detecting nail biomarkers (ViT and CNNs) and predicting disease risk (Bayesian Network) were built. In the Testing phase, model accuracy and performance were evaluated. For Deployment, the researchers used Flask, a lightweight web framework, to create a simple and accessible interface where users can upload fingernail images and get predictions. The Review phase helped the researchers assess results and plan refinements. Using Agile helped ensure that each part of the system was built, tested, and improved in cycles, leading to a more reliable and responsive final product.
 
+#figure(
+  image("./img/shandilya-theoretical.jpg", width: 75%),
+  caption: flex-caption(
+    [End-to-end framework for nail image classification using deep learning models. #cite(<shandilya_autonomous_2024>, form: "normal")],
+    [End-to-end framework for nail image classification using deep learning models.],
+  ),
+) <theo-shandilya>
+
+@theo-shandilya is a descriptive figure of the framework used to achieve the process of nail disease classification. From the figure, it can be noticed that data gathering is the very first step in the proposed process, which means a collection of images of nails with different conditions to prepare a dataset for testing and training purposes. For this study, the Nail Disease Detection dataset has been used to gather different nail disease images. These preprocessed images are resized to a resolution and, subsequently, undergo several data augmentation techniques like shearing, rotation by 20 degrees, shifting based on width and height, zooming, and horizontal flipping to diversify the dataset. The images are standardized so that they become suitably fit for the model and are then divided into three subsets: training, validation, and testing sets.
+
+In the study, the researchers based their work on a framework by #cite(<shandilya_autonomous_2024>), where a deep learning system using CNN and CapsNet was used to detect nail diseases from images. Their model first learned important patterns using a Convolutional Neural Network (CNN), and then used Capsule Networks (CapsNet) to better understand shapes and features in the images.
+
+The researchers improved this framework by replacing the CNN-CapsNet model with a Vision Transformer (ViT). Vision Transformers divide images into smaller patches and learn how these patches are related. This helps the model understand both the small details and the overall structure of the image. Unlike CNNs, which focus on nearby pixels, Vision Transformers can look across the whole image at once.
+
+The study also expanded the types of nail conditions that the model can detect. Instead of just a 6 nail classifications, the researchers included 11 different nail classifications, specifically acral lentiginous melanoma, beau’s line, blue finger, clubbing, healthy nail, koilonychia, muehrcke’s lines, onychogryphosis, pitting, and terry’s nail.
+
+The study also went a step further by connecting each nail condition to possible systemic diseases. For example, some nail problems might be linked to heart disease, anemia, or cancer. This connection helps the model not just recognize the nail condition, but also suggest what health issue might be related.
+
 ==== Conceptual Framework
 The conceptual framework provides a practical workflow for implementing the theoretical foundation, detailing the process from data collection to system deployment. It is divided into three phases: input, process, and output.
 
@@ -853,6 +847,7 @@ As illustrated in @conceptual-framework, the input phase involves collecting a d
 The scope is the domain of the research. It describes the extent to which the research question will be explored in the study. Delimitations are the factors or aspects of the research area that the researchers exclude from the research. #cite(<aje-scope>, form: "normal"). The research limitations are the practical or theoretical shortcomings of a study that are often outside of the researchers' control#cite(<aje-limitations>, form: "normal")
 
 ==== Scope
+// Isama yung scope ng statistics ng systemic diseases
 The following scope are set by the researchers:
 - The research is scheduled over a seven-month period, covering phases such as data collection, preprocessing, model development, evaluation, and deployment
 - The study will cover classifying nail features ranging 10 classes: Beau's Lines, Blue Nails, Clubbing, Healthy Nail, Koilonychia, Melanonychia, Muehrcke's Lines, Onychogryphosis, and Terry's Nails.
@@ -865,6 +860,7 @@ The following scope are set by the researchers:
 ==== Delimitations
 The following delimitations are set by the researchers:
 // Include ba natin nail segmentation?
+// Include delimitations ng statistics ng systemic disease.
 - The developed model does not detect individual features of the nail (like the lunula, nail bed, or color of the nail). It relies solely on the power of the CNN and ViT Models to detect from subtle to distinct features from the labeled dataset.
 - The developed system is not intended to function as a diagnostic tool. Unlike dermatologists or internal medicine physicians who incorporate a patient’s full medical history, laboratory results, and clinical examinations into their assessment, this system relies exclusively on statistical associations between nail features and systemic diseases. Consequently, its inferences are based on general probabilities rather than individualized medical data, which may oversimplify the complexity and multifactorial nature of systemic diseases.
 - The model will not analyze how severe a nail feature has become. It will only classify which nail feature it is.
