@@ -776,30 +776,32 @@ In the study, the researchers used Convolutional Neural Networks (CNNs) because 
 
 In the study, the researchers used a Vision Transformer (ViT) model because it offers a new way to analyze images by treating them as sequences of patches, similar to how text is processed in Natural Language Processing. Based on #cite(<dosovitskiy_image_2020>), this design allows the model to focus on different parts of the image and capture important visual patterns without relying on built-in image rules like in CNNs. This makes ViT especially useful for detecting fine details in fingernail images, such as color or texture changes, which are important for identifying nail biomarkers. By using ViT, the researchers aimed to explore whether this newer method could better detect subtle features in the nails that may not be as easily captured by traditional CNNs.
 
-#[
-  #show math.equation: set text(size: 16pt)
-  #grid(
-    columns: 1fr,
+#grid(
+  columns: 1fr,
+  row-gutter: 1em,
+  [#figure(
+    [
+      #show math.equation: set text(size: 16pt)
+      #v(1em)
+      $P(A|B)=P(A inter B)/P(B) = (P(A) dot P(B|A))/P(B)$
+      #v(1em)
+    ],
+    caption: flex-caption(
+      [Formula of Bayes' Theorem #cite(<hayes_bayes_2025>, form: "normal")],
+      [Formula of Bayes' Theorem],
+    ),
+  ) <bayes-formula>],
+  [*where:*],
+  grid(
+    columns: (1em, 1.3fr, 0.4fr, 8fr),
     row-gutter: 1em,
-    [#figure(
-      [
-        #v(1em)
-        $P(A|B)=P(A inter B)/P(B) = (P(A) dot P(B|A))/P(B)$
-        #v(1em)
-      ],
-      caption: flex-caption(
-        [Formula of Bayes' Theorem #cite(<hayes_bayes_2025>, form: "normal")],
-        [Formula of Bayes' Theorem],
-      ),
-    ) <bayes-formula>],
-    [*where:*],
-    [$P(A)=$ The probability of A occuring],
-    [$P(B)=$ The probability of B occuring],
-    [$P(A|B)=$ The probability of A given B],
-    [$P(B|A)=$ The probability of B given A],
-    [$P(A inter B)=$ The probability of both A and B occuring],
-  )
-]
+    [], [$P(A)$], [$=$], [The probability of A occuring],
+    [], [$P(B)$], [$=$], [The probability of B occuring],
+    [], [$P(A|B)$], [$=$], [The probability of A given B],
+    [], [$P(B|A)$], [$=$], [The probability of B given A],
+    [], [$P(A inter B)$], [$=$], [The probability of both A and B occuring],
+  ),
+)
 
 @bayes-formula shows the formula of the foundation of the researchers' probability model. According @hayes_bayes_2025, Bayes' Theorem is a mathematical formula for determining conditional probability. Conditional probability is the likelihood of an outcome occurring based on a previous outcome in similar circumstances. Thus, Bayes' Theorem provides a way to revise or update an existing prediction or theory given new evidence.
 
