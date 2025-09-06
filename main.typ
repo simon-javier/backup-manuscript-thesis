@@ -814,10 +814,10 @@ The Bayesian framework also gives a clear way to provide personalized risk asses
 
 #figure(
   [
-  #v(1em)
+    #v(1em)
     #show math.equation: set text(size: 14pt)
     $P("Disease"|"Feature")=(P("Disease") dot P("Feature"|"Disease"))/P("Feature")$
-  #v(1em)
+    #v(1em)
   ],
   caption: [Representation of Bayes’ Theorem for calculating the conditional probability of disease occurrence based on observed features],
 )<bayes-application>
@@ -1622,6 +1622,12 @@ A comprehensive multi-level testing strategy ensures the system’s reliability 
 #[
   #set par(spacing: 1em, leading: 1em)
   #include "./rc-defense-transcription.typ"
+]
+
+#h3(hidden: true)[Sir Bernardino Consultation -- 09/05/2025]
+#[
+  #set par(spacing: 1em, leading: 1em)
+  #include "./sir-mark-consultation.typ"
 ]
 #pagebreak()
 
