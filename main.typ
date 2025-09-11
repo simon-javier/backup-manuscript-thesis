@@ -1187,7 +1187,7 @@ The researchers considered testing ViTs due to their ability to model global rel
 @vit shows the architecutre of ViTs. The figure is from #cite(<geeksforgeeks-2025d>). The input image is divided into patches which are flattened and embedded using linear projection. Positional encodings are then added to the patch embeddings to retain spatial information. The patch embeddings are passed through multiple transformer encoder layers, which include multi-head self-attention and feed-forward networks. Lastly, the CLS token's output is extracted and fed into Multi-Layer Perceptrons (MLP) for the final classification.
 
 ==== Transfer Learning
-According to #cite(<murel-jacob-2025>), transfer learning uses pre-trained models from one machine learning task or dataset to improve performance and generalizability on a related task or dataset.
+According to #cite(<murel-jacob-2025a>), transfer learning uses pre-trained models from one machine learning task or dataset to improve performance and generalizability on a related task or dataset.
 
 The researchers utilized and made use of transfer learning to gain several advantages in training. It helped the researchers reduce computational costs like model training time and training data. Using transfer learning also helps improve generalizability because it involves retraining an existing model with new dataset, and the re-trained model will consist of knowledge gained from multiple datasets. In this case, the pre-trained models from `torchvision` were trained on ImageNet, enabling the model to benefit from features that were already learned from a wide range of images in ImageNet.
 
@@ -1202,7 +1202,7 @@ The researchers utilized and made use of transfer learning to gain several advan
 
 ==== Fine-Tuning
 
-Fine-tuning and transfer learning are related but distinct techniques. According to #cite(<murel-jacob-2025>), while both approaches involve reusing pre-existing models instead of training from scratch, they differ in how the pre-trained models are adapted. Transfer learning typically involves using the pre-trained model as a fixed feature extractor by freezing its weights and training only a new classifier layer on top. In contrast, fine-tuning refers to unfreezing part or all of the pre-trained model and continuing the training process on a new, task-specific dataset. This allows the model to adapt its internal representations to better fit the characteristics of the target domain.
+Fine-tuning and transfer learning are related but distinct techniques. According to #cite(<murel-jacob-2025a>), while both approaches involve reusing pre-existing models instead of training from scratch, they differ in how the pre-trained models are adapted. Transfer learning typically involves using the pre-trained model as a fixed feature extractor by freezing its weights and training only a new classifier layer on top. In contrast, fine-tuning refers to unfreezing part or all of the pre-trained model and continuing the training process on a new, task-specific dataset. This allows the model to adapt its internal representations to better fit the characteristics of the target domain.
 
 In the researchers case, they further trained pre-trained models on their nail dataset. This was done to allow the model to refine general visual features it learned from Imagenet and adapt them to visual cues present in nail images.
 
@@ -1229,7 +1229,20 @@ In this study, the researchers applied image preprocessing techniques in order t
 Normalization adjusts pixel intensity values to a standard scale #cite(<geeksforgeeks-2025e>, form: "normal"). In this research, input images were normalized using the standard ImageNet mean and standard deviation values: $"mean" = [0.485, 0.456, 0.406]$ and $"std" = [0.229, 0.224, 0.225]$. This normalization ensures compatibility with pre-trained models from PyTorch’s torchvision library, which were originally trained on the ImageNet dataset. By aligning the data distributions, normalization enables more effective transfer learning and stable gradient flow during training.
 
 ==== Data Augmentation
-Techniques such as horizontal flipping, rotation, and brightness adjustment were applied to increase dataset diversity and reduce overfitting.
+According to #cite(<murel-jacob-2025b>), data augmentation uses pre-existing data to create new data samples that can improve model optimization and generalizability. It improves machine learning model optimization and generalization. In other words, data augmentation can reduce overfitting and improve model robustness.
+
+In this research, the dataset was subjected to various image augmentation techniques, including flipping, shearing, rotation, brightness adjustment, and exposure modification. These augmentations enable the model to learn from diverse orientations, lighting conditions, and perspectives of the nail images, thereby enhancing its ability to generalize to unseen data.
+
+#context {
+  [
+    #figure(image("img/data-augmentation.png"), caption: flex-caption(
+      [Multiclass Classification #cite(<murel-jacob-2025b>, form: "normal")],
+      [Multiclass Classification],
+    )) <data-augmentation>
+  ]
+}
+
+@data-augmentation illustrates an example of data augmentation applied to images. The original image is transformed into multiple variations through techniques such as flipping, rotation, blurring, exposure adjustment, contrast adjustment, and conversion to grayscale. This process addresses dataset limitations by increasing diversity in the training samples, thereby improving the model’s generalization capability.
 
 ==== Batch Learning
 Training was conducted using mini-batches of 32 images per iteration. This method enhances training efficiency while maintaining a balance between generalization and convergence speed.
