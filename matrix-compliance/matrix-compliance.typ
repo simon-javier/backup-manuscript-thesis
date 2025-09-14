@@ -133,29 +133,39 @@
 
   table.cell(colspan: 4, fill: rgb(213, 220, 228), )[*DR. MIA VILLARICA - (ADDITIONAL RECOMMENDATIONS LAST AUGUST 19)*],
 
-  [1. Find a literature that proves you can rename the label "Acral Lentiginous Melanoma" to "Melanoncyhia"],
-  [],
-  [],
+  [1. Find literature or expert opinions supporting the proposed renaming of ‘Acral Lentiginous Melanoma’ to ‘Melanonychia.’1. Find a literature that proves you can rename the label "Acral Lentiginous Melanoma" to "Melanoncyhia"],
+  [Incorporated expert opinion from Dr. Cristine Florentino to justify renaming the class.],
+  [Fully Complied\
+  \
+  See page 63],
   [],
 
   [2. The objectives should be revised to make them more specific and measurable, such as specifying the exact number of images, confirming whether each image is labeled, and detailing the verification process.],
-  [],
-  [],
+  [- Made the objectives more specific
+  - Specified minimum number of images of the dataset, as well as the resolution.
+  - The dataset to be gathered must be a labeled dataset],
+  [Fully Complied\
+  \
+  See pages 5-6],
   [],
 
   [3. The definition of “high-quality” images should be removed.],
-  [],
-  [],
+  [- Removed],
+  [Fully Complied\
+  \ 
+  See page 5],
   [],
 
   [4. The planned use of Roboflow or synthetic datasets should be explicitly included in the objectives, with a clear explanation of where and how they will be applied in the project.],
-  [],
-  [],
+  [- Explained how the dataset will be applied in the project. ],
+  [Fully Complied\
+  \
+  See page 5],
   [],
 
   [5. The project timeline should be updated and adjusted to align with the suggested defense dates (October 6–10 or December 1–5) to make it more realistic and well-defined.],
   [],
-  [],
+  [Fully Complied],
   [],
 
   table.cell(colspan: 4, fill: rgb(213, 220, 228), )[*MARK BERNARDINO - SYSTEM EXPERT (ADDITIONAL RECOMMENDATIONS LAST SEPTEMBER 5)*],
@@ -167,13 +177,14 @@
   [],
 
   [2. Document all the experiments],
-  [],
+  [- Started adding screenshots of code in Data Model Generation. ],
   [Ongoing],
   [],
 
   [3. Scale the classifier's confidence with the confusion matrix when predicting the probability of systemic diseases],
-  [],
-  [Ongoing],
+  [Started making a prototype for this functionality.],
+  [Ongoing \
+  \ See pages 68-73],
   [],
 
   [4. Make a mobile version if possible],
