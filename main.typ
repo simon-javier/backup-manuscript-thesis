@@ -1102,13 +1102,10 @@ According to #cite(<geeksforgeeks-2025a>), machine learning is a branch of artif
 
 In this study, the researchers utilized machine learning to detect subtle to distinct nail changes. These nail features, such as discoloration for blue finger (Cyanosis) and shape abnormalities for clubbing, can be difficult to interpret using rule-based methods or traditional programming techniques. By using machine learning, particularly deep learning models, the system can learn to recognize patterns in nail images without explicitly programming what each nail feature would look like.
 
-#context {
-  [
-    #figure(image("img/machine-learning-geek-for-geeks.png"), caption: flex-caption(
-      [Machine Learning #cite(<geeksforgeeks-2025a>, form: "normal")],
-      [Machine Learning],
-    )) <machine-learning>]
-}
+#figure(image("img/machine-learning-geek-for-geeks.png"), caption: flex-caption(
+  [Machine Learning #cite(<geeksforgeeks-2025a>, form: "normal")],
+  [Machine Learning],
+)) <machine-learning>
 
 @machine-learning shows how machine learning models work. The model takes in inputs like stock data, customer transaction data, streaming data, and email text. It is then put into machine learning algorithms and techniques such as regression for numerical data and classification for categorical data where the model learns patterns in the data. Lastly, the output represents the model's prediction of the expected outcome based on the patterns it has learned from the training data.
 
@@ -1117,12 +1114,11 @@ According to #cite(<geeksforgeeks-2025b>), supervised machine learning is a fund
 
 This study involves a classification problem and falls under the category of supervised machine learning. The model is trained on labeled data which are nail images paired with corresponding nail disease labels. Then it learns to classify new, unseen nail images into their respective categories based on learned features.
 
-#context {
-  [#figure(image("img/supervised-machine-learning-geek-for-geeks.png"), caption: flex-caption(
-    [Supervised Machine Learning #cite(<geeksforgeeks-2025b>, form: "normal")],
-    [Supervised Machine Learning],
-  ))<supervised>]
-}
+#figure(image("img/supervised-machine-learning-geek-for-geeks.png"), caption: flex-caption(
+  [Supervised Machine Learning #cite(<geeksforgeeks-2025b>, form: "normal")],
+  [Supervised Machine Learning],
+))<supervised>
+
 
 @supervised illustrates how supervised learning works. The input data contains data that are labeled. Each labeled data are then fed into the algorithm. The algorithm learns the associations and patterns between the data and its label. It finds out what patterns likely leads to each label. Finally, the model predicts labels based on inputs.
 
@@ -1132,14 +1128,10 @@ According to #cite(<ibm-2025a>), a neural network is a machine learning program,
 
 In this study, the researchers utilized neural networks because of their strong ability to detect complex patterns in data like images of nails. Unlike traditional machine learning algorithms that often require manual feature extraction, neural networks can automatically learn hierarchical representations of features like color and texture by analyzing images pixels by pixels.
 
-#context {
-  [
-    #figure(image("img/neural-networks-geeks-for-geeks.png"), caption: flex-caption(
-      [Neural Network Architecture #cite(<geeksforgeeks-2025c>, form: "normal")],
-      [Neural Network Architecture],
-    )) <neural-network>
-  ]
-}
+#figure(image("img/neural-networks-geeks-for-geeks.png"), caption: flex-caption(
+  [Neural Network Architecture #cite(<geeksforgeeks-2025c>, form: "normal")],
+  [Neural Network Architecture],
+)) <neural-network>
 
 @neural-network shows the architecture of a neural network. The figure is from #cite(<geeksforgeeks-2025c>) and illustrates that every neural network consists of layers of nodes or artificial neurons, an input layer, one or more hidden layers, and an output layer. Each node connects to others, and has its own associated weight and threshold. If the output of any individual node is above the specified threshold value, that node is activated, sending data to the next layer of the network. Otherwise, no data is passed along to the next layer of the network.
 
@@ -1150,16 +1142,13 @@ According to #cite(<ibm-2025a>), deep learning and neural networks tend to be us
 
 The neural networks used in this study are considered deep neural networks, since images of nails are very complex and has variations such as texture, color, and spatial patterns, which will require multiple hidden layers to effectively extract and learn these features for accurate classification.
 
-#context {
-  [#figure(image("img/deep-neural-network-ibm.png"), caption: flex-caption(
-    [Deep Neural Network Architecture #cite(<ibm-2025a>, form: "normal")],
-    [Deep Neural Network Architecture],
-  ))<dnn>]
-}
+#figure(image("img/deep-neural-network-ibm.png"), caption: flex-caption(
+  [Deep Neural Network Architecture #cite(<ibm-2025a>, form: "normal")],
+  [Deep Neural Network Architecture],
+)) <dnn>
+
 
 @dnn shows the architecture of a deep neural network. Unlike basic neural networks, deep neural networks consists of many more hidden layers. Machine learning on these deep neural networks is called deep learning.
-
-
 
 ==== Convolutional Neural Networks (CNNs)
 According to #cite(<ibm-2025b>), convolutional neural networks are distinguished from other neural networks by their superior performance with image, speech or audio signal inputs. They have three main types of layers, which are the convolutional layer, pooling layer, and fully-connected (FC) layer.
@@ -1180,14 +1169,10 @@ According to #cite(<shah-2022>), in ViTs, images are represented as sequences, a
 
 The researchers considered testing ViTs due to their ability to model global relationships across an image rather than relying on local feature extractions. The researchers explored whether the unique architecture of ViTs can offer advantages over CNN models in classifying nail features. Testing it allowed researchers to compare performance, generalization, and representation against CNNs, contributing to a more comprehensive evaluation of model effectiveness. Vision Transformers generally perform better than CNNs, so the researchers considered using it. However, they are more computationally expensive and harder to interpret, so it's a matter of trade-offs.
 
-#context {
-  [
-    #figure(image("img/vit-geek-for-geeks.png"), caption: flex-caption(
-      [Architecture and Working of Vision Transformer #cite(<geeksforgeeks-2025d>, form: "normal")],
-      [Architecture and Working of Vision Transformer],
-    )) <vit>
-  ]
-}
+#figure(image("img/vit-geek-for-geeks.png"), caption: flex-caption(
+  [Architecture and Working of Vision Transformer #cite(<geeksforgeeks-2025d>, form: "normal")],
+  [Architecture and Working of Vision Transformer],
+)) <vit>
 
 @vit shows the architecutre of ViTs. The figure is from #cite(<geeksforgeeks-2025d>). The input image is divided into patches which are flattened and embedded using linear projection. Positional encodings are then added to the patch embeddings to retain spatial information. The patch embeddings are passed through multiple transformer encoder layers, which include multi-head self-attention and feed-forward networks. Lastly, the CLS token's output is extracted and fed into Multi-Layer Perceptrons (MLP) for the final classification.
 
@@ -1209,14 +1194,10 @@ In the researchers case, they further trained pre-trained models on their nail d
 ==== Multiclass Classification
 Multiclass classification is a machine learning classification task that consists of more than two classes, or outputs #cite(<data-robot-2025>, form: "normal"). In this study, the researchers adopted multiclass classification approach because there are a total of 10 distinct classes of nail features in their dataset. The model is trained to identify which specific nail feature is present in a given input image. Since each image belongs to only one category and the task requires distinguishing among multiple possibilities, multiclass classification was the appropriate and necessary framework.
 
-#context {
-  [
-    #figure(image("img/multiclass-classification.png"), caption: flex-caption(
-      [Multiclass Classification #cite(<kainat-2023>, form: "normal")],
-      [Multiclass Classification],
-    )) <multiclass-classification>
-  ]
-}
+#figure(image("img/multiclass-classification.png"), caption: flex-caption(
+  [Multiclass Classification #cite(<kainat-2023>, form: "normal")],
+  [Multiclass Classification],
+)) <multiclass-classification>
 
 @multiclass-classification shows an example of an illustration of multiclass classification. Each shape is its own label or class. In this illustration, the model would take an image of an object as input and predict one of the three possible classes which are "triangle", "cross", or "circle", to which the object belongs.
 
@@ -1233,14 +1214,10 @@ According to #cite(<murel-jacob-2025b>), data augmentation uses pre-existing dat
 
 In this research, the dataset was subjected to various image augmentation techniques, including flipping, shearing, rotation, brightness adjustment, and exposure modification. These augmentations enable the model to learn from diverse orientations, lighting conditions, and perspectives of the nail images, thereby enhancing its ability to generalize to unseen data.
 
-#context {
-  [
-    #figure(image("img/data-augmentation.png"), caption: flex-caption(
-      [Multiclass Classification #cite(<murel-jacob-2025b>, form: "normal")],
-      [Multiclass Classification],
-    )) <data-augmentation>
-  ]
-}
+#figure(image("img/data-augmentation.png"), caption: flex-caption(
+  [Multiclass Classification #cite(<murel-jacob-2025b>, form: "normal")],
+  [Multiclass Classification],
+)) <data-augmentation>
 
 @data-augmentation illustrates an example of data augmentation applied to images. The original image is transformed into multiple variations through techniques such as flipping, rotation, blurring, exposure adjustment, contrast adjustment, and conversion to grayscale. This process addresses dataset limitations by increasing diversity in the training samples, thereby improving the model’s generalization capability.
 
@@ -1447,51 +1424,36 @@ This section presents the systematic framework employed in the development of th
 ==== Data Preparation
 The dataset, comprising labeled images of fingernails, was stored in Google Drive to allow seamless integration with Google Colab. This approach leverages Colab's cloud-based GPU resources, facilitating efficient model training. The directory containing the dataset was mounted in the Colab environment, and the paths to its `train`, `valid`, and `test` subsets were programmatically stored for ease of access. The transforms were also prepared to be ready for data loading.
 
-#context {
-  [
-    #figure(image("img/ch3-dmg-data-preparation.png"), caption: flex-caption(
-      [Data Preparation],
-      [Data Preparation],
-    )) <data-preparation>
-  ]
-}
+#figure(image("img/ch3-dmg-data-preparation.png"), caption: flex-caption(
+  [Data Preparation],
+  [Data Preparation],
+)) <data-preparation>
 
 ==== Data Preprocessing
 
 The transforms include the preprocessing steps to be used. Given that the dataset had undergone prior augmentation, the preprocessing steps were minimal but essential. Images were resized to 224×224 pixels, a standard input size for most pre-trained convolutional neural networks. The images were then converted into tensors and normalized using the mean and standard deviation values of the ImageNet dataset. This normalization ensures consistency with the distribution of the pre-trained models, which is critical for transfer learning to perform effectively.
 
-#context {
-  [
-    #figure(image("img/ch3-dmg-data-preprocessing.png"), caption: flex-caption(
-      [Data Preprocessing],
-      [Data Preprocessing],
-    )) <data-preprocessing>
-  ]
-}
+#figure(image("img/ch3-dmg-data-preprocessing.png"), caption: flex-caption(
+  [Data Preprocessing],
+  [Data Preprocessing],
+)) <data-preprocessing>
+
 ==== Model Building
 
 Five models were selected: four Convolutional Neural Networks (CNNs) and one Vision Transformer (ViT). The use of transfer learning — where models pre-trained on large datasets such as ImageNet are adapted to new tasks — significantly reduces training time and improves performance, especially when labeled data is limited.
 
 
-#context {
-  [
-    #figure(image("img/ch3-dmg-model-building.png"), caption: flex-caption(
-      [Sample Model Building of VGG16],
-      [Model Building],
-    )) <model-building>
-  ]
-}
+#figure(image("img/ch3-dmg-model-building.png"), caption: flex-caption(
+  [Sample Model Building of VGG16],
+  [Model Building],
+)) <model-building>
 
 The models were loaded with its default pre-trained weights via `models.MODELNAME_Weights.DEFAULT`. The final classification layers (also known as the "head") of each model were modified to output probabilities for 10 distinct nail disease classes. 
 
-#context {
-  [
-    #figure(image("img/ch3-dmg-loss-function.png"), caption: flex-caption(
-      [Loss Function, Optimizer, and Scheduler],
-      [Loss Function, Optimizer, and Scheduler],
-    )) <loss-function-optimizer-scheduler>
-  ]
-}
+#figure(image("img/ch3-dmg-loss-function.png"), caption: flex-caption(
+  [Loss Function, Optimizer, and Scheduler],
+  [Loss Function, Optimizer, and Scheduler],
+)) <loss-function-optimizer-scheduler>
 
 A CrossEntropy loss function was employed for multiclass classification. To address class imbalance in the dataset, weighted loss functions were used, ensuring that minority classes contributed proportionally to the loss and gradient calculations.
 
@@ -1499,47 +1461,31 @@ The optimization algorithm chosen was AdamW, which combines the benefits of Adam
 
 ==== Model Training
 
-#context {
-  [
-    #figure(image("img/ch3-dmg-model-training.png"), caption: flex-caption(
-      [Model Training],
-      [Model Training],
-    )) <model-training>
-  ]
-}
+#figure(image("img/ch3-dmg-model-training.png"), caption: flex-caption(
+  [Model Training],
+  [Model Training],
+)) <model-training>
 
 Each model was trained for five epochs on Google Colab using an NVIDIA T4 GPU, which imposed computational constraints but remained sufficient for prototyping. The training pipeline followed the conventional two-phase approach: the training step and the validation step. The researchers created a helper class (`utils.helpers`) to easily train different models on google colab without having to code the whole training phase. The code for the training phase is as follows below.
 
-#context {
-  [
-    #figure(image("img/ch3-dmg-train-step-function.png"), caption: flex-caption(
-      [Train Step],
-      [Train Step],
-    )) <train-step>
-  ]
-}
+#figure(image("img/ch3-dmg-train-step-function.png"), caption: flex-caption(
+  [Train Step],
+  [Train Step],
+)) <train-step>
 
 In the training step (see @train-step), mini-batches from the training dataset were fed into the model. For each batch, the model produced raw predictions (logits), which were compared against the ground-truth labels using the designated loss function. The loss value was backpropagated through the network, and the optimizer updated the weights accordingly. Training loss and accuracy were aggregated over all batches within an epoch to provide metrics for monitoring learning progression.
 
-#context {
-  [
-    #figure(image("img/ch3-dmg-valid-step-function.png"), caption: flex-caption(
-      [Validation Step],
-      [Validation Step],
-    )) <validation-step>
-  ]
-}
+#figure(image("img/ch3-dmg-valid-step-function.png"), caption: flex-caption(
+  [Validation Step],
+  [Validation Step],
+)) <validation-step>
 
 In the validation step (see @validation-step), the trained model was evaluated on unseen data from the validation set. Unlike the training step, no weight updates occurred, as the model was placed in evaluation mode with gradient tracking disabled with PyTorch's `inference_mode()`. The validation phase served exclusively to measure the model’s generalization performance. Validation loss and accuracy were computed per epoch and compared against the training metrics to identify signs of underfitting or overfitting.
 
-#context {
-  [
-    #figure(image("img/ch3-dmg-train-model-function.png"), caption: flex-caption(
-      [Model training code],
-      [Model training code]
-    )) <train-model-function>
-  ]
-}
+#figure(image("img/ch3-dmg-train-model-function.png"), caption: flex-caption(
+  [Model training code],
+  [Model training code]
+)) <train-model-function>
 
 Both steps were called by the `train_model()` function (see @train-model-function), which executed the training and validation routines across the specified number of epochs. The function also managed learning rate scheduling, recorded per-epoch results, and logged the total training time. Capturing training duration was essential for assessing computational efficiency, particularly in the context of scaling the system to larger datasets or more complex architectures.
 
