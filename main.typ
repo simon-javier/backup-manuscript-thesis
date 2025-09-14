@@ -1215,8 +1215,8 @@ According to #cite(<murel-jacob-2025b>), data augmentation uses pre-existing dat
 In this research, the dataset was subjected to various image augmentation techniques, including flipping, shearing, rotation, brightness adjustment, and exposure modification. These augmentations enable the model to learn from diverse orientations, lighting conditions, and perspectives of the nail images, thereby enhancing its ability to generalize to unseen data.
 
 #figure(image("img/data-augmentation.png"), caption: flex-caption(
-  [Multiclass Classification #cite(<murel-jacob-2025b>, form: "normal")],
-  [Multiclass Classification],
+  [Image Augmentation #cite(<murel-jacob-2025b>, form: "normal")],
+  [Image Augmentation],
 )) <data-augmentation>
 
 @data-augmentation illustrates an example of data augmentation applied to images. The original image is transformed into multiple variations through techniques such as flipping, rotation, blurring, exposure adjustment, contrast adjustment, and conversion to grayscale. This process addresses dataset limitations by increasing diversity in the training samples, thereby improving the model’s generalization capability.
