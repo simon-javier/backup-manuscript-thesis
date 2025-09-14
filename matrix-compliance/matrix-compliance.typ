@@ -74,7 +74,7 @@
   [Included more theories, concepts, and models that explains why we chose certain approach.],
   [Fully Complied \
   \
-  See pages 6-14 \
+  See pages 6-15 \
   ],
   [],
 
@@ -82,7 +82,7 @@
   [Made minor changes in the conceptual framework to align with the specific objectives],
   [Partially Complied \ 
   \
-  See pages 15-16
+  See pages 16-17
   ],
   [],
 
@@ -90,14 +90,14 @@
   [Listed nail attributes with their corresponding image and description. Its correlation with systemic diseases is still ongoing.],
   [Partially Complied \
   \
-  See pages 62-63
+  See pages 64-65
   ],
   [],
 
   [5.	Strengthen the RRL],
   [Reviewed more literature to further strengthen the RRL. We then synthesized based on the gaps that we found.],
   [Partially Complied \ \
-  See pages 20-46
+  See pages 21-47
   ],
   [],
 
@@ -105,7 +105,7 @@
   [Included photos and descriptions of the 10 nail features which was not included in the last defense. The _Applied Techniques_ section now includes all the techniques being used by the researchers with images of the techniques. It is ongoing and each technique and experiment will be documented in the future.],
   [Partially Complied \
   \
-  See pages 47-72
+  See pages 48-74
   ],
   [],
 
@@ -113,7 +113,7 @@
   [The scope and limitation is now made to be more specific and now aligns with the research problem and objectives. We also added delimitations to state which parts or methods of the research we intentionally did not include.],
   [Fully Complied \
   \
-   See pages 16-18 
+   See pages 17-19 
   ],
   [],
 
@@ -133,24 +133,36 @@
 
   table.cell(colspan: 4, fill: rgb(213, 220, 228), )[*DR. MIA VILLARICA - (ADDITIONAL RECOMMENDATIONS LAST AUGUST 19)*],
 
-  [1. Find a literature that proves you can rename the label "Acral Lentiginous Melanoma" to "Melanoncyhia"],
-  [],
-  [],
+  [1. Find literature or expert opinions supporting the proposed renaming of ‘Acral Lentiginous Melanoma’ to ‘Melanonychia.’],
+  [Incorporated expert opinion from Dr. Cristine Florentino to justify renaming the class.],
+  [Fully complied \ \
+    See page 63
+  ],
   [],
 
   [2. The objectives should be revised to make them more specific and measurable, such as specifying the exact number of images, confirming whether each image is labeled, and detailing the verification process.],
-  [],
-  [],
+  [
+   - Made the objectives more specific
+   - Specified minimum number of images of the dataset, as well as the resolution.
+   - The dataset to be gathered must be a labeled dataset
+  ],
+  [Fully complied \ \
+   See pages  5-6
+  ],
   [],
 
   [3. The definition of “high-quality” images should be removed.],
-  [],
-  [],
+  [- Removed],
+  [Fully complied \ \
+    See page 5
+  ],
   [],
 
   [4. The planned use of Roboflow or synthetic datasets should be explicitly included in the objectives, with a clear explanation of where and how they will be applied in the project.],
-  [],
-  [],
+  [- Explained how the dataset will be applied in the project. It will be applied for deep learning],
+  [Fully complied \ \
+    See page 5
+  ],
   [],
 
   [5. The project timeline should be updated and adjusted to align with the suggested defense dates (October 6–10 or December 1–5) to make it more realistic and well-defined.],
@@ -172,7 +184,7 @@
   [],
 
   [3. Scale the classifier's confidence with the confusion matrix when predicting the probability of systemic diseases],
-  [],
+  [Started making a prototype for this function],
   [Ongoing],
   [],
 
