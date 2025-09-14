@@ -60,7 +60,39 @@
     [STATUS],
     [PANEL'S APPROVAL],
   ),
-  table.cell(colspan: 4, fill: rgb(213, 220, 228), )[*DR. MIA V. VILLARICA - ADVISER*],
+
+  table.cell(colspan: 4, fill: rgb(213, 220, 228), )[*SUMMARY OF RECOMMENDATIONS FROM TITLE PROPOSAL LAST APRIL 15*],
+  [1. Verify dataset from experts], 
+  [The dermatologist verified our dataset. She clarified that the images are nail features. She also clarified that Acral Lentiginous Melanoma is not a nail feature but a diagnosis itself, and the nail feature or physical examination finding can be hyperpigmented nail plate or melanonychia.], 
+  [Fully Complied], 
+  [],
+
+  [2. Consult experts on the field], 
+  [Interviewed a dermatologist from Laguna Holy Family Doctors], 
+  [Fully Complied], 
+  [],
+
+  [3. Consider external factors like age, history, and lifestyle], 
+  [We are including demographical statistics gathered from literature. Data availability can be a challenge ], 
+  [Ongoing], 
+  [],
+
+  [4. Curate local dataset of nail images], 
+  [Since nail features are morphologically consistent across the world but the prevalence is not, we will curate a local dataset of statistics to be used for Bayesian inference], 
+  [Ongoing], 
+  [],
+
+  [5. Remove the "Sta. Cruz" from the title], 
+  [Removed the "Sta. Cruz" from the title], 
+  [Fully Complied], 
+  [],
+
+  [6. Consider color changes on the skin], 
+  [The dataset we gathered includes color changes. Blue Nails, Terry's Nails, and Muehrcke's Lines have these color changes ], 
+  [Fully Complied], 
+  [],
+
+  table.cell(colspan: 4, fill: rgb(213, 220, 228), )[*DR. MIA VILLARICA - THESIS ADVISER (RECOMMENDATIONS FROM RC)*],
 
   [1.	Specific objectives should be informed.],
   [We specified the research problem and research objectives. The data to be collected is articulated more clearly. The research problem takes on a more specific approach in terms of data collection methods and training and evaluation methods. The research objectives reflect these research problems.],
@@ -117,7 +149,7 @@
   ],
   [],
 
-  table.cell(colspan: 4, fill: rgb(213, 220, 228), )[*MICAH JOY FORMARAN - TECHNICAL EDITOR*],
+  table.cell(colspan: 4, fill: rgb(213, 220, 228), )[*MICAH JOY FORMARAN - TECHNICAL EDITOR (RECOMMENDATIONS FROM RC)*],
 
   [1.	Refrain from dividing words. Example: discol- \
   oration should be one word "discoloration"
