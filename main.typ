@@ -720,14 +720,12 @@ Specifically, this study seeks to achieve the following objectives:
 + To apply standardized preprocessing steps including resizing and normalization to ensure consistency and suitability for deep learning, and to augment the dataset by at least 30% using systematic geometric and photometric transformations to enhance model generalization and robustness for systemic disease classification.
 + To develop and train multiple deep learning models (EfficientNetV2S, VGG16, ResNet50, RegNetY-16GF, and SwinV2-B) on the augmented dataset to classify nail features and to make systemic diseases inferences using Bayesian inference from the statistical dataset of systemic diseases.
 + To evaluate and compare the performance of the trained models using standard metrics, including accuracy, precision, recall, and F1-score for convolutional neural networks (CNNs) and apply explainability and interpretability methods for the algorithms. 
-+ To deploy the top-performing model in a prototype application that provides interpretable systemic disease predictions from fingernail images, designed for potential use in clinical decision support or health screening applications.
++ To deploy the models in a prototype application that provides interpretable systemic disease predictions from fingernail images, designed for potential use in clinical decision support or health screening applications.
 
 === Research Framework
 This section outlines the theoretical and conceptual frameworks that underpin the study, providing a structured approach to developing the proposed system.
 
 ==== Theoretical Framework
-// NOTE: nacorrelate ko na ata??? ang fingernail and systemic diseases
-
 A theoretical framework serves as a foundational structure of concepts, definitions, and propositions that guide research by explaining or predicting phenomena and the relationships between them. #cite(<vinz_what_2022>) states that a theoretical framework serves as a foundational review of existing theories that functions as a guiding structure for developing arguments within a researcher's own work. It explains the established theories that underpin a research study, thereby demonstrating the relevance of the paper and its grounding in existing ideas. Essentially, it justifies and contextualizes the research, representing a crucial initial step for a research paper.  The diagram below integrates deep learning and probabilistic modeling to create a comprehensive system for fingernail-based systemic disease detection, drawing inspiration from AI-driven diagnostic methodologies.
 
 #figure(
@@ -791,7 +789,7 @@ In the study, the researchers used a Vision Transformer (ViT) model because it o
 )
 ]
 
-Instead of using a probabilistic model, the study relies directly on Bayes’ theorem, as shown in @bayes-formula. According @hayes_bayes_2025, Bayes' Theorem is a mathematical formula for determining conditional probability. Conditional probability is the likelihood of an outcome occurring based on a previous outcome in similar circumstances. Thus, Bayes' Theorem provides a way to revise or update an existing prediction or theory given new evidence.
+The study relies on the use Bayes’ theorem for the inference, as shown in @bayes-formula. According @hayes_bayes_2025, Bayes' Theorem is a mathematical formula for determining conditional probability. Conditional probability is the likelihood of an outcome occurring based on a previous outcome in similar circumstances. Thus, Bayes' Theorem provides a way to revise or update an existing prediction or theory given new evidence.
 
 @rao_medical_2023 points out that every decision in clinical practice naturally follows Bayesian thinking. This shows that the theorem is useful for diseases that affect multiple parts of the body. The main advantage of Bayes’ theorem is that it allows a doctor to update their initial guess, or prior probability, as more evidence comes in. In medicine, diagnosis usually starts with a list of possible conditions, which gets narrower as doctors gather test results, observations, and data about how common the diseases are. This step-by-step updating process is exactly how Bayesian inference works.
 
@@ -1447,27 +1445,103 @@ These preprocessing steps were essential for adapting the dataset to the specifi
 This section presents the systematic framework employed in the development of the deep learning model for nail disease classification and probabilistic inference of systemic diseases. The process adheres to standard machine learning practices and scientific methodologies, particularly aligning with the phases found in the Cross-Industry Standard Process for Data Mining (CRISP-DM) and other established machine learning pipelines. Each step is carefully designed to ensure reproducibility, scalability, and clinical relevance.
 
 ==== Data Preparation
-The dataset, comprising labeled images of fingernails, was stored in Google Drive to allow seamless integration with Google Colab. This approach leverages Colab's cloud-based GPU resources, facilitating efficient model training. The directory containing the dataset was mounted in the Colab environment, and the paths to its `train`, `valid`, and `test` subsets were programmatically stored for ease of access.
+The dataset, comprising labeled images of fingernails, was stored in Google Drive to allow seamless integration with Google Colab. This approach leverages Colab's cloud-based GPU resources, facilitating efficient model training. The directory containing the dataset was mounted in the Colab environment, and the paths to its `train`, `valid`, and `test` subsets were programmatically stored for ease of access. The transforms were also prepared to be ready for data loading.
 
-The images were organized into class-specific directories, making them compatible with PyTorch’s `ImageFolder` utility. This function simplifies the labeling process by automatically assigning labels based on folder names, thus reducing the risk of human error. The dataset was then loaded into memory in mini-batches of 32 using PyTorch’s `DataLoader`, which supports parallel data loading, shuffling, and efficient memory usage — all essential for stable and reproducible training of deep learning models.
+#context {
+  [
+    #figure(image("img/ch3-dmg-data-preparation.png"), caption: flex-caption(
+      [Data Preparation],
+      [Data Preparation],
+    )) <data-preparation>
+  ]
+}
 
 ==== Data Preprocessing
 
-Given that the dataset had undergone prior augmentation, the preprocessing steps were minimal but essential. Images were resized to 224×224 pixels, a standard input size for most pre-trained convolutional neural networks. The images were then converted into tensors and normalized using the mean and standard deviation values of the ImageNet dataset. This normalization ensures consistency with the distribution of the pre-trained models, which is critical for transfer learning to perform effectively.
+The transforms include the preprocessing steps to be used. Given that the dataset had undergone prior augmentation, the preprocessing steps were minimal but essential. Images were resized to 224×224 pixels, a standard input size for most pre-trained convolutional neural networks. The images were then converted into tensors and normalized using the mean and standard deviation values of the ImageNet dataset. This normalization ensures consistency with the distribution of the pre-trained models, which is critical for transfer learning to perform effectively.
 
+#context {
+  [
+    #figure(image("img/ch3-dmg-data-preprocessing.png"), caption: flex-caption(
+      [Data Preprocessing],
+      [Data Preprocessing],
+    )) <data-preprocessing>
+  ]
+}
 ==== Model Building
 
 Five models were selected: four Convolutional Neural Networks (CNNs) and one Vision Transformer (ViT). The use of transfer learning — where models pre-trained on large datasets such as ImageNet are adapted to new tasks — significantly reduces training time and improves performance, especially when labeled data is limited.
 
-The final classification layers (also known as the "head") of each model were modified to output probabilities for 10 distinct nail disease classes. A CrossEntropy loss function was employed for multiclass classification. To address class imbalance in the dataset, weighted loss functions were used, ensuring that minority classes contributed proportionally to the loss and gradient calculations.
 
-The optimization algorithm chosen was AdamW, which combines the benefits of Adam with improved weight decay handling, leading to better generalization. The learning rate was empirically set to $1e-4$. Additionally, during the validation phase, accuracy was computed using the `Accuracy` metric from the `torchmetrics` library to ensure standardized and reliable evaluation.
+#context {
+  [
+    #figure(image("img/ch3-dmg-model-building.png"), caption: flex-caption(
+      [Sample Model Building of VGG16],
+      [Model Building],
+    )) <model-building>
+  ]
+}
+
+The models were loaded with its default pre-trained weights via `models.MODELNAME_Weights.DEFAULT`. The final classification layers (also known as the "head") of each model were modified to output probabilities for 10 distinct nail disease classes. 
+
+#context {
+  [
+    #figure(image("img/ch3-dmg-loss-function.png"), caption: flex-caption(
+      [Loss Function, Optimizer, and Scheduler],
+      [Loss Function, Optimizer, and Scheduler],
+    )) <loss-function-optimizer-scheduler>
+  ]
+}
+
+A CrossEntropy loss function was employed for multiclass classification. To address class imbalance in the dataset, weighted loss functions were used, ensuring that minority classes contributed proportionally to the loss and gradient calculations.
+
+The optimization algorithm chosen was AdamW, which combines the benefits of Adam with improved weight decay handling, leading to better generalization. The learning rate was empirically set to $1e-4$. A basic scheduler `StepLR()` was used to lower the learning rate by 10% of its previous value every 5 epochs. Additionally, during the validation phase, accuracy was computed using the `Accuracy` metric from the `torchmetrics` library to ensure standardized and reliable evaluation.
 
 ==== Model Training
 
-Each model was trained for five epochs. The training routine followed the conventional two-phase approach: the training step and the validation step. In the training step, batches from the training set were used to iteratively update the model’s weights via backpropagation. Training loss and training accuracy were recorded in each epoch to monitor learning progression.
+#context {
+  [
+    #figure(image("img/ch3-dmg-model-training.png"), caption: flex-caption(
+      [Model Training],
+      [Model Training],
+    )) <model-training>
+  ]
+}
 
-In the validation step, the model was evaluated on unseen data from the validation set. Here, no weight updates occurred; the purpose was solely to assess the model’s generalization performance. Validation loss and validation accuracy were likewise monitored to detect overfitting or underfitting. The training process also recorded the total time taken, which is essential for computational efficiency analysis, especially when scaling to larger systems.
+Each model was trained for five epochs on Google Colab using an NVIDIA T4 GPU, which imposed computational constraints but remained sufficient for prototyping. The training pipeline followed the conventional two-phase approach: the training step and the validation step. The researchers created a helper class (`utils.helpers`) to easily train different models on google colab without having to code the whole training phase. The code for the training phase is as follows below.
+
+#context {
+  [
+    #figure(image("img/ch3-dmg-train-step-function.png"), caption: flex-caption(
+      [Train Step],
+      [Train Step],
+    )) <train-step>
+  ]
+}
+
+In the training step (see @train-step), mini-batches from the training dataset were fed into the model. For each batch, the model produced raw predictions (logits), which were compared against the ground-truth labels using the designated loss function. The loss value was backpropagated through the network, and the optimizer updated the weights accordingly. Training loss and accuracy were aggregated over all batches within an epoch to provide metrics for monitoring learning progression.
+
+#context {
+  [
+    #figure(image("img/ch3-dmg-valid-step-function.png"), caption: flex-caption(
+      [Validation Step],
+      [Validation Step],
+    )) <validation-step>
+  ]
+}
+
+In the validation step (see @validation-step), the trained model was evaluated on unseen data from the validation set. Unlike the training step, no weight updates occurred, as the model was placed in evaluation mode with gradient tracking disabled with PyTorch's `inference_mode()`. The validation phase served exclusively to measure the model’s generalization performance. Validation loss and accuracy were computed per epoch and compared against the training metrics to identify signs of underfitting or overfitting.
+
+#context {
+  [
+    #figure(image("img/ch3-dmg-train-model-function.png"), caption: flex-caption(
+      [Model training code],
+      [Model training code]
+    )) <train-model-function>
+  ]
+}
+
+Both steps were called by the `train_model()` function (see @train-model-function), which executed the training and validation routines across the specified number of epochs. The function also managed learning rate scheduling, recorded per-epoch results, and logged the total training time. Capturing training duration was essential for assessing computational efficiency, particularly in the context of scaling the system to larger datasets or more complex architectures.
 
 ==== Systemic Disease Inference
 
