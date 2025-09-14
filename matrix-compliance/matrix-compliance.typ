@@ -130,11 +130,34 @@
   [Repositioned all table captions above their respective tables.],
   [Fully Complied],
   [],
+
   table.cell(colspan: 4, fill: rgb(213, 220, 228), )[*DR. MIA VILLARICA - (ADDITIONAL RECOMMENDATIONS LAST AUGUST 19)*],
-  [1. Find a literature that proves you can rename the label "Acral Lentiginous Melanoma" to "Melanoncyhia],
+
+  [1. Find a literature that proves you can rename the label "Acral Lentiginous Melanoma" to "Melanoncyhia"],
   [],
   [],
   [],
+
+  [2. The objectives should be revised to make them more specific and measurable, such as specifying the exact number of images, confirming whether each image is labeled, and detailing the verification process.],
+  [],
+  [],
+  [],
+
+  [3. The definition of “high-quality” images should be removed.],
+  [],
+  [],
+  [],
+
+  [4. The planned use of Roboflow or synthetic datasets should be explicitly included in the objectives, with a clear explanation of where and how they will be applied in the project.],
+  [],
+  [],
+  [],
+
+  [5. The project timeline should be updated and adjusted to align with the suggested defense dates (October 6–10 or December 1–5) to make it more realistic and well-defined.],
+  [],
+  [],
+  [],
+
   table.cell(colspan: 4, fill: rgb(213, 220, 228), )[*MARK BERNARDINO - SYSTEM EXPERT (ADDITIONAL RECOMMENDATIONS LAST SEPTEMBER 5)*],
   [1. If the system can detect nail features with 60% accuracy above, just focus on predicting the underlying sysytemic diseases for now],
   [ - Curated a dataset of statistics of systemic diseases
