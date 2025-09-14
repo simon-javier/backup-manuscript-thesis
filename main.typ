@@ -1424,19 +1424,14 @@ This section presents the systematic framework employed in the development of th
 ==== Data Preparation
 The dataset, comprising labeled images of fingernails, was stored in Google Drive to allow seamless integration with Google Colab. This approach leverages Colab's cloud-based GPU resources, facilitating efficient model training. The directory containing the dataset was mounted in the Colab environment, and the paths to its `train`, `valid`, and `test` subsets were programmatically stored for ease of access. The transforms were also prepared to be ready for data loading.
 
-#figure(image("img/ch3-dmg-data-preparation.png"), caption: flex-caption(
-  [Data Preparation],
-  [Data Preparation],
-)) <data-preparation>
+#figure(image("img/ch3-dmg-data-preparation.png"), caption: [Data Preparation]) <data-preparation>
 
 ==== Data Preprocessing
 
 The transforms include the preprocessing steps to be used. Given that the dataset had undergone prior augmentation, the preprocessing steps were minimal but essential. Images were resized to 224×224 pixels, a standard input size for most pre-trained convolutional neural networks. The images were then converted into tensors and normalized using the mean and standard deviation values of the ImageNet dataset. This normalization ensures consistency with the distribution of the pre-trained models, which is critical for transfer learning to perform effectively.
 
-#figure(image("img/ch3-dmg-data-preprocessing.png"), caption: flex-caption(
-  [Data Preprocessing],
-  [Data Preprocessing],
-)) <data-preprocessing>
+#figure(image("img/ch3-dmg-data-preprocessing.png"), caption: [Data Preprocessing],
+) <data-preprocessing>
 
 ==== Model Building
 
@@ -1450,10 +1445,8 @@ Five models were selected: four Convolutional Neural Networks (CNNs) and one Vis
 
 The models were loaded with its default pre-trained weights via `models.MODELNAME_Weights.DEFAULT`. The final classification layers (also known as the "head") of each model were modified to output probabilities for 10 distinct nail disease classes. 
 
-#figure(image("img/ch3-dmg-loss-function.png"), caption: flex-caption(
-  [Loss Function, Optimizer, and Scheduler],
-  [Loss Function, Optimizer, and Scheduler],
-)) <loss-function-optimizer-scheduler>
+#figure(image("img/ch3-dmg-loss-function.png"), caption: [Loss Function, Optimizer, and Scheduler],
+) <loss-function-optimizer-scheduler>
 
 A CrossEntropy loss function was employed for multiclass classification. To address class imbalance in the dataset, weighted loss functions were used, ensuring that minority classes contributed proportionally to the loss and gradient calculations.
 
@@ -1461,31 +1454,23 @@ The optimization algorithm chosen was AdamW, which combines the benefits of Adam
 
 ==== Model Training
 
-#figure(image("img/ch3-dmg-model-training.png"), caption: flex-caption(
-  [Model Training],
-  [Model Training],
-)) <model-training>
+#figure(image("img/ch3-dmg-model-training.png"), caption: [Model Training],
+) <model-training>
 
 Each model was trained for five epochs on Google Colab using an NVIDIA T4 GPU, which imposed computational constraints but remained sufficient for prototyping. The training pipeline followed the conventional two-phase approach: the training step and the validation step. The researchers created a helper class (`utils.helpers`) to easily train different models on google colab without having to code the whole training phase. The code for the training phase is as follows below.
 
-#figure(image("img/ch3-dmg-train-step-function.png"), caption: flex-caption(
-  [Train Step],
-  [Train Step],
-)) <train-step>
+#figure(image("img/ch3-dmg-train-step-function.png"), caption: [Train Step],
+) <train-step>
 
 In the training step (see @train-step), mini-batches from the training dataset were fed into the model. For each batch, the model produced raw predictions (logits), which were compared against the ground-truth labels using the designated loss function. The loss value was backpropagated through the network, and the optimizer updated the weights accordingly. Training loss and accuracy were aggregated over all batches within an epoch to provide metrics for monitoring learning progression.
 
-#figure(image("img/ch3-dmg-valid-step-function.png"), caption: flex-caption(
-  [Validation Step],
-  [Validation Step],
-)) <validation-step>
+#figure(image("img/ch3-dmg-valid-step-function.png"), caption: [Validation Step],
+) <validation-step>
 
 In the validation step (see @validation-step), the trained model was evaluated on unseen data from the validation set. Unlike the training step, no weight updates occurred, as the model was placed in evaluation mode with gradient tracking disabled with PyTorch's `inference_mode()`. The validation phase served exclusively to measure the model’s generalization performance. Validation loss and accuracy were computed per epoch and compared against the training metrics to identify signs of underfitting or overfitting.
 
-#figure(image("img/ch3-dmg-train-model-function.png"), caption: flex-caption(
-  [Model training code],
-  [Model training code]
-)) <train-model-function>
+#figure(image("img/ch3-dmg-train-model-function.png"), caption: [Model training code]
+) <train-model-function>
 
 Both steps were called by the `train_model()` function (see @train-model-function), which executed the training and validation routines across the specified number of epochs. The function also managed learning rate scheduling, recorded per-epoch results, and logged the total training time. Capturing training duration was essential for assessing computational efficiency, particularly in the context of scaling the system to larger datasets or more complex architectures.
 
