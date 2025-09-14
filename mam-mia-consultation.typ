@@ -1,0 +1,27 @@
+/* Consultation - 08/19/25 */
+
+#grid(
+  columns: (1fr, 3fr),
+  row-gutter: 1.5em,
+  [Ma'am Mia:],[...nakita mo na? Yung eto?],
+  [Valdeabella],[Opo.],
+  [Ma'am Mia:],[Ayusin nyo na ngayon. Tas sa link niyo ha. Tas ang FOD naten---ayusin niyo kase ang FOD naten---nakita niyo naman. Tingnan mo yung guide, nanjan yung defense naten. Pwede na kayo na---eto October 6 to 10 pwede na kayo jan o kaya December 1 to 5. So, i-adjust niyo yung timeline niyo para mas defined. Pwede niyo simulan ngayon o kaya anuhin niyo...Eh paano nga yan? Katulad nito, yang number one niyo is curate high-quality, eh nasaan na yung sa Roboflow niyo?],
+  [Valdeabella],[Ipapakita ko po.],
+  [Ma'am Mia:],[Hindi nga! Ibig ko sabihin sa objective oh. Wala naman sa objective niyo na gumamit ng dataset ng roboflow eh tama? Yung synthetic?],
+  [Valdeabella],[Opo.],
+  [Ma'am Mia:],[Oh. Curate nakalagay ih. Oh ngayon hindi rin to specific kase to curate. Dapat meron tayong "hanggang ilan?" Kunwari at least 10,000 images. Annotated ba yun? Labeled? Sino ang magsasabing healthy yun o hindi? Ganun. Tas paano mo nasabing high-quality?],
+  [Javier],[Pag pina-verify po ba sa expert ay---],
+  [Ma'am Mia:],[Ito naman sagutin mo muna tanong ko.],
+  [Javier],[Opo. Pag pinaverify po ba sa expert masasabi po bang high-quality yun o hindi po?],
+  [Ma'am Mia:],[Sinong expert?],
+  [Javier],[Yung ininterview po namin.],
+  [Ma'am Mia:],[High-quality images ang sinasabi ko. High-quality naku ko!],
+  [Javier],[Sorry po, akala ko po yung quality ng---kung accurate ba yung dataset.],
+  [Ma'am Mia:],[Eh andito tayo sa number one eh. High-quality fingernail images. Di ba? Paano mo masasabing high-quality?],
+  [Valdeabella],[Mataas resolution.],
+  [Ma'am Mia:],[Oh edi dapat nilagay mo dito "at least..."---eh paano niyo---kase may mga micro camera na ngayon ih. Pero hindi, dapat nga hindi high-quality ano ih. Kumbaga wala lang, eh paano kung local quality yung nacapture niyo pero nagbibigay din naman siya ng ano kase ipo-process niyo pa yan di ba?],
+  [Valdeabella],[Opo.],
+  [Ma'am Mia:],[Oh, sabagay bahala kayo buhay niyo yan. Pero ang number one kase na objective niyo, hindi talaga 'to curate' yung mga datasets na yan. Ngayon nasan na nga si ano...kase may sense pa rin naman yung synthetic sa Roboflow. May sense pa rin siya. Asan siya sa objective niyo? Saan mo siya gagamitin? Hindi ako makapag edit dito kase naka pdf. Oh dali edit niyo. I-take note nalang kase hindi tayo matatapos dito. Sige ayusin niyo yung pinapagawa ko. Hoy sa susunod, lahat may laptop.],
+  [Researchers:],[Opo.],
+  [Ma'am Mia:],[Para isa google docs, isa-isa tayo.],
+)
