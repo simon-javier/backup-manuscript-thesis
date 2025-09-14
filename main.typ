@@ -1437,7 +1437,6 @@ The transforms include the preprocessing steps to be used. Given that the datase
 
 Five models were selected: four Convolutional Neural Networks (CNNs) and one Vision Transformer (ViT). The use of transfer learning — where models pre-trained on large datasets such as ImageNet are adapted to new tasks — significantly reduces training time and improves performance, especially when labeled data is limited.
 
-
 #figure(image("img/ch3-dmg-model-building.png"), caption: flex-caption(
   [Sample Model Building of VGG16],
   [Model Building],

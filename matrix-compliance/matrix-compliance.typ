@@ -167,7 +167,7 @@
 
   [5. The project timeline should be updated and adjusted to align with the suggested defense dates (October 6–10 or December 1–5) to make it more realistic and well-defined.],
   [],
-  [],
+  [Fully Complied],
   [],
 
   table.cell(colspan: 4, fill: rgb(213, 220, 228), )[*MARK BERNARDINO - SYSTEM EXPERT (ADDITIONAL RECOMMENDATIONS LAST SEPTEMBER 5)*],
@@ -179,13 +179,14 @@
   [],
 
   [2. Document all the experiments],
-  [],
+  [- Started adding screenshots of code in Data Model Generation.],
   [Ongoing],
   [],
 
   [3. Scale the classifier's confidence with the confusion matrix when predicting the probability of systemic diseases],
-  [Started making a prototype for this function],
-  [Ongoing],
+  [Started making a prototype for this functionality.],
+  [Ongoing \
+  \ See pages 68-73],
   [],
 
   [4. Make a mobile version if possible],
