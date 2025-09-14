@@ -726,8 +726,6 @@ Specifically, this study seeks to achieve the following objectives:
 This section outlines the theoretical and conceptual frameworks that underpin the study, providing a structured approach to developing the proposed system.
 
 ==== Theoretical Framework
-// NOTE: nacorrelate ko na ata??? ang fingernail and systemic diseases
-
 A theoretical framework serves as a foundational structure of concepts, definitions, and propositions that guide research by explaining or predicting phenomena and the relationships between them. #cite(<vinz_what_2022>) states that a theoretical framework serves as a foundational review of existing theories that functions as a guiding structure for developing arguments within a researcher's own work. It explains the established theories that underpin a research study, thereby demonstrating the relevance of the paper and its grounding in existing ideas. Essentially, it justifies and contextualizes the research, representing a crucial initial step for a research paper.  The diagram below integrates deep learning and probabilistic modeling to create a comprehensive system for fingernail-based systemic disease detection, drawing inspiration from AI-driven diagnostic methodologies.
 
 #figure(
