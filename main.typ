@@ -138,7 +138,8 @@
 
 #show heading.where(level: 4): it => par(first-line-indent: 0in, emph[#it.body])
 
-#show heading.where(level: 5): it => emph(strong[#it.body.])
+#show heading.where(level: 5): it => strong[#it.body.]
+#show heading.where(level: 6): it => emph(strong[#it.body.])
 
 
 
@@ -192,9 +193,9 @@
 )
 
 #show raw: set text(
-  font: "Cascadia Code",
   size: 10pt,
 )
+
 
 #show raw.where(block: true): set par(leading: 1em)
 #show figure.where(kind: raw): set block(breakable: true, sticky: false, width: 100%)
@@ -505,9 +506,6 @@ Some terminologies used in the design and development of the developed system we
   [*Machine Learning (ML)*],
   [Machine Learning is a broader field encompassing deep learning, with techniques like Support Vector Machines and CNNs employed in studies to enhance classification accuracy for nails, and is integrated into the study.],
 
-  [*Naïve Bayes*],
-  [Naïve Bayes is a probabilistic model used in the study, alongside Bayesian Inference, to infer systemic disease probabilities, and is supported by the knowledge integration module.],
-
   [*Normalization (Image)*],
   [Input images were normalized using standard ImageNet mean and standard deviation values to ensure compatibility with pre-trained models, enabling more effective transfer learning and stable gradient flow during training.],
 
@@ -528,8 +526,8 @@ Some terminologies used in the design and development of the developed system we
 
   [*Specificity*], [Specificity is an evaluation metric for probabilistic models.],
 
-  [*SwinV2B*],
-  [SwinV2B achieved the highest performance across all evaluated metrics (accuracy, precision, recall, F1 score) among five architectures, despite its computational intensity, and is integrated into the business logic layer for accurate diagnosis.],
+  [*SwinV2-T*],
+  [SwinV2-T achieved the highest performance across all evaluated metrics (accuracy, precision, recall, F1 score) among five architectures, despite its computational intensity, and is integrated into the business logic layer for accurate diagnosis.],
 
   [*Transfer Learning*],
   [Transfer learning involves fine-tuning pre-trained models (e.g., EfficientNetV2 and RegNetY16GF), initially trained on large-scale datasets, using the nail disease dataset to accelerate training and improve performance, with normalization ensuring consistency for effectiveness.],
@@ -586,9 +584,6 @@ This section defines any terms or phrases derived from the study operationally, 
   [*Preventive Healthcare*],
   [Preventive healthcare is the primary goal of the study, which aims to develop a system empowering individuals globally by providing a non-invasive, accessible tool for early health screening, detection, and actionable recommendations.],
 
-  [*Subungual Melanoma (SUM)*],
-  [Subungual Melanoma is a cancer arising from malignant proliferation of melanocytes in the nail matrix, typically appearing as a pigmented streak that expands, and is the rarest of four major subtypes of cutaneous melanoma, accounting for 0.7–3.5% of all malignant melanomas.],
-
   [*Systemic Diseases*],
   [Systemic diseases are conditions such as diabetes, cardiovascular disorders, and liver conditions that often manifest early through fingernail abnormalities, providing a critical window for intervention, and the study aims for their probabilistic detection using deep learning on fingernail biomarkers.],
 
@@ -604,19 +599,19 @@ This section defines any terms or phrases derived from the study operationally, 
   #h2(c: false)[Preliminaries]
   #outline(target: selector(heading).after(<prelim-s>).before(<prelim-e>), title: none)
 
-  #h2(c: false, outlined: false, bookmarked: false)[CHAPTER I INTRODUCTION AND ITS BACKGROUND]
+  #h2(c: false, outlined: false, bookmarked: false)[#link(<ch1-s>)[CHAPTER I INTRODUCTION AND ITS BACKGROUND]]
   #outline(target: selector(heading).after(<ch1-s>).before(<ch1-e>), title: none)
 
-  #h2(c: false, outlined: false, bookmarked: false)[CHAPTER II REVIEW OF RELATED LITERATURE]
+  #h2(c: false, outlined: false, bookmarked: false)[#link(<ch2-s>)[CHAPTER II REVIEW OF RELATED LITERATURE]]
   #outline(target: selector(heading).after(<ch2-s>).before(<ch2-e>), title: none)
 
-  #h2(c: false, outlined: false, bookmarked: false)[CHAPTER III RESEARCH METHODOLOGY]
+  #h2(c: false, outlined: false, bookmarked: false)[#link(<ch3-s>)[CHAPTER III RESEARCH METHODOLOGY]]
   #outline(target: selector(heading).after(<ch3-s>).before(<ch3-e>), title: none)
 
-  #h2(c: false, outlined: false, bookmarked: false)[CHAPTER IV RESULTS AND DISCUSSION]
+  #h2(c: false, outlined: false, bookmarked: false)[#link(<ch4-s>)[CHAPTER IV RESULTS AND DISCUSSION]]
   #outline(target: selector(heading).after(<ch4-s>).before(<ch4-e>), title: none)
 
-  #h2(c: false, outlined: false, bookmarked: false)[CHAPTER V SUMMARY, CONCLUSIONS AND RECOMMENDATIONS]
+  #h2(c: false, outlined: false, bookmarked: false)[#link(<ch5-s>)[CHAPTER V SUMMARY, CONCLUSIONS AND RECOMMENDATIONS]]
   #outline(target: selector(heading).after(<ch5-s>).before(<ch5-e>), title: none)
 
   #outline(target: selector(heading).after(<post-s>).before(<post-e>), title: none, indent: 0em)
@@ -662,7 +657,43 @@ This section defines any terms or phrases derived from the study operationally, 
 
 #show heading.where(level: 4): it => block(emph(it.body))
 
-#show heading.where(level: 5): it => emph(strong[#it.body.])
+#show heading.where(level: 5): it => strong[#it.body.]
+#show heading.where(level: 6): it => emph(strong[#it.body.])
+
+#let table-multi-page(..table-args) = context {
+  let columns = table-args.named().at("columns", default: 1)
+  let column-amount = if type(columns) == int {
+    columns
+  } else if type(columns) == array {
+    columns.len()
+  } else {
+    1
+  }
+
+  let table-counter = counter("table")
+  table-counter.step()
+
+  // Counter for the amount of pages in the table
+  let table-part-counter = counter("table-part" + str(table-counter.get().first()))
+
+  show <table-header>: header => {
+    table-part-counter.step()
+    context if (table-part-counter.get().first() != 1) {
+      [*Table #table-counter.display().* (continued)]
+    }
+  }
+
+  grid(
+    inset: 0mm,
+    row-gutter: 2mm,
+    grid.header(grid.cell(align(left + bottom)[ #none <table-header> ])),
+    ..table-args,
+  )
+}
+
+#set table.header(repeat: false)
+#show table: it => table-multi-page(it)
+#show figure.where(kind: table): set figure(gap: .5em)
 
 #metadata("Chapter 1 start") <ch1-s>
 #set cite(form: "prose")
@@ -676,7 +707,7 @@ Artificial Intelligence (AI) has emerged as a transformative force in addressing
 
 In the Philippines, early efforts like the Bionyx project explored AI-driven fingernail analysis, using Microsoft Azure Custom Vision to identify systemic conditions such as heart, lung, and liver issues through nail images #cite(<chua_student-made_2018>, form: "normal"). While innovative, its reliance on older technology resulted in limited precision compared to modern deep learning models. Internationally, research has emphasized the diagnostic value of nails, with studies employing machine learning techniques like Support Vector Machines and CNNs to enhance classification accuracy #cite(<dhanashree_fingernail_2022>, form: "normal"). Despite these advancements, a critical gap persists: the integration of deep learning-based classification with probabilistic inference to estimate the likelihood of systemic diseases, providing actionable insights for users.
 
-To address the challenges faced in identifying systemic diseases from nail biomarkers, the study aims to develop a deep learning-based system that combines CNN models, specifically, EfficientNetV2S, VGG16, ResNet50 and RegNetY 16GF. The study also utilized a newer vision transformer model, SwinV2B for nail disorder classification with probabilistic models /*(e.g., Naïve Bayes, Bayesian Inference)*/ to infer systemic disease probabilities. By using publicly available datasets from Roboflow, the system is designed to be a globally accessible, non-invasive tool for early health screening. The proposed system will empower individuals, regardless of their location or socioeconomic status, to monitor their health proactively, offering a user-friendly platform that delivers probabilistic risk assessments and actionable recommendations for medical consultation.
+To address the challenges faced in identifying systemic diseases from nail biomarkers, the study aims to develop a deep learning-based system that combines CNN models, specifically, EfficientNetV2-S, VGG-16, ResNet-50 and RegNetY-16GF. The study also utilized a newer vision transformer model, SwinV2-T for nail disorder classification with probabilistic models /*(e.g., Naïve Bayes, Bayesian Inference)*/ to infer systemic disease probabilities. By using publicly available datasets from Roboflow, the system is designed to be a globally accessible, non-invasive tool for early health screening. The proposed system will empower individuals, regardless of their location or socioeconomic status, to monitor their health proactively, offering a user-friendly platform that delivers probabilistic risk assessments and actionable recommendations for medical consultation.
 
 #pagebreak()
 === Research Problem
@@ -706,19 +737,19 @@ Thus, this study specifically seeks to address the following problems:
 
 + How can a diverse dataset of at least 3,000 fingernail images across multiple classes be gathered, prepared, preprocessed, and curated to ensure compatibility with deep learning frameworks while addressing issues like class imbalance and data quality?
 + How can researchers systematically collect and curate statistical data on systemic diseases associated with nail features into a usable dataset, and how can this dataset be applied using Bayesian inference for systemic disease inference?
-+ How can the reliability and accuracy of the deep learning model be ensured through rigorous training and evaluation, including cross-validation, and comparison against benchmarks from existing studies?
++ How can the reliability and accuracy of the deep learning model be ensured through rigorous training and evaluation and comparison against benchmarks from existing studies?
 + How can explainability methods, such as Grad-CAM or attention-based visualizations, be implemented in deep learning models for fingernail analysis to provide interpretable and explainable results?
 + Which deep learning model demonstrates superior performance for nail disease classification, and how do standard evaluation metrics (e.g., accuracy, precision, recall, F1-score for CNNs; confidence intervals, sensitivity, specificity for probabilistic models) inform the selection of the optimal model?
 + How can the best-performing model be deployed in a prototype application to provide interpretable systemic disease inference from fingernail images, and what are the key challenges in ensuring its suitability for clinical decision support or health screening?
 
 
 === Research Objectives
-The main objective of the study is to design, develop  and evaluate a deep learning-based system for the classification of the fingernail biomarker that achieves at least 80% accuracy by December, and integrating Bayesian inference for the detection of the probabilities of systemic diseases, providing a non-invasive, accessible, and cost-effective tool to enhance preventive healthcare for individuals globally.
+The main objective of the study is to design, develop  and evaluate a deep learning-based system for the classification of nail features that achieves at least 80% accuracy by December, and integrating Bayesian inference for the detection of the probabilities of systemic diseases, providing a non-invasive, accessible, and cost-effective tool to enhance preventive healthcare for individuals globally.
 
 Specifically, this study seeks to achieve the following objectives:
 + To obtain a publicly available fingernail image dataset from Roboflow, consisting of at least 3,000 labeled images across a minimum of 5 distinct nail feature classes, with each image meeting a minimum resolution of 224×224 pixels, and the dataset will be verified by a dermatologist. In parallel, to curate a statistical dataset to be used for inference using Bayesian inference, containing percentage-based associations between these nail feature classes and systemic diseases derived from published clinical, epidemiological studies, and literature. 
-+ To apply standardized preprocessing steps including resizing and normalization to ensure consistency and suitability for deep learning, and to augment the dataset by at least 30% using systematic geometric and photometric transformations to enhance model generalization and robustness for systemic disease classification.
-+ To develop and train multiple deep learning models (EfficientNetV2S, VGG16, ResNet50, RegNetY-16GF, and SwinV2-B) on the augmented dataset to classify nail features and to make systemic diseases inferences using Bayesian inference from the statistical dataset of systemic diseases.
++ To apply standardized preprocessing steps including resizing and normalization to ensure consistency and suitability for deep learning, and to augment the image dataset by at least 30% using systematic geometric and photometric transformations to enhance model generalization and robustness for systemic disease classification.
++ To experiment, develop and train multiple deep learning models (EfficientNetV2S, VGG16, ResNet50, RegNetY-16GF, and SwinV2-T) on the dataset to accurately classify nail features and to make systemic diseases inferences using Bayesian inference from the statistical dataset of systemic diseases.
 + To evaluate and compare the performance of the trained models using standard metrics, including accuracy, precision, recall, and F1-score for convolutional neural networks (CNNs) and apply explainability and interpretability methods for the algorithms. 
 + To deploy the models in a prototype application that provides interpretable systemic disease predictions from fingernail images, designed for potential use in clinical decision support or health screening applications.
 
@@ -789,7 +820,7 @@ In the study, the researchers used a Vision Transformer (ViT) model because it o
 )
 ]
 
-The study relies on the use Bayes’ theorem for the inference, as shown in @bayes-formula. According @hayes_bayes_2025, Bayes' Theorem is a mathematical formula for determining conditional probability. Conditional probability is the likelihood of an outcome occurring based on a previous outcome in similar circumstances. Thus, Bayes' Theorem provides a way to revise or update an existing prediction or theory given new evidence.
+The study relies on the use Bayes’ theorem for the inference, as shown in @bayes-formula. According to @hayes_bayes_2025, Bayes' Theorem is a mathematical formula for determining conditional probability. Conditional probability is the likelihood of an outcome occurring based on a previous outcome in similar circumstances. Thus, Bayes' Theorem provides a way to revise or update an existing prediction or theory given new evidence.
 
 @rao_medical_2023 points out that every decision in clinical practice naturally follows Bayesian thinking. This shows that the theorem is useful for diseases that affect multiple parts of the body. The main advantage of Bayes’ theorem is that it allows a doctor to update their initial guess, or prior probability, as more evidence comes in. In medicine, diagnosis usually starts with a list of possible conditions, which gets narrower as doctors gather test results, observations, and data about how common the diseases are. This step-by-step updating process is exactly how Bayesian inference works.
 
@@ -826,7 +857,7 @@ The researchers improved this framework by replacing the CNN-CapsNet model with 
 
 The study also expanded the types of nail conditions that the model can detect. Instead of just a 6 nail classifications, the researchers included 10 different nail classifications, specifically beau’s line, blue finger, clubbing, healthy nail, koilonychia, melanonychia, muehrcke’s lines, onychogryphosis, pitting, and terry’s nail.
 
-The study also went a step further by connecting each nail condition to possible systemic diseases. For example, some nail problems might be linked to heart disease, anemia, or cancer. This connection helps the model not just recognize the nail condition, but also suggest what health issue might be related.
+The study also went a step further by connecting each nail condition to possible systemic diseases. For example, some nail problems might be linked to heart disease, anemia, or cancer. This connection helps the model not just recognize the nail condition, but also suggest what health issues might be related.
 
 #figure(image("/img/agile.png"), caption: flex-caption(
   [AGILE Development Cycle #cite(<okeke_agile_2021>, form: "normal")],
@@ -866,16 +897,16 @@ The scope is the domain of the research. It describes the extent to which the re
 The following scope are set by the researchers:
 - The research is scheduled over a seven-month period, covering phases such as data collection, preprocessing, model development, evaluation, and deployment
 - The study will cover classifying nail features ranging 10 classes: Beau's Lines, Blue Nails, Clubbing, Healthy Nail, Koilonychia, Melanonychia, Muehrcke's Lines, Onychogryphosis, Pitting, and Terry's Nails.
-- The image dataset will be trained on five models: Resnet-50, VGG-16, RegNetY-16GF, EfficientNetV2-S, and SwinV2-B. The researchers will improve the model through iterative experimentations.
+- The image dataset will be trained on five models: Resnet-50, VGG-16, RegNetY-16GF, EfficientNetV2-S, and SwinV2-T. The researchers will improve the model through iterative experimentations.
 // To be updated to be more specific
-- The researchers will implement explainability tehcniques such as Grad-CAM to understand how the model came up with the classified nail.
+- The researchers will implement explainability techniques such as Grad-CAM to understand how the model came up with the classified nail.
 - The study makes inferences using Bayesian inference with probabilities derived from the curated statistical dataset.
 - The study will be developed on the web using frameworks like Flask.
 
 ==== Delimitations
 The following delimitations are set by the researchers:
 // Include ba natin nail segmentation?
-- The developed model does not detect individual features of the nail (like the lunula, nail bed, or color of the nail). It relies solely on the power of the CNN and ViT Models to detect from subtle to distinct features from the labeled dataset.
+- The developed model does not explicitly identify specific anatomical features of the nail, such as the lunula, nail bed, or nail color. Instead, it leverages the CNN and ViT architectures to automatically learn and detect relevant patterns and features from the labeled dataset, ranging from subtle changes like Muehrcke’s lines to distinct characteristics like onychogryphosis.
 - The developed system is not intended to function as a diagnostic tool. Unlike dermatologists or internal medicine physicians who incorporate a patient’s full medical history, laboratory results, and clinical examinations into their assessment, this system relies exclusively on statistical associations between nail features and systemic diseases. Consequently, its inferences are based on general probabilities rather than individualized medical data, which may oversimplify the complexity and multifactorial nature of systemic diseases.
 - The model will not analyze how severe a nail feature has become. It will only classify which nail feature it is.
 
@@ -885,6 +916,7 @@ This study is limited to the following:
 - The reliability of nails as a systemic disease detector is tricky and requires more information such as the user's history, work, and pathology.
 - The dataset quality and balance can impact the model's ability to make predictions.
 - Publicly sourced datasets may lack formal verification from licensed medical professionals, introducing risks of inaccurate labels that could impact classification and inference reliability.
+- Local data about prevalence of nail features and nail feature given diseases can be limited.
 - Due to the blackbox nature of deep learning models, the models employed have limited interpretability and explainability, which may affect clinical trust and adoption despite strong predictive performance #cite(<doshi_2017_towards>, form: "normal").
 - Training complex models require substantial computational resources which may limit the ability to perform extensive hyperparameter tuning.
 
@@ -929,13 +961,13 @@ The urgency of research in personal hygiene and nail diseases is exceptionally h
 === Nail Abnormalities as Systemic Disease Indicators
 According to #cite(<shandilya_autonomous_2024>, form: "prose"), the architectural complexity of the nail unit proves to be an important marker for the general health condition and very often represents alterations coinciding with most diseases. Architectural changes in the nails constitute important diagnostic information within a broad spectrum of diseases---from cancer and dermatological diseases to respiratory and cardiovascular diseases. Their study develops an intricate classification system for nail diseases based on the anatomical characteristics of the nail unit for the enhancement of accuracy in dermatological diagnosis. Detailed diagnosis of nail diseases such as onychogryphosis, cyanosis, clubbing, and koilonychia enhances the accuracy of dermatological examination and alerts the clinician to more generalized health issues including hypoxia or anemia due to an iron deficiency. Besides, changes in nails may include manifestations like pitting in psoriasis or onycholysis in eczema: two diseases with a long duration.
 
-Another study conducted by #cite(<abdulhadi_human_2021>) further strengthens the idea that nail abnormalities are important marker for the general health condition. In their study, they stated that many diseases can be predicted by observing color and shape of human nails in healhcare domain. They stated that a white spot here, a rosy stain there, or some winkle or projection may be an indication of disease in the body. Problems in the liver, lungs, and heart can show up in nails. Doctors observe nails of patient to get assistance in disease identification. Usually, pink nails indicate healthy human. Healthy nails are smooth and consistent in color. Anything else affecting the growth and appearance of the fingernails or toenails may indicate an abnormality. A person’s nails can say a lot about their health condition. The need of such systems to analyze nails for disease prediction is because human eye is having subjectivity about colors, having limitation of resolution and small amount of color change in few pixels on nail not being highlighted to human eyes which may lead to wrong result, whereas computer recognizes small color changes on nail.
+Another study conducted by #cite(<abdulhadi_human_2021>) further strengthens the idea that nail abnormalities are important markers for the general health condition. In their study, they stated that many diseases can be predicted by observing the color and shape of human nails in the healthcare domain. They stated that a white spot here, a rosy stain there, or some wrinkle or projection may be an indication of disease in the body. Problems in the liver, lungs, and heart can show up in nails. Doctors observe the nails of patients to get assistance in disease identification. Usually, pink nails indicate a healthy human. Healthy nails are smooth and consistent in color. Anything else affecting the growth and appearance of the fingernails or toenails may indicate an abnormality. A person’s nails can say a lot about their health condition. The need of such systems to analyze nails for disease prediction is because the human eye is having subjectivity about colors, having limitation of resolution and small amount of color change in a few pixels on the nail not being highlighted to human eyes which may lead to wrong result, whereas computers recognize small color changes on nail.
 
 One example of nail abnormalities is described as Beau's Lines. In the paper called "Classification of melanonychia, Beau’s lines, and nail clubbing based on nail images and transfer learning techniques" by #cite(<cosar_sogukkuyu_classification_2023>), they described Beau's lines as horizontal depressions that rise from the nail’s base and spread outward from the white, moon-shaped section of the nail bed. The width of the lines can be used to determine how long the disease has been present.
 
-#cite(<lee_optimal_2022>) stated that Beau's Lines diagnosis is clinical, by inspecting the nail plate for transverse depressions. Ultrasound imaging can help visualize the defect and estimate the timeframe of the insult. AI models like AlexNet with Attention (AWA) have alse been applied to classify Beau's lines, achieving an 86.67% testing accuracy in the study conducted by #cite(<shih_classification_2022>).
+#cite(<lee_optimal_2022>) stated that Beau's Lines diagnosis is clinical, by inspecting the nail plate for transverse depressions. Ultrasound imaging can help visualize the defect and estimate the timeframe of the insult. AI models like AlexNet with Attention (AWA) have also been applied to classify Beau's lines, achieving an 86.67% testing accuracy in the study conducted by #cite(<shih_classification_2022>).
 
-Further down the list of nail abnormalities is called blue finger or cyanosis. #cite(<mahajan_artificial_2024>) described cyanosis as benign and rare condition with an idiopathic etiology. It is characterized by an acute bluish discoloration of fingers, which may be accompanied by pain. Blue fingers can mean your organs, muscles, and tissues aren’t getting the amount of blood they need to function properly. Many different conditions can cause cyanosis. Cyanosis is primarily caused by lower oxygen saturation, leading to an accumulation of deoxyhemoglobin in the small blood vessels of the extremities. It indicates a lack of oxygen. Central cyanosis may manifest on mucosa and extremities due to congenital heart diseases.  Peripheral cyanosis is typically diagnosed by examining the nails and digits, caused by vasoconstriction and diminished peripheral blood flow, as seen in cold exposure, shock, congestive cardiac failure, and peripheral vascular disease.
+Further down the list of nail abnormalities is called blue finger or cyanosis. #cite(<mahajan_artificial_2024>) described cyanosis as a benign and rare condition with an idiopathic etiology. It is characterized by an acute bluish discoloration of fingers, which may be accompanied by pain. Blue fingers can mean your organs, muscles, and tissues aren’t getting the amount of blood they need to function properly. Many different conditions can cause cyanosis. Cyanosis is primarily caused by lower oxygen saturation, leading to an accumulation of deoxyhemoglobin in the small blood vessels of the extremities. It indicates a lack of oxygen. Central cyanosis may manifest on mucosa and extremities due to congenital heart diseases.  Peripheral cyanosis is typically diagnosed by examining the nails and digits, caused by vasoconstriction and diminished peripheral blood flow, as seen in cold exposure, shock, congestive cardiac failure, and peripheral vascular disease.
 
 In the study conducted by #cite(<pankratov_nail_2024>), he stated that the color change can also be associated with conditions like liver cirrhosis or certain poisonings, such as cyanide or copper salts. He also stated that cyanosis of the nail bed can be caused by spastic states and decompensated mitral valve defects.
 
@@ -965,15 +997,15 @@ In a study conducted by @rodriguez-cerdeira_fungal_2024, infectious diseases, pa
 
 Melanonychia is also one of the most common nail changes seen in people living with HIV/AIDS. One of the major findings by @flores-bozo_nail_2022 was longitudinal melanonychia is reported in about 25.3% of patients. A large portion of these cases (24.4%) are racial melanonychia, which matches the high percentage (70%) of participants with Fitzpatrick’s skin type IV. Aside from racial factors, longitudinal melanonychia is also linked to certain treatments. For example, one case (0.5%) was connected to the use of zidovudine, an antiretroviral drug. While combined antiretroviral therapy (cART) is effective in treating HIV, it can also increase the risk of both infectious and noninfectious nail conditions, including longitudinal melanonychia. Because these nail changes are common and can have different causes, regular nail checkups are important for people living with HIV.
 
-Another nail classification that the researcher's models wants to identify is Muehrcke’s Lines. In a study conducted by #cite(<mahajan_artificial_2024>), he stated that  Muehrcke’s lines appear as double white lines that run across the fingernails horizontally. Muehrcke’s lines usually affect several nails at a time. There are usually no lines on the thumbnails. Some characteristics of Muehrcke’s lines are: White bands go across the entire nail from side to side. Lines are usually most clearly seen on the second, third, and fourth fingers. The nail bed looks healthy in between the lines. The lines do not move as the nail grows. The lines do not cause dents in the nail. When you press down on the fingernail, the lines temporarily disappear.
+Another nail classification that the researcher's models want to identify is Muehrcke’s Lines. In a study conducted by #cite(<mahajan_artificial_2024>), he stated that  Muehrcke’s lines appear as double white lines that run across the fingernails horizontally. Muehrcke’s lines usually affect several nails at a time. There are usually no lines on the thumbnails. Some characteristics of Muehrcke’s lines are: White bands go across the entire nail from side to side. Lines are usually most clearly seen on the second, third, and fourth fingers. The nail bed looks healthy in between the lines. The lines do not move as the nail grows. The lines do not cause dents in the nail. When you press down on the fingernail, the lines temporarily disappear.
 
 The lines have been linked to low levels of a protein called albumin. Albumin is found in the blood. It is made in the liver. Although low albumin level is most commonly linked to liver disease, many different systemic (body-wide) diseases can cause low albumin levels. Muehrcke’s lines have been seen in people with: Cancer after chemotherapy; Kidney disease, including nephrotic syndrome and glomerulonephritis; Liver disease, including cirrhosis, an unbalanced diet that leads to an extreme lack of nutrients in the body #cite(<mahajan_artificial_2024>, form: "normal").
 
 Onychogryphosis, also known as Ram's Horn Nail, is also identified by #cite(<mahajan_artificial_2024>). He stated that Onychogryphosis, also known as ram’s horn nail, is a nail disorder resulting from slow nail plate growth. Onychogryphosis is a nail disease that causes one side of the nail to grow faster than the other. It is characterized by an opaque, yellow-brown thickening of the nail plate with elongation and increased curvature. The nickname for this disease is ram’s horn nails because the nails are thick and curvy, like horns or claws.
 
-Futher down the list of nail classification is pitting. Nail pitting may appear as depressions or dimples in your fingernails or toenails. Nail pitting may show up as shallow or deep holes in your nails. The pitting can happen on your fingernails or your toenails. You may think the pitting looks like white spots or other marks. It might even look like your nails have been hit with an ice pick. Nail pitting also may be related to alopecia areata — an autoimmune disease that causes hair loss. #cite(<mahajan_artificial_2024>, form: "normal")
+Futher down the list of nail classification is pitting. Nail pitting may appear as depressions or dimples in your fingernails or toenails. Nail pitting may show up as shallow or deep holes in your nails. The pitting can happen on your fingernails or your toenails. You may think the pitting looks like white spots or other marks. It might even look like your nails have been hit with an ice pick. Nail pitting also may be related to alopecia areata---an autoimmune disease that causes hair loss. #cite(<mahajan_artificial_2024>, form: "normal")
 
-Lastly, the researchers also included terry's nails to nail classifications that the system is going to identify. According to #cite(<lin_development_2021>, form: "normal"), terry’s nails are characterized by white opacification of the nails with effacement of the lunula and distal sparing. Described originally in 1954 by Dr. Richard Terry as a common fingernail abnormality in patients with hepatic cirrhosis, Terry’s nails are now a known sequelae of other conditions such as congestive heart failure, chronic kidney disease, diabetes mellitus, and malnutrition. Often all nails of the hands are affected.
+Lastly, the researchers also included Terry's nails to nail classifications that the system is going to identify. According to #cite(<lin_development_2021>), terry’s nails are characterized by white opacification of the nails with effacement of the lunula and distal sparing. Described originally in 1954 by Dr. Richard Terry as a common fingernail abnormality in patients with hepatic cirrhosis, Terry’s nails are now a known sequelae of other conditions such as congestive heart failure, chronic kidney disease, diabetes mellitus, and malnutrition. Often all the nails of the hands are affected.
 
 Correspondingly, #cite(<rowe_nail_2025>) states that Terry's nails are characterized by leukonychia of nearly the entire nail bed, with only the distal 1 to 2 mm possessing a normal color. They are most commonly associated with hepatic cirrhosis, and in one multicenter study of patients with cirrhosis, 25.6% had Terry's nails.
 
@@ -984,16 +1016,24 @@ On top of that, while being promoted as one of the most reliable physical signs 
 // NOTE: Might add more studies
 Traditional diagnostic methods, particularly in rural areas, face several significant limitations related to equipment, expertise scarcity, inherent human variability, and the challenges of accurately interpreting complex symptoms. These limitations underscore a growing need for advanced artificial intelligence (AI) solutions in healthcare. In a study conducted by #cite(<nirupama_mobilenet-v2_2024>), they stated that access to dermatological expertise is limited, particularly in underserved or remote areas. Traditional methods of skin disease classification, although valuable, have their limitations. They heavily rely on human expertise, which leads to subjectivity and variations in diagnosis. In light of these challenges, there is a rising need for automated and computer-aided diagnostic systems to help dermatologists and healthcare providers in achieving more accurate and consistent results. In modern days, machine learning algorithms, especially deep models have shown promising outcomes in automating diagnostic procedures for skin disorders.
 
-In addition, the study of #cite(<dhanashree_fingernail_2022>, form: "prose") mentions that though various disease can be diagnosed using the colour of finger nails, the accuracy rate sometimes fails. This is mainly due to the colour assumptions made by humans through naked eye. Human eye has limitation in resolution and small amount of colour change in few pixels on nail would not be highlighted to human eyes which may lead to wrong result whereas it is possible for a machine to recognize small colour changes on nail. The health condition can be diagnosed using the nail’s thickness, length of nails, colour and texture.
+In addition, the study of #cite(<dhanashree_fingernail_2022>, form: "prose") mentions that though various diseases can be diagnosed using the colour of finger nails, the accuracy rate sometimes fails. This is mainly due to the colour assumptions made by humans through naked eye. The human eye has limitations in resolution and a small amount of colour change in a few pixels on a nail would not be highlighted to human eyes which may lead to wrong results whereas it is possible for a machine to recognize small colour changes on a nail. The health condition can be diagnosed using the nail’s thickness, length of nails, colour and texture.
 
 === Deep Learning and Image Processing for Nail Analysis
-The research conducted by #cite(<shandilya_autonomous_2024>, form: "prose") began with the development of a Base CNN model for nail disease classification and progressed to the creation of a more advanced Hybrid Capsule CNN model to improve classification performance. The integration of capsule networks into the Hybrid model significantly enhanced its ability to capture spatial hierarchies and handle transformations, leading to better overall classification outcomes. The Nail Disease Detection dataset has been employed to conduct the training and testing of both models. With an accuracy of 99.25%, the Hybrid Capsule CNN model provides a more accurate, robust, and dependable solution for automated nail disease classification then Base CNN model with 97.75% accuracy. Its potential applications extend to medical diagnostics and healthcare automation, where accurate disease detection is critical for effective treatment.
+VGG-related networks like VGG-16 and VGG-19  are one of the highly cited families of CNNs in this context. They often appear as feature extractors or as initial point architectures due to their lightweight nature and proven capability on image classification datasets. For instance, @shandilya_autonomous_2024 proposed a dedicated four-block CNN yet compared it to VGG-19 that had 89.37% accuracy in recognizing six different nail disorders. Similarly, @marulkar_enhancing_2025 indicated that VGG-16 had 87.5% and 77% accuracies according to @ccaso_detection_2024 in separate classification tasks. More recent reports, however, indicate that although VGG-related models are still relevant, they are increasingly increasingly beaten by richer and deeper architectures. In one such work of @navarro-cabrera_machine_2025 targeting iron deficiency anemia, they noted that DenseNet169 had considerably outperformed VGG-16 in achieving 71.08% accuracy from a memory usage point of view compared to 64.77% for recall. The implication is thus that for particular subtle detection issues in medicine, possibly dense connectivity in DenseNets has something over sequential layering in VGGs.
+
+The research conducted by #cite(<shandilya_autonomous_2024>, form: "prose") began with the development of a Base CNN model for nail disease classification and progressed to the creation of a more advanced Hybrid Capsule CNN model to improve classification performance. The integration of capsule networks into the Hybrid model significantly enhanced its ability to capture spatial hierarchies and handle transformations, leading to better overall classification outcomes. The Nail Disease Detection dataset has been employed to conduct the training and testing of both models. With an accuracy of 99.25%, the Hybrid Capsule CNN model provides a more accurate, robust, and dependable solution for automated nail disease classification than the Base CNN model with 97.75% accuracy. Its potential applications extend to medical diagnostics and healthcare automation, where accurate disease detection is critical for effective treatment.
 
 Furthermore, #cite(<ardianto_bioinformatics-driven_2025>, form: "prose") explored the application of Convolutional Neural Networks (CNNs) to detect 17 classes of nail conditions, achieving an overall detection accuracy of 83%. The CNN model, configured with predefined parameters such as a dropout rate of 0.2 and a learning rate of 0.001, demonstrated strong generalization capabilities. Notably, the dropout rate effectively reduced overfitting by introducing regularization, while the learning rate balanced convergence speed and stability during training. These parameter choices were instrumental in achieving a low validation error (0.1037) compared to training error, highlighting the model's ability to generalize to unseen data. Certain classes, such as "Leukonychia" and "Splinter Hemorrhage," showed excellent detection accuracy due to well-defined visual patterns in these conditions. However, classes like "Pale Nail" and "Alopecia Areata" exhibited lower accuracy, indicating the need for additional data and refinement in feature extraction. This highlights the model's strengths while also identifying areas requiring further research. The results underscore the potential of using CNN models in medical applications, providing a rapid and accessible diagnostic tool for nail condition detection.
 
-In the study conducted by #cite(<lahari_cnn_2023>, form: "prose"), two algorithms for classification namely Artificial Neural Network and Convolution neural network (DenseNet121) were used. The two algorithms are compared based on accuracy, specificity, and sensitivity. ANN is the older version which is less accurate. CNN is the latest model which can perform the classification better and it gives better results than ANN. CNN gives more accuracy and sensitivity than ANN. And the specificity is almost equal in both the algorithms. In their proposed technique, they trained a model that classifies the disease based on the colour and pattern of the nail. The system detects the diseases based on the features. It is able to identify the small patterns and colour variations also such that providing a system with higher success rate. Their proposed model gives more accurate results than human vision, because it overcomes the limitations of human eye like to identify the variations in nail colour and patterns.
+In the study conducted by #cite(<lahari_cnn_2023>, form: "prose"), two algorithms for classification namely Artificial Neural Network and Convolution neural network (DenseNet121) were used. The two algorithms are compared based on accuracy, specificity, and sensitivity. ANN is the older version which is less accurate. CNN is the latest model which can perform the classification better and it gives better results than ANN. CNN gives more accuracy and sensitivity than ANN. And the specificity is almost equal in both the algorithms. In their proposed technique, they trained a model that classifies the disease based on the colour and pattern of the nail. The system detects the diseases based on the features. It is able to identify the small patterns and colour variations also such that providing a system with higher success rate. Their proposed model gives more accurate results than human vision, because it overcomes the limitations of the human eye like to identify the variations in nail colour and patterns.
 
-Furthermore, #cite(<sharma_fingernail_2024>, form: "prose") conducted a fingernail image-based health assessment using a hybrid VGG16 and Random Forest Model. The hybrid model has proven to be highly effective in classifying fingernail images into specific disease categories. The model's performance, evaluated through metrics such as accuracy, precision, recall, and F1-score, exceeded those of alternative classifiers. With a 97.02% accuracy rate, the proposed model shows great promise for early diagnosis of diseases such as kidney disorder, melanoma, and anaemia through fingernail analysis. The proposed hybrid model has several advantages, including high accuracy and effective feature extraction through VGG16, making it highly reliable for disease detection. It is scalable, non-invasive, and versatile for other image-based diagnostics. However, its disadvantages include a limited dataset, and narrow disease focus. Future work can be focused on expanding the dataset, including more diseases, integrating the model into mobile applications, exploring advanced architectures like ResNet, and improving robustness to handle variable image quality for broader applicability.
+Furthermore, #cite(<sharma_fingernail_2024>, form: "prose") conducted a fingernail image-based health assessment using a hybrid VGG16 and Random Forest Model. The hybrid model has proven to be highly effective in classifying fingernail images into specific disease categories. The model's performance, evaluated through metrics such as accuracy, precision, recall, and F1-score, exceeded those of alternative classifiers. With a 97.02% accuracy rate, the proposed model shows great promise for early diagnosis of diseases such as kidney disorder, melanoma, and anemia through fingernail analysis. The proposed hybrid model has several advantages, including high accuracy and effective feature extraction through VGG16, making it highly reliable for disease detection. It is scalable, non-invasive, and versatile for other image-based diagnostics. However, its disadvantages include a limited dataset, and narrow disease focus. Future work can be focused on expanding the dataset, including more diseases, integrating the model into mobile applications, exploring advanced architectures like ResNet, and improving robustness to handle variable image quality for broader applicability.
+
+Architectures from the ResNet family, particularly ResNet-50, have appeared extensively. They have been commended for their ability to train very deep networks by utilizing skip connections to alleviate vanishing gradients. Some studies have shown that ResNet-50 outperforms other well-known models. One comparative investigation of @marulkar_enhancing_2025 amongst various architectures across general nail disease classification claimed both ResNet50 and DenseNet201 had the highest precision at 96.39%, significantly outclassing VGG-16 at 87.5%.
+
+The introduction of models such as EfficientNet exhibits a clear trend toward optimizing CNNs both in terms of power and efficiency. They are scaling networks that strive to balance depth, width, and resolution to achieve decent performance with fewer parameters. @can_diagnosing_2022 employed Noisy-Student weighted variants of EfficientNet-B2 to obtain 72% accuracy on a difficult multi-class classification task with 17 different diseases of nails. Then, @ebadi_jalal_abnormality_2025 extended this by proposing CE-NFCNet that is based on EfficientNet-B0 and consists of a cascade transfer learning method. Their network produced optimal results (1.00 precision, recall, accuracy, and AUC) by using a smaller image dataset that includes capillaroscopy of the nailfold. Their network dramatically outperformed models trained from scratch and single transfer learning. This illustrates how combining together EfficientNet with advanced learning techniques is very effective for dealing with special problems in medical imaging.
+
+While CNNs are still by far the most common models, studies suggest that Vision Transformers (ViTs) are already making inroads. The self-attention associated with ViTs allows them to take in the whole image and look for global cues rather than having CNNs look at just minuscule local areas. @garaiman_vision_2022 utilized a predefined ViT to learn from images of nailfold capillaroscopy and diagnose microangiopathy from cases of systemic sclerosis with good results across several features. @roy_vision_2022 utilized a ViT to draw out features when they had to distinguish Yellow Nail Syndrome, yet another systemic condition. @garaiman_vision_2022 followed this up by creating a ViT model to help rheumatologists screen these changes and successfully illustrating it in a practical context. Though there are such successful examples, ViTs have not gained such popularity as CNNs. Most of the works are constructed on top of CNNs by virtue of their maturity and clarity, and transformers' contribution to analyzing images of nails is yet in development.
 
 === Probabilistic Modeling and Explainable AI
 Bayesian methods and probabilistic modeling are becoming important in Explainable AI (XAI) because they can measure uncertainty and give clearer insights into how models make decisions. Recent studies highlight the strengths of Bayesian methods for making AI more interpretable, especially in critical areas where it is essential to understand how and why AI systems reach their conclusions.
@@ -1009,18 +1049,6 @@ Probabilistic programming languages (PPLs) are seen as an important tool for mak
 Beyond general interpretability, probabilistic methods are also used for attribution, which measures how much each input or factor contributes to an outcome under uncertainty. For example, #cite(<rodemann_explaining_2024>) introduce ShapleyBO, a framework for interpreting BO's proposals by game-theoretic Shapley values to quantify each parameter's contribution to BO's acquisition function. They explain that ShapleyBO can disentangle the contributions to exploration into those that explore aleatoric and epistemic uncertainty #cite(<rodemann_explaining_2024>, form: "normal"). In a similar direction, #cite(<li_shapley_2023>) propose a probability-based Shapley (P-Shapley) value, which uses predicted probabilities to better separate the importance of different data points in machine learning classifiers. From an economics perspective, #cite(<sinha_bayesian_2022>) present a Bayesian model of marketing attribution that not only captures known effects of advertisements but also provides usable error bounds for parameters of interest.
 
 Measuring posterior uncertainty is also vital for improving models and making reliable decisions, especially with unclear data. In behavioral science, earlier attempts to automate aspects typically have limited interpretability and lack uncertainty representation, which increases the risk of hidden errors #cite(<hayden_uncertainty_2021>, form: "normal"). On the other hand, using posterior uncertainty to identify ambiguities in observed data and automatically schedule sparse human annotations can rapidly improve posterior estimates and reduce uncertainty #cite(<hayden_uncertainty_2021>, form: "normal"). This shows how Bayesian approaches, with their strong focus on uncertainty, create AI systems that are more reliable and flexible, which is especially useful when collecting data is costly or requires expert knowledge.
-
-// ISSUE: kailangan pa ba tong section na to since hindi tayo gagamit ng probabilitistic model?
-=== Multimodal AI and Ensemble Models
-The use of ensemble methods in multimodal AI works best when supported by clear frameworks and careful fusion strategies. These strategies are designed to use the strengths of each type of data and base learner. Recent studies have gone beyond simple model combinations and now focus on structured designs that reduce complexity and improve how information flows through the system. Fusion strategies are usually grouped by how and when they combine features or predictions in the model’s pipeline. The most common ones in research are intermediate fusion and late fusion, often used with ensemble-like methods #cite(<li_review_2024>, form: "normal") #cite(<guarrasi_systematic_2025>, form: "normal"). Intermediate fusion combines feature vectors from different data types at a middle layer of the neural network, often by concatenating them. Late fusion, on the other hand, merges the final predictions of separate models that each handle a specific data type #cite(<huang_ai-powered_2025>, form: "normal") #cite(<kline_multimodal_2022>, form: "normal").
-
-The main design pattern often used is a multi-branch or multi-model setup. In this approach, each branch handles a specific type of data. For example, #cite(<menon_multimodal_2021>) created a three-dimensional convolutional neural network (3D CNN) that combined diffusion MRI (dMRI), structural MRI (sMRI), and resting-state fMRI (rs-fMRI). Each type of scan was processed by its own CNN branch. In a similar way, #cite(<nakach_comprehensive_2024>) built a model for breast cancer classification that used different deep learning models for each type of medical image before bringing them together. Another strategy is to use an ensemble meta-learner, which combines the results of different models. This meta-learner works like a "committee" that makes the final decision based on the outputs of all the models. Studies have used meta-learners such as XGBoost #cite(<rashmi_ensemble_2024>, form: "normal"), LightGBM #cite(<song_multimodal_2025>, form: "normal"), ElasticNet #cite(<kline_multimodal_2022>, form: "normal") , and even simpler methods like majority voting or weighted averaging #cite(<auzine_development_2024>, form: "normal") #cite(<sanchez-moreno_ensemble-based_2025>, form: "normal"). One creative example used ridge regression to combine the outputs of VGG-19, CapsNet, and MobileNet for land cover classification. This showed how flexible the ensemble approach can be #cite(<joshi_ensemble_2021>, form: "normal").
-
-The choice of ensemble method depends on the problem and its requirements. Simple methods like unweighted averaging and majority voting are common because they are easy to use and work well. However, more advanced methods can improve results. For example, the Weighted Average Ensemble (WAE) gives different weights to model predictions based on their cross-validation performance. This means models that perform better have more influence on the final result. Stacking, also called stacked generalization, is a more advanced method. Here, a new model (called a meta-model) learns to use the predictions of several base models to make the final prediction #cite(<ganaie_ensemble_2022>, form: "normal"). @othman_hybrid_2023 applied this by combining LSTM and GRU models, while @henriquez_multimodal_2024 used it to build an edRVFL model for Alzheimer’s detection. Other popular techniques include boosting methods like AdaBoost, which trains models one after another so that each new model fixes the mistakes of the previous ones #cite(<ghorbanali_ensemble_2022>, form: "normal") #cite(<logan_deep_2021>, form: "normal"). Bagging, on the other hand, trains models separately on different subsets of the data to reduce variance #cite(<deb_multi_2022>, form: "normal") #cite(<zhang_fragmented_2024>, form: "normal"). There are also implicit ensembles, which happen as part of the training process itself. Examples include Dropout and Stochastic Depth, which can act like ensemble learning without needing separate models #cite(<ganaie_ensemble_2022>, form: "normal").
-
-The use of ensemble multimodal CNNs has shown strong and steady improvements in many fields, especially in medicine where combining different types of data is very important. In healthcare, these models have reached high accuracy in tasks like diagnosis, predicting patient outcomes, and grouping patients into categories. For example, a study by @auzine_development_2024 on classifying gastrointestinal cancer with endoscopic images reported a 96.89% accuracy using an ensemble of InceptionV3, InceptionResNetV2, and VGG16. Another study on glioma subtype classification used a hybrid EFAI framework that joined CNNs (DenseNet201, VGG19_bn) and Transformers with clinical data. This model reached 0.936 accuracy and an AUC of 0.967 #cite(<shirae_multimodal_2025>, form: "normal"). Ensemble models have also been effective in detecting COVID-19 from chest X-rays and CT scans, with one model achieving 99% accuracy on X-rays and another reaching 96.18% on CT scans #cite(<rajpoot_integrated_2024>, form: "normal"). These results highlight how combining multiple pre-trained CNNs can capture more useful and reliable features than any single model alone.
-
-Even with the strong progress of multimodal ensemble AI, there are still many challenges before it can be widely used in clinics and industries. One major problem, especially in medicine, is the limited amount and quality of data. Many studies use public datasets, but these are often too small and not diverse enough. A systematic review by @kline_multimodal_2022 showed that only 37.6% of papers were published in clinical journals, and 69% of studies excluded patients with missing data types, which reduces how well the models can work in real-world situations #cite(<schouten_navigating_2025>, form: "normal"). This heavy dependence on complete data is a serious issue because missing values are very common in practice. Another challenge is the lack of standard benchmark datasets, which makes it hard to compare models fairly and measure real performance #cite(<guarrasi_systematic_2025>, form: "normal"). In fact, only 18% of the reviewed papers tested their models on independent datasets, showing a clear gap between reported results and real-world reliability #cite(<schouten_navigating_2025>, form: "normal").
 
 === Clinical Applications
 The use of deep learning on fingernail biomarkers has grown a lot since 2021. Researchers are no longer just classifying nail images but are now focusing on detecting different systemic diseases. Recent studies show strong results in spotting nail changes linked to conditions like anemia, liver disease, and nutritional problems. A common trend is the use of transfer learning with well-known models such as VGG-16 #cite(<sharma_fingernail_2024>, form: "normal") and DenseNet #cite(<alzahrani_deep_2023>, form: "normal"). These are often paired with traditional machine learning methods to create hybrid models that perform with higher accuracy. For example, @cosar_sogukkuyu_classification_2023 built a model with VGG-16 that classified three nail diseases: Beau’s lines, melanonychia, and clubbing, from 723 clinical images, reaching 94% accuracy. In another study, @hadiyoso_classification_2022 applied VGG-16 with transfer learning to classify koilonychia, Beau’s lines, and leukonychia, achieving 96% accuracy.
@@ -1039,7 +1067,7 @@ Other conditions have also been studied with deep learning. @pujari_real_2025 us
 
 The fast growth of deep learning for fingernail biomarkers comes from many different methods and model designs. Researchers use several types of neural networks, ranging from standard Convolutional Neural Networks (CNNs) to newer transformer-based models. Since most nail datasets are small, transfer learning is often used to get around the lack of training data. The choice of model depends on the task, such as classification, segmentation, or object detection, and shows how the field is improving at finding useful features in complex nail images.
 
-Transfer learning is now the most common strategy for making clinical diagnostic models. In this approach, a pre-trained model like VGG16, ResNet50, or DenseNet201 is first trained on a huge dataset like ImageNet, and then adjusted to work on a smaller set of nail images #cite(<kandekar_deep_2025>, form: "normal") #cite(<jeong_deep_2022>, form: "normal"). This process improves accuracy and shortens training time compared to building a model from scratch. Several studies, including those by @abdulhadi_human_2021, @hadiyoso_classification_2022, and @cosar_sogukkuyu_classification_2023, successfully applied transfer learning to classify nail diseases such as hyperpigmentation, clubbing, and Beau’s lines with high accuracy. Another important step forward is hybrid models, which combine deep learning for feature extraction with traditional machine learning for classification. For example, @sharma_fingernail_2024 used VGG16 for feature extraction and Random Forest for classification, reaching 97.02% accuracy in detecting multiple nail diseases. Likewise, @alzahrani_deep_2023 used DenseNet201 with an SGDClassifier and achieved 94% accuracy. These results show that the best solutions do not always come from deep learning alone.
+Transfer learning is now the most common strategy for making clinical diagnostic models. In this approach, a pre-trained model like VGG16, ResNet50, or DenseNet201 is first trained on a huge dataset like ImageNet, and then adjusted to work on a smaller set of nail images #cite(<kandekar_deep_2025>, form: "normal") #cite(<jeong_deep_2022>, form: "normal"). This process improves accuracy and shortens training time compared to building a model from scratch. Several studies, including those by @abdulhadi_human_2021, @cosar_sogukkuyu_classification_2023, and @hadiyoso_classification_2022, successfully applied transfer learning to classify nail diseases such as hyperpigmentation, clubbing, and Beau’s lines with high accuracy. Another important step forward is hybrid models, which combine deep learning for feature extraction with traditional machine learning for classification. For example, @sharma_fingernail_2024 used VGG16 for feature extraction and Random Forest for classification, reaching 97.02% accuracy in detecting multiple nail diseases. Likewise, @alzahrani_deep_2023 used DenseNet201 with an SGDClassifier and achieved 94% accuracy. These results show that the best solutions do not always come from deep learning alone.
 
 For tasks that require marking exact regions in an image, such as highlighting pigmented areas or outlining nail features, segmentation models like U-Net and Mask R-CNN work very well. @chen_development_2022 built a U-Net-based model to segment dermoscopic nail images. The model had high Dice scores and helped track pigmented lesions more precisely, which is important for early melanoma detection. @hsieh_mask_2022 used Mask R-CNN to both segment and classify nail psoriasis signs like pitting and onycholysis, achieving strong accuracy and proving the usefulness of instance segmentation in dermatology. Object detection models, such as YOLOv8, are also becoming popular for spotting nail conditions in larger images. For example, @pujari_real_2025 used YOLOv8 to detect onychomycosis, melanonychia, and other diseases from nail images with high precision and recall.
 
@@ -1058,7 +1086,7 @@ In another case, @abdusalomov_accessible_2025 worked on brain tumor detection by
 
 Both @guo_smartphone-based_2021 and @abdusalomov_accessible_2025 show how simplifying AI models and running them directly on devices can bring powerful medical tools to rural healthcare. At the same time, challenges remain, such as hardware compatibility and more clinical testing.
 
-Another common and practical way to build models that save resources is to use large pre-trained deep learning models without fully retraining them. This method is known as transfer learning. It works by using powerful Convolutional Neural Networks (CNNs) as feature extractors. In a study by @isewon_optimizing_2025, researchers tested this method by using popular CNNs such as VGG-16, ResNet-50, and EfficientNet-B0 to pull out important features from medical images. These features were then used as inputs for simpler machine learning models, such as Logistic Regression (LR), Random Forests, and Naïve Bayes #cite(<isewon_optimizing_2025>, form: "normal").
+Another common and practical way to build models that save resources is to use large pre-trained deep learning models without fully retraining them. This method is known as transfer learning. It works by using powerful Convolutional Neural Networks (CNNs) as feature extractors. In a study by @isewon_optimizing_2025, they tested this method by using popular CNNs such as VGG-16, ResNet-50, and EfficientNet-B0 to pull out important features from medical images. These features were then used as inputs for simpler machine learning models, such as Logistic Regression (LR), Random Forests, and Naïve Bayes #cite(<isewon_optimizing_2025>, form: "normal").
 
 The study found that this mix of deep CNNs and shallow models creates a good balance between strong prediction performance and efficiency. For example, when a simple LR model was trained on features extracted by VGG-16, it reached almost the same accuracy as a fully trained VGG-16 model for classifying medical images. The key difference was that it used far less time and memory, making it more practical for devices with limited processing power #cite(<isewon_optimizing_2025>, form: "normal").
 
@@ -1066,7 +1094,7 @@ This type of "adaptation" works well because it takes advantage of features alre
 
 Other studies use more direct ways to make models smaller and faster. This can be done by shrinking large models or by designing new ones that are efficient from the start. @musa_lightweight_2025 created a detailed review of model compression methods. These include pruning, which means removing extra or unimportant neural connections or filters from a trained network; quantization, which lowers the precision of a model’s weights (for example, turning 32-bit floating-point numbers into 8-bit integers) to make the model smaller and faster; and knowledge distillation, where a smaller "student" model is trained to copy the results of a larger "teacher" model. These methods can cut down model size and speed up computation, but they often come with a trade-off: the more you compress, the higher the chance of losing accuracy #cite(<musa_lightweight_2025>, form: "normal").
 
-The "Innovation" pathway takes a different route by creating lightweight models from the ground up. Although this approach requires more effort during design, it can lead to models that are both powerful and efficient. Recent studies show good results from custom shallow CNNs. For instance, the MNet-10 model has only 10 layers but still reached high accuracy in multiple medical imaging tasks #cite(<montaha_mnet-10_2022>, form: "normal"). @singh_healthcare_2024 also created EO-LWAMCNet, a lightweight CNN made for Internet of Things (IoT) devices. It achieved about 95% accuracy in predicting chronic liver and brain diseases from sensor data. Because it is efficient, this model allows advanced diagnostics without needing expensive local hardware #cite(<singh_healthcare_2024>, form: "normal").
+The "Innovation" pathway takes a different route by creating lightweight models from the ground up. Although this approach requires more effort during design, it can lead to models that are both powerful and efficient. Recent studies show good results from custom shallow CNNs. For instance, the MNet-10 model has only 10 layers but still achieved high accuracy in multiple medical imaging tasks #cite(<montaha_mnet-10_2022>, form: "normal"). @singh_healthcare_2024 also created EO-LWAMCNet, a lightweight CNN made for Internet of Things (IoT) devices. It achieved about 95% accuracy in predicting chronic liver and brain diseases from sensor data. Because it is efficient, this model allows advanced diagnostics without needing expensive local hardware #cite(<singh_healthcare_2024>, form: "normal").
 
 Current research is also exploring new hybrid designs that mix different architectures. One example is MUCM-Net, which was made for skin lesion segmentation. It combines the spatial feature extraction of CNNs, the pattern recognition strengths of Multi-Layer Perceptrons (MLPs), and modern state-space models (Mamba) #cite(<yuan_mucm-net_2024>, form: "normal"). The result is a model that is both highly accurate (with a Dice Similarity Coefficient of $0.91$) and very efficient, requiring only $0.055$ GFLOPS. This makes it a great choice for mobile devices in areas with limited resources #cite(<yuan_mucm-net_2024>, form: "normal"). Another example is the lightweight CNN made by @vincent_performance_2025 for skin cancer detection. It was designed with mobile-first use in mind and was tested on low-cost devices like the Raspberry Pi and NVIDIA Jetson Nano using TensorFlow Lite. The system reached 98.25% accuracy and ran in just 0.01 seconds on a Raspberry Pi 5, showing that it is possible to build fast, offline, and affordable diagnostic tools #cite(<vincent_performance_2025>, form: "normal").
 
@@ -1109,7 +1137,7 @@ This study integrates a wide range of machine learning and software engineering 
 ==== Machine Learning
 According to #cite(<geeksforgeeks-2025a>), machine learning is a branch of artificial intelligence that enables algorithms to uncover hidden patterns within datasets. It allows them to predict new, similar data without explicit programming for each task.
 
-In this study, the researchers utilized machine learning to detect subtle to distinct nail changes. These nail features, such as discoloration for blue finger (Cyanosis) and shape abnormalities for clubbing, can be difficult to interpret using rule-based methods or traditional programming techniques. By using machine learning, particularly deep learning models, the system can learn to recognize patterns in nail images without explicitly programming what each nail feature would look like.
+In this study, the researchers utilized machine learning to detect subtle to distinct nail changes. These nail features, such as discoloration for blue nails and shape abnormalities for clubbing, can be difficult to interpret using rule-based methods or traditional programming techniques. By using machine learning, particularly deep learning models, the system can learn to recognize patterns in nail images without explicitly programming what each nail feature would look like.
 
 #figure(image("img/machine-learning-geek-for-geeks.png"), caption: flex-caption(
   [Machine Learning #cite(<geeksforgeeks-2025a>, form: "normal")],
@@ -1129,13 +1157,13 @@ This study involves a classification problem and falls under the category of sup
 ))<supervised>
 
 
-@supervised illustrates how supervised learning works. The input data contains data that are labeled. Each labeled data are then fed into the algorithm. The algorithm learns the associations and patterns between the data and its label. It finds out what patterns likely leads to each label. Finally, the model predicts labels based on inputs.
+@supervised illustrates how supervised learning works. The input data contains data that are labeled. Each labeled data is then fed into the algorithm. The algorithm learns the associations and patterns between the data and its label. It finds out what patterns likely lead to each label. Finally, the model predicts labels based on inputs.
 
 
 ==== Neural Networks
 According to #cite(<ibm-2025a>), a neural network is a machine learning program, or model, that makes decisions in a manner similar to the human brain, by using processes that mimic the way biological neurons work together to identify phenomena, weigh options and arrive at conclusions.
 
-In this study, the researchers utilized neural networks because of their strong ability to detect complex patterns in data like images of nails. Unlike traditional machine learning algorithms that often require manual feature extraction, neural networks can automatically learn hierarchical representations of features like color and texture by analyzing images pixels by pixels.
+In this study, the researchers utilized neural networks because of their strong ability to detect complex patterns in data like images of nails. Unlike traditional machine learning algorithms that often require manual feature extraction, neural networks can automatically learn hierarchical representations of features like color and texture by analyzing images pixel by pixel.
 
 #figure(image("img/neural-networks-geeks-for-geeks.png"), caption: flex-caption(
   [Neural Network Architecture #cite(<geeksforgeeks-2025c>, form: "normal")],
@@ -1149,7 +1177,7 @@ Deep learning is a subset of machine learning that uses multilayered neural netw
 
 According to #cite(<ibm-2025a>), deep learning and neural networks tend to be used interchangeably in conversation, which can be confusing. It is important to note that the term “deep” in deep learning refers specifically to the number of layers within a neural network. A neural network with more than three layers, including the input and output layers, is typically classified as a deep learning algorithm. In contrast, networks with only two or three layers are considered basic neural networks.
 
-The neural networks used in this study are considered deep neural networks, since images of nails are very complex and has variations such as texture, color, and spatial patterns, which will require multiple hidden layers to effectively extract and learn these features for accurate classification.
+The neural networks used in this study are considered deep neural networks, since images of nails are very complex and have variations such as texture, color, and spatial patterns, which will require multiple hidden layers to effectively extract and learn these features for accurate classification.
 
 #figure(image("img/deep-neural-network-ibm.png"), caption: flex-caption(
   [Deep Neural Network Architecture #cite(<ibm-2025a>, form: "normal")],
@@ -1157,33 +1185,33 @@ The neural networks used in this study are considered deep neural networks, sinc
 )) <dnn>
 
 
-@dnn shows the architecture of a deep neural network. Unlike basic neural networks, deep neural networks consists of many more hidden layers. Machine learning on these deep neural networks is called deep learning.
+@dnn shows the architecture of a deep neural network. Unlike basic neural networks, deep neural networks consist of many more hidden layers. Machine learning on these deep neural networks is called deep learning.
 
-==== Convolutional Neural Networks (CNNs)
+==== Convolutional Neural Networks
 According to #cite(<ibm-2025b>), convolutional neural networks are distinguished from other neural networks by their superior performance with image, speech or audio signal inputs. They have three main types of layers, which are the convolutional layer, pooling layer, and fully-connected (FC) layer.
 
 This nature of superior performance in images is the primary reason the researchers chose this type of neural networks. Convolutional neural networks are particularly well-suited for visual recognition tasks due to their ability to capture spatial hierarchies and local dependencies in images. The convolutional layers automatically learn relevant patterns such as edges, textures, and shapes, while deeper layers can abstract more complex features like structures or the anomalies present in the nail photos.
 
 #figure(image("img/cnn-developer-breach.png"), caption: flex-caption(
-  [Convolutional Neural Network Architecture #cite(<swapna-2025>, form: "normal")],
+  [Convolutional Neural Network Architecture #cite(<ibm-2025b>, form: "normal")],
   [Convolutional Neural Network Architecture],
 ))<cnn>
 
 @cnn illustrates the architecture of a CNN, which consists of two primary components: feature extraction and classification. The input image is processed through a series of convolutional layers with ReLU activation, followed by pooling layers that progressively reduce spatial dimensions while retaining important features. These operations generate hierarchical feature maps that capture visual patterns from the image. The output of the feature extraction stage is then flattened and passed through fully connected layers, which act as the classification component. Finally, a softmax activation function produces a probabilistic distribution over predefined classes, enabling the model to make predictions based on the learned features.
 
-All the CNNs in this study follow this same fundamental procedure, only having differences in depth and complexity of their architecture like the number of convolutional and pooling layers, the size and the number of filters, and the structure of the fully connected layers.
+All the CNNs used in this study follow this same fundamental procedure, only having differences in depth and complexity of their architecture like the number of convolutional and pooling layers, the size and the number of filters, and the structure of the fully connected layers.
 
-==== Vision Transformers (ViTs)
+==== Vision Transformers
 According to #cite(<shah-2022>), in ViTs, images are represented as sequences, and class labels for the image are predicted, which allows models to learn image structure independently. Input images are treated as a sequence of patches where every patch is flattened into a single vector by concatenating the channels of all pixels in a patch and then linearly projecting it to the desired input dimension.
 
 The researchers considered testing ViTs due to their ability to model global relationships across an image rather than relying on local feature extractions. The researchers explored whether the unique architecture of ViTs can offer advantages over CNN models in classifying nail features. Testing it allowed researchers to compare performance, generalization, and representation against CNNs, contributing to a more comprehensive evaluation of model effectiveness. Vision Transformers generally perform better than CNNs, so the researchers considered using it. However, they are more computationally expensive and harder to interpret, so it's a matter of trade-offs.
 
 #figure(image("img/vit-geek-for-geeks.png"), caption: flex-caption(
-  [Architecture and Working of Vision Transformer #cite(<geeksforgeeks-2025d>, form: "normal")],
-  [Architecture and Working of Vision Transformer],
+  [Architecture and Working of Vision Transformers #cite(<geeksforgeeks-2025d>, form: "normal")],
+  [Architecture and Working of Vision Transformers],
 )) <vit>
 
-@vit shows the architecutre of ViTs. The figure is from #cite(<geeksforgeeks-2025d>). The input image is divided into patches which are flattened and embedded using linear projection. Positional encodings are then added to the patch embeddings to retain spatial information. The patch embeddings are passed through multiple transformer encoder layers, which include multi-head self-attention and feed-forward networks. Lastly, the CLS token's output is extracted and fed into Multi-Layer Perceptrons (MLP) for the final classification.
+@vit shows the architecture of ViTs. The figure is from #cite(<geeksforgeeks-2025d>). The input image is divided into patches which are flattened and embedded using linear projection. Positional encodings are then added to the patch embeddings to retain spatial information. The patch embeddings are passed through multiple transformer encoder layers, which include multi-head self-attention and feed-forward networks. Lastly, the CLS token's output is extracted and fed into Multi-Layer Perceptrons (MLP) for the final classification.
 
 ==== Transfer Learning
 According to #cite(<murel-jacob-2025a>), transfer learning uses pre-trained models from one machine learning task or dataset to improve performance and generalizability on a related task or dataset.
@@ -1193,7 +1221,7 @@ According to #cite(<murel-jacob-2025a>), transfer learning uses pre-trained mode
   [Transfer Learning],
 )) <transfer-learning>
 
-The researchers utilized and made use of transfer learning to gain several advantages in training. It helped the researchers reduce computational costs like model training time and training data. Using transfer learning also helps improve generalizability because it involves retraining an existing model with new dataset, and the re-trained model will consist of knowledge gained from multiple datasets. In this case, the pre-trained models from `torchvision` were trained on ImageNet, enabling the model to benefit from features that were already learned from a wide range of images in ImageNet.
+The researchers utilized and made use of transfer learning to gain several advantages in training. It helped the researchers reduce computational costs like model training time and training data. Using transfer learning also helps improve generalizability because it involves retraining an existing model with a new dataset, and the re-trained model will consist of knowledge gained from multiple datasets. In this case, the pre-trained models from `torchvision` were trained on ImageNet, enabling the model to benefit from features that were already learned from a wide range of images in ImageNet.
 
 ==== Fine-Tuning
 Fine-tuning and transfer learning are related but distinct techniques. According to #cite(<murel-jacob-2025a>), while both approaches involve reusing pre-existing models instead of training from scratch, they differ in how the pre-trained models are adapted. Transfer learning typically involves using the pre-trained model as a fixed feature extractor by freezing its weights and training only a new classifier layer on top. In contrast, fine-tuning refers to unfreezing part or all of the pre-trained model and continuing the training process on a new, task-specific dataset. This allows the model to adapt its internal representations to better fit the characteristics of the target domain.
@@ -1201,7 +1229,7 @@ Fine-tuning and transfer learning are related but distinct techniques. According
 In the researchers case, they further trained pre-trained models on their nail dataset. This was done to allow the model to refine general visual features it learned from Imagenet and adapt them to visual cues present in nail images.
 
 ==== Multiclass Classification
-Multiclass classification is a machine learning classification task that consists of more than two classes, or outputs #cite(<data-robot-2025>, form: "normal"). In this study, the researchers adopted multiclass classification approach because there are a total of 10 distinct classes of nail features in their dataset. The model is trained to identify which specific nail feature is present in a given input image. Since each image belongs to only one category and the task requires distinguishing among multiple possibilities, multiclass classification was the appropriate and necessary framework.
+Multiclass classification is a machine learning classification task that consists of more than two classes, or outputs #cite(<data-robot-2025>, form: "normal"). In this study, the researchers adopted a multiclass classification approach because there are a total of 10 distinct classes of nail features in their dataset. The model is trained to identify which specific nail feature is present in a given input image. Since each image belongs to only one category and the task requires distinguishing among multiple possibilities, multiclass classification was the appropriate and necessary framework.
 
 #figure(image("img/multiclass-classification.png"), caption: flex-caption(
   [Multiclass Classification #cite(<kainat-2023>, form: "normal")],
@@ -1231,102 +1259,122 @@ In this research, the dataset was subjected to various image augmentation techni
 @data-augmentation illustrates an example of data augmentation applied to images. The original image is transformed into multiple variations through techniques such as flipping, rotation, blurring, exposure adjustment, contrast adjustment, and conversion to grayscale. This process addresses dataset limitations by increasing diversity in the training samples, thereby improving the model’s generalization capability.
 
 ==== Batch Learning
-Training was conducted using mini-batches of 32 images per iteration. This method enhances training efficiency while maintaining a balance between generalization and convergence speed.
 
 ==== Class Balancing
-To address class imbalance within the dataset, a weighted loss function was used. Class weights were assigned inversely proportional to the frequency of each class, ensuring that underrepresented classes contributed more significantly to the loss during training. This approach helped mitigate bias toward majority classes without altering the data distribution through sampling techniques.
 
 ==== Learning Rate Scheduling
-Two strategies were employed to adaptively tune learning rates during training:
-- _StepLR:_ Decreases the learning rate by a factor at fixed intervals.
-- _ReduceLROnPlateau:_ Lowers the learning rate when validation metrics stop improving, allowing for more fine-grained convergence.
+
+==== Early Stopping
+
+
 
 ==== Model Evaluation
-Performance was measured using standard metrics such as accuracy, precision, recall, and F1-score. Confusion matrices were also generated to evaluate per-class performance and misclassification trends.
 
-==== Visualization
-Plots of training/validation loss, accuracy curves, and confusion matrices were used to monitor and interpret model performance. Techniques such as Grad-CAM may also be explored to visualize model attention and improve transparency.
+===== Confusion Matrix
+Hello this is confusion matrix
+
+===== Accuracy
+
+===== Top-1 Accuracy
+
+===== Top-5 Accuracy
 
 ==== Modularization
-The system was structured into modular components—data preprocessing, model training, evaluation, and deployment—to facilitate maintenance, experimentation, and scalability.
 
 === Algorithm Analysis
-To assess the performance and computational efficiency of the selected deep learning models, five architectures were evaluated using identical training parameters. Each model was trained for five epochs with a batch size of 32, a learning rate of $1e-4$, and the AdamW optimizer. The loss function employed was Cross Entropy Loss. All experiments were executed under consistent hardware and software environments to ensure comparability.
+In order to evaluate the performance of deep learning models for nail feature classification, the researchers considered a set of architectures that represent different stages of advancement in computer vision research. The selection of models was guided by two principles: the first is ensuring diversity in architectural design to capture a broad range of representational capabilities, and the second one is relying on established benchmarks such as ImageNet Top-1 and Top-5 accuracy, parameter counts, and computational complexity (GFLOPs) as reported in the official PyTorch model repository. These criteria provide a standardized basis for comparison and ensure that the chosen models span from classical convolutional networks to modern transformer-based approaches.
 
-#context {
-  [#figure(
-    text(size: 7pt)[
-      #table(
-        columns: (1fr,) * 8,
-        align: (x, _) => if x == 0 { left + horizon } else { horizon + center },
-        table.header(
-          [Model], [Parameters], [Epochs], [Training Time (min)], [Accuracy], [Precision], [Recall], [F1-Score]
-        ),
+==== VGG-16
+VGG-16, introduced by @simonyan_very_2015, is one of the earliest deep convolutional neural networks that achieved state-of-the-art performance on ImageNet. Its hallmark is the use of a simple and uniform architecture: stacks of 3 by 3 convolutional filters, followed by max-pooling layers, and fully connected layers at the end. Despite having a large parameter count of 138.4 million and GFLOPs of 15.47, VGG16 became widely adopted due to its straightforward design and effectiveness in transfer learning applications. In this study, VGG-16 serves as a classical baseline, allowing comparison between traditional CNNs and modern architectures.
 
-        [EfficientNetV2S], [20,190,298], [5], [21.22], [88%], [90%], [88%], [88%],
+#figure(
+  image("./img/vgg16_architecture.jpg"), caption: flex-caption([Architecture of VGG-16 #cite(<hassan_vgg16_2018>, form: "normal")], [Architecture of VGG-16])
+) <vgg-architecture>
 
-        [VGG16], [134,301,514], [5], [27.06], [66%], [77%], [66%], [67%],
+@vgg-architecture shows the architecture of the model VGG-16. According to @hassan_vgg16_2018, VGG-16 processes fixed-size 224×224 RGB images through a deep stack of convolutional layers with very small receptive fields (3×3, and occasionally 1×1 for channel-wise transformations), stride 1, and padding to preserve spatial resolution. Spatial pooling is applied via five max-pooling layers with 2×2 windows and stride 2, interspersed between convolutional blocks. This feature extraction stage is followed by three fully connected layers: two with 4096 channels and a final layer with 1000 channels for ImageNet classification, capped by a softmax output. All hidden layers use ReLU activations, and Local Response Normalization was largely excluded, as it increased memory and computation without improving performance.
 
-        [ResNet50], [23,528,522], [5], [22.86], [75%], [80%], [75%], [76%],
+==== ResNet-50
+ResNet-50, developed by @he_deep_2015, introduced the concept of residual connections, which alleviated the vanishing gradient problem and enabled the training of very deep networks. With only 25.6 million parameters and 4.09 GFLOPs, ResNet50 is significantly more efficient than VGG-16 while achieving higher accuracy on ImageNet benchmarks. It has since become one of the most widely used backbones for computer vision tasks, particularly in medical imaging. Its inclusion in this research provides a strong reference point as an “industrial standard” CNN model.
 
-        [RegNetY-16GF], [80,595,390], [5], [24.33], [85%], [88%], [85%], [85%],
+#figure(
+  image("./img/resnet50_architecture.jpg"), caption: flex-caption([Architecture of ResNet-50 #cite(<mukherjee_annotated_2022>, form: "normal")], [Architecture of ResNet-50])
+) <resnet-architecture>
 
-        [SwinV2B], [86,916,068], [5], [62.13], [90%], [90%], [90%], [89%],
-      )],
-    caption: [Comparison of model performance metrics and training efficiency across nail conditions.],
-  )<model-table>]
-}
+@resnet-architecture shows the architecture of ResNet-50. According to @he_deep_2015 ResNet-50 is a 50-layer deep convolutional neural network that introduced residual learning to overcome the vanishing gradient problem, enabling the training of very deep models with high accuracy. Its architecture consists of an initial convolutional layer followed by four stages of residual blocks, each built using a bottleneck design: a 1×1 convolution for dimensionality reduction, a 3×3 convolution for spatial feature extraction, and another 1×1 convolution to restore dimensions. These blocks are connected by shortcut, or identity, connections that allow gradients to bypass layers during backpropagation, ensuring stable optimization even in very deep networks.
 
-// ==== Comparative Analysis
-@model-table illustrates that among the five architectures, *SwinV2B* achieved the highest performance across all evaluated metrics, obtaining an accuracy of _90%_, precision of _90%_, recall of _90%_, and an F1-score of _89%_. Despite its computational intensity—demonstrated by the highest training time of _62.13 minutes_—its superior classification performance justifies the resource cost in scenarios where accuracy is prioritized.
+==== RegNetY-16GF
+RegNet, introduced by @radosavovic_designing_2020, is based on the idea of designing network design spaces rather than fixed architectures. The RegNetY family incorporates Squeeze-and-Excitation (SE) blocks for channel-wise feature recalibration. The RegNetY-16GF variant offers a balance between large capacity (83.6 million parameters and 15.91 GFLOPs) and practical scalability. It has been shown to outperform EfficientNets under standardized training regimes, making it a compelling candidate for tasks requiring both accuracy and generalization. Its inclusion provides a modern convolutional model optimized for performance-efficiency trade-offs.
 
-*EfficientNetV2S* follows closely, with a relatively lower parameter count and faster training time, making it a competitive choice for lightweight applications. It achieves an F1-score of _88%_, while maintaining strong recall and precision.
+==== EfficientNetV2-S
+EfficientNetV2, proposed by @tan_efficientnetv2_2021, is the successor to EfficientNet and was designed to achieve faster training and improved parameter efficiency. The “S” (small) variant balances accuracy and computational requirements, using fused MBConv layers and progressive learning strategies such as variable image resizing and adaptive regularization scheduling. With 21.5 million parameters and 8.37 GFLOPS, EfficientNetV2S achieves high accuracy with relatively fewer resources, making it suitable for healthcare deployment where efficiency and scalability are critical. Its role in this study is to represent modern efficiency-oriented CNNs.
 
-In contrast, *VGG16*, the oldest architecture in this benchmark, demonstrated the lowest accuracy (_72%_) and F1-score (_70%_), coupled with the highest number of parameters. This result underscores its inefficiency for fine-grained classification tasks, such as fingernail disease detection, especially when compared to more modern architectures.
+==== SwinV2-T
+Swin Transformer V2 #cite(<liu_swin_2022>, form: "normal") builds on the original Swin Transformer by introducing residual-post-norm and scaled cosine attention, improving training stability for deep models. It also addresses the “resolution gap” problem, enabling pretrained models to transfer more effectively to higher resolutions—a feature relevant in medical imaging where fine details matter. The Tiny variant (SwinV2-T) has approximately 28.4 million parameters and 5.94 GFLOPs, making it a lightweight alternative compared to Base or Large variants. Despite its efficiency, it still benefits from hierarchical self-attention and the ability to model long-range dependencies, providing a transformer-based counterpart to convolutional architectures in nail feature classification.
+#figure(
+  text(size: 10pt)[
+    #table(
+      columns: (1fr,) * 5,
+      align: (x, _) => if x == 0 { left + horizon } else { horizon + center },
+      table.header(
+        [Model], [Top-1 Accuracy], [Top-5 Accuracy], [Parameters], [GFLOPs]
+      ),
 
-*ResNet50* and *RegNetY-16GF* exhibit balanced trade-offs between performance and computational requirements. *ResNet50*, with its residual connections, offers a solid baseline (F1-score: _76%_), while *RegNetY-16GF* leverages architectural flexibility to achieve higher metrics, albeit at increased parameter complexity.
+      [VGG16], [71.592], [90.382], [138.4M], [15.47],
+      [ResNet-50], [76.13], [92.862], [25.6M], [4.09],
+      [RegNetY-16GF], [80.424], [95.24], [83.6M], [15.91], 
+      [EfficientNetV2-S], [84.228], [96.878], [21.5M], [8.37],
+      [SwinV2-T], [82.072], [96.132], [28.4M], [5.94],
+    )
+    ],
+  caption: [Baseline Characteristics of Selected Models],
+)<model-table>
 
-==== Classification Breakdown
-Individual classification reports are provided for each model, detailing per-class precision, recall, and F1-scores. These metrics are especially crucial given the dataset’s class imbalance and the medical significance of detecting less common conditions (_e.g., Koilonychia, Muehrcke’s Lines_).
+==== Training Configuration
+To ensure consistency across all the experiments, we used the same training covering the optimization algorithm, learning rate scheduling and loss function. For the optimizer, we used the AdamW optimizer #cite(<loshchilov_decoupled_2019>, form: "normal"), which decouples weight decay from the gradient update rule, providing improved generalization compared to standard Adam. The learning rate was adjusted using the ReduceLROnPlateau scheduler, which monitors the validation loss and reduces the learning rate by a factor of γ (gamma) once performance plateaus. This adaptive adjustment prevents overfitting and allows the model to converge more efficiently, which is particularly important in medical imaging tasks where datasets are relatively small and prone to variance. The effectiveness of ReduceLROnPlateau in stabilizing transfer learning for medical image analysis has been demonstrated in prior studies #cite(<rajpurkar_chexnet_2017>, form: "normal"). To address class imbalance in the nail disease dataset, we employed a weighted Cross-Entropy Loss, where class weights were computed inversely proportional to class frequencies. This ensures that underrepresented classes contribute more significantly to the loss, preventing the model from being biased toward majority classes. Weighted Cross-Entropy Loss is widely adopted in medical image classification where imbalanced datasets are common #cite(<buda_systematic_2018>, form: "normal").
 
-#par(first-line-indent: 0em)[For example:]
-- SwinV2B shows strong and consistent class-wise performance, particularly achieving *1.00 recall* for _Melanonychia_ and _Muehrcke’s Lines_, which is critical in a preventive diagnostic context.
-- VGG16 struggles with minority classes such as _Blue Finger_ and _Beau’s Line_, exhibiting high variance and frequent underperformance.
-- ResNet50 shows improvement in difficult classes like _Blue Finger_ (F1: *0.78*) and _Pitting_ (F1: *0.89*), albeit at lower recall for others like Clubbing.
+==== Training from scratch
+In this setup, the model is initialized with random weights and trained end-to-end on the nail disease dataset. Unlike transfer learning, no pre-trained ImageNet features are used. This serves as a control experiment to assess the value of transfer learning by showing how the model performs when forced to learn all representations from the target dataset alone.
 
-These reports indicate that while newer models offer significantly improved overall accuracy, their strength also lies in more balanced performance across all classes.
+==== Baseline
+The baseline is defined as freezing all pretrained weights of the backbone and training only the classification head. This evaluates how well ImageNet-pretrained features transfer to the nail disease dataset without any fine-tuning, establishing a point of comparison for more adaptive strategies.
 
+==== Full Fine-Tuning
+In this approach, all layers of the pretrained model are unfrozen and updated during training. This allows the entire network to adapt more thoroughly to the nail disease dataset, often leading to higher accuracy. Multiple studies in medical image classification have demonstrated that full fine-tuning outperforms head-only or partial fine-tuning in many cases (e.g., @peng_rethinking_2023 and @davila_comparison_2024), albeit with increased risk of overfitting when training data are limited.
+
+==== Gradual Unfreezing
+Following the approach of @howard_universal_2018, gradual unfreezing begins by training only the classification head, then progressively unfreezing earlier layers of the network over training epochs. This balances stability with adaptability, as it prevents catastrophic forgetting of pretrained features while still allowing the model to adjust to domain-specific patterns in nail images.
+
+==== Bayesian Inference
+In contrast to deterministic fine-tuning, Bayesian inference provides a probabilistic framework, treating parameters as random variables and updating priors with data to yield posteriors via Bayes' theorem: $p(theta | y) prop p(y | theta) p(theta)$. As detailed in @gelman_bayesian_2013, computation involves methods like MCMC, variational inference, and Hamiltonian Monte Carlo, enabling uncertainty quantification essential for medical applications to avoid overconfidence. In our nail disease pipeline, it calculates posterior probabilities of systemic conditions from detected features, incorporating population priors and conditionals. Advantages include robustness to limited data via informative priors, though it requires more computation and careful prior selection, as discussed in hierarchical modeling and model checking.
 
 === Data Collection Methods
 The dataset utilized for this study is sourced from a publicly available Nail Disease Detection collection hosted on Roboflow, and is released under the Creative Commons Attribution 4.0 (CC BY 4.0) license. The dataset comprises a total of 7,264 images, annotated using the TensorFlow TFRecord (Raccoon) format, covering 11 classes of nail diseases. However, the researchers have dropped the Lindsay's Nail class due to few number of images.
 
-The researchers decided to revise the name of the class from “acral lentiginous melanoma” to “melanonychia” for medical specificity. As determined from the experts' interview done by the researchers to Dr. Cristine Florentino, acral lentiginous melanoma is a diagnosis in itself and not a finding on physical exam. Conversely, melanonychia (a hyperpigmentation of the nail plate) is a measurable nail feature, thus making it the more appropriate name for the dataset. Because not all images may have been confirmed to depict acral lentiginous melanoma but they all exhibit features of melanonychia, such a revision allows the dataset to depict clinical specificity and not portray a diagnosis as a finding on the nails.
+The researchers decided to revise the name of the class from “acral lentiginous melanoma” to “melanonychia” for medical specificity. As determined from the experts' interview done by the researchers to Dr. Cristine Florentino, acral lentiginous melanoma is a diagnosis in itself and not a finding on a physical exam. Conversely, melanonychia (a hyperpigmentation of the nail plate) is a measurable nail feature, thus making it the more appropriate name for the dataset. Because not all images may have been confirmed to depict acral lentiginous melanoma but they all exhibit features of melanonychia, such a revision allows the dataset to depict clinical specificity and not portray a diagnosis as a finding on the nails.
 
-#context (
-  [#figure(
-    text(size: 12pt)[
-      #table(
-        inset: 0.3em,
-        columns: (1.7fr, 1fr, 1fr, 1fr),
-        align: (x, _) => if x == 0 { left + horizon } else { horizon + center },
-        table.header([Class], [Train], [Validation], [Test]),
+#figure(
+  text(size: 12pt)[
+    #table(
+      inset: 0.3em,
+      columns: (1.7fr, 1fr, 1fr, 1fr),
+      align: (x, _) => if x == 0 { left + horizon } else { horizon + center },
+      table.header([Class], [Train], [Validation], [Test]),
 
-        [Beau's Line], [456], [44], [22],
-        [Blue Finger], [612], [59], [29],
-        [Clubbing], [783], [74], [38],
-        [Healthy Nail], [642], [54], [30],
-        [Koilonychia], [537], [52], [28],
-        [Melanonychia], [753], [70], [36],
-        [Muehrcke’s Lines], [336], [31], [16],
-        [Onychogryphosis], [690], [65], [34],
-        [Pitting], [657], [61], [32],
-        [Terry’s Nail], [894], [81], [42],
-      ),
-      #v(-2em)
-    ],
-    caption: [Sample distribution per class across dataset splits.],
-  )<class-distribution>]
-)
+      [Beau's Line], [456], [44], [22],
+      [Blue Finger], [612], [59], [29],
+      [Clubbing], [783], [74], [38],
+      [Healthy Nail], [642], [54], [30],
+      [Koilonychia], [537], [52], [28],
+      [Melanonychia], [753], [70], [36],
+      [Muehrcke’s Lines], [336], [31], [16],
+      [Onychogryphosis], [690], [65], [34],
+      [Pitting], [657], [61], [32],
+      [Terry’s Nail], [894], [81], [42],
+    ),
+    #v(-2em)
+  ],
+  caption: [Sample distribution per class across dataset splits.],
+)<class-distribution>
 
 
 The final dataset used in this study consists of 7,258 labeled nail images, divided into three subsets: training (6,360 images, 88%), validation (591 images, 8%), and testing (307 images, 4%) as illustrated in @class-distribution.
@@ -1337,7 +1385,7 @@ The class with the highest representation across all sets is Terry's Nail, while
 
 Weighted loss was used during training to compensate for class imbalance and improve model fairness across underrepresented classes.\
 
-#context {
+#{
   set image(width: 50%)
   figure(
     table(
@@ -1351,44 +1399,47 @@ Weighted loss was used during training to compensate for class imbalance and imp
       //https://my.clevelandclinic.org/health/symptoms/22906-beaus-lines
 
       [Blue Finger],
-      [Also known as Cyanosis, is when the nails turn a bluish tone],
+      [Also known as Blue Nails, is when the nails turn a bluish tone.],
       [#image("img/table-2-blue-finger.jpg")],
 
       [Clubbing],
-      [Nails appear wider, spongelike or swollen, like an upside-down spoon],
+      [Nails appear wider, spongelike, or swollen, like an upside-down spoon.],
       [#image("img/table-2-clubbing.jpg")],
 
       [Healthy Nail],
-      [Healthy nails are smooth, consistent in color and consistency],
+      [Healthy nails are smooth, consistent in color and consistency.],
       [#image("img/table-2-healthy.jpg")],
 
-      [Koilonychia], [Soft nails that have a spoon-shaped dent], [#image("img/table-2-koilonychia.jpg")],
+      [Koilonychia], [Soft nails that have a spoon-shaped dent.], [#image("img/table-2-koilonychia.jpg")],
+
       [Melanonychia],
-      [Are brown or black discolouration of a nail. It may be diffuse or take the form of a longitudinal band.],
+      [Brown or black discoloration of a nail. It may be diffuse or take the form of a longitudinal band.],
       [#image("img/table-2-melanonychia.jpg")],
+
       //https://dermnetnz.org/topics/melanonychia
-      [Muehrcke’s Lines], [Are horizontal white lines across the nail.], [#image("img/table-2-muehrckes-lines.jpg")],
+      [Muehrcke’s Lines], [Horizontal white lines across the nail.], [#image("img/table-2-muehrckes-lines.jpg")],
+
       //https://my.clevelandclinic.org/health/symptoms/muehrcke-lines
       [Onychogryphosis],
-      [Characterised by an opaque, yellow-brown thickening of the nail plate with elongation and increased curvature],
+      [Characterized by an opaque, yellow-brown thickening of the nail plate with elongation and increased curvature.],
       [#image("img/table-2-onychogryphosis.jpg")],
       //https://dermnetnz.org/topics/onychogryphosis
       [Pitting],
-      [May show up as shallow or deep holes in the nail. It can look like white spots or marks],
+      [May show up as shallow or deep holes in the nail. It can look like white spots or marks.],
       [#image("img/table-2-pitting.jpg")],
 
       [Terry's Nail],
-      [Nail looks white, like frosted glass, except for a thin brown or pink strip at the tip. Lunula is obliterated.],
+      [The nail looks white, like frosted glass, except for a thin brown or pink strip at the tip. The lunula is obliterated.],
       [#image("img/table-2-terrys-nail.jpg")],
       //https://my.clevelandclinic.org/health/symptoms/22890-terrys-nails
     ),
-    caption: [Description of nail features],
+    caption: [Description of Nail Features],
   )
 }
 
-The dataset we collected were already pre-processed and augmented. These were the preprocessing step used by the owner of the public dataset:
+The dataset we collected was already pre-processed and augmented. These were the preprocessing step used by the owner of the public dataset:
 - Automatic orientation correction (EXIF metadata removed)
-- Resizing to $416 #sym.times 416$ pixels using "fit" scaling, which introduces black padding to maintain aspect ratio
+- Resizing to $416 times 416$ pixels using "fit" scaling, which introduces black padding to maintain aspect ratio
 
 To improve model generalization, data augmentation was also applied, producing three versions of each source image. These augmentations included:
 - 50% chance of horizontal flip
@@ -1399,7 +1450,7 @@ To improve model generalization, data augmentation was also applied, producing t
 - Random brightness adjustment between -20% and +20%
 - Random exposure adjustment between -15% and +15%
 
-#context {
+#{
   set image(width: 50%)
   figure(
     table(
@@ -1430,20 +1481,22 @@ These preprocessing steps were essential for adapting the dataset to the specifi
 === Data Model Generation
 This section presents the systematic framework employed in the development of the deep learning model for nail disease classification and probabilistic inference of systemic diseases. The process adheres to standard machine learning practices and scientific methodologies, particularly aligning with the phases found in the Cross-Industry Standard Process for Data Mining (CRISP-DM) and other established machine learning pipelines. Each step is carefully designed to ensure reproducibility, scalability, and clinical relevance.
 
-==== Data Preparation
+==== Initial Setup
+For the initial experiments of the usage of the models.
+
+
+===== Data Preparation
 The dataset, comprising labeled images of fingernails, was stored in Google Drive to allow seamless integration with Google Colab. This approach leverages Colab's cloud-based GPU resources, facilitating efficient model training. The directory containing the dataset was mounted in the Colab environment, and the paths to its `train`, `valid`, and `test` subsets were programmatically stored for ease of access. The transforms were also prepared to be ready for data loading.
 
 #figure(image("img/ch3-dmg-data-preparation.png"), caption: [Data Preparation]) <data-preparation>
 
 ==== Data Preprocessing
-
 The transforms include the preprocessing steps to be used. Given that the dataset had undergone prior augmentation, the preprocessing steps were minimal but essential. Images were resized to 224×224 pixels, a standard input size for most pre-trained convolutional neural networks. The images were then converted into tensors and normalized using the mean and standard deviation values of the ImageNet dataset. This normalization ensures consistency with the distribution of the pre-trained models, which is critical for transfer learning to perform effectively.
 
 #figure(image("img/ch3-dmg-data-preprocessing.png"), caption: [Data Preprocessing],
 ) <data-preprocessing>
 
 ==== Model Building
-
 Five models were selected: four Convolutional Neural Networks (CNNs) and one Vision Transformer (ViT). The use of transfer learning — where models pre-trained on large datasets such as ImageNet are adapted to new tasks — significantly reduces training time and improves performance, especially when labeled data is limited.
 
 #figure(image("img/ch3-dmg-model-building.png"), caption: flex-caption(
@@ -1461,7 +1514,6 @@ A CrossEntropy loss function was employed for multiclass classification. To addr
 The optimization algorithm chosen was AdamW, which combines the benefits of Adam with improved weight decay handling, leading to better generalization. The learning rate was empirically set to $1e-4$. A basic scheduler `StepLR()` was used to lower the learning rate by 10% of its previous value every 5 epochs. Additionally, during the validation phase, accuracy was computed using the `Accuracy` metric from the `torchmetrics` library to ensure standardized and reliable evaluation.
 
 ==== Model Training
-
 #figure(image("img/ch3-dmg-model-training.png"), caption: [Model Training],
 ) <model-training>
 
@@ -1482,86 +1534,17 @@ In the validation step (see @validation-step), the trained model was evaluated o
 
 Both steps were called by the `train_model()` function (see @train-model-function), which executed the training and validation routines across the specified number of epochs. The function also managed learning rate scheduling, recorded per-epoch results, and logged the total training time. Capturing training duration was essential for assessing computational efficiency, particularly in the context of scaling the system to larger datasets or more complex architectures.
 
-==== Systemic Disease Inference
-
-After predicting a nail condition, the system cross-references it with a predefined mapping of associated systemic diseases based on medical literature. Instead of making a definitive diagnosis, it presents all possible related systemic conditions to inform the user. This approach enhances interpretability, supports preventive healthcare, and avoids overstepping diagnostic boundaries—making the system ethically sound and suitable for academic deployment.
-
 ==== Model Evaluation
 
-Following training, the models were rigorously evaluated using both quantitative and qualitative metrics. These included:
-
-- *Loss curves*, to visualize convergence behavior.
-- *Confusion matrices*, to observe classification patterns and errors.
-- *Accuracy, precision, recall, and F1-score*, which are standard metrics in medical image classification, providing a more nuanced view of model performance beyond simple accuracy.
-
-Such comprehensive evaluation ensures that the selected model not only performs well overall but also minimizes critical misclassifications — particularly important in health-related applications.
-
-==== Deployment
-
-The final phase involved integrating the trained model into a web-based application using the Flask framework. This step was necessary to make the predictive system accessible to end users, such as clinicians or patients. The deployment pipeline includes model serialization, backend integration, and the development of a user interface for uploading images and displaying predictions. Deploying the model on the web facilitates real-world application, bridging the gap between research and practical healthcare utility.
+==== Systemic Disease Inference
 
 === System Development Methodology
-The flask web application was developed using an Agile Software Development Methodology, employing iterative and incremental cycles to integrate machine learning models with web application frameworks. This approach ensures flexibility and collaboration, accommodating evolving requirements critical for healthcare applications requiring technical precision and user-centric design.
-
-*Requirements Analysis:* Engages stakeholders, including healthcare professionals, patients, and administrators, to define functional needs such as user authentication, image upload, AI-driven diagnosis, result visualization, and historical data management. Non-functional requirements prioritize performance optimization, security compliance, and scalability. Risk assessment addresses model accuracy, data privacy, and system reliability critical for medical applications.
-
-*System Design:* Establishes a detailed database schema for user management, diagnosis records, and audit trails. RESTful API endpoints facilitate data exchange and model integration, while responsive user interface mockups align with modern web standards. A robust security framework incorporates authentication protocols, data encryption, and access controls compliant with healthcare regulations.
-
-*Implementation:* Proceeds through two-week sprints, focusing on specific feature sets to ensure manageable progress and quality assurance. PyTorch-based models, including EfficientNetV2-S and VGG16, are integrated with standardized image preprocessing and thread-safe inference pipelines. The Model-as-a-Service architecture ensures seamless model integration, with results stored alongside metadata for audits and analytics.
-
-*Testing and Validation:* Conducted continuously, incorporating unit tests for components, integration tests for model-application interfaces, and user acceptance tests with healthcare professional feedback to refine functionality and ensure clinical reliability.
 
 === Software Tools Used
-The development, training, evaluation, and deployment of the proposed system utilized a suite of open-source and industry-standard software tools, ensuring both reproducibility and scalability of the research. The following tools and frameworks were employed:
-
-*Python:* The primary programming language used throughout the study for data processing, model development, and system integration due to its extensive support for machine learning and scientific computing.
-
-*PyTorch:* A deep learning framework used for implementing, training, and fine-tuning convolutional neural networks (CNNs) and vision transformers. PyTorch enabled seamless integration with pre-trained models, dynamic computation graphs, and GPU acceleration.
-
-*Torchvision:* A PyTorch companion library used for loading pre-trained models (e.g., EfficientNetV2, RegNetY16GF, ResNet50), applying standard image transformations, and accessing utility functions for computer vision tasks.
-
-*Torchmetrics:* A PyTorch-native library for computing evaluation metrics such as accuracy, precision, recall, and F1-score. Its modular design ensured consistent metric computation across training, validation, and testing phases.
-
-*Google Colab:* A cloud-based Jupyter notebook environment used for training and experimentation. It provided access to free GPU resources (T4) essential for efficient model training.
-
-*Matplotlib & Seaborn:* Visualization libraries used to plot training metrics (loss, accuracy), confusion matrices, and Grad-CAM outputs for model interpretability and evaluation.
-
-*Grad-CAM:* Applied to generate class activation maps that explain the visual reasoning behind model predictions, enhancing interpretability and transparency.
-
-*Pandas & NumPy:* Used for data manipulation, statistical computation, and label handling throughout preprocessing and evaluation.
-
-*Scikit-learn:* Employed for computing evaluation metrics such as precision, recall, F1-score, and for generating confusion matrices.
-
-*Visual Studio Code:* The primary development environment used for writing and organizing code modules. Its extensions for Python and Git integration facilitated version control and modular code development.
-
-*Flask:* A high-level Python web framework intended for integrating the trained model into a web application, enabling users to upload nail images and receive probabilistic health feedback.
 
 === System Architecture
-The system employs a three-tier architecture, separating concerns across presentation, business logic, and data access layers to deliver a robust nail disease detection platform:
-
-*Presentation Layer:* A Flask-driven web interface supports user authentication, secure image uploads, diagnosis visualization, and paginated history management, designed with responsive HTML5, CSS3, and JavaScript for cross-browser compatibility and accessibility.
-
-*Business Logic Layer:* The Flask application core manages request routing, file processing, and API responses, integrating machine learning models for nail disease detection. Key functions include:
-- Secure file validation and preprocessing using Werkzeug and Pillow.
-- Model inference with PyTorch, using EfficientNetV2-S, VGG16, SwinV2B, ResNet50, and RegNetY-16GF for accurate diagnosis.
-- Result interpretation with confidence scoring and classification mapping.
-
-*Data Access Layer:* SQLAlchemy with SQLite manages user profiles, diagnosis records, and audit trails, ensuring data integrity through optimized queries, transaction control, and relationship management.
-
-*Security Architecture:* Incorporates password hashing (Werkzeug), session management (FlaskLogin), CSRF protection (Flask-WTF), and input sanitization to safeguard sensitive data and prevent vulnerabilities like SQL injection and XSS.
 
 === Software Testing
-A comprehensive multi-level testing strategy ensures the system’s reliability and effectiveness in solving the automated medical image classification problem:
-
-*Unit Testing:* Validates individual components, including model loading, image preprocessing pipelines, database CRUD operations, and security functions, ensuring correct functionality and robust error handling.
-
-*Integration Testing:* Verifies model-application interactions, performance under concurrent requests, and data consistency across SQLAlchemy operations, with emphasis on end-to-end prediction pipelines and error propagation.
-
-*System Testing:* Confirms complete functionality through user workflow validation, diagnosis accuracy, and performance under load, including stress testing and memory usage monitoring to meet response time thresholds.
-
-*Security Testing:* Assesses vulnerabilities, input validation, authentication mechanisms, and data protection to ensure compliance with healthcare privacy standards.
-
-*User Acceptance Testing:* Incorporates healthcare professional feedback to validate clinical accuracy, usability, and accessibility, ensuring mobile responsiveness and browser compatibility. Quality assurance enforces 85% code coverage, PEP 8 compliance, and performance metrics, including three-second diagnosis completion and support for 100 concurrent users, confirming the system’s reliability, accuracy, and usability as a healthcare decision support tool.
 
 #pagebreak()
 #metadata("Chapter 3 end") <ch3-e>
@@ -1591,6 +1574,7 @@ A comprehensive multi-level testing strategy ensures the system’s reliability 
 #h2(outlined: false, bookmarked: false)[Summary, Conclusions, Recommendations]
 
 === Summary
+
 === Conclusions
 
 === Recommendations
@@ -1622,6 +1606,13 @@ A comprehensive multi-level testing strategy ensures the system’s reliability 
   )
 ]
 #pagebreak()
+
+#h3(hidden: true)[Expert Interview Transcription]
+#[
+  #set par(spacing: 1em, leading: 1em)
+  #include "./expert-interview.typ"
+]
+
 #h3(hidden: true)[RC Defense Transcription]
 #[
   #set par(spacing: 1em, leading: 1em)
