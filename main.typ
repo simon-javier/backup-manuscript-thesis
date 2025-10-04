@@ -1,4 +1,4 @@
-#set text(font: "TeX Gyre Termes", size: 12pt, hyphenate: false)
+#set text(font: "TeX Gyre Termes", size: 12pt, hyphenate: false, lang: "en")
 
 #let font-size = 12pt
 #let double-spacing = 1.5em
@@ -147,7 +147,13 @@
 #show figure.where(kind: table): set block(breakable: true, sticky: false)
 #show figure.where(kind: table): set figure(placement: none)
 #show figure.where(kind: table): set figure.caption(position: top)
-
+#show figure.where(kind: "equation"): set figure(supplement: "Equation")
+#show figure.where(kind: raw): set figure(supplement: "Code Snippet")
+#show figure.where(kind: "equation"): it => [
+  #show math.equation: set text(size: 16pt)
+  #it.body
+  #it.caption
+]
 #set figure(
   gap: double-spacing,
   numbering: "1.",
@@ -186,7 +192,7 @@
   fill: luma(250),
   stroke: (left: 3pt + rgb("#6272a4")),
   inset: (x: 10pt, y: 8pt),
-  width: auto,
+  width: 100%,
   breakable: true,
   outset: (y: 7pt),
   radius: (left: 0pt, right: 6pt),
@@ -276,7 +282,7 @@
   \
   \
   Under the supervision of: \
-  *MIA M. VILLARICA, DIT*
+  *MIA V. VILLARICA, DIT*
   #v(1fr)
   *JUNE 2025*
 ]]
@@ -339,7 +345,7 @@
   \
   #grid(
     columns: (2fr, 1fr, 1fr),
-    [], [], align(center)[*Mia M. Villarica* \ Thesis Adviser],
+    [], [], align(center)[*Mia V. Villarica* \ Thesis Adviser],
   ) #v(0.5em)
 
   #line(length: 100%)
@@ -355,10 +361,10 @@
     row-gutter: 4em,
     align: center,
     [*MARK P. BERNARDINO* \ Member],
-    [*MARIA LAUREEN B. MIRANDA* \ Member],
-    text(size: 11pt)[*MA. CEZANNE D. DIMACULANGAN* \ Member],
-    text(size: 11pt)[*ENGR. MARIBELLE B. MANALANSAN* \ Member],
-    grid.cell(colspan: 2)[*REYNALEN C. JUSTO, LPT, DIT* \ Research Implement Unit Head],
+    [*VICTOR A. ESTALILLA JR.* \ Member],
+    text(size: 11pt)[*MICAH JOY FORMARAN* \ Member],
+    text(size: 11pt)[*JHONJHON P. ZOTOMAYOR* \ Member],
+    grid.cell(colspan: 2)[*MARIA LAUREEN B. MIRANDA, LPT, MIT* \ Research Implement Unit Head],
   )
 
   #v(1.5em)#line(length: 100%)#v(0.5em)
@@ -625,6 +631,13 @@ This section defines any terms or phrases derived from the study operationally, 
   #h2[List of Tables]
   #outline(target: figure.where(kind: table), title: none)
 
+  #pagebreak()
+  #h2[List of Equations]
+  #outline(target: figure.where(kind: "equation"), title: none)
+
+  #pagebreak()
+  #h2[List of Code Snippets]
+  #outline(target: figure.where(kind: raw), title: none)
 
   #metadata("group 1 end") <prelim-e>
 ]
@@ -637,13 +650,18 @@ This section defines any terms or phrases derived from the study operationally, 
 #show table.cell: set par(leading: 1em)
 #show table.cell.where(y: 0): strong
 #show table.cell.where(y: 0): upper
+#show table.cell.where(y: 0): set par(justify: false)
+#set table.cell(inset: .5em)
+#show table.cell: set text(hyphenate: true)
+#show table.cell.where(y: 0): set text(hyphenate: false)
+
 #set table(
   align: (_, y) => if y == 0 { center + horizon } else { left + horizon },
-  stroke: (x, y) => (
-    top: if y <= 0 { (thickness: 2pt, dash: "solid") } else if y <= 1 { (thickness: 1pt, dash: "solid") } else {
-      (thickness: 0pt, dash: "solid")
-    },
-    bottom: (thickness: 2pt, dash: "solid"),
+  stroke: (_, y) => (
+    left: { 0pt },
+    right: { 0pt },
+    top: if y < 1 { stroke(2pt) } else if y == 1 { none } else { 0pt },
+    bottom: if y < 1 { stroke(1pt) } else { stroke(2pt) },
   ),
 )
 
@@ -691,9 +709,8 @@ This section defines any terms or phrases derived from the study operationally, 
   )
 }
 
-#set table.header(repeat: false)
 #show table: it => table-multi-page(it)
-#show figure.where(kind: table): set figure(gap: .5em)
+#show figure.where(kind: table): set figure(gap: 1em)
 
 #metadata("Chapter 1 start") <ch1-s>
 #set cite(form: "prose")
@@ -731,7 +748,7 @@ Thus, this study specifically seeks to address the following problems:
 // How can the researchers ensure the model is reliable and accurate
 // How can the researcers implement explainability methods for deep learning models
 // How can the researchers pick the best models suitable for certain situations?
-// 
+//
 
 // Specific problem reference
 
@@ -747,10 +764,10 @@ Thus, this study specifically seeks to address the following problems:
 The main objective of the study is to design, develop  and evaluate a deep learning-based system for the classification of nail features that achieves at least 80% accuracy by December, and integrating Bayesian inference for the detection of the probabilities of systemic diseases, providing a non-invasive, accessible, and cost-effective tool to enhance preventive healthcare for individuals globally.
 
 Specifically, this study seeks to achieve the following objectives:
-+ To obtain a publicly available fingernail image dataset from Roboflow, consisting of at least 3,000 labeled images across a minimum of 5 distinct nail feature classes, with each image meeting a minimum resolution of 224×224 pixels, and the dataset will be verified by a dermatologist. In parallel, to curate a statistical dataset to be used for inference using Bayesian inference, containing percentage-based associations between these nail feature classes and systemic diseases derived from published clinical, epidemiological studies, and literature. 
++ To obtain a publicly available fingernail image dataset from Roboflow, consisting of at least 3,000 labeled images across a minimum of 5 distinct nail feature classes, with each image meeting a minimum resolution of 224×224 pixels, and the dataset will be verified by a dermatologist. In parallel, to curate a statistical dataset to be used for inference using Bayesian inference, containing percentage-based associations between these nail feature classes and systemic diseases derived from published clinical, epidemiological studies, and literature.
 + To apply standardized preprocessing steps including resizing and normalization to ensure consistency and suitability for deep learning, and to augment the image dataset by at least 30% using systematic geometric and photometric transformations to enhance model generalization and robustness for systemic disease classification.
 + To experiment, develop and train multiple deep learning models (EfficientNetV2S, VGG16, ResNet50, RegNetY-16GF, and SwinV2-T) on the dataset to accurately classify nail features and to make systemic diseases inferences using Bayesian inference from the statistical dataset of systemic diseases.
-+ To evaluate and compare the performance of the trained models using standard metrics, including accuracy, precision, recall, and F1-score for convolutional neural networks (CNNs) and apply explainability and interpretability methods for the algorithms. 
++ To evaluate and compare the performance of the trained models using standard metrics, including accuracy, precision, recall, and F1-score for convolutional neural networks (CNNs) and apply explainability and interpretability methods for the algorithms.
 + To deploy the models in a prototype application that provides interpretable systemic disease predictions from fingernail images, designed for potential use in clinical decision support or health screening applications.
 
 === Research Framework
@@ -798,26 +815,26 @@ In the study, the researchers used Convolutional Neural Networks (CNNs) because 
 In the study, the researchers used a Vision Transformer (ViT) model because it offers a new way to analyze images by treating them as sequences of patches, similar to how text is processed in Natural Language Processing. Based on #cite(<dosovitskiy_image_2020>), this design allows the model to focus on different parts of the image and capture important visual patterns without relying on built-in image rules like in CNNs. This makes ViT especially useful for detecting fine details in fingernail images, such as color or texture changes, which are important for identifying nail biomarkers. By using ViT, the researchers aimed to explore whether this newer method could better detect subtle features in the nails that may not be as easily captured by traditional CNNs.
 
 #[
-#show math.equation: set text(size: 16pt)
-#grid(
-  columns: 1fr,
-  row-gutter: 1em,
-  [#figure(
-    [
-      $P(A|B)=P(A inter B)/P(B) = (P(A) dot P(B|A))/P(B)$
-    ],
-    caption: flex-caption(
-      [Formula of Bayes' Theorem #cite(<hayes_bayes_2025>, form: "normal")],
-      [Formula of Bayes' Theorem],
-    ),
-  ) <bayes-formula>],
-  [*where:*],
-  [$P(A)=$ The probability of A occuring],
-  [$P(B)=$ The probability of B occuring],
-  [$P(A|B)=$ The probability of A given B],
-  [$P(B|A)=$ The probability of B given A],
-  [$P(A inter B)=$ The probability of both A and B occuring],
-)
+  #grid(
+    columns: 1fr,
+    row-gutter: 1em,
+    [#figure(
+      kind: "equation",
+      [
+        $P(A|B)=P(A inter B)/P(B) = (P(A) dot P(B|A))/P(B)$
+      ],
+      caption: flex-caption(
+        [Formula of Bayes' Theorem #cite(<hayes_bayes_2025>, form: "normal")],
+        [Formula of Bayes' Theorem],
+      ),
+    ) <bayes-formula>],
+    [*where:*],
+    [$P(A)=$ The probability of A occuring],
+    [$P(B)=$ The probability of B occuring],
+    [$P(A|B)=$ The probability of A given B],
+    [$P(B|A)=$ The probability of B given A],
+    [$P(A inter B)=$ The probability of both A and B occuring],
+  )
 ]
 
 The study relies on the use Bayes’ theorem for the inference, as shown in @bayes-formula. According to @hayes_bayes_2025, Bayes' Theorem is a mathematical formula for determining conditional probability. Conditional probability is the likelihood of an outcome occurring based on a previous outcome in similar circumstances. Thus, Bayes' Theorem provides a way to revise or update an existing prediction or theory given new evidence.
@@ -830,11 +847,9 @@ The Bayesian framework also gives a clear way to provide personalized risk asses
 
 
 #figure(
+  kind: "equation",
   [
-    #v(1em)
-    #show math.equation: set text(size: 14pt)
     $P("Disease"|"Feature")=(P("Disease") dot P("Feature"|"Disease"))/P("Feature")$
-    #v(1em)
   ],
   caption: [Representation of Bayes’ Theorem for calculating the conditional probability of disease occurrence based on observed features],
 )<bayes-application>
@@ -1259,27 +1274,141 @@ In this research, the dataset was subjected to various image augmentation techni
 @data-augmentation illustrates an example of data augmentation applied to images. The original image is transformed into multiple variations through techniques such as flipping, rotation, blurring, exposure adjustment, contrast adjustment, and conversion to grayscale. This process addresses dataset limitations by increasing diversity in the training samples, thereby improving the model’s generalization capability.
 
 ==== Batch Learning
+According to @geeksforgeeks_batch_2025, batch learning, also called offline learning, is a type of learning where the model trains on the entire dataset at once. The researchers opted for batch learning in this study due to the static nature of the dataset, which consisted of a fixed collection of labeled images that did not require real-time updates. The advantages of batch learning in this study include enhanced stability, reproducibility, and accuracy.
+
+#figure(
+  image("./img/batch-learning.png"),
+  caption: flex-caption(
+    [Batch Learning vs Online Learning #cite(<gaidhane_batch_2023>, form: "normal")],
+    [Batch Learning vs Online Learning],
+  ),
+) <batch-learning-img>
+
+@batch-learning-img shows the difference between batch learning and online learning. According to Gaidhane (2023), the key difference between batch learning and online learning is that batch learning requires a fixed dataset. Batch learning is typically faster and requires less computational resources than online learning, but may not be as flexible in handling changing or large datasets. Online learning, on the other hand, can be more flexible and adaptable due to incremental learning, where the model trains on new data as it arrives. However, it may require more resources and is slower to process data.
 
 ==== Class Balancing
+Class balancing refers to techniques used to address imbalances in the dataset where certain classes, such as specific disease categories, have significantly fewer samples than others like healthy cases, preventing the model from biasing toward the majority class and improving overall performance, as explained by Kharwal (2021), who defines it as balancing classes with unbalanced samples to avoid skewed learning in machine learning models.
+
+In this research, the researchers implemented a weighted Cross Entropy Loss, a technique that adjusts the loss function to assign higher penalties to misclassifications of underrepresented classes in the imbalance dataset. It helps to improve model performance on minority classes.
 
 ==== Learning Rate Scheduling
+As stated by @chugani_gentle_2025, learning rate schedulers are algorithms that automatically adjust the model’s learning rate during training. Instead of using the same learning rate from start to finish, these schedulers change it based on predefined rules or training performance.
+
+#figure(
+  image("./img/reduceLR-scheduler.png"),
+  caption: flex-caption(
+    [ReduceLROnPlateau Scheduler #cite(<chugani_gentle_2025>, form: "normal")],
+    [ReduceLROnPlateau Scheduler],
+  ),
+)
+
+In this research, the researchers applied an adaptive plateau reduction scheduler which is ReduceLROnPlateau. ReduceLROnPlateau monitors validation metrics and reduces the learning rate only when improvement stagnates. Unlike StepLR which reduces learning rate by a factor on n number of epochs, ReduceLROnPlateau automatically reduces the learning rate by the defined factor if the validation loss does not improve for n number of epochs. The main advantage of this is its simplicity and responsiveness to training dynamics.
 
 ==== Early Stopping
+According to @murel_what_2023, early stopping is the most readily implemented regularization technique. Early stopping limits the number of iterations during model training.
+#figure(
+  image("./img/early-stopping.png"),
+  caption: flex-caption([Early Stopping #cite(<murel_what_2023>, form: "normal")], [Early Stopping]),
+) <early-stopping-img>
+@early-stopping-img shows a model continuously passing through the training data. Early stopping makes it so that it stops once there is no more improvement in training and validation accuracy after a predefined number of epochs has passed. The goal is to train a model until it has reached the lowest possible training error preceding a plateau or increase in validation error. This technique helped the researchers to save time and GPU usage on colab, preventing the model from training more epochs even if the model is not improving anymore.
 
-
-
-==== Model Evaluation
-
-===== Confusion Matrix
-Hello this is confusion matrix
+==== Evaluation Metrics
+Model evaluation is the process of using different evaluation metrics to understand a machine learning model’s performance, as well as its strengths and weaknesses. Model evaluation is important to assess the efficacy of a model during initial research phases, and it also plays a role in model monitoring #cite(<domino_what_nodate>, form: "normal").
+The researchers used multiple evaluation metrics to systematically monitor training dynamics and rigorously assess the predictive performance of the model across different experimental setups.
 
 ===== Accuracy
+It is a fundamental metric for evaluating the performance of a classification model. It tells us the proportion of correct predictions made by the model out of all predictions #cite(<geeksforgeeks_evaluation_2025>, form: "normal"). In the context of this study, where the objective is to classify images into multiple fingernail feature categories, accuracy provides an intuitive and holistic measure of the model’s predictive effectiveness.
 
-===== Top-1 Accuracy
+#figure(
+  kind: "equation",
+  [
+    $"Accuracy" = ("TP" + "TN") / ("TP" + "TN" + "FP" + "FN")$
+  ],
+  caption: flex-caption(
+    [Formula for Accuracy #cite(<geeksforgeeks_evaluation_2025>, form: "normal")],
+    [Formula for Accuracy],
+  ),
+)
 
-===== Top-5 Accuracy
+===== Precision / Positive Predictive Value (PPV)
+Precision or Positive Predictive Value measures how many of the positive predictions made by the model are actually correct. It’s useful when the cost of false positives is high, such as in medical diagnoses where predicting a disease when it’s not present can have serious consequences. The formula of precision is defined as:
+
+#figure(
+  kind: "equation",
+  [
+    $"Precision/PPV" = "TP"/("TP" + "FP")$
+  ],
+  caption: flex-caption(
+    [Formula for Precision/PPV #cite(<geeksforgeeks_evaluation_2025>, form: "normal")],
+    [Formula for Precision/PPV],
+  ),
+)
+where TP denotes True Positive and FP denotes False Positive. In multiclass classification, precision is computed per class and can be averaged (macro, micro, or weighted) to obtain an overall measure #cite(<sokolova_systematic_2009>, form: "normal").
+
+===== Negative Predictive Values (NPV)
+According to @pedigo_sensitivity_2025, Negative Predictive Value (NPV) reflects the reliability of a negative result. It measures the proportion of negative test results that are true negatives. The formula is defined as:
+#figure(
+  kind: "equation",
+  [
+    $"NPV" = "TN" / ("TN" + "FN")$
+  ],
+  caption: flex-caption([Formula for NPV #cite(<pedigo_sensitivity_2025>, form: "normal")], [Formula for NPV]),
+)
+where TN denoted True Negative and FN denoted False Negatives.
+
+===== Recall / Sensitivity
+According to @pedigo_sensitivity_2025, recall or sensitivity, also called true positive rate, measures the model’s ability to correctly identify true positives. More precisely, it is the proportion of true positives to actual positives. The formula for recall is defined as:
+
+#figure(
+  kind: "equation",
+  [
+    $"Recall / Sensitivity" = "TP" / ("TP" + "FN")$
+  ],
+  caption: flex-caption([Formula for Recall #cite(<pedigo_sensitivity_2025>, form: "normal")], [Formula for Recall]),
+)
+
+where TP denotes True Positive and FN denotes False Negatives.
+
+===== Specificity
+Similarly, specificity (true negative rate) measures the model's ability to identify true negatives. It is the proportion of true negatives to actual negatives. #cite(<pedigo_sensitivity_2025>, form: "normal").
+
+#figure(
+  kind: "equation",
+  [
+    $"Specificity" = "TN" / ("FP" + "TN")$
+  ],
+  caption: flex-caption(
+    [Formula for Specificity #cite(<pedigo_sensitivity_2025>, form: "normal")],
+    [Formula for Specificity],
+  ),
+)
+
+===== F1-Score
+According to @geeksforgeeks_evaluation_2025 the F1 Score is the harmonic mean of precision and recall. It is useful when we need a balance between precision and recall as it combines both into a single number. A high F1 score means the model performs well on both. The formula for F1-Score is defined as:
+
+#figure(
+  kind: "equation",
+  [
+    $"F1 Score" = 2 times ("Precision" times "Recall") / ("Precision" + "Recall")$
+  ],
+  caption: flex-caption(
+    [Formula for F1-Score #cite(<geeksforgeeks_evaluation_2025>, form: "normal")],
+    [Formula for F1-Score],
+  ),
+)
+
+===== Confusion Matrix
+@geeksforgeeks_understanding_2025 defines confusion matrix as a simple table used to measure how well a classification model is performing. It compares the predictions made by the model with the actual results and shows where the model was right or wrong. This helps in understanding where the model is making mistakes.
+#figure(
+  image("./img/confusion-matrix.jpg"),
+  caption: flex-caption(
+    [Confusion Matrix #cite(<geeksforgeeks_understanding_2025>, form: "normal")],
+    [Confusion Matrix],
+  ),
+)
 
 ==== Modularization
+==== Model Interpretability
 
 === Algorithm Analysis
 In order to evaluate the performance of deep learning models for nail feature classification, the researchers considered a set of architectures that represent different stages of advancement in computer vision research. The selection of models was guided by two principles: the first is ensuring diversity in architectural design to capture a broad range of representational capabilities, and the second one is relying on established benchmarks such as ImageNet Top-1 and Top-5 accuracy, parameter counts, and computational complexity (GFLOPs) as reported in the official PyTorch model repository. These criteria provide a standardized basis for comparison and ensure that the chosen models span from classical convolutional networks to modern transformer-based approaches.
@@ -1288,7 +1417,8 @@ In order to evaluate the performance of deep learning models for nail feature cl
 VGG-16, introduced by @simonyan_very_2015, is one of the earliest deep convolutional neural networks that achieved state-of-the-art performance on ImageNet. Its hallmark is the use of a simple and uniform architecture: stacks of 3 by 3 convolutional filters, followed by max-pooling layers, and fully connected layers at the end. Despite having a large parameter count of 138.4 million and GFLOPs of 15.47, VGG16 became widely adopted due to its straightforward design and effectiveness in transfer learning applications. In this study, VGG-16 serves as a classical baseline, allowing comparison between traditional CNNs and modern architectures.
 
 #figure(
-  image("./img/vgg16_architecture.jpg"), caption: flex-caption([Architecture of VGG-16 #cite(<hassan_vgg16_2018>, form: "normal")], [Architecture of VGG-16])
+  image("./img/vgg16_architecture.jpg"),
+  caption: flex-caption([Architecture of VGG-16 #cite(<hassan_vgg16_2018>, form: "normal")], [Architecture of VGG-16]),
 ) <vgg-architecture>
 
 @vgg-architecture shows the architecture of the model VGG-16. According to @hassan_vgg16_2018, VGG-16 processes fixed-size 224×224 RGB images through a deep stack of convolutional layers with very small receptive fields (3×3, and occasionally 1×1 for channel-wise transformations), stride 1, and padding to preserve spatial resolution. Spatial pooling is applied via five max-pooling layers with 2×2 windows and stride 2, interspersed between convolutional blocks. This feature extraction stage is followed by three fully connected layers: two with 4096 channels and a final layer with 1000 channels for ImageNet classification, capped by a softmax output. All hidden layers use ReLU activations, and Local Response Normalization was largely excluded, as it increased memory and computation without improving performance.
@@ -1297,65 +1427,75 @@ VGG-16, introduced by @simonyan_very_2015, is one of the earliest deep convoluti
 ResNet-50, developed by @he_deep_2015, introduced the concept of residual connections, which alleviated the vanishing gradient problem and enabled the training of very deep networks. With only 25.6 million parameters and 4.09 GFLOPs, ResNet50 is significantly more efficient than VGG-16 while achieving higher accuracy on ImageNet benchmarks. It has since become one of the most widely used backbones for computer vision tasks, particularly in medical imaging. Its inclusion in this research provides a strong reference point as an “industrial standard” CNN model.
 
 #figure(
-  image("./img/resnet50_architecture.jpg"), caption: flex-caption([Architecture of ResNet-50 #cite(<mukherjee_annotated_2022>, form: "normal")], [Architecture of ResNet-50])
+  image("./img/resnet50_architecture.jpg"),
+  caption: flex-caption(
+    [Architecture of ResNet-50 #cite(<mukherjee_annotated_2022>, form: "normal")],
+    [Architecture of ResNet-50],
+  ),
 ) <resnet-architecture>
 
 @resnet-architecture shows the architecture of ResNet-50. According to @he_deep_2015 ResNet-50 is a 50-layer deep convolutional neural network that introduced residual learning to overcome the vanishing gradient problem, enabling the training of very deep models with high accuracy. Its architecture consists of an initial convolutional layer followed by four stages of residual blocks, each built using a bottleneck design: a 1×1 convolution for dimensionality reduction, a 3×3 convolution for spatial feature extraction, and another 1×1 convolution to restore dimensions. These blocks are connected by shortcut, or identity, connections that allow gradients to bypass layers during backpropagation, ensuring stable optimization even in very deep networks.
 
 ==== RegNetY-16GF
-RegNet, introduced by @radosavovic_designing_2020, is based on the idea of designing network design spaces rather than fixed architectures. The RegNetY family incorporates Squeeze-and-Excitation (SE) blocks for channel-wise feature recalibration. The RegNetY-16GF variant offers a balance between large capacity (83.6 million parameters and 15.91 GFLOPs) and practical scalability. It has been shown to outperform EfficientNets under standardized training regimes, making it a compelling candidate for tasks requiring both accuracy and generalization. Its inclusion provides a modern convolutional model optimized for performance-efficiency trade-offs.
+RegNet, introduced by @radosavovic_designing_2020, is based on the idea of designing network design spaces rather than fixed architectures. The RegNetY family incorporates Squeeze-and-Excitation (SE) blocks for channel-wise feature recalibration. The RegNetY-16GF variant offers a balance between large capacity (83.6 million parameters and 15.91 GFLOPs) and practical scalability. It has been shown to outperform EfficientNets under standardized training regimes, making it a compelling candidate for tasks requiring both accuracy and generalization. Its inclusion provides a modern convolutional model optimized for performance-efficiency trade-offs. Initially, the researchers included this model. However, upon learning that it is computationally more expensive to train despite having about the same parameters and GFLOPs as VGG16, the researchers have dropped this model.
 
 ==== EfficientNetV2-S
 EfficientNetV2, proposed by @tan_efficientnetv2_2021, is the successor to EfficientNet and was designed to achieve faster training and improved parameter efficiency. The “S” (small) variant balances accuracy and computational requirements, using fused MBConv layers and progressive learning strategies such as variable image resizing and adaptive regularization scheduling. With 21.5 million parameters and 8.37 GFLOPS, EfficientNetV2S achieves high accuracy with relatively fewer resources, making it suitable for healthcare deployment where efficiency and scalability are critical. Its role in this study is to represent modern efficiency-oriented CNNs.
 
 ==== SwinV2-T
 Swin Transformer V2 #cite(<liu_swin_2022>, form: "normal") builds on the original Swin Transformer by introducing residual-post-norm and scaled cosine attention, improving training stability for deep models. It also addresses the “resolution gap” problem, enabling pretrained models to transfer more effectively to higher resolutions—a feature relevant in medical imaging where fine details matter. The Tiny variant (SwinV2-T) has approximately 28.4 million parameters and 5.94 GFLOPs, making it a lightweight alternative compared to Base or Large variants. Despite its efficiency, it still benefits from hierarchical self-attention and the ability to model long-range dependencies, providing a transformer-based counterpart to convolutional architectures in nail feature classification.
+
+==== ConvNeXt-Tiny
+Upon observing that RegNetY-16GF is computationally more demanding despite having a comparable number of parameters and GFLOPs to VGG16, the researchers opted to replace it with ConvNeXt-Tiny. This decision was motivated by the need to conduct multiple experiments efficiently, as ConvNeXt-Tiny offers a favorable balance between performance and computational cost. Introduced by Liu et al. (2022), ConvNeXt demonstrated competitive or superior performance compared to Vision Transformers across various benchmarks, while retaining the advantages of convolutional inductive biases that make training more stable and efficient on smaller datasets. The Tiny variant, in particular, was chosen because it offers a favorable trade-off between accuracy and computational cost, with approximately 28 million parameters, making it more practical for experimentation in a resource-constrained environment such as Google Colab.
+
 #figure(
   text(size: 10pt)[
     #table(
       columns: (1fr,) * 5,
       align: (x, _) => if x == 0 { left + horizon } else { horizon + center },
-      table.header(
-        [Model], [Top-1 Accuracy], [Top-5 Accuracy], [Parameters], [GFLOPs]
-      ),
+      table.header([Model], [Top-1 Accuracy], [Top-5 Accuracy], [Parameters], [GFLOPs]),
 
       [VGG16], [71.592], [90.382], [138.4M], [15.47],
       [ResNet-50], [76.13], [92.862], [25.6M], [4.09],
-      [RegNetY-16GF], [80.424], [95.24], [83.6M], [15.91], 
+      [RegNetY-16GF], [80.424], [95.24], [83.6M], [15.91],
       [EfficientNetV2-S], [84.228], [96.878], [21.5M], [8.37],
       [SwinV2-T], [82.072], [96.132], [28.4M], [5.94],
+      [ConvNeXt-Tiny], [82.52], [96.146], [28.6M], [4.46],
     )
-    ],
-  caption: [Baseline Characteristics of Selected Models],
+  ],
+  caption: [Performance on ImageNet of Selected Models from PyTorch],
 )<model-table>
 
 ==== Training Configuration
 To ensure consistency across all the experiments, we used the same training covering the optimization algorithm, learning rate scheduling and loss function. For the optimizer, we used the AdamW optimizer #cite(<loshchilov_decoupled_2019>, form: "normal"), which decouples weight decay from the gradient update rule, providing improved generalization compared to standard Adam. The learning rate was adjusted using the ReduceLROnPlateau scheduler, which monitors the validation loss and reduces the learning rate by a factor of γ (gamma) once performance plateaus. This adaptive adjustment prevents overfitting and allows the model to converge more efficiently, which is particularly important in medical imaging tasks where datasets are relatively small and prone to variance. The effectiveness of ReduceLROnPlateau in stabilizing transfer learning for medical image analysis has been demonstrated in prior studies #cite(<rajpurkar_chexnet_2017>, form: "normal"). To address class imbalance in the nail disease dataset, we employed a weighted Cross-Entropy Loss, where class weights were computed inversely proportional to class frequencies. This ensures that underrepresented classes contribute more significantly to the loss, preventing the model from being biased toward majority classes. Weighted Cross-Entropy Loss is widely adopted in medical image classification where imbalanced datasets are common #cite(<buda_systematic_2018>, form: "normal").
 
-==== Training from scratch
+==== Training Strategies
+===== Training from scratch
 In this setup, the model is initialized with random weights and trained end-to-end on the nail disease dataset. Unlike transfer learning, no pre-trained ImageNet features are used. This serves as a control experiment to assess the value of transfer learning by showing how the model performs when forced to learn all representations from the target dataset alone.
 
-==== Baseline
+===== Baseline
 The baseline is defined as freezing all pretrained weights of the backbone and training only the classification head. This evaluates how well ImageNet-pretrained features transfer to the nail disease dataset without any fine-tuning, establishing a point of comparison for more adaptive strategies.
 
-==== Full Fine-Tuning
+===== Full Fine-Tuning
 In this approach, all layers of the pretrained model are unfrozen and updated during training. This allows the entire network to adapt more thoroughly to the nail disease dataset, often leading to higher accuracy. Multiple studies in medical image classification have demonstrated that full fine-tuning outperforms head-only or partial fine-tuning in many cases (e.g., @peng_rethinking_2023 and @davila_comparison_2024), albeit with increased risk of overfitting when training data are limited.
 
-==== Gradual Unfreezing
-Following the approach of @howard_universal_2018, gradual unfreezing begins by training only the classification head, then progressively unfreezing earlier layers of the network over training epochs. This balances stability with adaptability, as it prevents catastrophic forgetting of pretrained features while still allowing the model to adjust to domain-specific patterns in nail images.
+===== Gradual Unfreezing
+Following the approach by @howard_universal_2018, gradual unfreezing begins by training only the classification head, then progressively unfreezing earlier layers of the network over training epochs. The researchers adopted this fine-tuning strategy to prevent catastrophic forgetting and allow the network to adapt progressively to the fingernail dataset. Unlike other ULMFiT (Universal Language Model Fine-Tuning) components such as discriminative learning rates or slanted triangular schedules, gradual unfreezing was selected for its simplicity and stability in vision-based transfer learning tasks. This approach enables efficient optimization while maintaining pre-trained feature representations.
 
 ==== Bayesian Inference
 In contrast to deterministic fine-tuning, Bayesian inference provides a probabilistic framework, treating parameters as random variables and updating priors with data to yield posteriors via Bayes' theorem: $p(theta | y) prop p(y | theta) p(theta)$. As detailed in @gelman_bayesian_2013, computation involves methods like MCMC, variational inference, and Hamiltonian Monte Carlo, enabling uncertainty quantification essential for medical applications to avoid overconfidence. In our nail disease pipeline, it calculates posterior probabilities of systemic conditions from detected features, incorporating population priors and conditionals. Advantages include robustness to limited data via informative priors, though it requires more computation and careful prior selection, as discussed in hierarchical modeling and model checking.
 
 === Data Collection Methods
-The dataset utilized for this study is sourced from a publicly available Nail Disease Detection collection hosted on Roboflow, and is released under the Creative Commons Attribution 4.0 (CC BY 4.0) license. The dataset comprises a total of 7,264 images, annotated using the TensorFlow TFRecord (Raccoon) format, covering 11 classes of nail diseases. However, the researchers have dropped the Lindsay's Nail class due to few number of images.
+The performance and reliability of any machine learning–based diagnostic system depend on the quality and representativeness of the data used for model development. In this study, the researchers curated a labeled dataset of fingernail images to support multiclass disease classification. Additionally, to enable probabilistic inference of systemic diseases from nail features, the researchers organized and processed a complementary statistical dataset that captures the relevant associations between nail characteristics and disease outcomes.
+
+==== Image Dataset
+The dataset utilized for this study is sourced from a publicly available Nail Disease Detection collection hosted on Roboflow, and is released under the Creative Commons Attribution 4.0 (CC BY 4.0) license. The dataset comprises a total of 7,264 images, annotated using the TensorFlow TFRecord (Raccoon) format, covering 11 classes of nail diseases. However, the researchers have dropped Lindsay's Nail class due to few number of images.
 
 The researchers decided to revise the name of the class from “acral lentiginous melanoma” to “melanonychia” for medical specificity. As determined from the experts' interview done by the researchers to Dr. Cristine Florentino, acral lentiginous melanoma is a diagnosis in itself and not a finding on a physical exam. Conversely, melanonychia (a hyperpigmentation of the nail plate) is a measurable nail feature, thus making it the more appropriate name for the dataset. Because not all images may have been confirmed to depict acral lentiginous melanoma but they all exhibit features of melanonychia, such a revision allows the dataset to depict clinical specificity and not portray a diagnosis as a finding on the nails.
 
 #figure(
   text(size: 12pt)[
     #table(
-      inset: 0.3em,
       columns: (1.7fr, 1fr, 1fr, 1fr),
       align: (x, _) => if x == 0 { left + horizon } else { horizon + center },
       table.header([Class], [Train], [Validation], [Test]),
@@ -1478,72 +1618,366 @@ Each image was then converted into a tensor format to facilitate numerical compu
 
 These preprocessing steps were essential for adapting the dataset to the specific requirements of the chosen model architectures and the deep learning environment used in this study.
 
+==== Statistical Dataset
+To complement the image-based dataset and enable Bayesian inference for linking detected nail features to potential underlying diseases, a separate statistical dataset was manually curated. This dataset was compiled from peer-reviewed literature, scientific journals, public health databases, and reliable online statistical sources, with a focus on extracting probabilities and demographic data relevant to the Philippine population where available. The curation process involved systematic searches on platforms such as PubMed Central (PMC), Lippincott Williams & Wilkins (LWW) journals, Statista, Wikipedia (for demographic overviews), and specialized medical sites like Capitol Medical Center and HERDIN. Each entry was cross-verified for accuracy, and only data from credible, cited sources were included to ensure reliability for probabilistic modeling.
+
+The statistical dataset is structured in an CSV file format, containing rows for each nail feature-disease association. Key columns include: `Nail Feature`, `Associated Disease/Condition`, `P(Nail|Disease)` (conditional probability of the nail feature given the disease), `P(Disease)` (prior probability of the disease), `P(Disease) Population` (population-specific prevalence), `P(Disease) Sex_Female` and `P(Disease) Sex_Male` (sex-specific probabilities), `Age (Mean)`, `Age_Low`, `Age_High` (age demographics), and `Source` Citation for `P(Nail|Disease)` and `P(Disease)` (hyperlinks to original sources for transparency and reproducibility).
+
+This dataset covers 31 associations across 10 nail features (aligning with the image dataset classes), linking them to conditions such as COVID-19, chemotherapy side effects, gastrointestinal diseases, renal failure, anemia, heart disease, and others. Probabilities were derived from epidemiological studies, clinical reports, and global cancer registries (e.g., GLOBOCAN), adapted to Philippine contexts when data permitted. No primary data collection was conducted; all values represent literature-based estimates to support posterior probability calculations in Bayesian frameworks.
+
+#figure(
+  table(
+    columns: (1fr, 2fr, 1fr),
+    align: (x, y) => if x < 2 and y != 0 { left } else { horizon + center },
+    table.header([Nail Feature], [Associated Diseases/Condition (Examples)], [No. of Associations]),
+
+    [Beau's Line],
+    [COVID-19, Chemotherapy, Gastrointestinal and Liver System Disease, Renal System Disease, Hematopoietic System Disease, Chronic Renal Failure],
+    [6],
+
+    [Blue Finger], [Raynaud's Phenomenon, Congenital Heart Disease], [2],
+
+    [Clubbing],
+    [Lung Cancer, Crohn's Disease, Ulcerative Colitis, Cardiovascular System Disease, Gastrointestinal and Liver System Disease, Renal System Disease, Hematopoietic System Disease, Chronic Renal Failure],
+    [8],
+
+    [Healthy Nail], [No Systemic Disease], [1],
+
+    [Koilonychia], [Iron Deficiency Anemia, Hematopoietic System Disease], [2],
+
+    [Melanonychia], [Subungual Melanoma, Human Immunodeficiency Virus (HIV), Chronic Renal Failure], [3],
+
+    [Muehrcke’s Lines], [Nephrotic Syndrome, Chronic Renal Failure, Renal System Disease], [3],
+
+    [Onychogryphosis], [Chronic Renal Failure, Elderly Population], [2],
+
+    [Pitting], [Psoriasis, Alopecia Areata], [2],
+
+    [Terry’s Nail], [Liver Cirrhosis, Congestive Heart Failure], [2],
+  ),
+  caption: [Sample distribution per class across dataset splits],
+)
+
+To illustrate the probabilistic data available for Bayesian inference, a sample table of selected entries is provided below. This excerpt focuses on core columns related to probabilities and demographics, showcasing a subset of associations across various nail features. Values are presented as curated from literature, with probabilities expressed as decimals (e.g., 0.186 representing 18.6%).
+
+#figure(
+  table(
+    columns: (1fr, 1fr),
+    align: (x, y) => if x == 0 { left } else { center },
+    table.header([Feature], [Sample Value]),
+    [Nail feature], [Terry’s Nails],
+    [Associated Disease/Condition], [Congestive heart failure],
+    [P(Nail | Disease)], [0.306],
+    [P(Disease)], [0.016],
+    [P(Disease) Population], [92337852],
+    [P(Disease) Sex_Female], [0.501],
+    [P(Disease) Sex_Male], [0.499],
+    [Age (Mean)], [52.6],
+    [Age_Low], [19],
+    [Age_High], [114],
+  ),
+  caption: [Sample of Features and Values from Statistical Dataset],
+)
+
+This sample showcases how the dataset can be used to compute likelihoods, such as the conditional probability of observing a specific nail feature given a disease, combined with disease priors for posterior estimations.
+
 === Data Model Generation
-This section presents the systematic framework employed in the development of the deep learning model for nail disease classification and probabilistic inference of systemic diseases. The process adheres to standard machine learning practices and scientific methodologies, particularly aligning with the phases found in the Cross-Industry Standard Process for Data Mining (CRISP-DM) and other established machine learning pipelines. Each step is carefully designed to ensure reproducibility, scalability, and clinical relevance.
+This section presents the systematic framework employed in the development of the deep learning model for nail disease classification and probabilistic inference of systemic diseases. The process adheres to standard machine learning practices and scientific methodologies, particularly aligning with the phases found in the Cross-Industry Standard Process for Data Mining (CRISP-DM) and other established machine learning pipelines. Each step is carefully designed to ensure reproducibility, scalability, and clinical relevance. The researchers also applied principles of modular software design and Object-Oriented Programming (OOP), in conjunction with the Don’t Repeat Yourself (DRY) principle as articulated by @hunt_pragmatic_1999 in The Pragmatic Programmer, to facilitate multiple experimental setups while minimizing redundant code across models and configurations.
 
-==== Initial Setup
-For the initial experiments of the usage of the models.
+==== Data Loading and Preprocessing
+#figure(
+  image("./img/system-archi-model-section1.png"),
+  caption: [Data Loading and Preprocessing Workflow],
+) <data-loading-and-prep>
 
+As shown in @data-loading-and-prep, the process begins with the researcher cloning the project repository into the Google Colab environment, which provides GPU-accelerated computational resources for deep learning tasks. The dataset is accessed via a version-controlled GitHub repository to ensure reproducibility and consistent data handling across experiments. The Data Loader component retrieves the images, categorizing them into training, validation, and testing subsets. This partitioning aligns with standard machine learning practice, preventing data leakage and enabling unbiased model evaluation.
 
-===== Data Preparation
-The dataset, comprising labeled images of fingernails, was stored in Google Drive to allow seamless integration with Google Colab. This approach leverages Colab's cloud-based GPU resources, facilitating efficient model training. The directory containing the dataset was mounted in the Colab environment, and the paths to its `train`, `valid`, and `test` subsets were programmatically stored for ease of access. The transforms were also prepared to be ready for data loading.
-
-#figure(image("img/ch3-dmg-data-preparation.png"), caption: [Data Preparation]) <data-preparation>
-
-==== Data Preprocessing
-The transforms include the preprocessing steps to be used. Given that the dataset had undergone prior augmentation, the preprocessing steps were minimal but essential. Images were resized to 224×224 pixels, a standard input size for most pre-trained convolutional neural networks. The images were then converted into tensors and normalized using the mean and standard deviation values of the ImageNet dataset. This normalization ensures consistency with the distribution of the pre-trained models, which is critical for transfer learning to perform effectively.
-
-#figure(image("img/ch3-dmg-data-preprocessing.png"), caption: [Data Preprocessing],
-) <data-preprocessing>
-
-==== Model Building
-Five models were selected: four Convolutional Neural Networks (CNNs) and one Vision Transformer (ViT). The use of transfer learning — where models pre-trained on large datasets such as ImageNet are adapted to new tasks — significantly reduces training time and improves performance, especially when labeled data is limited.
-
-#figure(image("img/ch3-dmg-model-building.png"), caption: flex-caption(
-  [Sample Model Building of VGG16],
-  [Model Building],
-)) <model-building>
-
-The models were loaded with its default pre-trained weights via `models.MODELNAME_Weights.DEFAULT`. The final classification layers (also known as the "head") of each model were modified to output probabilities for 10 distinct nail disease classes. 
-
-#figure(image("img/ch3-dmg-loss-function.png"), caption: [Loss Function, Optimizer, and Scheduler],
-) <loss-function-optimizer-scheduler>
-
-A CrossEntropy loss function was employed for multiclass classification. To address class imbalance in the dataset, weighted loss functions were used, ensuring that minority classes contributed proportionally to the loss and gradient calculations.
-
-The optimization algorithm chosen was AdamW, which combines the benefits of Adam with improved weight decay handling, leading to better generalization. The learning rate was empirically set to $1e-4$. A basic scheduler `StepLR()` was used to lower the learning rate by 10% of its previous value every 5 epochs. Additionally, during the validation phase, accuracy was computed using the `Accuracy` metric from the `torchmetrics` library to ensure standardized and reliable evaluation.
-
+The Data Loader performs several preprocessing operations to ensure that the dataset is properly formatted and standardized. Each image is resized to 224×224 pixels to match the standard input size used when training common vision models like VGG, ResNet, EfficientNet, ConvNeXt-Tiny, and SwinV2-T. While these models can handle images with different resolutions, the 224×224 size is commonly used because it follows the ImageNet training setup and works best with pretrained model weights. The images are then converted into tensor format for compatibility with PyTorch-based deep learning frameworks. Normalization is applied using ImageNet statistical parameters to stabilize the training process and accelerate convergence by aligning the data distribution with pretrained feature spaces. To further enhance the generalization ability of the model, data augmentation techniques such as random flipping, rotation, and brightness adjustments are applied. These augmentations simulate real-world variations in lighting and orientation, allowing the model to learn more invariant representations of nail features. The final preprocessed dataset is then returned to the Google Colab environment as ready-to-train data, forming the foundation for all subsequent model learning processes.
 ==== Model Training
-#figure(image("img/ch3-dmg-model-training.png"), caption: [Model Training],
-) <model-training>
+#figure(
+  image("./img/system-archi-model-section2.png"),
+  caption: [Model Training Workflow],
+)
 
-Each model was trained for five epochs on Google Colab using an NVIDIA T4 GPU, which imposed computational constraints but remained sufficient for prototyping. The training pipeline followed the conventional two-phase approach: the training step and the validation step. The researchers created a helper class (`utils.helpers`) to easily train different models on google colab without having to code the whole training phase. The code for the training phase is as follows below.
+The second phase of the data model generation focuses on training the deep learning model to recognize relevant nail biomarkers. This process involves the interaction between the training engine, model, loss function, optimizer, and learning rate scheduler. The training begins with initializing a pretrained CNN architecture, such as VGG-16, ResNet-50, EfficientNetV2-S, SwinV2-T, or ConvNeXt-Tiny. Transfer learning is employed to leverage the high-level visual representations learned from large-scale datasets such as ImageNet, thus improving model convergence and reducing the amount of required training data. The use of transfer learning is supported by empirical findings demonstrating that pretrained weights significantly enhance model performance in specialized domains like medical imaging.
 
-#figure(image("img/ch3-dmg-train-step-function.png"), caption: [Train Step],
-) <train-step>
+During training, the system employs a Weighted Cross-Entropy loss function to mitigate class imbalance issues inherent in medical datasets, ensuring that underrepresented classes contribute proportionally to gradient updates. The AdamW optimizer is used with a learning rate of 1×10⁻⁴, combining adaptive moment estimation with decoupled weight decay to achieve efficient optimization and better generalization. The ReduceLROnPlateau scheduler dynamically adjusts the learning rate when validation performance stagnates, preventing premature convergence and maintaining training stability. Each training epoch consists of forward propagation, where the model produces predictions from input data; loss computation, where discrepancies between predictions and true labels are quantified; and backpropagation, where gradients are propagated through the network to update weights. This iterative process continues until convergence or until early stopping criteria are met, ensuring the trained model attains optimal balance between learning capacity and generalization performance.
 
-In the training step (see @train-step), mini-batches from the training dataset were fed into the model. For each batch, the model produced raw predictions (logits), which were compared against the ground-truth labels using the designated loss function. The loss value was backpropagated through the network, and the optimizer updated the weights accordingly. Training loss and accuracy were aggregated over all batches within an epoch to provide metrics for monitoring learning progression.
+==== Model Validation and Evaluation
+#figure(
+  image("./img/system-archi-model-section3.png"),
+  caption: [Model Validation and Performance Monitoring Workflow],
+)
+The third phase manages a step-by-step process that checks and improves how well the model works after each training epoch. After every epoch, the validation engine tests the model on new data without updating the model’s weights. This makes sure the results are fair and do not affect the training. The Metrics Calculator then quickly measures the validation loss and accuracy to show how well the model is doing. These results are sent back as feedback.
 
-#figure(image("img/ch3-dmg-valid-step-function.png"), caption: [Validation Step],
-) <validation-step>
+Based on the feedback, there are two possible actions. If the validation results are the best so far, the system saves the current model as a checkpoint. This keeps the best version of the model. If the results stop getting better, the early stopping system checks if it should stop training. Depending on this check, the system either lowers the learning rate or stops training to save time and avoid overfitting. The model was then evaluated using the metrics stated in applied concepts which are the accuracy, confusion matrix, precision, recall, F1 score, and training and validation losses and accuracies.
 
-In the validation step (see @validation-step), the trained model was evaluated on unseen data from the validation set. Unlike the training step, no weight updates occurred, as the model was placed in evaluation mode with gradient tracking disabled with PyTorch's `inference_mode()`. The validation phase served exclusively to measure the model’s generalization performance. Validation loss and accuracy were computed per epoch and compared against the training metrics to identify signs of underfitting or overfitting.
-
-#figure(image("img/ch3-dmg-train-model-function.png"), caption: [Model training code]
-) <train-model-function>
-
-Both steps were called by the `train_model()` function (see @train-model-function), which executed the training and validation routines across the specified number of epochs. The function also managed learning rate scheduling, recorded per-epoch results, and logged the total training time. Capturing training duration was essential for assessing computational efficiency, particularly in the context of scaling the system to larger datasets or more complex architectures.
-
-==== Model Evaluation
+This process makes sure that only the best model is saved and used at the end of training. It is a strong way to keep checking and making decisions automatically, so the model is as accurate and general as possible before it is used.
 
 ==== Systemic Disease Inference
+Following the model evaluation phase, where the trained CNN and ViT models were assessed for their accuracy in detecting nail features such as pitting, clubbing, or healthy nails on the test dataset, the next stage involved utilizing these detection outputs for probabilistic inference of underlying systemic diseases. This inference step bridges the gap between visible nail abnormalities and potential conditions, utilizing Bayesian principles to estimate disease probabilities conditioned on the observed nail features. To enhance the reliability of predictions, the system incorporates a calibration mechanism based on the model’s confusion matrix, adjusting raw CNN confidence scores to better estimate true feature probabilities.
+#figure(
+  image("./img/systemic-disease-archi.png"),
+  caption: [Disease Probability Computation Workflow],
+) <systemic-disease-archi>
+As shown in @systemic-disease-archi, the final phase performs probabilistic reasoning to derive disease likelihoods from the model’s predictions. When the AI model produces raw confidence scores for detected nail features, these values undergo calibration through the confusion matrix to ensure statistical reliability. Calibration aligns the model’s output probabilities with empirical distributions observed during validation, thereby correcting potential overconfidence. The system then retrieves conditional probabilities $P("Nail" | "Disease")$  and prior probabilities $P("Disease")$ from the statistical dataset stored in CSV format. Using Bayes’ theorem, the Bayesian inference engine computes posterior probabilities $P("Disease" | "Nail")$, integrating both the model’s evidence and historical statistical relationships.
+
+To improve diagnostic precision, the system incorporates demographic adjustment by modifying disease priors according to the user’s age and sex. This adjustment accounts for population-level prevalence variations, aligning system outputs with real-world epidemiological data. The final probabilities are normalized and ranked, generating a list of potential diseases along with their respective likelihoods. For instance, the system may output results such as Psoriasis (91.24%) and Alopecia Areata (7.29%). This process merges data-driven feature recognition with probabilistic reasoning, offering interpretable and clinically meaningful insights. The hybridization of deep learning and Bayesian inference enhances the transparency and reliability of AI-based medical diagnosis, addressing the interpretability challenges commonly associated with black-box neural networks population-level prevalence variations, aligning system outputs with real-world epidemiological data. The final probabilities are normalized and ranked, generating a list of potential diseases along with their respective likelihoods. For instance, the system may output results such as Psoriasis (91.24%) and Alopecia Areata (7.29%). This process merges data-driven feature recognition with probabilistic reasoning, offering interpretable and clinically meaningful insights. The hybridization of deep learning and Bayesian inference enhances the transparency and reliability of AI-based medical diagnosis, addressing the interpretability challenges commonly associated with black-box neural networks.
+
+The inference pipeline was designed to be modular and dynamic, allowing integration with varying CNN confidence scores from different nail scans. It incorporates prior knowledge from a curated dataset of nail feature-disease associations, adjusting for user demographics such as age and sex to refine predictions, and applies post-hoc calibration to account for systematic misclassifications. This section details the data preparation, confusion matrix calibration, Bayesian model setup, inference computation, demographic integration, and output generation, ensuring the system remains generalizable for testing diverse nail images without hardcoding specific features like pitting.
+
+===== Data Preparation for Inference
+The foundation of the disease inference relies on a probabilistic dataset compiled in a CSV file (e.g.,”StatisticalDataset.csv”), which maps nail features to associated diseases or conditions. This dataset includes key columns such as `Nail  Feature` (e.g., “Pitting”, “Clubbing”), `Associated Disease/Condition` (e.g., “Psoriasis”, “Lung Cancer”), conditional probabilities `P(Nail|Disease)` scaled from 0-1 (representing the likelihood of observing the nail feature given the disease), prior probabilities `P(Disease)` also scaled from 0-1 (indicating base prevalence in the population), demographic priors like `P(Disease|Sex_Female)` and `P(Disease|Sex_Male)`, and age-related parameters (mean, low, and high ranges).
+
+The CSV was loaded into a Pandas DataFrame within a Python script, with missing values handled via Pandas’ `fillna` method to ensure robustness. A dictionary structure (`feature_to_disease`) was constructed using `defaultdict` from the `collections` module, grouping diseases by nail feature for efficient lookup. Each entry in this dictionary encapsulated the disease name, $P("Nail" | "Disease")$, $P("Disease")$, sex-specific priors, and age bounds. For the “Healthy Nail” feature linked to “No systemic disease”, a default prior P(Disease) of 1.0 was assigned to represent the baseline absence of pathology, while invalid or zero-probability entries were skipped to avoid computational errors.
+
+#figure(
+  ```python
+  def load_statistical_data(self):
+      """Load the statistical dataset from CSV"""
+      df = pd.read_csv("data/StatisticalDataset.csv")
+      df = df.fillna(value=pd.NA)
+
+      self.feature_to_diseases = defaultdict(list)
+      for _, row in df.iterrows():
+          f = row['Nail Feature']
+          d = row['Associated Disease/Condition']
+          p_fd = row['P(Nail | Disease) 0-1%']
+          p_d = row['P(Disease) 0-1%']
+
+          if pd.isna(p_d):
+              if d == 'No systemic disease':
+                  p_d = 1.0
+              else:
+                  continue
+
+          self.feature_to_diseases[f].append({
+              'disease': d,
+              'p_fd': p_fd,
+              'p_d': p_d,
+              'p_female': row['P(Disease) Sex_Female 0-1'],
+              'p_male': row['P(Disease) Sex_Male 0-1'],
+              'age_low': row['Age_Low'],
+              'age_high': row['Age_High'],
+              'age_mean': row['Age (Mean)']
+          })
+      ...
+  ```,
+  caption: [Loading and Parsing the Inference Dataset],
+)
+
+This preparation setup ensures the data is readily accessible for Bayesian updates, deriving implicit $P("Nail")$ via the law of total probability if needed, though the core computation focuses on posterior $P("Disease" | "Nail")$ using Bayes’ theorem: $P("Disease" | "Nail") = (P("Nail" | "Disease") dot P("Disease")) / P("Nail")$. To make the system dynamic, no assumptions were made about specific features; the pipeline processes all detected features with non-zero confidence from the CNN after calibration.
+
+===== Confusion Matrix Calibration
+To address potential biases and misclassifications in the CNN’s raw confidence scores (e.g., overconfidence in certain features or systematic confusion between similar classes like pitting and koilonychia), a calibration step was integrated using the model’s confusion matrix derived from the test set evaluation. The confusion matrix, a $10 times 10$ array (matching the 10 nail features classes), captures the counts of true labels versus predicted labels, normalized row-wise to yield conditional probabilities $P("Predicted" | "True")$.
+
+In this script, the confusion matrix is obtained directly from the model’s evaluation results, with rows representing true labels and columns predicted labels, ordered consistently with the feature labels (e.g., Melanonychia first, Terry’s Nails last). Normalization produces the confusion probability matrix `conf`. The raw CNN confidences are vectorized into a predicted probability vector `q` (in the same label order), which is then adjusted to estimate the true feature probabilities `p` using the pseudoinverse of the confusion matrix: `p = pinv(conf) @ q`. Negative values in `p` are clipped to zero, and the vector is renormalized to sum to 1, ensuring valid probabilities.
+
+This calibration acts as a debiasing transform, compensating for the model’s error patterns, for instance, if the model frequently confuses clubbing with healthy nails, the adjusted probabilities redistribute confidence more accurately. The adjusted_confidence dictionary replaces the raw confidences in subsequent Bayesian computations, improving downstream disease inference fidelity. For dynamic use, the confusion matrix can be updated from ongoing evaluations, making the system adaptable to model retraining.
+
+#figure(
+  ```python
+  def load_confusion_matrix(self, model_name):
+    """Load confusion matrix for the specified model"""
+    metrics_path = Path(__file__).parent.parent.parent / "models" / "metrics" / f"{model_name}_metrics.json"
+    with open(metrics_path, 'r') as f:
+      metrics = json.load(f)
+      confusion_matrix = np.array(metrics['ml_metrics']['confusion_matrix'])
+      return confusion_matrix
+
+  def adjust_confidence_with_confusion_matrix(self, confidence_dict, model_name):
+    """Adjust confidence scores using confusion matrix (Bayesian calibration)"""
+    counts = self.load_confusion_matrix(model_name)
+    row_sums = counts.sum(axis=1, keepdims=True)
+    conf = counts / row_sums  # Normalize rows to P(pred | true)
+
+    q = np.array([confidence_dict.get(label, 0.0) for label in self.labels])
+    adjusted_p = pinv(conf) @ q
+    adjusted_p = np.maximum(adjusted_p, 0.0)
+    if adjusted_p.sum() > 0:
+      adjusted_p /= adjusted_p.sum()
+
+      adjusted_confidence = {self.labels[i]: adjusted_p[i] for i in range(len(self.labels))}
+      return adjusted_confidence
+  ...
+  ```,
+  caption: [Confusion Matrix Normalization and Pseudoinverse Calibration],
+)
+
+===== Bayesian Inference Setup
+The inference employs a naive Bayesian framework, assuming conditional independence among nail features for simplicity, while weighting contributions by the calibrated confidence scores (normalized to 0-1 probabilities). These adjusted scores represent a more reliable estimate of the true presence of each nail feature (e.g., Pitting: potentially adjusted from 0.9962 based on matrix corrections). The setup computes unnormalized posteriors for each disease associated with detected features, then normalizes across all diseases to yield a probability distribution.
+
+For each nail feature with positive adjusted confidence (`p_f_image > 0`), the script iterates over linked diseases, calculating the effective prior by incorporating demographics. Sex-specific adjustments use $P("Disease" | "Sex")$ if available, multiplying by the base $P("Disease")$ only if sex priors sum approximately to 1 (indicating they are conditional probabilities); otherwise, they are treated as absolute priors. Age filtering applies a uniform density within specified ranges (e.g., `p_age_d = 1 / (high - low) if within bounds, else 0`), effectively zeroing out diseases mismatched to the user’s age.
+
+The unnormalized posterior for a disease `d` given feature `f` is `p_fd * effective_prior`, summed across diseases for normalization into `p_d_f`. This is then weighted by `p_f_image` and aggregated across all features, allowing multiple features to contribute evidence proportionally. Final normalization ensures the posteriors sum to 1, providing a ranked list of potential diseases.
+
+#figure(
+  ```python
+  def compute_disease_probabilities(self, adjusted_confidence, user_sex, user_age):
+    """Compute disease probabilities using Bayesian inference"""
+    disease_to_post = defaultdict(float)
+    sex = user_sex.lower() if user_sex else 'male'
+    age = float(user_age) if user_age else 30.0
+
+    for f, entries in self.feature_to_diseases.items():
+      p_f_image = adjusted_confidence.get(f, 0)
+      if p_f_image == 0:
+        continue
+
+        unnorm = {}
+        sum_unnorm = 0.0
+        for entry in entries:
+          d = entry['disease']
+          p_fd = entry['p_fd']
+          p_d = entry['p_d']
+          if pd.isna(p_fd) or p_fd == 0:
+            continue
+
+            # Sex-based prior adjustment
+            p_female, p_male = entry['p_female'], entry['p_male']
+            if p_female is None and p_male is None:
+              effective_p_d = p_d
+              else:
+              p_sex = p_female if sex == 'female' else p_male
+              if p_female and p_male and abs((p_female + p_male) - 1) < 0.05:
+                effective_p_d = p_d * p_sex
+                else:
+                effective_p_d = p_sex or p_d
+
+              # Age-based adjustment
+              low, high = entry['age_low'], entry['age_high']
+              if low and high and low <= age <= high:
+                p_age_d = 1.0 / (high - low)
+              else:
+                p_age_d = 0.0
+
+              unnorm[d] = p_fd * effective_p_d * p_age_d
+              sum_unnorm += unnorm[d]
+
+          # Normalize within feature and accumulate contribution
+          if sum_unnorm > 0:
+            for d, u in unnorm.items():
+              p_d_f = u / sum_unnorm
+              disease_to_post[d] += p_d_f * p_f_image
+
+      # Final normalization across diseases
+      total_post = sum(disease_to_post.values())
+      if total_post > 0:
+        for d in disease_to_post:
+          disease_to_post[d] /= total_post
+      ...
+  ```,
+  caption: [Bayesian Posterior Computation with Calibrated Inputs],
+)
+
+===== Demographic Integration and User Prompting
+The researchers implemented a functionality that prompts the user for sex (male/female) and age via input functions, assuming adult users unless specified. These inputs are used to modulate priors: for instance, if a disease like Congenital Heart Disease has an age range of 0-0 (implying neonatal onset), an adult user’s age would set `p_age_d` to 0, excluding it. This step enhances accuracy by avoiding implausible matches, such as elderly-specific conditions for young users. If demographics are unavailable or irrelevant (e.g., no sex priors in the data), the base $P("Disease")$ is used unaltered.
+
+The prompting is kept minimal to maintain usability, occurring after CNN evaluation but before inference. Edge cases, like non-binary sex or invalid ages, are handled by defaulting to unadjusted priors, though future iterations could incorporate more inclusive demographics.
+
+===== Inference Execution and Dynamic Handling
+The script executes the inference by processing the calibrated confidence dictionary, which is dynamically populated (e.g., from model outputs) rather than hardcoded. For testing different nails, users can replace the raw confidence values, with calibration automatically applied; for example, a high raw pitting score might be tempered if the matrix shows frequent false positives, while clubbing could be boosted if underrepresented. The system avoids confusing high-confidence features like pitting with low ones like healthy nails by relying on the adjusted probabilities (e.g., raw 0.0028 for healthy treated accordingly post-calibration).
+
+The computation avoids direct $P("Nail")$ derivation unless necessary, focusing on proportional posteriors to bypass marginalization over all diseases. This efficiency is crucial for real-time applications. Posterior are stored in a `defaultdict`, sorted descendingly, and output in a human-readable format, listing diseases with percentages (e.g, Psoriasis: 91.24%).
+
+===== Output Generation and Interpretation
+The final output mirrors a clinical report: “Potential Systemic Diseases (Probabilities)” followed by a sorted list (e.g., Psoriasis: 91.24%, Alopecia areata: 7.29%), This encourages users to view results as hypothesis, not diagnoses, prompting medical follow-up. For healthy nails with high confidence, “No systemic disease” dominates, providing reassurance.
+
+In case of multiple high-confidence features, the aggregation ensures balance evidence; for low-confidence scans, posterior dilute across possibilities. The calibration step further refines this by correcting for model imperfections, leading to more robust outputs. The systems’s generality supports iterative testing: upload a new nail image, evaluate via CNN, calibrate confidences, feed to inference, and interpret anew.
+
+#figure(
+  ```
+  Enter your sex (male/female): male
+  Enter your age: 21
+  Potential Systemic Diseases (probabilities):
+  Psoriasis: 55.38%
+  Alopecia areata: 44.31%
+  No systemic disease: 0.25%
+  Raynaud's phenomenon: 0.03%
+  Chemotherapy: 0.01%
+  Hematopoietic System Disease: 0.01%
+  Human Immunodeficiency Virus (HIV): 0.01%
+  COVID-19: 0.00%
+  Gastrointestinal and Liver System Disease: 0.00%
+  Chronic Renal Failure: 0.00%
+  Subungual melanoma: 0.00%
+  ```,
+  caption: [Sample Output for High Pitting Confidence Post-Calibration],
+)
+
+This inference module completes the pipeline, transforming raw nail images into actionable health insights through calibrated probabilistic reasoning, all implemented in Python for accessibility and extensibility.
 
 === System Development Methodology
+The researchers applied the simplest Agile framework called Kanban methodology in the study. According to @the_pm_professional_kanban_2024, Kanban, originating from lean manufacturing principles, provides teams with a visual representation of their workflow using a Kanban board. Tasks are represented as cards moving through different stages, allowing teams to track progress at a glance. By limiting WIP, Kanban ensures that teams focus on completing tasks before taking on new ones, thus preventing bottlenecks and improving efficiency.
+#figure(
+  image("./img/Abstract_Kanban_Board.jpg"),
+  caption: flex-caption(
+    [Representation of a Kanban Board #cite(<falco_english_2023>, form: "normal")],
+    [Representation of a Kanban Board],
+  ),
+)
+A software development company that started using Kanban saw better teamwork, fewer delays, and higher productivity by making their workflow visible and limiting how much work they did at the same time #cite(<fastercapital_kanban_2025>, form: "normal"). In another example, a software services company used Kanban to get more done while still being able to respond quickly to changing client needs #cite(<kanban_university_visotech_2024>, form: "normal"). The Kanban method is helpful for keeping track of how work moves through a project. It’s a well-tested way to manage projects that helps teams make their workflows smoother, get more done, and give better results to clients. By using Kanban’s core ideas and practices, the researchers can respond easily to changing needs while also working better together and coming up with new ideas.
 
 === Software Tools Used
+Software tools are computer programs, apps, libraries, or platforms used in the development and creation of systems and models, organized into five primary categories: development environments and languages; libraries, frameworks, and databases; platforms and version control; AI-assisted development; and documentation and communication tools.
 
-=== System Architecture
+==== Development Environments and Languages
+===== Python
+A popular programming language that is easy to read and use. It is often used for machine learning, web development, and data analysis. In this study, Python was the main language for building the AI models and the web application, using libraries like PyTorch and Flask.
 
+===== Visual Studio Code
+It is popular as an editor for developing web applications and AI models due to its flexibility, ability to run multiple programming languages and programs, as well as popularity among communities. It also has integrated tools for HTML, CSS, and JavaScript built-in tools. Additionally, developers may integrate extensions to get more features. There also comes an integrated terminal for the editor where developers may run commands and use version control without closing the program. It accelerates work as well as simplifies it. The researchers utilized VS Code for the development of the models and the website.
+
+===== Google Colaboratory
+It is an online tool from Google that lets users write and run Python code directly in their browser. It is popular in data science and machine learning because it is easy to use and provides powerful computing resources, including free access to GPUs and TPUs. The researchers used it to train and test their machine learning algorithms. It was chosen because it is free and easy to share with other researchers.
+
+==== Libraries, Frameworks, and Databases
+===== Pytorch
+It is an open-source deep learning framework used in this study as the main environment for building, training, and testing AI models. It supports tensor computation with GPU acceleration, provides automatic differentiation for backpropagation, and offers modular neural network components. These features allowed the researchers to implement the model architecture and run experiments during training and evaluation more efficiently.
+
+===== Matplotlib
+It is a Python library used for data visualization. It helps create plots, charts, and graphs. In this study, the researchers used Matplotlib for Exploratory Data Analysis (EDA) to find patterns, trends, and distributions in the dataset. It was also used for overall data visualization, giving clear graphs that supported model evaluation and result interpretation.
+
+===== Flask
+The researchers used Flask, a simple and flexible web framework for Python, to build web applications and APIs. Flask makes it easier to create web projects by giving a clear structure for setting up servers, handling requests, and managing routes with less code.
+
+===== Bootstrap
+It is a front-end framework used by the researchers to build the website’s layout and design. It comes with ready-made CSS and JavaScript parts that made it easier to create responsive and mobile-first user interfaces. The researchers used Bootstrap’s grid system, utility classes, and reusable components to keep the website consistent, scalable, and efficient in its front-end development.
+
+===== SQLite
+It is a lightweight, serverless relational database system built directly into the application. In this study, the researchers used SQLite to store and retrieve structured data, such as user accounts, nail diagnosis results, and related records. Since SQLite is self-contained and requires very little setup, it was a good choice for managing local data efficiently while still being reliable and supporting ACID transactions.
+
+==== Platforms and Version Control
+===== Git
+It is a distributed version control system used by the researchers to manage source code and project files. It was the main tool for version control during both model development and web application work. Git made it easier to track changes, create branches, and combine updates. It was also used to keep version history of Typst files, helping the researchers work together on revisions and protect the accuracy of the final manuscript.
+
+===== GitHub
+It is an online service used to store and share project source code. The researchers used it to manage and update their work, making it the main place for collaboration. Researchers pushed and pulled commits, kept track of version history, and worked on different branches to do tasks at the same time. GitHub also helped with issue tracking and repository management, which kept the workflow organized during the study.
+
+===== Hugging Face
+It is a platform that offers a hub for storing and sharing machine learning models. In this study, Hugging Face was used to host the trained models. This made it easier to keep track of different versions, repeat experiments, and deploy the models. It also allowed the models to be accessed directly through code during testing and experimentation.
+
+==== AI-Assisted Development
+===== AI Coding Assistants
+The researchers used AI assistants that understand programming code, mainly GitHub Copilot which works inside Visual Studio Code. These tools helped speed up basic coding tasks. The main purpose of this AI was to automatically write code for repetitive tasks. This included creating standard code for Flask web routes, setting up the basic structure for PyTorch model classes, and writing functions to prepare data. Because the AI handled these simple tasks, the researchers could spend more time on more important work, like designing the main structure of the application and improving the logic of the neural network.
+
+===== Conversational Language Models
+The researchers used several conversational models, such as OpenAI's ChatGPT and Google's Gemini. They used these as interactive tools to help solve complex technical problems. These AI platforms helped them understand complicated error messages, rewrite Python code to make it more efficient and easier to read, and come up with ideas for improving the model's training process. In addition, the researchers used these models to help with writing. The AIs helped draft technical documents, generate clear descriptions for functions, and improve the final research paper. They did this by making sure all technical terms were used consistently and by making complex ideas easier to understand.
+
+==== Documentation and Communication Tools
+===== Zotero
+It is a reference management tool used by the researchers to collect, store, and sync research sources. It helped organize citations, manage references on different devices, and create properly formatted bibliographies that supported the study’s documentation needs.
+
+===== Google Docs
+It is a cloud-based writing tool used by the researchers to draft and edit the manuscript. It supported real-time collaboration, tracked changes, and kept all files in one place, making sure edits and feedback were updated smoothly during the study.
+
+===== Typst
+It is a modern typesetting tool used by the researchers to create the final print-ready version of the manuscript. It helped make the document easier to read, kept the formatting consistent, and improved the overall look of the published work, giving the research a clear and professional output.
+
+===== Discord
+It is a communication tool used by the researchers for online meetings and discussions, especially when meeting in person was not possible. It offered real-time voice, video, and text channels that helped the group coordinate tasks, assign responsibilities, and track progress during the study.
+
+=== Corpus Structure
 === Software Testing
 
 #pagebreak()
@@ -1553,7 +1987,15 @@ Both steps were called by the `train_model()` function (see @train-model-functio
 #chp[Chapter IV]
 #h2(outlined: false, bookmarked: true)[Results and Discussion]
 
-=== System Overview
+=== System Architecture
+#figure(
+  image("./img/system-archi-web.png"),
+  caption: [System Architecture Design],
+) <system-architecture>
+The system architecture as shown in @system-architecture operationalizes the trained model by integrating it into a fully functional backend environment. This manages real-time inference requests, database operations, and probabilistic computations. The workflow begins when a user uploads a nail image via the web-based interface. The API Gateway receives the image through an HTTP POST request, validating the data and forwarding it to the backend’s business logic layer. The uploaded image is temporarily stored in the local file system under a designated directory, while its file path and metadata are recorded in an SQLite database for traceability and reproducibility.
+
+The Machine Learning Inference Service retrieves the image and performs classification using the trained deep learning model. The resulting prediction includes both the class label and its associated confidence score. The business logic layer then logs the output and queries the database for prior probabilities and likelihood values associated with the detected features. These are used by the Bayesian inference module to compute disease probabilities. The integration of database querying with inference ensures data consistency and enables the system to generate contextual, data-informed predictions. The results are transmitted back through the API Gateway to the front-end interface, where the user can view the diagnostic outcomes in an interpretable format.
+
 
 === Research Objective 1
 
@@ -1629,6 +2071,12 @@ Both steps were called by the `train_model()` function (see @train-model-functio
 #[
   #set par(spacing: 1em, leading: 1em)
   #include "./sir-mark-consultation.typ"
+]
+
+#h3(hidden: true)[Ma’am Villarica Consultation – 10/08/2025]
+#[
+  #set par(spacing: 1em, leading: 1em)
+  #include "mam-mia-consultation2.typ"
 ]
 
 #pagebreak()
