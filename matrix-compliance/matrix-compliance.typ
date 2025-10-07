@@ -106,7 +106,7 @@
   [Included more theories, concepts, and models that explains why we chose certain approach.],
   [Fully Complied \
   \
-  See pages 6-15 \
+  See pages 7-18 \
   ],
   [],
 
@@ -114,22 +114,20 @@
   [Made minor changes in the conceptual framework to align with the specific objectives],
   [Partially Complied \ 
   \
-  See pages 16-17
-  ],
+  See pages 19-20  ],
   [],
 
   [4.	List the nail attributes and correlate diseases],
   [Listed nail attributes with their corresponding image and description. Its correlation with systemic diseases is still ongoing.],
   [Partially Complied \
   \
-  See pages 64-65
-  ],
+  See pages 87-88  ],
   [],
 
   [5.	Strengthen the RRL],
   [Reviewed more literature to further strengthen the RRL. We then synthesized based on the gaps that we found.],
   [Partially Complied \ \
-  See pages 21-47
+  See pages 24-55
   ],
   [],
 
@@ -137,7 +135,7 @@
   [Included photos and descriptions of the 10 nail features which was not included in the last defense. The _Applied Techniques_ section now includes all the techniques being used by the researchers with images of the techniques. It is ongoing and each technique and experiment will be documented in the future.],
   [Partially Complied \
   \
-  See pages 48-74
+  See pages 56-118
   ],
   [],
 
@@ -145,7 +143,7 @@
   [The scope and limitation is now made to be more specific and now aligns with the research problem and objectives. We also added delimitations to state which parts or methods of the research we intentionally did not include.],
   [Fully Complied \
   \
-   See pages 17-19 
+   See pages 20-22
   ],
   [],
 
@@ -168,7 +166,7 @@
   [1. Find literature or expert opinions supporting the proposed renaming of ‘Acral Lentiginous Melanoma’ to ‘Melanonychia.’],
   [Incorporated expert opinion from Dr. Cristine Florentino to justify renaming the class.],
   [Fully complied \ \
-    See page 63
+    See page 85-86
   ],
   [],
 
@@ -179,7 +177,7 @@
    - The dataset to be gathered must be a labeled dataset
   ],
   [Fully complied \ \
-   See pages  5-6
+   See pages  5-7
   ],
   [],
 
@@ -218,7 +216,7 @@
   [3. Scale the classifier's confidence with the confusion matrix when predicting the probability of systemic diseases],
   [Started making a prototype for this functionality.],
   [Ongoing \
-  \ See pages 68-73],
+  \ See pages 107-108],
   [],
 
   [4. Make a mobile version if possible],
