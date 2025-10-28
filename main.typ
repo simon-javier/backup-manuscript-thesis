@@ -2049,13 +2049,13 @@ The Machine Learning Inference Service retrieves the image and performs classifi
 ]
 #pagebreak()
 
-#h3(hidden: true)[Expert Interview Transcription]
+#h3(hidden: true)[Expert Interview Transcription -- 07/03/2025]
 #[
   #set par(spacing: 1em, leading: 1em)
   #include "./expert-interview.typ"
 ]
 
-#h3(hidden: true)[RC Defense Transcription]
+#h3(hidden: true)[RC Defense Transcription -- 07/29/2025]
 #[
   #set par(spacing: 1em, leading: 1em)
   #include "./rc-defense-transcription.typ"
@@ -2073,10 +2073,22 @@ The Machine Learning Inference Service retrieves the image and performs classifi
   #include "./sir-mark-consultation.typ"
 ]
 
-#h3(hidden: true)[Ma’am Villarica Consultation – 10/08/2025]
+#h3(hidden: true)[Sir Bernardino Consultation –- 10/07/2025]
+#[
+#set par(spacing: 1em, leading: 1em)
+#include "./sir-mark-consultation2.typ"
+]
+
+#h3(hidden: true)[Ma’am Villarica Consultation –- 10/08/2025]
 #[
   #set par(spacing: 1em, leading: 1em)
   #include "mam-mia-consultation2.typ"
+]
+
+#h3(hidden: true)[Sir Estalilla Consultation -- 10/13/2025]
+#[
+  #set par(spacing: 1em, leading: 1em)
+  #include "./sir-estalilla-consultation.typ"
 ]
 
 #pagebreak()
