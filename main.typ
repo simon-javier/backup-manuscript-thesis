@@ -476,9 +476,6 @@ Some terminologies used in the design and development of the developed system we
   [*Batch Learning / Mini Batches*],
   [Training was conducted using mini batches of 32 images per iteration to enhance training efficiency while balancing generalization and convergence speed.],
 
-  [*Confidence Intervals*],
-  [Confidence Intervals are an evaluation metric for probabilistic models, with the system providing probabilistic risk assessments (e.g., "Diabetes Likelihood: 85%") along with recommendations for medical consultation.],
-
   [*Convolutional Neural Networks (CNNs)*],
   [CNNs are the primary architecture for analyzing image data in this study, automatically learning spatial hierarchies of features essential for accurate classification of nail abnormalities, and excel at analyzing visual data to identify patterns that may escape human observation.],
 
@@ -577,6 +574,9 @@ This section defines any terms or phrases derived from the study operationally, 
 
   [*Muehrcke's Lines*],
   [Muehrcke's Lines are a nail condition that is the most underrepresented class in the dataset, but some models show strong recall for it, which is critical in a preventive diagnostic context.],
+
+  [*Nail Feature*],
+  [Refers to the distinct visual or morphological characteristics of the fingernail, such as color, texture, shape, thickness, and the presence of ridges, lines, or discoloration. These features serve as key biomarkers analyzed by the deep learning model to identify and classify nail diseases, which may indicate underlying systemic health conditions.],
 
   [*Onychomycosis*],
   [Onychomycosis is a common nail condition for which region-based CNNs and deep learning have demonstrated superior diagnostic performance compared to dermatologists.],
@@ -756,7 +756,7 @@ Thus, this study specifically seeks to address the following problems:
 + How can researchers systematically collect and curate statistical data on systemic diseases associated with nail features into a usable dataset, and how can this dataset be applied using Bayesian inference for systemic disease inference?
 + How can the reliability and accuracy of the deep learning model be ensured through rigorous training and evaluation and comparison against benchmarks from existing studies?
 + How can explainability methods, such as Grad-CAM or attention-based visualizations, be implemented in deep learning models for fingernail analysis to provide interpretable and explainable results?
-+ Which deep learning model demonstrates superior performance for nail disease classification, and how do standard evaluation metrics (e.g., accuracy, precision, recall, F1-score for CNNs; confidence intervals, sensitivity, specificity for probabilistic models) inform the selection of the optimal model?
++ Which deep learning model demonstrates superior performance for nail feature classification, and how do standard evaluation metrics (e.g., accuracy, precision, recall, F1-score) inform the selection of the optimal model?
 + How can the best-performing model be deployed in a prototype application to provide interpretable systemic disease inference from fingernail images, and what are the key challenges in ensuring its suitability for clinical decision support or health screening?
 
 
@@ -885,14 +885,10 @@ The study also went a step further by connecting each nail condition to possible
 ==== Conceptual Framework
 The conceptual framework provides a practical workflow for implementing the theoretical foundation, detailing the process from data collection to system deployment. It is divided into three phases: input, process, and output.
 
-
-#context {
-  [#figure(
-    image("img/ConceptualFramework.png"),
-    caption: [Conceptual Framework of the Study],
-    placement: bottom,
-  ) <conceptual-framework>]
-}
+#figure(
+  image("img/ConceptualFramework.png"),
+  caption: [Conceptual Framework of the Study],
+) <conceptual-framework>
 
 As illustrated in @conceptual-framework, the input phase involves collecting a dataset of at least 3,000 labeled fingernail images with a minimum resolution of 224x224 from Roboflow. The processing phase includes data cleaning (resizing and normalization) and augmentation (flipping, scaling, and brightness adjustment) to enhance dataset diversity. Feature extraction using CNNs, such as ResNet-50, VGG-16, RegNetY-16GF, and EfficientNetV2, precedes model training with a split dataset (80% training, 20% testing), employing CNNs for classification and literature-based inference. Evaluation metrics (sensitivity, recall, and confidence intervals) guide hyperparameter tuning, leading to the selection of the best-performing model. The output phase delivers probabilistic classifications of nail disorders, systemic disease likelihoods (e.g., diabetes: 85%), and recommendations for medical consultation, with deployment in a web application for global accessibility.
 // As illustrated in @conceptual-framework, input phase involves collecting a minimum of 3,000, 224x224 Resolution labeled fingernail images dataset from Roboflow. The process phase includes data cleaning (resizing and normalization) and augmentation (flipping, scaling, brightness adjustment) to enhance dataset diversity. Feature extraction using CNNs including ResNet-50, VGG-16, RegNetY-16GF, and EfficientNetV2, precedes model training with a split dataset (80% training, 20% testing), employing CNNs for classification and literature based inference. Evaluation metrics (sensitivity, recall, confidence intervals) guide hyperparameter tuning, leading to the selection of the best-performing model. The output phase delivers probabilistic classifications of nail disorders, systemic disease likelihoods (e.g., diabetes: 85%), and recommendations for medical consultation, with deployment into a web application for global accessibility.
@@ -913,8 +909,7 @@ The following scope are set by the researchers:
 - The research is scheduled over a seven-month period, covering phases such as data collection, preprocessing, model development, evaluation, and deployment
 - The study will cover classifying nail features ranging 10 classes: Beau's Lines, Blue Nails, Clubbing, Healthy Nail, Koilonychia, Melanonychia, Muehrcke's Lines, Onychogryphosis, Pitting, and Terry's Nails.
 - The image dataset will be trained on five models: Resnet-50, VGG-16, RegNetY-16GF, EfficientNetV2-S, and SwinV2-T. The researchers will improve the model through iterative experimentations.
-// To be updated to be more specific
-- The researchers will implement explainability techniques such as Grad-CAM to understand how the model came up with the classified nail.
+- The researchers will implement explainability techniques such as GradCAM, ScoreCAM, GradCAMPlusPlus, AblationCAM, and feature maps to understand how the model came up with the classified nail.
 - The study makes inferences using Bayesian inference with probabilities derived from the curated statistical dataset.
 - The study will be developed on the web using frameworks like Flask.
 
@@ -931,7 +926,7 @@ This study is limited to the following:
 - The reliability of nails as a systemic disease detector is tricky and requires more information such as the user's history, work, and pathology.
 - The dataset quality and balance can impact the model's ability to make predictions.
 - Publicly sourced datasets may lack formal verification from licensed medical professionals, introducing risks of inaccurate labels that could impact classification and inference reliability.
-- Local data about prevalence of nail features and nail feature given diseases can be limited.
+- Epidemiological data regarding the prevalence of nail features and their associations with systemic diseases in the local population may be limited.
 - Due to the blackbox nature of deep learning models, the models employed have limited interpretability and explainability, which may affect clinical trust and adoption despite strong predictive performance #cite(<doshi_2017_towards>, form: "normal").
 - Training complex models require substantial computational resources which may limit the ability to perform extensive hyperparameter tuning.
 
@@ -939,21 +934,29 @@ This study is limited to the following:
 === Significance of the Research
 The findings of this study are beneficial to individuals and organizations worldwide, offering a non-invasive, accessible tool for early detection of systemic diseases through fingernail biomarkers. By addressing critical gaps in preventive healthcare, the system empowers users to take proactive steps toward better health outcomes. Specifically, the results of this study provide advantages to the following:
 
-*Global Community:* Individuals worldwide, especially those in remote or resource-limited areas, can access early health risk assessments, bridging gaps in healthcare access and empowering them to seek timely medical consultation.
+===== Global Community
+Individuals worldwide, especially those in remote or resource-limited areas, can access early health risk assessments, bridging gaps in healthcare access and empowering them to seek timely medical consultation.
 
-*Healthcare Providers:* Medical professionals can utilize the system as a preliminary screening tool to prioritize patients for further evaluation, improving efficiency in resource-constrained settings and enhancing patient care.
+===== Healthcare Providers
+Medical professionals can utilize the system as a preliminary screening tool to prioritize patients for further evaluation, improving efficiency in resource-constrained settings and enhancing patient care.
 
-*Public Health Organizations:* The system supports population-level health monitoring by identifying disease prevalence patterns, aiding in the development of targeted health interventions and policies.
+===== Public Health Organizations
+The system supports population-level health monitoring by identifying disease prevalence patterns, aiding in the development of targeted health interventions and policies.
 
-*Researchers:* The study serves as a foundation for future research in AI-driven diagnostics, offering insights into integrating deep learning and probabilistic modeling for medical applications.
+===== Researchers
+The study serves as a foundation for future research in AI-driven diagnostics, offering insights into integrating deep learning and probabilistic modeling for medical applications.
 
-*Underserved Populations:* Communities in remote or economically disadvantaged regions benefit from a tool that requires no specialized equipment, promoting health equity and reducing disparities in healthcare access.
+===== Underserved Populations
+Communities in remote or economically disadvantaged regions benefit from a tool that requires no specialized equipment, promoting health equity and reducing disparities in healthcare access.
 
-*Health Tech Developers:* The project provides a blueprint for developing scalable, AI-driven health solutions, encouraging innovation in preventive healthcare technologies.
+===== Health Tech Developers
+The project provides a blueprint for developing scalable, AI-driven health solutions, encouraging innovation in preventive healthcare technologies.
 
-*Policy Makers:* The results can inform public health policies on integrating AI tools into healthcare systems, improving access to early detection and preventive care on a global scale.
+===== Policy Makers
+The results can inform public health policies on integrating AI tools into healthcare systems, improving access to early detection and preventive care on a global scale.
 
-*Educational Institutions:* Medical and technology students can use the system as a learning tool to explore the intersection of AI and healthcare, fostering interdisciplinary education.
+===== Educational Institutions
+Medical and technology students can use the system as a learning tool to explore the intersection of AI and healthcare, fostering interdisciplinary education.
 
 #metadata("Chapter 1 end") <ch1-e>
 #pagebreak()
@@ -971,7 +974,7 @@ Timely diagnosis is an important aspect in cutting down on death and enhancing t
 
 The study of #cite(<yang_multimodal_2024>) supports this by stating that many diseases are left undiagnosed and untreated, even if the disease shows many physical symptoms. With the rise of Artificial intelligence (AI), self-diagnosis and improved disease recognition have become more promising than ever. AI-driven diagnostic systems can potentially improve the accuracy and speed of disease diagnosis, especially for skin diseases. These tools have shown promising results in the diagnosis of skin diseases, with some studies demonstrating superior performance compared to human dermatologists.
 
-The urgency of research in personal hygiene and nail diseases is exceptionally high due to the significant health implications of untreated nail infections, which can range from minor discomfort to severe systemic health issues. Conducting in-depth research not only aids in identifying risk factors, transmission patterns, and effective prevention strategies but also supports the development of evidence-based interventions. These interventions are crucial for designing educational programs and health campaigns aimed at raising public awareness of the importance of proper nail care. #cite(<ardianto_bioinformatics-driven_2025>, form: "normal")
+The urgency of research in personal hygiene and nail diseases is exceptionally high due to the significant health implications of untreated nail infections, which can range from minor discomfort to severe systemic health issues. Conducting in-depth research not only aids in identifying risk factors, transmission patterns, and effective prevention strategies but also supports the development of evidence-based interventions. These interventions are crucial for designing educational programs and health campaigns aimed at raising public awareness of the importance of proper nail care #cite(<ardianto_bioinformatics-driven_2025>, form: "normal").
 
 === Nail Abnormalities as Systemic Disease Indicators
 According to #cite(<shandilya_autonomous_2024>, form: "prose"), the architectural complexity of the nail unit proves to be an important marker for the general health condition and very often represents alterations coinciding with most diseases. Architectural changes in the nails constitute important diagnostic information within a broad spectrum of diseases---from cancer and dermatological diseases to respiratory and cardiovascular diseases. Their study develops an intricate classification system for nail diseases based on the anatomical characteristics of the nail unit for the enhancement of accuracy in dermatological diagnosis. Detailed diagnosis of nail diseases such as onychogryphosis, cyanosis, clubbing, and koilonychia enhances the accuracy of dermatological examination and alerts the clinician to more generalized health issues including hypoxia or anemia due to an iron deficiency. Besides, changes in nails may include manifestations like pitting in psoriasis or onycholysis in eczema: two diseases with a long duration.
@@ -1118,7 +1121,7 @@ Most research on lightweight diagnostic AI, especially for areas with limited re
 === Synthesis
 The related studies literature registers a strong need for non-invasive and easy-to-use diagnostic devices, most importantly in rural and disadvantaged areas where professionals are hard to reach #cite(<prajeeth_smart_2023>, form: "normal") #cite(<alruwaili_integrated_2025>, form: "normal"). Prior research mentions that nails may serve a potential source of health information. Several studies link nail changes such as clubbing, koilonychia, cyanosis, Terry’s nails, etc., to acute medical conditions such as heart and pulmonary disorders, liver cirrhosis, iron deficiency anemia, etc. #cite(<shandilya_autonomous_2024>, form: "normal") #cite(<abdulhadi_human_2021>, form: "normal") #cite(<desir_nail_2024>, form: "normal").
 
-The literature also reveals that deep learning has indeed been effective to detect nail conditions from images, strengthening the current approach taken by this study. Architectures such as VGG16, ResNet50, and EfficientNet are found to work well in other related studies, and so are appropriate choices to train and test in this study #cite(<ardianto_bioinformatics-driven_2025>, form: "normal") #cite(<sharma_fingernail_2024>, form: "normal") #cite(<han_deep_2018>, form: "normal"). Data enhancement is similarly presented to be a valuable step to increase model consistency, and this is in alignment with the researchers’ objective to enhance their dataset.
+The literature also reveals that deep learning has indeed been effective to detect nail conditions from images, strengthening the current approach taken by this study. Architectures such as VGG16, ResNet50, and EfficientNet are found to work well in other related studies, and so are appropriate choices to train and test in this study #cite(<ardianto_bioinformatics-driven_2025>, form: "normal") #cite(<sharma_fingernail_2024>, form: "normal"). Data enhancement is similarly presented to be a valuable step to increase model consistency, and this is in alignment with the researchers’ objective to enhance their dataset.
 
 The literature mentions two major gaps that this work is eager to address. Firstly, there is the “black box” issue, where deep learning models are correct but are not transparent enough to help doctors trust them #cite(<kandekar_deep_2025>, form: "normal") #cite(<hsieh_comprehensive_2024>, form: "normal"). To address this, the study will make use of Bayesian inference and a hand-curated dataset to calculate the chances of diseases. This facilitates the system to transition from merely image classification to outputting clearer, probabilistic health information and injects a degree of transparency and uncertainty that is lacking in current models #cite(<zhou_combining_2025>, form: "normal") #cite(<ma_advances_2021>, form: "normal"). The second gap is that most current work reaches only to proof-of-concept and does not progress to real-world deployment or testing #cite(<kandekar_deep_2025>, form: "normal") #cite(<gaurav_artificial_2025>, form: "normal"). This study will fill that gap by developing a working prototype application from the highest-performing model. This step is critical to converting theoretical performance to a practical aid to clinical decision-making.
 
@@ -1317,7 +1320,7 @@ Model evaluation is the process of using different evaluation metrics to underst
 The researchers used multiple evaluation metrics to systematically monitor training dynamics and rigorously assess the predictive performance of the model across different experimental setups.
 
 ===== Accuracy
-It is a fundamental metric for evaluating the performance of a classification model. It tells us the proportion of correct predictions made by the model out of all predictions #cite(<geeksforgeeks_evaluation_2025>, form: "normal"). In the context of this study, where the objective is to classify images into multiple fingernail feature categories, accuracy provides an intuitive and holistic measure of the model’s predictive effectiveness.
+Accuracy is a fundamental metric for evaluating the performance of a classification model. It tells us the proportion of correct predictions made by the model out of all predictions #cite(<geeksforgeeks_evaluation_2025>, form: "normal"). In the context of this study, where the objective is to classify images into multiple fingernail feature categories, accuracy provides an intuitive and holistic measure of the model’s predictive effectiveness.
 
 #figure(
   kind: "equation",
@@ -1330,13 +1333,13 @@ It is a fundamental metric for evaluating the performance of a classification mo
   ),
 )
 
-===== Precision / Positive Predictive Value (PPV)
-Precision or Positive Predictive Value measures how many of the positive predictions made by the model are actually correct. It’s useful when the cost of false positives is high, such as in medical diagnoses where predicting a disease when it’s not present can have serious consequences. The formula of precision is defined as:
+===== Precision
+Precision measures how many of the positive predictions made by the model are actually correct. It’s useful when the cost of false positives is high, such as in medical diagnoses where predicting a disease when it’s not present can have serious consequences. The formula of precision is defined as:
 
 #figure(
   kind: "equation",
   [
-    $"Precision/PPV" = "TP"/("TP" + "FP")$
+    $"Precision" = "TP"/("TP" + "FP")$
   ],
   caption: flex-caption(
     [Formula for Precision/PPV #cite(<geeksforgeeks_evaluation_2025>, form: "normal")],
@@ -1345,55 +1348,30 @@ Precision or Positive Predictive Value measures how many of the positive predict
 )
 where TP denotes True Positive and FP denotes False Positive. In multiclass classification, precision is computed per class and can be averaged (macro, micro, or weighted) to obtain an overall measure #cite(<sokolova_systematic_2009>, form: "normal").
 
-===== Negative Predictive Values (NPV)
-According to @pedigo_sensitivity_2025, Negative Predictive Value (NPV) reflects the reliability of a negative result. It measures the proportion of negative test results that are true negatives. The formula is defined as:
-#figure(
-  kind: "equation",
-  [
-    $"NPV" = "TN" / ("TN" + "FN")$
-  ],
-  caption: flex-caption([Formula for NPV #cite(<pedigo_sensitivity_2025>, form: "normal")], [Formula for NPV]),
-)
-where TN denoted True Negative and FN denoted False Negatives.
-
-===== Recall / Sensitivity
+===== Recall
 According to @pedigo_sensitivity_2025, recall or sensitivity, also called true positive rate, measures the model’s ability to correctly identify true positives. More precisely, it is the proportion of true positives to actual positives. The formula for recall is defined as:
 
 #figure(
   kind: "equation",
   [
-    $"Recall / Sensitivity" = "TP" / ("TP" + "FN")$
+    $"Recall" = "TP" / ("TP" + "FN")$
   ],
   caption: flex-caption([Formula for Recall #cite(<pedigo_sensitivity_2025>, form: "normal")], [Formula for Recall]),
 )
 
 where TP denotes True Positive and FN denotes False Negatives.
 
-===== Specificity
-Similarly, specificity (true negative rate) measures the model's ability to identify true negatives. It is the proportion of true negatives to actual negatives. #cite(<pedigo_sensitivity_2025>, form: "normal").
+===== F1 score
+According to @geeksforgeeks_evaluation_2025 the F1 score is the harmonic mean of precision and recall. It is useful when we need a balance between precision and recall as it combines both into a single number. A high F1 score means the model performs well on both. The formula for F1 score is defined as:
 
 #figure(
   kind: "equation",
   [
-    $"Specificity" = "TN" / ("FP" + "TN")$
+    $"F1 score" = 2 times ("Precision" times "Recall") / ("Precision" + "Recall")$
   ],
   caption: flex-caption(
-    [Formula for Specificity #cite(<pedigo_sensitivity_2025>, form: "normal")],
-    [Formula for Specificity],
-  ),
-)
-
-===== F1-Score
-According to @geeksforgeeks_evaluation_2025 the F1 Score is the harmonic mean of precision and recall. It is useful when we need a balance between precision and recall as it combines both into a single number. A high F1 score means the model performs well on both. The formula for F1-Score is defined as:
-
-#figure(
-  kind: "equation",
-  [
-    $"F1 Score" = 2 times ("Precision" times "Recall") / ("Precision" + "Recall")$
-  ],
-  caption: flex-caption(
-    [Formula for F1-Score #cite(<geeksforgeeks_evaluation_2025>, form: "normal")],
-    [Formula for F1-Score],
+    [Formula for F1 score #cite(<geeksforgeeks_evaluation_2025>, form: "normal")],
+    [Formula for F1 score],
   ),
 )
 
@@ -1407,8 +1385,16 @@ According to @geeksforgeeks_evaluation_2025 the F1 Score is the harmonic mean of
   ),
 )
 
-==== Modularization
 ==== Model Interpretability
+According to @geeksforgeeks_model_2025, model interpretability is the ability to understand and explain how a machine learning or deep learning model makes predictions or decisions. Understanding traditional machine learning models, such as decision trees or linear regression, is relatively simple due to their transparency. Deep learning models, particularly neural networks, operate as complex, multi-layered black boxes, making them difficult to interpret. 
+
+The researchers applied saliency maps as their interpretability method. Saliency maps is an interpretability method for computer vision tasks. It highlights which parts of the image are the most important for the model’s decision, offering visual interpretability. 
+
+#figure(
+  image("./img/saliency-map.png"),
+  caption: flex-caption([Saliency Map #cite(<geeksforgeeks_what_2021>, form: "normal")], [Saliency Map])
+)
+
 
 === Algorithm Analysis
 In order to evaluate the performance of deep learning models for nail feature classification, the researchers considered a set of architectures that represent different stages of advancement in computer vision research. The selection of models was guided by two principles: the first is ensuring diversity in architectural design to capture a broad range of representational capabilities, and the second one is relying on established benchmarks such as ImageNet Top-1 and Top-5 accuracy, parameter counts, and computational complexity (GFLOPs) as reported in the official PyTorch model repository. These criteria provide a standardized basis for comparison and ensure that the chosen models span from classical convolutional networks to modern transformer-based approaches.
@@ -1442,11 +1428,43 @@ RegNet, introduced by @radosavovic_designing_2020, is based on the idea of desig
 ==== EfficientNetV2-S
 EfficientNetV2, proposed by @tan_efficientnetv2_2021, is the successor to EfficientNet and was designed to achieve faster training and improved parameter efficiency. The “S” (small) variant balances accuracy and computational requirements, using fused MBConv layers and progressive learning strategies such as variable image resizing and adaptive regularization scheduling. With 21.5 million parameters and 8.37 GFLOPS, EfficientNetV2S achieves high accuracy with relatively fewer resources, making it suitable for healthcare deployment where efficiency and scalability are critical. Its role in this study is to represent modern efficiency-oriented CNNs.
 
+#figure(
+  image("./img/efficientnet-archi.png"),
+  caption: flex-caption(
+    [Architecture of EfficientNetV2-S #cite(<zhao_diagnostic_2024>, form: "normal")],
+    [Architecture of EfficientNetV2-S]
+  )
+) <efficientnet-archi>
+
+@efficientnet-archi shows the architecture of EfficientNetV2-S. According to @tan_efficientnetv2_2021, EfficientNetV2 introduces training-aware Neural Architecture Search (NAS) and scaling to optimize both accuracy and training efficiency. The architecture combines Fused-MBConv blocks in early layers for faster training and traditional MBConv blocks in later stages for parameter efficiency. Each block uses depthwise separable convolutions with varying expansion ratios, complemented by squeeze-and-excitation optimization. The network employs progressive learning, gradually increasing image size and adjusting regularization during training, which improves convergence speed while maintaining strong generalization. This design makes EfficientNetV2-S particularly effective for transfer learning scenarios with limited computational resources.
+
 ==== SwinV2-T
 Swin Transformer V2 #cite(<liu_swin_2022>, form: "normal") builds on the original Swin Transformer by introducing residual-post-norm and scaled cosine attention, improving training stability for deep models. It also addresses the “resolution gap” problem, enabling pretrained models to transfer more effectively to higher resolutions—a feature relevant in medical imaging where fine details matter. The Tiny variant (SwinV2-T) has approximately 28.4 million parameters and 5.94 GFLOPs, making it a lightweight alternative compared to Base or Large variants. Despite its efficiency, it still benefits from hierarchical self-attention and the ability to model long-range dependencies, providing a transformer-based counterpart to convolutional architectures in nail feature classification.
 
+#figure(
+  image("./img/swinfig.png"),
+  caption: flex-caption(
+    [Swin Transformer vs Swin Transformer V2 #cite(<rastogi_papers_2024>, form: "normal")],
+    [Swin Transformer vs Swin Transformer V2]
+  )
+) <swinfig>
+
+@swinfig shows the architecture of Swin Transformer V2. According to @liu_swin_2022, SwinV2 employs a hierarchical structure with shifted window-based self-attention mechanisms that compute attention within non-overlapping local windows, then shift window partitions between layers to enable cross-window connections. The architecture introduces three key innovations: residual-post-normalization for improved training stability, scaled cosine attention to replace dot-product attention for better transferability across resolutions, and log-spaced continuous position bias to handle varying window sizes. The network begins with a patch embedding layer that splits the input into non-overlapping patches, followed by four stages of Swin Transformer blocks with patch merging layers between stages to progressively reduce spatial resolution while increasing feature dimensionality.
+
 ==== ConvNeXt-Tiny
-Upon observing that RegNetY-16GF is computationally more demanding despite having a comparable number of parameters and GFLOPs to VGG16, the researchers opted to replace it with ConvNeXt-Tiny. This decision was motivated by the need to conduct multiple experiments efficiently, as ConvNeXt-Tiny offers a favorable balance between performance and computational cost. Introduced by Liu et al. (2022), ConvNeXt demonstrated competitive or superior performance compared to Vision Transformers across various benchmarks, while retaining the advantages of convolutional inductive biases that make training more stable and efficient on smaller datasets. The Tiny variant, in particular, was chosen because it offers a favorable trade-off between accuracy and computational cost, with approximately 28 million parameters, making it more practical for experimentation in a resource-constrained environment such as Google Colab.
+Upon observing that RegNetY-16GF is computationally more demanding despite having a comparable number of parameters and GFLOPs to VGG16, the researchers opted to replace it with ConvNeXt-Tiny. This decision was motivated by the need to conduct multiple experiments efficiently, as ConvNeXt-Tiny offers a favorable balance between performance and computational cost. Introduced by @liu_swin_2022, ConvNeXt demonstrated competitive or superior performance compared to Vision Transformers across various benchmarks, while retaining the advantages of convolutional inductive biases that make training more stable and efficient on smaller datasets. The Tiny variant, in particular, was chosen because it offers a favorable trade-off between accuracy and computational cost, with approximately 28 million parameters, making it more practical for experimentation in a resource-constrained environment such as Google Colab.
+
+#figure(
+  image("./img/convnextfig.png"),
+  caption: flex-caption(
+    [ConvNext-Tiny Architecture #cite(<zhao_diagnostic_2024>, form: "normal")],
+    [ConvNext-Tiny Architecture]
+  )
+) <convnextfig>
+
+@convnextfig shows the architecture of ConvNeXt. According to @liu_swin_2022, ConvNeXt modernizes the standard ResNet architecture by systematically adopting design choices from Vision Transformers while maintaining a pure convolutional approach. The network employs a hierarchical structure with four stages, using patchify stems with larger convolutional kernels (4×4, stride 4) instead of aggressive early downsampling. Each stage consists of inverted bottleneck blocks inspired by transformers, featuring depthwise 7×7 convolutions, LayerNorm for improved training stability, GELU activation functions, and fewer activation functions and normalization layers compared to traditional CNNs. The architecture also incorporates separate downsampling layers between stages, achieving competitive performance with transformers while benefiting from convolutional efficiency and simpler training dynamics.
+
+@model-table presents the baseline performance metrics of the selected models on the ImageNet classification benchmark, as reported in the official PyTorch model repository. Top-1 accuracy measures the percentage of images for which the model's highest-confidence prediction matches the true label, while Top-5 accuracy evaluates whether the correct label appears within the model's top five predictions. The parameter count and GFLOPs (giga floating-point operations) quantify model size and computational complexity, respectively. These standardized metrics provide a basis for comparing architectural efficiency: while VGG-16 demonstrates relatively modest accuracy (71.59% Top-1) with high computational cost (138.4M parameters, 15.47 GFLOPs), modern architectures such as EfficientNetV2-S achieve substantially higher accuracy (84.23% Top-1) with significantly fewer parameters (21.5M) and reduced computational requirements (8.37 GFLOPs).
 
 #figure(
   text(size: 10pt)[
@@ -1470,17 +1488,88 @@ Upon observing that RegNetY-16GF is computationally more demanding despite havin
 To ensure consistency across all the experiments, we used the same training covering the optimization algorithm, learning rate scheduling and loss function. For the optimizer, we used the AdamW optimizer #cite(<loshchilov_decoupled_2019>, form: "normal"), which decouples weight decay from the gradient update rule, providing improved generalization compared to standard Adam. The learning rate was adjusted using the ReduceLROnPlateau scheduler, which monitors the validation loss and reduces the learning rate by a factor of γ (gamma) once performance plateaus. This adaptive adjustment prevents overfitting and allows the model to converge more efficiently, which is particularly important in medical imaging tasks where datasets are relatively small and prone to variance. The effectiveness of ReduceLROnPlateau in stabilizing transfer learning for medical image analysis has been demonstrated in prior studies #cite(<rajpurkar_chexnet_2017>, form: "normal"). To address class imbalance in the nail disease dataset, we employed a weighted Cross-Entropy Loss, where class weights were computed inversely proportional to class frequencies. This ensures that underrepresented classes contribute more significantly to the loss, preventing the model from being biased toward majority classes. Weighted Cross-Entropy Loss is widely adopted in medical image classification where imbalanced datasets are common #cite(<buda_systematic_2018>, form: "normal").
 
 ==== Training Strategies
+Transfer learning offers multiple approaches to adapting pretrained models to new domains, each representing different trade-offs between computational efficiency, training stability, and model capacity to learn domain-specific features. The choice of training strategy significantly impacts how effectively a model can leverage pretrained ImageNet representations while adapting to the specialized characteristics of fingernail pathology images. To systematically evaluate these trade-offs, the researchers implemented four distinct training strategies: training from scratch, freezing pretrained weights to assess raw feature transferability, full fine-tuning to enable comprehensive network adaptation, and gradual unfreezing to balance feature preservation with domain-specific learning.
+
 ===== Training from scratch
-In this setup, the model is initialized with random weights and trained end-to-end on the nail disease dataset. Unlike transfer learning, no pre-trained ImageNet features are used. This serves as a control experiment to assess the value of transfer learning by showing how the model performs when forced to learn all representations from the target dataset alone.
+In this setup, the model is initialized with random weights and trained end-to-end on the nail disease dataset. Unlike transfer learning, no pre-trained ImageNet features are used. This configuration employs a higher initial learning rate ($1e-3$) compared to fine-tuning approaches, with a more aggressive scheduler factor (0.1) and extended training duration (200 epochs) to allow the model sufficient time to learn representations from scratch. The lighter weight decay (0.0005) prevents over-regularization during the initial learning phase. This serves as a control experiment to assess the value of transfer learning by showing how the model performs when forced to learn all representations from the target dataset alone.
 
 ===== Baseline
-The baseline is defined as freezing all pretrained weights of the backbone and training only the classification head. This evaluates how well ImageNet-pretrained features transfer to the nail disease dataset without any fine-tuning, establishing a point of comparison for more adaptive strategies.
+The baseline is defined as freezing all pretrained weights of the backbone and training only the classification head. This configuration uses a moderate learning rate ($1e-3$) and lower weight decay (0.01) since only the head parameters are being optimized. The scheduler patience of 4 epochs provides balanced responsiveness to validation performance, establishing a point of comparison for more adaptive strategies. This evaluates how well ImageNet-pretrained features transfer to the nail disease dataset without any fine-tuning.
 
 ===== Full Fine-Tuning
-In this approach, all layers of the pretrained model are unfrozen and updated during training. This allows the entire network to adapt more thoroughly to the nail disease dataset, often leading to higher accuracy. Multiple studies in medical image classification have demonstrated that full fine-tuning outperforms head-only or partial fine-tuning in many cases (e.g., @peng_rethinking_2023 and @davila_comparison_2024), albeit with increased risk of overfitting when training data are limited.
+In this approach, all layers of the pretrained model are unfrozen and updated during training. This configuration employs a significantly lower learning rate ($1e-5$) to prevent catastrophic forgetting of pretrained features, with higher weight decay (0.05) for improved regularization, particularly important for transformer-based models. The increased scheduler patience (5 epochs) and cooldown (2 epochs) provide stability during full-network adaptation. Multiple studies in medical image classification have demonstrated that full fine-tuning outperforms head-only or partial fine-tuning in many cases (e.g., @peng_rethinking_2023 and @davila_comparison_2024), albeit with increased risk of overfitting when training data are limited.
 
 ===== Gradual Unfreezing
-Following the approach by @howard_universal_2018, gradual unfreezing begins by training only the classification head, then progressively unfreezing earlier layers of the network over training epochs. The researchers adopted this fine-tuning strategy to prevent catastrophic forgetting and allow the network to adapt progressively to the fingernail dataset. Unlike other ULMFiT (Universal Language Model Fine-Tuning) components such as discriminative learning rates or slanted triangular schedules, gradual unfreezing was selected for its simplicity and stability in vision-based transfer learning tasks. This approach enables efficient optimization while maintaining pre-trained feature representations.
+Following the approach by @howard_universal_2018, gradual unfreezing begins by training only the classification head, then progressively unfreezing earlier layers of the network over training epochs. A learning rate of 1e-4 was used with moderate weight decay (0.01) and reduced scheduler patience (3 epochs) to enable faster adaptation as layers are unfrozen. The researchers adopted this fine-tuning strategy to prevent catastrophic forgetting and allow the network to adapt progressively to the fingernail dataset. Unlike other ULMFiT (Universal Language Model Fine-Tuning) components such as discriminative learning rates or slanted triangular schedules, gradual unfreezing was selected for its simplicity and stability in vision-based transfer learning tasks. This approach enables efficient optimization while maintaining pretrained feature representations.
+
+==== Hyperparameter Configuration by Training Strategy
+@hyperparam-table summarizes the hyperparameter configurations used across all training strategies. Each configuration was tailored to the specific optimization requirements of its corresponding training approach, with all experiments maintaining consistent batch size (32) and random seed (42) to ensure fair comparison. The rationale for these parameter choices is detailed in the subsequent subsections describing each training strategy.
+
+#figure(
+  table(
+    align: (x, y) => if x == 0 { left } else { center },
+    columns: (2fr, 0.5fr, 1fr, 1fr, 1fr),
+    table.header(
+      [Parameter],
+      [Base],
+      [Full],
+      [Scratch],
+      [Gradual Unfreeze],
+    ),
+
+    [Batch Size],
+    [32],
+    [32],
+    [32],
+    [32],
+    [Epochs],
+    [50],
+    [50],
+    [200],
+    [50],
+    [Learning Rate],
+    [1e-3],
+    [1e-5],
+    [1e-3],
+    [1e-4],
+    [Weight Decay],
+    [0.01],
+    [0.05],
+    [0.0005],
+    [0.01],
+    [Early Stopping Patience],
+    [10],
+    [15],
+    [25],
+    [15],
+    [Scheduler Factor],
+    [0.5],
+    [0.5],
+    [0.1],
+    [0.5],
+    [Scheduler Patience],
+    [4],
+    [5],
+    [10],
+    [3],
+    [Scheduler Threshold],
+    [1e-4],
+    [1e-5],
+    [1e-4],
+    [1e-4],
+    [Scheduler Cooldown],
+    [1],
+    [2],
+    [2],
+    [1],
+    [Minimum Learning Rate],
+    [1e-6],
+    [1e-6],
+    [1e-6],
+    [1e-6],
+  ),
+  caption: [Hyperparameter configurations across training strategies]
+) <hyperparam-table>
 
 ==== Bayesian Inference
 In contrast to deterministic fine-tuning, Bayesian inference provides a probabilistic framework, treating parameters as random variables and updating priors with data to yield posteriors via Bayes' theorem: $p(theta | y) prop p(y | theta) p(theta)$. As detailed in @gelman_bayesian_2013, computation involves methods like MCMC, variational inference, and Hamiltonian Monte Carlo, enabling uncertainty quantification essential for medical applications to avoid overconfidence. In our nail disease pipeline, it calculates posterior probabilities of systemic conditions from detected features, incorporating population priors and conditionals. Advantages include robustness to limited data via informative priors, though it requires more computation and careful prior selection, as discussed in hierarchical modeling and model checking.
@@ -1492,6 +1581,8 @@ The performance and reliability of any machine learning–based diagnostic syste
 The dataset utilized for this study is sourced from a publicly available Nail Disease Detection collection hosted on Roboflow, and is released under the Creative Commons Attribution 4.0 (CC BY 4.0) license. The dataset comprises a total of 7,264 images, annotated using the TensorFlow TFRecord (Raccoon) format, covering 11 classes of nail diseases. However, the researchers have dropped Lindsay's Nail class due to few number of images.
 
 The researchers decided to revise the name of the class from “acral lentiginous melanoma” to “melanonychia” for medical specificity. As determined from the experts' interview done by the researchers to Dr. Cristine Florentino, acral lentiginous melanoma is a diagnosis in itself and not a finding on a physical exam. Conversely, melanonychia (a hyperpigmentation of the nail plate) is a measurable nail feature, thus making it the more appropriate name for the dataset. Because not all images may have been confirmed to depict acral lentiginous melanoma but they all exhibit features of melanonychia, such a revision allows the dataset to depict clinical specificity and not portray a diagnosis as a finding on the nails.
+
+The final dataset used in this study consists of 7,258 labeled nail images, divided into three subsets: training (6,360 images, 88%), validation (591 images, 8%), and testing (307 images, 4%) as illustrated in @class-distribution. Each subset contains images from ten nail disease classes, with class distributions reflecting a natural imbalance. The training set is used for model learning, the validation set for hyperparameter tuning and early stopping, and the test set for final evaluation.
 
 #figure(
   text(size: 12pt)[
@@ -1510,20 +1601,12 @@ The researchers decided to revise the name of the class from “acral lentiginou
       [Onychogryphosis], [690], [65], [34],
       [Pitting], [657], [61], [32],
       [Terry’s Nail], [894], [81], [42],
-    ),
-    #v(-2em)
+    )
   ],
-  caption: [Sample distribution per class across dataset splits.],
+  caption: [Distribution per class across dataset splits in Fingernail Images Dataset],
 )<class-distribution>
 
-
-The final dataset used in this study consists of 7,258 labeled nail images, divided into three subsets: training (6,360 images, 88%), validation (591 images, 8%), and testing (307 images, 4%) as illustrated in @class-distribution.
-
-Each subset contains images from ten nail disease classes, with class distributions reflecting a natural imbalance. The training set is used for model learning, the validation set for hyperparameter tuning and early stopping, and the test set for final evaluation.
-
-The class with the highest representation across all sets is Terry's Nail, while Muehrcke’s Lines is the most underrepresented.
-
-Weighted loss was used during training to compensate for class imbalance and improve model fairness across underrepresented classes.\
+The class with the highest representation across all sets is Terry's Nail, while Muehrcke’s Lines is the most underrepresented. Weighted loss was used during training to compensate for class imbalance and improve model fairness across underrepresented classes.
 
 #{
   set image(width: 50%)
@@ -1590,6 +1673,7 @@ To improve model generalization, data augmentation was also applied, producing t
 - Random brightness adjustment between -20% and +20%
 - Random exposure adjustment between -15% and +15%
 
+A sample of nail augmentations can be seen on the table below, which shows sample images of the nail features.
 #{
   set image(width: 50%)
   figure(
@@ -1623,7 +1707,7 @@ To complement the image-based dataset and enable Bayesian inference for linking 
 
 The statistical dataset is structured in an CSV file format, containing rows for each nail feature-disease association. Key columns include: `Nail Feature`, `Associated Disease/Condition`, `P(Nail|Disease)` (conditional probability of the nail feature given the disease), `P(Disease)` (prior probability of the disease), `P(Disease) Population` (population-specific prevalence), `P(Disease) Sex_Female` and `P(Disease) Sex_Male` (sex-specific probabilities), `Age (Mean)`, `Age_Low`, `Age_High` (age demographics), and `Source` Citation for `P(Nail|Disease)` and `P(Disease)` (hyperlinks to original sources for transparency and reproducibility).
 
-This dataset covers 31 associations across 10 nail features (aligning with the image dataset classes), linking them to conditions such as COVID-19, chemotherapy side effects, gastrointestinal diseases, renal failure, anemia, heart disease, and others. Probabilities were derived from epidemiological studies, clinical reports, and global cancer registries (e.g., GLOBOCAN), adapted to Philippine contexts when data permitted. No primary data collection was conducted; all values represent literature-based estimates to support posterior probability calculations in Bayesian frameworks.
+This dataset covers 31 associations across 10 nail features (aligning with the image dataset classes), linking them to conditions such as COVID-19, chemotherapy side effects, gastrointestinal diseases, renal failure, anemia, heart disease, and others. Probabilities were derived from epidemiological studies, clinical reports, and global cancer registries (e.g., GLOBOCAN), adapted to Philippine contexts when data permitted. No primary data collection was conducted; all values represent literature-based estimates to support posterior probability calculations in Bayesian frameworks. @stat-sample-dataset shows a sample of distribution per class across dataset splits.
 
 #figure(
   table(
@@ -1655,10 +1739,10 @@ This dataset covers 31 associations across 10 nail features (aligning with the i
 
     [Terry’s Nail], [Liver Cirrhosis, Congestive Heart Failure], [2],
   ),
-  caption: [Sample distribution per class across dataset splits],
-)
+  caption: [Distribution per class across dataset splits in Statistical Dataset],
+) <stat-sample-dataset>
 
-To illustrate the probabilistic data available for Bayesian inference, a sample table of selected entries is provided below. This excerpt focuses on core columns related to probabilities and demographics, showcasing a subset of associations across various nail features. Values are presented as curated from literature, with probabilities expressed as decimals (e.g., 0.186 representing 18.6%).
+@sample-feature-stat showcases how the dataset can be used to compute likelihoods, such as the conditional probability of observing a specific nail feature given a disease, combined with disease priors for posterior estimations.
 
 #figure(
   table(
@@ -1677,9 +1761,7 @@ To illustrate the probabilistic data available for Bayesian inference, a sample 
     [Age_High], [114],
   ),
   caption: [Sample of Features and Values from Statistical Dataset],
-)
-
-This sample showcases how the dataset can be used to compute likelihoods, such as the conditional probability of observing a specific nail feature given a disease, combined with disease priors for posterior estimations.
+) <sample-feature-stat>
 
 === Data Model Generation
 This section presents the systematic framework employed in the development of the deep learning model for nail disease classification and probabilistic inference of systemic diseases. The process adheres to standard machine learning practices and scientific methodologies, particularly aligning with the phases found in the Cross-Industry Standard Process for Data Mining (CRISP-DM) and other established machine learning pipelines. Each step is carefully designed to ensure reproducibility, scalability, and clinical relevance. The researchers also applied principles of modular software design and Object-Oriented Programming (OOP), in conjunction with the Don’t Repeat Yourself (DRY) principle as articulated by @hunt_pragmatic_1999 in The Pragmatic Programmer, to facilitate multiple experimental setups while minimizing redundant code across models and configurations.
@@ -1771,7 +1853,7 @@ This preparation setup ensures the data is readily accessible for Bayesian updat
 ===== Confusion Matrix Calibration
 To address potential biases and misclassifications in the CNN’s raw confidence scores (e.g., overconfidence in certain features or systematic confusion between similar classes like pitting and koilonychia), a calibration step was integrated using the model’s confusion matrix derived from the test set evaluation. The confusion matrix, a $10 times 10$ array (matching the 10 nail features classes), captures the counts of true labels versus predicted labels, normalized row-wise to yield conditional probabilities $P("Predicted" | "True")$.
 
-In this script, the confusion matrix is obtained directly from the model’s evaluation results, with rows representing true labels and columns predicted labels, ordered consistently with the feature labels (e.g., Melanonychia first, Terry’s Nails last). Normalization produces the confusion probability matrix `conf`. The raw CNN confidences are vectorized into a predicted probability vector `q` (in the same label order), which is then adjusted to estimate the true feature probabilities `p` using the pseudoinverse of the confusion matrix: `p = pinv(conf) @ q`. Negative values in `p` are clipped to zero, and the vector is renormalized to sum to 1, ensuring valid probabilities.
+In this script, the confusion matrix is obtained directly from the model’s evaluation results, with rows representing true labels and columns predicted labels, ordered consistently with the feature labels (e.g., Melanonychia first, Terry’s Nails last). Normalization produces the confusion probability matrix (`conf`). The raw CNN confidences are vectorized into a predicted probability vector `q` (in the same label order), which is then adjusted to estimate the true feature probabilities `p` using the pseudoinverse of the confusion matrix: `p = pinv(conf) @ q`. Negative values in `p` are clipped to zero, and the vector is renormalized to sum to 1, ensuring valid probabilities.
 
 This calibration acts as a debiasing transform, compensating for the model’s error patterns, for instance, if the model frequently confuses clubbing with healthy nails, the adjusted probabilities redistribute confidence more accurately. The adjusted_confidence dictionary replaces the raw confidences in subsequent Bayesian computations, improving downstream disease inference fidelity. For dynamic use, the confusion matrix can be updated from ongoing evaluations, making the system adaptable to model retraining.
 
@@ -1843,29 +1925,7 @@ The unnormalized posterior for a disease `d` given feature `f` is `p_fd * effect
                 effective_p_d = p_d * p_sex
                 else:
                 effective_p_d = p_sex or p_d
-
-              # Age-based adjustment
-              low, high = entry['age_low'], entry['age_high']
-              if low and high and low <= age <= high:
-                p_age_d = 1.0 / (high - low)
-              else:
-                p_age_d = 0.0
-
-              unnorm[d] = p_fd * effective_p_d * p_age_d
-              sum_unnorm += unnorm[d]
-
-          # Normalize within feature and accumulate contribution
-          if sum_unnorm > 0:
-            for d, u in unnorm.items():
-              p_d_f = u / sum_unnorm
-              disease_to_post[d] += p_d_f * p_f_image
-
-      # Final normalization across diseases
-      total_post = sum(disease_to_post.values())
-      if total_post > 0:
-        for d in disease_to_post:
-          disease_to_post[d] /= total_post
-      ...
+                ...
   ```,
   caption: [Bayesian Posterior Computation with Calibrated Inputs],
 )
@@ -1879,6 +1939,35 @@ The prompting is kept minimal to maintain usability, occurring after CNN evaluat
 The script executes the inference by processing the calibrated confidence dictionary, which is dynamically populated (e.g., from model outputs) rather than hardcoded. For testing different nails, users can replace the raw confidence values, with calibration automatically applied; for example, a high raw pitting score might be tempered if the matrix shows frequent false positives, while clubbing could be boosted if underrepresented. The system avoids confusing high-confidence features like pitting with low ones like healthy nails by relying on the adjusted probabilities (e.g., raw 0.0028 for healthy treated accordingly post-calibration).
 
 The computation avoids direct $P("Nail")$ derivation unless necessary, focusing on proportional posteriors to bypass marginalization over all diseases. This efficiency is crucial for real-time applications. Posterior are stored in a `defaultdict`, sorted descendingly, and output in a human-readable format, listing diseases with percentages (e.g, Psoriasis: 91.24%).
+
+#figure(
+  ```python
+    ...
+        # Age-based adjustment
+        low, high = entry['age_low'], entry['age_high']
+        if low and high and low <= age <= high:
+          p_age_d = 1.0 / (high - low)
+        else:
+          p_age_d = 0.0
+
+        unnorm[d] = p_fd * effective_p_d * p_age_d
+        sum_unnorm += unnorm[d]
+
+    # Normalize within feature and accumulate contribution
+    if sum_unnorm > 0:
+      for d, u in unnorm.items():
+        p_d_f = u / sum_unnorm
+        disease_to_post[d] += p_d_f * p_f_image
+
+# Final normalization across diseases
+total_post = sum(disease_to_post.values())
+if total_post > 0:
+  for d in disease_to_post:
+    disease_to_post[d] /= total_post
+...
+  ```,
+  caption: [Core Inference Loop and Normalization with Calibrated Confidence]
+)
 
 ===== Output Generation and Interpretation
 The final output mirrors a clinical report: “Potential Systemic Diseases (Probabilities)” followed by a sorted list (e.g., Psoriasis: 91.24%, Alopecia areata: 7.29%), This encourages users to view results as hypothesis, not diagnoses, prompting medical follow-up. For healthy nails with high confidence, “No systemic disease” dominates, providing reassurance.
@@ -1978,6 +2067,295 @@ It is a modern typesetting tool used by the researchers to create the final prin
 It is a communication tool used by the researchers for online meetings and discussions, especially when meeting in person was not possible. It offered real-time voice, video, and text channels that helped the group coordinate tasks, assign responsibilities, and track progress during the study.
 
 === Corpus Structure
+This section presents comprehensive documentation of the two datasets utilized in this study. @image-corpus describes the image dataset, including its source, composition, class structure, and the preprocessing and augmentation procedures applied to prepare the data for model training.
+
+#figure(
+  caption: [Image Dataset Corpus Structure and Composition],
+  table(
+    columns: (1fr, 1.5fr),
+    align: left,
+    table.header(
+      [CATEGORY],
+      [DETAILS],
+    ),
+
+    [Dataset Source],
+    [Publicly available Nail Disease Detection dataset from Roboflow],
+
+[License],
+[Creative Commons Attribution 4.0 (CC BY 4.0)],
+
+[Annotation Format],
+[TensorFlow TFRecord (Raccoon)],
+
+[Image Format],
+[.jpg],
+
+[Original Image Count],
+[7,264 images across 11 classes],
+
+[Original Class Names],
+[- Acral Lentiginous Melanoma
+- Beau's Line
+- Blue Finger
+- Clubbing
+- Healthy Nail
+- Koilonychia
+- Lindsay’s Nail
+- Muehrcke’s Lines
+- Onychogryphosis
+- Pitting
+- Terry’s Nail],
+
+[Dataset Modifications],
+[- Removed Lindsay's Nail (insufficient images)
+- Renamed "Acral lentiginous melanoma" to"Melanonychia"],
+
+[Final Image Count],
+[7,258 images across 10 classes],
+
+[Final Class Names],
+[- Beau's Line
+- Blue Finger
+- Clubbing
+- Healthy Nail
+- Koilonychia
+- Melanonychia
+- Muehrcke’s Lines
+- Onychogryphosis
+- Pitting
+- Terry’s Nail],
+
+[Expert Consultation and Verification],
+[Dr. Cristine Florentino],
+
+[Training Set],
+[6,360 images (88%)],
+
+[Validation Set],
+[591 images (8%)],
+
+[Test Set],
+[307 images (4%)],
+
+[Class Distribution],
+[Natural imbalance across all subsets],
+
+[Most Represented Class],
+[Terry's Nail],
+
+[Least Represented Class],
+[Muehrcke's Lines],
+
+[Training Set Purpose],
+[Model learning],
+
+[Validation Set Purpose],
+[Hyperparameter tuning and early stopping],
+
+[Test Set Purpose],
+[Final model evaluation],
+
+[Class Imbalance Handling],
+[Weighted loss function during training],
+
+[Initial Preprocessing],
+[- Automatic orientation correction with EXIF metadata removal
+- 416 × 416 pixels using "fit" scaling with black padding to preserve aspect ratio],
+
+[Augmentation Multiplier],
+[Three versions per source image],
+
+[Augmentation Techniques ],
+[- 50% horizontal flip, 50% vertical flip
+- Equal probability 90° rotation (none, clockwise, counter-clockwise, 180°)
+- Random rotation (-15° to +15°)
+- Random shear (-15° to +15° horizontal and vertical)
+- Random brightness (-20% to +20%)
+- Random exposure (-15% to +15%)],
+
+[PyTorch Preprocessing],
+[- 224 × 224 pixels (standard for pre-trained CNN architectures)
+- Conversion to tensor format
+- ImageNet dataset mean and standard deviation values],
+
+[Purpose of Additional Preprocessing],
+[Compatibility with PyTorch framework, stable model convergence, consistency with pre-trained models],
+
+  )
+) <image-corpus>
+
+@stat-corpus presents the statistical dataset of systemic diseases associated with nail abnormalities, curated through systematic review of medical literature, which provides the probabilistic framework for diagnostic inference.
+
+#[
+#show table.cell: set text(size: 8pt)
+#show table.cell: set par(leading: 0.5em, spacing: 0.5em)
+#figure(
+  caption: [Statistical Dataset Corpus Structure],
+  table(
+    columns: (1fr, 1.5fr, 1.3fr, 1fr, 2fr),
+    align: (_, y) => if y==0 { left + horizon } else { left },
+    table.header(
+      [NAIL FEATURE],
+      [SYSTEMIC DISEASE],
+      [ASSOCIATION (%)],
+      [REFERENCE],
+      [REFERENCE DESCRIPTION],
+    ),
+
+    [Beau's Lines],
+    [COVID-19],
+    [18.6],
+    [@grover_nail_2022],
+    [Cross-sectional study on nail changes in COVID-19 patients showing Beau's lines in 18.6% of cases, reflecting systemic involvement.],
+    [Beau's Lines],
+    [Chemotherapy],
+    [3.2],
+    [@shanmugam_reddy_nail_2017],
+    [Prospective cross-sectional study identifying Beau's lines in 3.2% of patients undergoing cancer chemotherapy, often associated with platinum-based agents.],
+    [Beau's Lines],
+    [Gastrointestinal and Liver System Disease],
+    [15.2],
+    [@mendagudli_descriptive_2024],
+    [Descriptive study of nail changes in systemic diseases reporting Beau's lines in 15.2% of patients with gastrointestinal and liver system involvement.],
+    [Beau's Lines],
+    [Renal System Disease],
+    [9.4],
+    [@mendagudli_descriptive_2024],
+    [Descriptive study of nail changes in systemic diseases reporting Beau's lines in 9.4% of patients with renal system involvement.],
+    [Beau's Lines],
+    [Hematopoietic System Disease],
+    [12.3],
+    [@mendagudli_descriptive_2024],
+    [Descriptive study of nail changes in systemic diseases reporting Beau's lines in 12.3% of patients with hematopoietic system involvement.],
+    [Beau's Lines],
+    [Chronic Renal Failure],
+    [35.7],
+    [@niema_nail_2019],
+    [Study on nail disorders in chronic renal failure patients showing Beau's lines in 35.7% of cases.],
+    [Blue Finger (Cyanosis)],
+    [Raynaud's phenomenon],
+    [11.95],
+    [@vizir_executable_2017],
+    [Rheumatology guidelines highlighting cyanosis as part of the triphasic color changes in Raynaud's phenomenon, indicating vasospasm and deoxygenation in 11.95% of cases.],
+    [Blue Finger (Cyanosis)],
+    [Congenital Heart Disease],
+    [25],
+    [@ossa_galvis_cyanotic_2025],
+    [Review on cyanotic heart disease describing cyanosis in 25.0% of congenital heart disease cases due to right-to-left shunting.],
+    [Clubbing],
+    [Lung cancer],
+    [10],
+    [@sarkar_digital_2012],
+    [Review on digital clubbing noting its occurrence in 10.0% of lung cancer patients as a paraneoplastic manifestation.],
+    [Clubbing],
+    [Crohn's disease],
+    [38],
+    [@kitis_finger_1979],
+    [Study on finger clubbing in inflammatory bowel disease reporting prevalence of 38.0% in Crohn's disease patients.],
+    [Clubbing],
+    [Ulcerative colitis],
+    [15],
+    [@kitis_finger_1979],
+    [Study on finger clubbing in inflammatory bowel disease reporting prevalence of 15.0% in ulcerative colitis patients.],
+    [Clubbing],
+    [Cardiovascular System Disease],
+    [43.8],
+    [@mendagudli_descriptive_2024],
+    [Descriptive study of nail changes in systemic diseases reporting clubbing in 43.8% of patients with cardiovascular system involvement.],
+    [Clubbing],
+    [Gastrointestinal and Liver System Disease],
+    [28.3],
+    [@mendagudli_descriptive_2024],
+    [Descriptive study of nail changes in systemic diseases reporting clubbing in 28.3% of patients with gastrointestinal and liver system involvement.],
+    [Clubbing],
+    [Renal System Disease],
+    [12.5],
+    [@mendagudli_descriptive_2024],
+    [Descriptive study of nail changes in systemic diseases reporting clubbing in 12.5% of patients with renal system involvement.],
+    [Clubbing],
+    [Hematopoietic System Disease],
+    [3.5],
+    [@mendagudli_descriptive_2024],
+    [Descriptive study of nail changes in systemic diseases reporting clubbing in 3.5% of patients with hematopoietic system involvement.],
+    [Clubbing],
+    [Chronic Renal Failure],
+    [1.8],
+    [niema_nail_2019],
+    [Study on nail disorders in chronic renal failure patients showing clubbing in 1.8% of cases.],
+    [Koilonychia],
+    [Iron Deficiency Anemia],
+    [5],
+    [@walker_koilonychia_2016],
+    [Update on koilonychia pathophysiology reporting its presence in 5.0% of iron deficiency anemia cases.],
+    [Koilonychia],
+    [Hematopoietic System Disease],
+    [21.1],
+    [@mendagudli_descriptive_2024],
+    [Descriptive study of nail changes in systemic diseases reporting koilonychia in 21.1% of patients with hematopoietic system involvement.],
+    [Melanonychia],
+    [Subungual melanoma],
+    [30],
+    [Longitudinal Melanonychia Review],
+    [Review on distinguishing malignant from benign melanonychia noting association in 30.0% of subungual melanoma cases.],
+    [Melanonychia],
+    [Human Immunodeficiency Virus (HIV)],
+    [25.3],
+    [@flores-bozo_nail_2022],
+    [Observational study on nail changes in HIV patients showing melanonychia in 25.3% of cases.],
+    [Melanonychia],
+    [Chronic Renal Failure],
+    [14.2],
+    [@niema_nail_2019],
+    [Study on nail disorders in chronic renal failure patients showing melanonychia in 14.2% of cases.],
+    [Muehrcke’s Lines],
+    [Nephrotic syndrome],
+    [23],
+    [@schwartz_muehrcke_2024],
+    [Overview on Muehrcke lines reporting their presence in 23.0% of nephrotic syndrome cases linked to hypoalbuminemia.],
+    [Muehrcke’s Lines],
+    [Chronic Renal Failure],
+    [7.1],
+    [@niema_nail_2019],
+    [Study on nail disorders in chronic renal failure patients showing Muehrcke’s lines in 7.1% of cases.],
+    [Muehrcke’s Lines],
+    [Renal System Disease],
+    [9.4],
+    [@mendagudli_descriptive_2024],
+    [Descriptive study of nail changes in systemic diseases reporting Muehrcke’s lines in 9.4% of patients with renal system involvement.],
+    [Onychogryphosis],
+    [Chronic Renal Failure],
+    [10.7],
+    [@niema_nail_2019],
+    [Study on nail disorders in chronic renal failure patients showing onychogryphosis in 10.7% of cases.],
+    [Onychogryphosis],
+    [Elderly Population],
+    [11.2],
+    [@ko_onychogryphosis_2018],
+    [Case report and review reporting onychogryphosis prevalence of 11.2% in the elderly population.],
+    [Pitting],
+    [Psoriasis],
+    [45],
+    [@schons_nail_2014],
+    [Review of nail psoriasis literature highlighting pitting as a common feature in 45.0% of psoriasis cases.],
+    [Pitting],
+    [Alopecia areata],
+    [80],
+    [@shakoei_clinical_2024],
+    [Cross-sectional study on nail involvement in alopecia areata reporting pitting in 80.0% of severe cases.],
+    [Terry’s Nails],
+    [Liver cirrhosis],
+    [25.6],
+    [@sack_association_2021],
+    [Prospective study showing association of Terry’s nails with liver cirrhosis in 25.6% of cases.],
+    [Terry’s Nails],
+    [Congestive heart failure],
+    [30.6],
+    [LITFL: Terry's Nails, 2023],
+    [Medical education resource associating Terry’s nails with chronic congestive heart failure in approximately 30.6% of cases.],
+  )
+) <stat-corpus>]
+
 === Software Testing
 
 #pagebreak()
@@ -1998,14 +2376,457 @@ The Machine Learning Inference Service retrieves the image and performs classifi
 
 
 === Research Objective 1
+To obtain a publicly available fingernail image dataset from Roboflow, consisting of at least 3,000 labeled images across a minimum of 5 distinct nail feature classes, with each image meeting a minimum resolution of 224×224 pixels, the dataset will be verified by a dermatologist. In parallel, to curate a statistical dataset to be used for inference using Bayesian inference, containing percentage-based associations between these nail feature classes and systemic diseases derived from published clinical, epidemiological studies, and literature.
+
+The researchers acquired a labeled dataset of nail feature images from Roboflow. This dataset was sourced on April 17, 2024, at which time it was publicly accessible. While the specific date of its transition to private or deleted status is unknown, it should be noted that as of the time of writing, the dataset is no longer publicly accessible. All results and analyses are based on the dataset version originally downloaded, and details of its acquisition have been documented. This change in availability may affect future reproducibility for subsequent researchers. Nevertheless, this dataset met the researchers’ criteria. The dataset consists of 7,258 images across 10 classes. Each image has a resolution of 416×416 pixels, making it compatible with PyTorch’s pretrained weights which were trained on 224×224 pixels. The dataset was verified by a dermatologist from Laguna Holy Family Hospital Dra. Cristine Florentino. 
+
+#figure(
+  image("./img/dataset-file-structure.png"),
+  caption: [Screenshot of the File Structure of the Dataset],
+) <file-structure>
+
+@file-structure shows a screenshot of the file structure of the dataset in the researcher’s computer. The top left window is the root of the dataset. It consists of the dataset splits which are the training, validation, and test set. The bottom left window shows the child folders which consist of  each class of the dataset. The right window shows the grandchild folder, which consists of the images of a class.
 
 === Research Objective 2
+To apply standardized preprocessing steps including resizing and normalization to ensure consistency and suitability for deep learning, and to augment the image dataset by at least 30% using systematic geometric and photometric transformations to enhance model generalization and robustness for systemic disease classification.
 
 === Research Objective 3
+To experiment, develop and train multiple deep learning models (EfficientNetV2S, VGG16, ResNet50, RegNetY-16GF, and SwinV2-T) on the dataset to accurately classify nail features and to make systemic diseases inferences using Bayesian inference from the statistical dataset of systemic diseases.
 
 === Research Objective 4
+To evaluate and compare the performance of the trained models using standard metrics, including accuracy, precision, recall, and F1 score for convolutional neural networks (CNNs) and apply explainability and interpretability methods for the algorithms.
+
+==== Strategy Evaluation
+===== Scratch
+As expected, the scratch training strategy performed the worst out of all the training strategies. This is due to the randomized weights. Even with a higher epoch and patience, they still performed worse.
+
+#{
+show table: set text(9pt)
+figure(
+  caption: [Scratch Training Results],
+  table(
+    align: (x, y) => if x == 0 and y >= 0 {left} else {center},
+    columns: (1.5fr, 1fr, 1fr, 1fr, 1fr, 1fr, 1fr),
+    table.header(
+      [MODEL],
+      [VAL. LOSS],
+      [EPOCH ],
+      [ACCURACY],
+      [PRECISION ],
+      [RECALL ],
+      [F1 ],
+    ),
+    [VGG-16],
+    [2.3000], 
+    [5], 
+    [0.1368], 
+    [0.0137], 
+    [0.1000], 
+    [0.0241], 
+    [ResNet-50], 
+    [1.5318], 
+    [24], 
+    [0.5081], 
+    [0.5038], 
+    [0.4893], 
+    [0.4911], 
+    [EfficientNetV2-S], 
+    [1.4900], 
+    [36], 
+    [0.5114], 
+    [0.5079], 
+    [0.4982], 
+    [0.4961], 
+    [SwinV2-T], 
+    [2.2606], 
+    [9], 
+    [0.1140], 
+    [0.0474], 
+    [0.1415], 
+    [0.0622], 
+    [ConvNeXt-Tiny], 
+    [1.6520], 
+    [22], 
+    [0.4658], 
+    [0.4655], 
+    [0.4561], 
+    [0.4543], 
+  )
+)
+}
+
+===== Baseline
+#{
+show table: set text(9pt)
+figure(
+  caption: [Baseline Training Results],
+  table(
+    align: (x, y) => if x == 0 and y >= 0 {left} else {center},
+    columns: (1.5fr, 1fr, 1fr, 1fr, 1fr, 1fr, 1fr),
+    table.header(
+      [MODEL],
+      [VAL. LOSS],
+      [EPOCH ],
+      [ACCURACY],
+      [PRECISION ],
+      [RECALL ],
+      [F1 ],
+    ),
+    [VGG-16],
+    [1.3456],
+    [4],
+    [0.6384],
+    [0.6593],
+    [0.6394],
+    [0.6179],
+    [ResNet-50],
+    [1.1391],
+    [17],
+    [0.6384],
+    [0.6685],
+    [0.6469],
+    [0.6275],
+    [EfficientNetV2-S],
+    [1.1672],
+    [24],
+    [0.6221],
+    [0.6222],
+    [0.6205],
+    [0.6084],
+    [SwinV2-T],
+    [0.8259],
+    [43],
+    [0.7296],
+    [0.7402],
+    [0.7306],
+    [0.7181],
+    [ConvNeXt-Tiny],
+    [0.9034],
+    [18],
+    [0.7166],
+    [0.7354],
+    [0.7192],
+    [0.7031],
+  )
+)
+}
+
+===== Full Finetune
+#{
+show table: set text(9pt)
+figure(
+  caption: [Full Finetune Training Results],
+  table(
+    align: (x, y) => if x == 0 and y >= 0 {left} else {center},
+    columns: (1.5fr, 1fr, 1fr, 1fr, 1fr, 1fr, 1fr),
+    table.header(
+      [MODEL],
+      [VAL. LOSS],
+      [EPOCH ],
+      [ACCURACY],
+      [PRECISION ],
+      [RECALL ],
+      [F1 ],
+    ),
+    [VGG-16],
+    [0.9659],
+    [4],
+    [0.7492],
+    [0.7778],
+    [0.7266],
+    [0.7277],
+    [ResNet-50],
+    [0.6661],
+    [20],
+    [0.7948],
+    [0.8288],
+    [0.7843],
+    [0.7823],
+    [EfficientNetV2-S],
+    [0.4666],
+    [10],
+    [0.8404],
+    [0.8578],
+    [0.8341],
+    [0.8209],
+    [SwinV2-T],
+    [0.4313],
+    [8],
+    [0.8925],
+    [0.8944],
+    [0.8933],
+    [0.8863],
+    [ConvNeXt-Tiny],
+    [0.4916],
+    [18],
+    [0.8436],
+    [0.8767],
+    [0.8366],
+    [0.8353],
+  )
+)
+}
+
+===== Gradual Unfreeze
+#{
+show table: set text(9pt)
+figure(
+  caption: [Gradual Unfreeze Training Results],
+  table(
+    align: (x, y) => if x == 0 and y >= 0 {left} else {center},
+    columns: (1.5fr, 1fr, 1fr, 1fr, 1fr, 1fr, 1fr),
+    table.header(
+      [MODEL],
+      [VAL. LOSS],
+      [EPOCH ],
+      [ACCURACY],
+      [PRECISION ],
+      [RECALL ],
+      [F1 ],
+    ),
+    [VGG-16],
+    [1.2344],
+    [3],
+    [0.6059],
+    [0.6273],
+    [0.5933],
+    [0.5762],
+    [ResNet-50],
+    [0.7325],
+    [10],
+    [0.7687],
+    [0.7863],
+    [0.7753],
+    [0.7618],
+    [EfficientNetV2-S],
+    [0.4522],
+    [21],
+    [0.8795],
+    [0.8887],
+    [0.8648],
+    [0.8703],
+    [SwinV2-T],
+    [0.3503],
+    [17],
+    [0.8827],
+    [0.8821],
+    [0.8815],
+    [0.8802],
+    [ConvNeXt-Tiny],
+    [0.4701],
+    [28],
+    [0.8893],
+    [0.8888],
+    [0.8847],
+    [0.8852],
+  )
+)
+}
+
+==== Model Evaluation
+===== VGG-16
+#figure(
+  caption: "Strategy comparison of VGG16",
+  image("./img/comparison_vgg16_all_strategies_plot.png")
+) <strategy-compare-vgg>
+
+===== ResNet-50
+#figure(
+  caption: "Strategy comparison of ResNet-50",
+  image("./img/comparison_resnet50_all_strategies_plot.png")
+) <strategy-compare-resnet>
+
+===== EfficientNetV2-S
+#figure(
+  caption: "Strategy comparison of EfficientNetV2-S",
+  image("./img/comparison_efficientnetv2s_all_strategies_plot.png")
+) <strategy-compare-efficientnet>
+
+===== SwinV2-T
+#figure(
+  caption: "Strategy comparison of SwinV2-T",
+  image("./img/comparison_swinv2t_all_strategies_plot.png")
+) <strategy-compare-swinv2t>
+
+===== ConvNeXt-Tiny
+#figure(
+  caption: "Strategy comparison of ConvNeXt-Tiny",
+  image("./img/comparison_convnexttiny_all_strategies_plot.png")
+) <strategy-compare-convnext>
+
+==== Best Variant per Model
+The older models performed best in full finetune, while newer models benefited best from gradual unfreezing.
+
+#{
+show table: set text(9pt)
+figure(
+  caption: [Best variant per model],
+  table(
+    align: (x, y) => if x == 0 and y >= 0 {left} else {center},
+    columns: (1.5fr, 1.5fr, 1fr, 1fr, 1fr, 1fr, .5fr),
+    table.header(
+      [MODEL],
+      [STRATEGY],
+      [VAL. LOSS],
+      [ACCURACY],
+      [PRECISION],
+      [RECALL],
+      [F1],
+    ),
+    [VGG-16],
+    [Full Finetune],
+    [0.9659],
+    [0.7492],
+    [0.7778],
+    [0.7266],
+    [0.7277],
+    [ResNet-50],
+    [Full Finetune],
+    [0.6661],
+    [0.7948],
+    [0.8288],
+    [0.7843],
+    [0.7823],
+    [EfficientNetV2-S],
+    [Gradual Unfreeze],
+    [0.4522],
+    [0.8795],
+    [0.8887],
+    [0.8648],
+    [0.8703],
+    [SwinV2-T],
+    [Gradual Unfreeze],
+    [0.3503],
+    [0.8827],
+    [0.8821],
+    [0.8815],
+    [0.8802],
+    [ConvNeXt-Tiny],
+    [Gradual Unfreeze],
+    [0.4701],
+    [0.8893],
+    [0.8888],
+    [0.8847],
+    [0.8852],
+  )
+)
+}
+
+#figure(
+  caption: "Performance comparison of the best version of each model",
+  image("./img/comparison_all_experiments_plot.png")
+) <best-model-compare>
+
+===== VGG-16
+#figure(
+  caption: "Confusion matrix of VGG-16 (full finetune)",
+  image("./img/vgg_confusion_matrix.png")
+) <vgg-confusion>
+
+#figure(
+  caption: "Normalized confusion matrix of VGG-16 (full finetune)",
+  image("./img/vgg_confusion_matrix_normalized.png")
+) <vgg-confusion-normalized>
+
+#figure(
+  caption: "Per class metrics of VGG-16 (full finetune).",
+  image("./img/vgg_per_class_metrics.png")
+) <vgg-per_class_metrics>
+
+#figure(
+  caption: "Training history of VGG-16 (Full finetune)",
+  image("./img/vgg_training_history.png")
+) <vgg-training_history>
+
+===== ResNet-50
+#figure(
+  caption: "Confusion matrix of ResNet-50 (full finetune)",
+  image("./img/resnet50_confusion_matrix.png")
+) <resnet-confusion>
+
+#figure(
+  caption: "Normalized confusion matrix of ResNet-50 (full finetune)",
+  image("./img/resnet50_confusion_matrix_normalized.png")
+) <resnet-confusion-normalized>
+
+#figure(
+  caption: "Per class metrics of ResNet-50 (full finetune).",
+  image("./img/resnet50_per_class_metrics.png")
+) <resnet-per_class_metrics>
+
+#figure(
+  caption: "Training history of ResNet-50 (Full finetune)",
+  image("./img/resnet50_training_history.png")
+) <resnet-training_history>
+
+===== EfficientNetV2-S
+#figure(
+  caption: "Confusion matrix of EfficientNetV2-S (gradual unfreeze)",
+  image("./img/efficientnet_confusion_matrix.png")
+) <efficientnet-confusion>
+
+#figure(
+  caption: "Normalized confusion matrix of EfficientNetV2-S (full finetune)",
+  image("./img/efficientnet_confusion_matrix_normalized.png")
+) <efficientnet-confusion-normalized>
+
+#figure(
+  caption: "Per class metrics of EfficientNetV2-S (gradual unfreeze).",
+  image("./img/efficientnet_per_class_metrics.png")
+) <efficientnet-per_class_metrics>
+
+#figure(
+  caption: "Training history of EfficientNetV2-S (gradual unfreeze)",
+  image("./img/efficientnet_training_history.png")
+) <efficientnet-training_history>
+
+===== SwinV2-T
+#figure(
+  caption: "Confusion matrix of SwinV2-T (gradual unfreeze)",
+  image("./img/swin_confusion_matrix.png")
+) <swin-confusion>
+
+#figure(
+  caption: "Normalized confusion matrix of SwinV2-T (full finetune)",
+  image("./img/swin_confusion_matrix_normalized.png")
+) <swin-confusion-normalized>
+
+#figure(
+  caption: "Per class metrics of SwinV2-T (gradual unfreeze).",
+  image("./img/swin_per_class_metrics.png")
+) <swin-per_class_metrics>
+
+#figure(
+  caption: "Training history of SwinV2-T (gradual unfreeze)",
+  image("./img/swin_training_history.png")
+) <swin-training_history>
+
+===== ConvNeXt-Tiny
+#figure(
+  caption: "Confusion matrix of ConvNeXt-Tiny (gradual unfreeze)",
+  image("./img/convnext_confusion_matrix.png")
+) <convnext-confusion>
+
+#figure(
+  caption: "Normalized confusion matrix of ConvNeXt-Tiny (full finetune)",
+  image("./img/convnext_confusion_matrix_normalized.png")
+) <convnext-confusion-normalized>
+
+#figure(
+  caption: "Per class metrics of ConvNeXt-Tiny (gradual unfreeze).",
+  image("./img/convnext_per_class_metrics.png")
+) <convnext-per_class_metrics>
+
+#figure(
+  caption: "Training history of ConvNeXt-Tiny (gradual unfreeze)",
+  image("./img/convnext_training_history.png")
+) <convnext-training_history>
+
+==== Model Interpretability
+
 
 === Research Objective 5
+To deploy the models in a prototype application that provides interpretable systemic disease predictions from fingernail images, designed for potential use in clinical decision support or health screening applications.
 
 
 #pagebreak()
