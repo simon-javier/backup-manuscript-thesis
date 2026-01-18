@@ -74,12 +74,12 @@
 
   [3. Consider external factors like age, history, and lifestyle], 
   [We are including demographical statistics gathered from literature. Data availability can be a challenge ], 
-  [Ongoing], 
+  [Partially Complied], 
   [],
 
   [4. Curate local dataset of nail images], 
   [Since nail features are morphologically consistent across the world but the prevalence is not, we will curate a local dataset of statistics to be used for Bayesian inference], 
-  [Ongoing], 
+  [Partially Complied], 
   [],
 
   [5. Remove the "Sta. Cruz" from the title], 
@@ -96,55 +96,38 @@
 
   [1.	Specific objectives should be informed.],
   [We specified the research problem and research objectives. The data to be collected is articulated more clearly. The research problem takes on a more specific approach in terms of data collection methods and training and evaluation methods. The research objectives reflect these research problems.],
-  [Fully Complied \
-   \
-   See pages  5-6
-  ],
+  [Fully Complied],
   [],
 
   [2.	The theoretical framework should be revised as well],
   [Included more theories, concepts, and models that explains why we chose certain approach.],
-  [Fully Complied \
-  \
-  See pages 7-18 \
+  [Fully Complied
   ],
   [],
 
   [3.	The conceptual framework is good, however, this should be aligned with the specific objectives],
   [Made minor changes in the conceptual framework to align with the specific objectives],
-  [Partially Complied \ 
-  \
-  See pages 19-20  ],
+  [Fully Complied],
   [],
 
   [4.	List the nail attributes and correlate diseases],
-  [Listed nail attributes with their corresponding image and description. Its correlation with systemic diseases is still ongoing.],
-  [Partially Complied \
-  \
-  See pages 87-88  ],
+  [Listed nail attributes with their corresponding image and description.],
+  [Fully Complied],
   [],
 
   [5.	Strengthen the RRL],
   [Reviewed more literature to further strengthen the RRL. We then synthesized based on the gaps that we found.],
-  [Partially Complied \ \
-  See pages 24-55
-  ],
+  [Fully Complied],
   [],
 
   [6.	Improve the docoument manuscript: Chapter 3],
-  [Included photos and descriptions of the 10 nail features which was not included in the last defense. The _Applied Techniques_ section now includes all the techniques being used by the researchers with images of the techniques. It is ongoing and each technique and experiment will be documented in the future.],
-  [Partially Complied \
-  \
-  See pages 56-118
-  ],
+  [Included photos and descriptions of the 10 nail features which was not included in the last defense. The _Applied Techniques_ section now includes all the techniques being used by the researchers with images of the techniques.],
+  [Fully Complied],
   [],
 
   [7.	Improve the scope and limitation],
   [The scope and limitation is now made to be more specific and now aligns with the research problem and objectives. We also added delimitations to state which parts or methods of the research we intentionally did not include.],
-  [Fully Complied \
-  \
-   See pages 20-22
-  ],
+  [Fully Complied],
   [],
 
   table.cell(colspan: 4, fill: rgb(213, 220, 228), )[*MICAH JOY FORMARAN - TECHNICAL EDITOR (RECOMMENDATIONS FROM RC)*],
@@ -165,9 +148,7 @@
 
   [1. Find literature or expert opinions supporting the proposed renaming of ‘Acral Lentiginous Melanoma’ to ‘Melanonychia.’],
   [Incorporated expert opinion from Dr. Cristine Florentino to justify renaming the class.],
-  [Fully complied \ \
-    See page 85-86
-  ],
+  [Fully Complied],
   [],
 
   [2. The objectives should be revised to make them more specific and measurable, such as specifying the exact number of images, confirming whether each image is labeled, and detailing the verification process.],
@@ -176,23 +157,17 @@
    - Specified minimum number of images of the dataset, as well as the resolution.
    - The dataset to be gathered must be a labeled dataset
   ],
-  [Fully complied \ \
-   See pages  5-7
-  ],
+  [Fully Complied],
   [],
 
   [3. The definition of “high-quality” images should be removed.],
   [- Removed],
-  [Fully complied \ \
-    See page 5
-  ],
+  [Fully Complied],
   [],
 
   [4. The planned use of Roboflow or synthetic datasets should be explicitly included in the objectives, with a clear explanation of where and how they will be applied in the project.],
   [- Explained how the dataset will be applied in the project. It will be applied for deep learning],
-  [Fully complied \ \
-    See page 5
-  ],
+  [Fully Complied],
   [],
 
   [5. The project timeline should be updated and adjusted to align with the suggested defense dates (October 6–10 or December 1–5) to make it more realistic and well-defined.],
@@ -205,18 +180,17 @@
   [ - Curated a dataset of statistics of systemic diseases
     - Applied Bayes' Theorem for probabilistic prediction
   ],
-  [Ongoing],
+  [Fully Complied],
   [],
 
   [2. Document all the experiments],
-  [- Started adding screenshots of code in Data Model Generation.],
+  [- Started adding screenshots of code in Data Model Generation and in drafts chapter 4.],
   [Ongoing],
   [],
 
   [3. Scale the classifier's confidence with the confusion matrix when predicting the probability of systemic diseases],
   [Started making a prototype for this functionality.],
-  [Ongoing \
-  \ See pages 107-108],
+  [Fully Complied],
   [],
 
   [4. Make a mobile version if possible],
