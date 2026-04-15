@@ -297,7 +297,7 @@
   Under the supervision of: \
   *MIA V. VILLARICA, DIT*
   #v(1fr)
-  *JUNE 2025*
+  #upper[*#datetime.today().display("[MONTH repr:long] [year]")*]
 ]]
 #pagebreak()
 
@@ -357,8 +357,8 @@
   \
   \
   #grid(
-    columns: (2fr, 1fr, 1fr),
-    [], [], align(center)[*Mia V. Villarica* \ Thesis Adviser],
+    columns: (1fr, 1fr, 1fr),
+    [], [], align(center)[*MIA V. VILLARICA, DIT* \ Thesis Adviser],
   ) #v(0.5em)
 
   #line(length: 100%)
@@ -375,7 +375,7 @@
     align: center,
     [*MARK P. BERNARDINO* \ Member],
     [*VICTOR A. ESTALILLA JR.* \ Member],
-    text(size: 11pt)[*MICAH JOY FORMARAN* \ Member],
+    text(size: 11pt)[*MICAH JOY F. VALDEZ* \ Member],
     text(size: 11pt)[*JHONJHON P. ZOTOMAYOR* \ Member],
     grid.cell(colspan: 2)[*MARIA LAUREEN B. MIRANDA, LPT, MIT* \ Research Implement Unit Head],
   )
@@ -395,7 +395,7 @@
   #grid(
     columns: (1fr, 1fr),
     align: center,
-    [*BENJAMIN O. ARJONA, Ed. D.* \ Chairperson, Research and Development],
+    [*ROSARIO G. CATAPANG, PhD, Ffp* \ Chairperson, Research And Development],
     [#underline[#box(width: 10em, repeat(sym.space))]\ Date Signed],
   )
   #v(1fr)
@@ -429,7 +429,7 @@
   \
   \
 
-  To their Technical Editor, *MS. MICAH FORMARAN*, who thoughtfully corrected the manuscript's format and content;
+  To their Technical Editor, *MS. MICAH JOY F. VALDEZ*, who thoughtfully corrected the manuscript's format and content;
   \
   \
 
@@ -710,7 +710,7 @@ This section defines any terms or phrases derived from the study operationally, 
   show <table-header>: header => {
     table-part-counter.step()
     context if (table-part-counter.get().first() != 1) {
-      [*Table #table-counter.display().* (continued)]
+      text(size: 12pt)[*Table #table-counter.display().* (continued)]
     }
   }
 
@@ -1620,7 +1620,7 @@ The final dataset used in this study consists of 7,258 labeled nail images, divi
 )<class-distribution>
 
 The class with the highest representation across all sets is Terry's Nail, while Muehrcke’s Lines is the most underrepresented. Weighted loss was used during training to compensate for class imbalance and improve model fairness across underrepresented classes. To better understand and visualize each nail feature, Table 4 shows the descriptions of the nail features along with sample images.
-
+#pagebreak()
 #{
   set image(width: 50%)
   figure(
@@ -2203,7 +2203,7 @@ This section presents comprehensive documentation of the two datasets utilized i
 ) <image-corpus>
 
 @stat-corpus presents the statistical dataset of systemic diseases associated with nail abnormalities, curated through systematic review of medical literature, which provides the probabilistic framework for diagnostic inference.
-
+#pagebreak()
 #[
 #show table.cell: set text(size: 8pt)
 #show table.cell: set par(leading: 0.5em, spacing: 0.5em)
@@ -3386,6 +3386,16 @@ Users should interpret the system's results as probabilistic risk assessments ra
   width: 100%,
   height: 100%,
 )
+
+#pagebreak()
+#h3(hidden: true)[Turnitin Digital Receipts]
+#image(
+  "./receipt_CS4B-05-PROBABILISTIC DETECTION OF SYSTEMIC DISEASES USING DEEP LEARNING ON FINGERNAIL BIOMARKERS.pdf"
+)
+#image(
+  "./receipt_10-PAGER.pdf"
+)
+
 
 #pagebreak()
 #h3(hidden: true)[Curriculum Vitae]
