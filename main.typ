@@ -373,7 +373,7 @@
     columns: (1fr, 1fr),
     row-gutter: 4em,
     align: center,
-    [*MARK P. BERNARDINO* \ Member],
+    [*MARK P. BERNARDINO, MSCS* \ Member],
     [*VICTOR A. ESTALILLA JR.* \ Member],
     text(size: 11pt)[*MICAH JOY F. VALDEZ* \ Member],
     text(size: 11pt)[*JHONJHON P. ZOTOMAYOR* \ Member],
@@ -3402,6 +3402,7 @@ Users should interpret the system's results as probabilistic risk assessments ra
 
 #image("./img/javier-resume.jpg")
 #image("./img/MHAR_ANDREI_MACAPALLG_CV_Latest.pdf")
+#image("./img/seanrei-cv.jpg")
 
 
 #metadata("postlude end") <post-e>
