@@ -352,7 +352,7 @@
 
   \
 
-  The thesis entitled *"#upper(title)"* prepared and submitted by *GERON SIMON A. JAVIER*, *MHAR ANDREI C. MACAPALLAG*, and *SEANREI ETHAN M. VALDEABELLA* in partial fulfillment of the requirements for the degree of *BACHELOR OF SCIENCE IN COMPUTER SCIENCE*, major in *INTELLIGENT SYSTEM* is hereby recommended for approval and acceptance.
+  The thesis entitled *"#upper(title)"* prepared and submitted by *GERON SIMON A. JAVIER*, *MHAR ANDREI C. MACAPALLAG*, and *SEANREI ETHAN M. VALDEABELLA* in partial fulfillment of the requirements for the degree of *BACHELOR OF SCIENCE IN COMPUTER SCIENCE*, major in *INTELLIGENT SYSTEMS* is hereby recommended for approval and acceptance.
   \
   \
   \
@@ -375,21 +375,21 @@
     align: center,
     [*MARK P. BERNARDINO, MSCS* \ Member],
     [*VICTOR A. ESTALILLA JR.* \ Member],
-    text(size: 11pt)[*MICAH JOY F. VALDEZ* \ Member],
-    text(size: 11pt)[*JHONJHON P. ZOTOMAYOR* \ Member],
-    grid.cell(colspan: 2)[*MARIA LAUREEN B. MIRANDA, LPT, MIT* \ Research Implement Unit Head],
+    text(size: 12pt)[*MICAH JOY F. VALDEZ* \ Member],
+    text(size: 10pt)[*JHONJHON P. ZOTOMAYOR, LPT, MAED* \ Member],
+    grid.cell(colspan: 2)[*MARIA LAUREEN B. MIRANDA, LPT, MIT* \ Research Implementing Unit Head],
   )
 
   #v(1.5em)#line(length: 100%)#v(0.5em)
 
-  Accepted and approved in partial fulfillment of the requirement for the degree of *BACHELOR OF SCIENCE IN COMPUTER SCIENCE*, Major in *INTELLIGENT SYSTEM*.
+  Accepted and approved in partial fulfillment of the requirement for the degree of *BACHELOR OF SCIENCE IN COMPUTER SCIENCE*, Major in *INTELLIGENT SYSTEMS*.
   \
   \
   \
   #grid(
     columns: (1fr, 1fr),
     align: center,
-    [], [*MIA V. VILLARICA, DIT* \ Dean/Associate Dean],
+    [], [*MIA V. VILLARICA, DIT* \ Associate Dean, CCS],
   )
   #v(1fr)
   #grid(
@@ -437,7 +437,7 @@
   \
   \
 
-  To their Language Critic, *MR. JOHNJOHN ZOTOMAYOR*, for being helpful in checking and revising the manuscript's grammar and its structure;
+  To their Language Critic, *MR. JHONJHON P. ZOTOMAYOR, LPT, MAED*, for being helpful in checking and revising the manuscript's grammar and its structure;
   \
   \
 
@@ -777,7 +777,7 @@ Thus, this study specifically seeks to address the following problems:
 The main objective of the study is to design, develop  and evaluate a deep learning-based system for the classification of nail features that achieves at least 80% accuracy by December, and integrating Bayesian inference for the detection of the probabilities of systemic diseases, providing a non-invasive, accessible, and cost-effective tool to enhance preventive healthcare for individuals globally.
 
 Specifically, this study seeks to achieve the following objectives:
-+ To obtain a publicly available fingernail image dataset from Roboflow, consisting of at least 3,000 labeled images across a minimum of 5 distinct nail feature classes, with each image meeting a minimum resolution of 224×224 pixels, and the dataset will be verified by a dermatologist. In parallel, to curate a statistical dataset to be used for inference using Bayesian inference, containing percentage-based associations between these nail feature classes and systemic diseases derived from published clinical, epidemiological studies, and literature.
++ To obtain a publicly available fingernail image dataset from Roboflow, consisting of at least 3,000 labeled images across a minimum of 5 distinct nail feature classes, with each image meeting a minimum resolution of 224×224 pixels, the dataset will be verified by a dermatologist. In parallel, to curate a statistical dataset to be used for inference using Bayesian inference, containing percentage-based associations between these nail feature classes and systemic diseases derived from published clinical, epidemiological studies, and literature.
 + To apply standardized preprocessing steps including resizing and normalization to ensure consistency and suitability for deep learning, and to augment the image dataset by at least 30% using systematic geometric and photometric transformations to enhance model generalization and robustness for systemic disease classification.
 + To experiment, develop and train multiple deep learning models (EfficientNetV2S, VGG16, ResNet50, RegNetY-16GF, and SwinV2-T) on the dataset to accurately classify nail features and to make systemic diseases inferences using Bayesian inference from the statistical dataset of systemic diseases.
 + To evaluate and compare the performance of the trained models using standard metrics, including accuracy, precision, recall, and F1-score for convolutional neural networks (CNNs) and apply explainability and interpretability methods for the algorithms.
@@ -920,18 +920,18 @@ The scope is the domain of the research. It describes the extent to which the re
 ==== Scope
 The following scope are set by the researchers:
 - The research is scheduled over a seven-month period, covering phases such as data collection, preprocessing, model development, evaluation, and deployment
-- The study will cover classifying nail features ranging 10 classes: Beau's Lines, Blue Nails, Clubbing, Healthy Nail, Koilonychia, Melanonychia, Muehrcke's Lines, Onychogryphosis, Pitting, and Terry's Nails.
-- The image dataset will be trained on five models: Resnet-50, VGG-16, RegNetY-16GF, EfficientNetV2-S, and SwinV2-T. The researchers will improve the model through iterative experimentations.
-- The researchers will implement explainability techniques such as GradCAM, ScoreCAM, GradCAMPlusPlus, AblationCAM, and feature maps to understand how the model came up with the classified nail.
+- The study covers classifying nail features ranging 10 classes: Beau's Lines, Blue Nails, Clubbing, Healthy Nail, Koilonychia, Melanonychia, Muehrcke's Lines, Onychogryphosis, Pitting, and Terry's Nails.
+- The image dataset was trained on five models: Resnet-50, VGG-16, RegNetY-16GF, EfficientNetV2-S, and SwinV2-T. The researchers improved the model through iterative experimentations.
+- The researchers implemented explainability techniques such as GradCAM, ScoreCAM, GradCAMPlusPlus, AblationCAM, and feature maps to understand how the model came up with the classified nail.
 - The study makes inferences using Bayesian inference with probabilities derived from the curated statistical dataset.
-- The study will be developed on the web using frameworks like Flask.
+- The study was developed on the web using frameworks like Flask.
 
 ==== Delimitations
 The following delimitations are set by the researchers:
 // Include ba natin nail segmentation?
 - The developed model does not explicitly identify specific anatomical features of the nail, such as the lunula, nail bed, or nail color. Instead, it leverages the CNN and ViT architectures to automatically learn and detect relevant patterns and features from the labeled dataset, ranging from subtle changes like Muehrcke’s lines to distinct characteristics like onychogryphosis.
 - The developed system is not intended to function as a diagnostic tool. Unlike dermatologists or internal medicine physicians who incorporate a patient’s full medical history, laboratory results, and clinical examinations into their assessment, this system relies exclusively on statistical associations between nail features and systemic diseases. Consequently, its inferences are based on general probabilities rather than individualized medical data, which may oversimplify the complexity and multifactorial nature of systemic diseases.
-- The model will not analyze how severe a nail feature has become. It will only classify which nail feature it is.
+- The model did not analyze how severe a nail feature has become. It only classifies which nail feature it is.
 
 
 ==== Limitations
@@ -3227,9 +3227,9 @@ Users should interpret the system's results as probabilistic risk assessments ra
 #pagebreak()
 
 #h3(hidden: true)[System Evaluation Questionnaire]
-#image("./img/answered_questionnaire (1).jpg")
-#image("./img/answered_questionnaire (2).jpg")
-#image("./img/answered_questionnaire (3).jpg")
+#image("./img/system-evaluation-questionnaire.jpg", width: 100%)
+#image("./img/system-evaluation-questionnaire2.jpg", width: 100%)
+#image("./img/system-evaluation-questionnaire3.jpg", width: 100%)
 
 
 #pagebreak()
@@ -3311,7 +3311,7 @@ Users should interpret the system's results as probabilistic risk assessments ra
 #image("img/communication-letter-02.jpg", width: 100%, height: 100%)
 #pagebreak()
 
-#image("img/communication-letter-03.jpg", width: 100%, height: 100%)
+#image("img/communication-letter-03-florentino.jpg", width: 100%, height: 100%)
 #pagebreak()
 
 #image("img/Request Letter_page-0001.jpg", width: 100%, height: 100%)
@@ -3398,9 +3398,21 @@ Users should interpret the system's results as probabilistic risk assessments ra
 
 
 #pagebreak()
+#h2(hidden: true, outlined: false)[Appendix C]
+#align(center + horizon)[
+  #grid(
+    align: center + horizon,
+    row-gutter: 1.8em,
+    columns: 1fr,
+    text(size: 56pt)[Appendix C],
+    text(size: 28pt)[Curriculum Vitae]
+  )
+]
+#pagebreak()
+
 #h3(hidden: true)[Curriculum Vitae]
 
-#image("./img/javier-resume.jpg")
+#image("./img/javier-resume (1).pdf")
 #image("./img/MHAR_ANDREI_MACAPALLG_CV_Latest.pdf")
 #image("./img/seanrei-cv.jpg")
 
