@@ -376,7 +376,7 @@
     [*MARK P. BERNARDINO, MSCS* \ Member],
     [*VICTOR A. ESTALILLA JR.* \ Member],
     text(size: 12pt)[*MICAH JOY F. VALDEZ* \ Member],
-    text(size: 10pt)[*JHONJHON P. ZOTOMAYOR, LPT, MAED* \ Member],
+    text(size: 10pt)[*JHON JHON P. ZOTOMAYOR, LPT, MAED* \ Member],
     grid.cell(colspan: 2)[*MARIA LAUREEN B. MIRANDA, LPT, MIT* \ Research Implementing Unit Head],
   )
 
@@ -437,7 +437,7 @@
   \
   \
 
-  To their Language Critic, *MR. JHONJHON P. ZOTOMAYOR, LPT, MAED*, for being helpful in checking and revising the manuscript's grammar and its structure;
+  To their Language Critic, *MR. JHON JHON P. ZOTOMAYOR, LPT, MAED*, for being helpful in checking and revising the manuscript's grammar and its structure;
   \
   \
 
