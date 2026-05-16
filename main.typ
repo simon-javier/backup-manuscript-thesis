@@ -886,7 +886,7 @@ What the researchers changed was the model itself. They replaced CNN-CapsNet wit
 
 The scope of classification was also expanded. The original framework handled 6 nail classifications. This study pushed that to 10 — beau's line, blue finger, clubbing, healthy nail, koilonychia, melanonychia, muehrcke's lines, onychogryphosis, pitting, and terry's nail.
 
-And the study went further than just classification. Each nail condition was connected to possible systemic diseases — heart disease, anemia, cancer, among others. So the model does not only recognize what a nail condition looks like. It also suggests what underlying health issues might be involved.
+And the study went further than just classification. Each nail condition was connected to possible systemic diseases — cardiovascular disease, anemia, cancer, among others. So the model does not only recognize what a nail condition looks like. It also suggests what underlying health issues might be involved.
 
 #figure(image("/img/agile.png"), caption: flex-caption(
   [AGILE Development Cycle #cite(<okeke_agile_2021>, form: "normal")],
@@ -1148,9 +1148,6 @@ This study brings together the strengths of deep learning and the explainability
 #chp[Chapter III]
 #h2(outlined: false, bookmarked: false)[Research Methodology]
 
-Edited main.typ
-Viewed main.typ:1152-1170
-
 This chapter covers the methods and materials used to meet the study's objectives — research design, locale, applied concepts and techniques, algorithm analysis, data collection, system development methodology, software tools, system architecture, and software testing.
 
 === Research Design
@@ -1173,7 +1170,6 @@ According to #cite(<geeksforgeeks-2025a>), machine learning is a branch of artif
 
 The researchers used machine learning in this study to pick up on nail changes — some subtle, others more obvious. Nail features like discoloration in blue nails or the shape changes seen in clubbing are hard to capture with rule-based methods. Traditional programming techniques struggle with them too. Deep learning models, though, can learn what these nail features look like directly from images. No one has to spell out every visual rule.
 
-
 #figure(image("img/machine-learning-geek-for-geeks.png"), caption: flex-caption(
   [Machine Learning #cite(<geeksforgeeks-2025a>, form: "normal")],
   [Machine Learning],
@@ -1182,37 +1178,37 @@ The researchers used machine learning in this study to pick up on nail changes �
 @machine-learning shows how machine learning models work. Inputs like stock data, customer transactions, streaming data, and email text get fed into the model. From there, techniques like regression handle numerical data while classification sorts categorical data — and the model picks up on patterns during that process. The output is basically the model's best prediction of what should happen, based on what it learned from the training data.
 
 ==== Supervised Machine Learning
-According to #cite(<geeksforgeeks-2025b>), supervised machine learning is a fundamental approach for machine learning and artificial intelligence. It involves training a model using labeled data, where each input comes with a corresponding correct output. Supervised machine learning can be applied to two main types of problems: classification and regression.
+Supervised machine learning is, according to #cite(<geeksforgeeks-2025b>), one of the core approaches in machine learning and AI. A model gets trained on labeled data — every input has a correct output paired with it. It handles two kinds of problems: classification and regression.
 
-This study involves a classification problem and falls under the category of supervised machine learning. The model is trained on labeled data which are nail images paired with corresponding nail disease labels. Then it learns to classify new, unseen nail images into their respective categories based on learned features.
+This study deals with classification specifically. The model trains on nail images, each one paired with a label for a nail feature, and from there it picks up on features that let it sort new images it has not seen before into the right categories. That makes it a supervised learning problem.
 
 #figure(image("img/supervised-machine-learning-geek-for-geeks.png"), caption: flex-caption(
   [Supervised Machine Learning #cite(<geeksforgeeks-2025b>, form: "normal")],
   [Supervised Machine Learning],
 ))<supervised>
 
-
-@supervised illustrates how supervised learning works. The input data contains data that are labeled. Each labeled data is then fed into the algorithm. The algorithm learns the associations and patterns between the data and its label. It finds out what patterns likely lead to each label. Finally, the model predicts labels based on inputs.
+@supervised shows how the process works. Labeled data goes in. The algorithm picks up on patterns between the data and the labels — basically figuring out which patterns point to which label. Once trained, the model takes new inputs and predicts labels on its own.
 
 
 ==== Neural Networks
-According to #cite(<ibm-2025a>), a neural network is a machine learning program, or model, that makes decisions in a manner similar to the human brain, by using processes that mimic the way biological neurons work together to identify phenomena, weigh options and arrive at conclusions.
+A neural network, as #cite(<ibm-2025a>) puts it, is a model that makes decisions in a way that resembles how the human brain works. Biological neurons identify things and reach conclusions together — neural networks try to do the same thing, roughly. The comparison is simplified, but it gets the point across.
 
-In this study, the researchers utilized neural networks because of their strong ability to detect complex patterns in data like images of nails. Unlike traditional machine learning algorithms that often require manual feature extraction, neural networks can automatically learn hierarchical representations of features like color and texture by analyzing images pixel by pixel.
+The researchers went with neural networks here because nail image data has complex visual patterns, and neural networks handle that well. Most traditional machine learning algorithms need someone to manually define what features matter. Neural networks do not. They pick up on things like color and texture by going through images pixel by pixel, building up their own representations without being told what to look for.
+
 
 #figure(image("img/neural-networks-geeks-for-geeks.png"), caption: flex-caption(
   [Neural Network Architecture #cite(<geeksforgeeks-2025c>, form: "normal")],
   [Neural Network Architecture],
 )) <neural-network>
 
-@neural-network shows the architecture of a neural network. The figure is from #cite(<geeksforgeeks-2025c>) and illustrates that every neural network consists of layers of nodes or artificial neurons, an input layer, one or more hidden layers, and an output layer. Each node connects to others, and has its own associated weight and threshold. If the output of any individual node is above the specified threshold value, that node is activated, sending data to the next layer of the network. Otherwise, no data is passed along to the next layer of the network.
+@neural-network shows the structure. The figure from #cite(<geeksforgeeks-2025c>) breaks it down — there is an input layer, hidden layers stacked in between, and an output layer at the end. Each node connects to nodes in the next layer, and every connection has a weight attached to it. When a node's output passes a set threshold it fires, sending data forward. Anything below that threshold gets ignored.
 
 ==== Deep Learning
-Deep learning is a subset of machine learning that uses multilayered neural networks, called deep neural networks, to simulate the complex decision-making power of the human brain #cite(<holdsworth-2025>, form: "normal").
+Deep learning uses multilayered neural networks — deep neural networks — to simulate how the human brain handles complex decisions #cite(<holdsworth-2025>, form: "normal"). It is a subset of machine learning, but a more powerful one.
 
-According to #cite(<ibm-2025a>), deep learning and neural networks tend to be used interchangeably in conversation, which can be confusing. It is important to note that the term “deep” in deep learning refers specifically to the number of layers within a neural network. A neural network with more than three layers, including the input and output layers, is typically classified as a deep learning algorithm. In contrast, networks with only two or three layers are considered basic neural networks.
+People use "deep learning" and "neural networks" interchangeably a lot, and #cite(<ibm-2025a>) points out why that gets confusing. The "deep" part refers to how many layers the network has. More than three layers, counting input and output, and it qualifies as deep learning. Two or three layers is just a basic neural network.
 
-The neural networks used in this study are considered deep neural networks, since images of nails are very complex and have variations such as texture, color, and spatial patterns, which will require multiple hidden layers to effectively extract and learn these features for accurate classification.
+Nail images have a lot going on, texture, color, spatial patterns that vary across samples. That kind of complexity needs multiple hidden layers to pull apart and learn from, which is why the neural networks in this study are deep neural networks.
 
 #figure(image("img/deep-neural-network-ibm.png"), caption: flex-caption(
   [Deep Neural Network Architecture #cite(<ibm-2025a>, form: "normal")],

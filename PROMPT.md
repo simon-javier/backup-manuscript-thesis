@@ -131,16 +131,105 @@ AI produces paragraphs of similar length. Break this:
   mid-paragraph instead of leading with it.
 
 ────────────────────────────────────────
-QUICK CHECKLIST BEFORE SUBMITTING
+PHASE 10 — BREAK TRICOLONS AND PARALLEL LISTS
+────────────────────────────────────────
+AI defaults to three-part parallel lists. They are one of the
+strongest detectable patterns.
+
+- "identifying things, weighing options, reaching conclusions"
+  → Drop to two items, or break the parallelism:
+  → "identifying things and figuring out which option makes sense"
+- "an input layer, one or more hidden layers, and an output layer"
+  → "an input layer, then hidden layers in between, then an output"
+- Never let a three-part list remain where all three items share
+  the same grammatical form. Break at least one.
+- If a list must stay, make one item noticeably longer than the others.
+
+────────────────────────────────────────
+PHASE 11 — DISRUPT MIRRORED CONDITIONAL PAIRS
+────────────────────────────────────────
+AI loves clean When/If or If/Otherwise paired logic:
+
+- "When X happens, Y occurs. If it doesn't, nothing moves forward."
+
+This mirrored structure is highly detectable. Fix by:
+
+- Collapsing both sides into one sentence with "otherwise" buried
+  mid-clause
+- Dropping one side entirely and letting the reader infer the negative
+- Making one side more specific and the other more vague
+  → "When a node crosses its threshold, it fires and passes data along —
+  anything below that just doesn't register."
+
+────────────────────────────────────────
+PHASE 12 — REMOVE MID-SENTENCE SELF-EXPLANATION
+────────────────────────────────────────
+AI frequently inserts a clause that explains the clause before it:
+
+- "...manual feature extraction, meaning someone has to define
+  what the model should look for."
+- "...activates and passes data to the next layer, which is how
+  information moves through the network."
+
+These "meaning / which means / that is / in other words" insertions
+are a strong AI signal. Humans trust the reader to follow. Either:
+
+- Delete the explanatory clause entirely
+- Move the explanation to its own separate sentence, slightly reworded
+- Replace with a blunter phrasing that doesn't re-explain
+
+────────────────────────────────────────
+PHASE 13 — VARY PARAGRAPH INTERNAL STRUCTURE
+────────────────────────────────────────
+AI paragraphs follow a predictable logic arc:
+claim → expand → contrast or example → resolution
+
+Detectors analyze this at the paragraph level, not just the sentence
+level. Break it by:
+
+- Starting one paragraph with the example before the claim
+- Ending one paragraph on an expansion rather than a resolution
+  (leave it slightly open)
+- Burying the main point in the middle of a paragraph rather
+  than leading with it
+- Letting one paragraph do only two of the four moves — not all of them
+
+────────────────────────────────────────
+PHASE 14 — FORCE EXTREME BURSTINESS
+────────────────────────────────────────
+The current approach varies sentence length moderately. That is not
+enough. Push to the extremes:
+
+- Every 3–4 sentences, insert one that is 5 words or fewer.
+  A fragment is fine.
+- Every paragraph should contain at least one sentence over 35 words
+  that slightly runs on.
+- Do not let three consecutive sentences land in the 15–25 word range.
+- The short sentence should follow the long one, not precede it.
+
+Example of forced burstiness:
+[32 words] Neural networks skip the step where someone manually
+defines what features the model should look for — instead they build
+up their own representations by moving through the data layer by layer.
+[4 words] That happens automatically.
+[19 words] It's part of what makes them useful for image data,
+where the relevant features aren't always obvious upfront.
+
+────────────────────────────────────────
+UPDATED CHECKLIST
 ────────────────────────────────────────
 ☐ No two consecutive sentences share the same rough length
-☐ At least one imperfect repetition exists in the text
+☐ No three-part parallel list survives intact — at least one item broken
+☐ No mirrored When/If conditional pairs remain
+☐ All "meaning / which means / in other words" self-explanation
+clauses removed or moved
+☐ At least one imperfect word repetition exists
 ☐ All clean transitional openers removed or replaced
 ☐ 30–50% of formal vocabulary swapped for simpler words
 ☐ At least 2–3 nominalizations converted back to verb form
 ☐ At least one instance of broken parallel structure
-☐ Paragraph lengths visibly vary (no uniform blocks)
-☐ One sentence begins with "And," "But," or "So"
-☐ Clause/logic order shuffled in at least 2 sentences
-☐ No sentence contains both a nominalization AND a formal
-transition — that combination is a high-signal AI pattern
+☐ Paragraph internal logic arc varies — not all follow claim→expand→resolve
+☐ At least one paragraph ends open/unresolved
+☐ One sentence is a fragment or under 6 words
+☐ One sentence exceeds 35 words and slightly runs on
+☐ No sentence contains both a nominalization AND a formal transition
