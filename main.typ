@@ -930,48 +930,46 @@ The following scope are set by the researchers:
 
 ==== Delimitations
 The following delimitations are set by the researchers:
-// Include ba natin nail segmentation?
 - The developed model does not explicitly identify specific anatomical features of the nail, such as the lunula, nail bed, or nail color. Instead, it leverages the CNN and ViT architectures to automatically learn and detect relevant patterns and features from the labeled dataset, ranging from subtle changes like Muehrcke’s lines to distinct characteristics like onychogryphosis.
 - The developed system is not intended to function as a diagnostic tool. Unlike dermatologists or internal medicine physicians who incorporate a patient’s full medical history, laboratory results, and clinical examinations into their assessment, this system relies exclusively on statistical associations between nail features and systemic diseases. Consequently, its inferences are based on general probabilities rather than individualized medical data, which may oversimplify the complexity and multifactorial nature of systemic diseases.
 - The model did not analyze how severe a nail feature has become. It only classifies which nail feature it is.
 
 
 ==== Limitations
-This study is limited to the following:
-- The reliability of nails as a systemic disease detector is tricky and requires more information such as the user's history, work, and pathology.
-- The dataset quality and balance can impact the model's ability to make predictions.
-- Publicly sourced datasets may lack formal verification from licensed medical professionals, introducing risks of inaccurate labels that could impact classification and inference reliability.
-- Epidemiological data regarding the prevalence of nail features and their associations with systemic diseases in the local population may be limited.
-- Due to the blackbox nature of deep learning models, the models employed have limited interpretability and explainability, which may affect clinical trust and adoption despite strong predictive performance #cite(<doshi_2017_towards>, form: "normal").
-- Training complex models require substantial computational resources which may limit the ability to perform extensive hyperparameter tuning.
-
+The study has the following limitations:
+- Nails alone are not reliable indicators of systemic disease. You need more context — the patient's history, their occupation, pathology results. Without that, the picture is incomplete.
+- Dataset quality and how balanced the classes are will affect predictions. That is hard to fully control.
+- Publicly sourced datasets may not have been verified by licensed medical professionals. Inaccurate labels are a real risk, and they can undermine both classification and inference.
+- Epidemiological data on how often nail features appear and their ties to systemic diseases in the local population may be scarce, or may not exist at all.
+- Deep learning models are black boxes. The ones used here have limited interpretability, and that can erode clinical trust — even when the model performs well #cite(<doshi_2017_towards>, form: "normal").
+- Training complex models takes serious computational resources. That limits how much hyperparameter tuning the researchers could realistically do.
 
 === Significance of the Research
-The findings of this study are beneficial to individuals and organizations worldwide, offering a non-invasive, accessible tool for early detection of systemic diseases through fingernail biomarkers. By addressing critical gaps in preventive healthcare, the system empowers users to take proactive steps toward better health outcomes. Specifically, the results of this study provide advantages to the following:
+This study provides a non-invasive, accessible tool for early detection of systemic diseases through fingernail biomarkers. It fills gaps in preventive healthcare and gives people a way to act sooner rather than later. The results are relevant to the following groups:
 
 ===== Global Community
-Individuals worldwide, especially those in remote or resource-limited areas, can access early health risk assessments, bridging gaps in healthcare access and empowering them to seek timely medical consultation.
+People in remote or resource-limited areas can access early health risk assessments without needing a specialist visit. That helps close gaps in healthcare access and encourages people to seek medical advice when it matters.
 
 ===== Healthcare Providers
-Medical professionals can utilize the system as a preliminary screening tool to prioritize patients for further evaluation, improving efficiency in resource-constrained settings and enhancing patient care.
+Doctors can use the system as a first-pass screening tool — a way to flag patients who might need further evaluation. In settings where time and resources are tight, that kind of prioritization helps.
 
 ===== Public Health Organizations
-The system supports population-level health monitoring by identifying disease prevalence patterns, aiding in the development of targeted health interventions and policies.
+The system supports monitoring health at a population level. Spotting disease prevalence patterns early feeds directly into building more targeted interventions and shaping public health policy.
 
 ===== Researchers
-The study serves as a foundation for future research in AI-driven diagnostics, offering insights into integrating deep learning and probabilistic modeling for medical applications.
+This study lays a foundation for future work in AI-driven diagnostics. It demonstrates how deep learning and probabilistic modeling can be combined for medical use, and that is something others can extend.
 
 ===== Underserved Populations
-Communities in remote or economically disadvantaged regions benefit from a tool that requires no specialized equipment, promoting health equity and reducing disparities in healthcare access.
+Communities in remote or economically disadvantaged areas benefit from a tool that requires no specialized equipment. It promotes health equity and narrows the gap in healthcare access — at least for initial screening.
 
 ===== Health Tech Developers
-The project provides a blueprint for developing scalable, AI-driven health solutions, encouraging innovation in preventive healthcare technologies.
+The project is, in effect, a blueprint. It shows how to build a scalable, AI-driven health solution, and it can inform future preventive healthcare technologies.
 
 ===== Policy Makers
-The results can inform public health policies on integrating AI tools into healthcare systems, improving access to early detection and preventive care on a global scale.
+The findings can guide decisions about integrating AI tools into healthcare systems, particularly around early detection and access to preventive care at a broader scale.
 
 ===== Educational Institutions
-Medical and technology students can use the system as a learning tool to explore the intersection of AI and healthcare, fostering interdisciplinary education.
+Medical and technology students can use the system as a hands-on example of how AI intersects with healthcare. It works well for interdisciplinary learning — the kind that bridges computer science and medicine.
 
 #metadata("Chapter 1 end") <ch1-e>
 #pagebreak()
