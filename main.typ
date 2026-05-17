@@ -1805,12 +1805,6 @@ Training comes next. The model has to learn to pick up on nail biomarkers, which
 
 Class imbalance gets addressed through Weighted Cross-Entropy loss, which increases the gradient contribution from underrepresented classes. AdamW runs the optimization at 1×10⁻⁴, pairing adaptive moment estimation with decoupled weight decay. ReduceLROnPlateau watches validation performance and drops the learning rate when it flatlines. Each epoch does the standard loop: forward propagation, loss computation, backpropagation. Training continues until convergence or until early stopping cuts it off.
 
-==== Model Training
-#figure(
-  image("./img/system-archi-model-section2.png"),
-  caption: [Model Training Workflow],
-)
-
 ==== Model Validation and Evaluation
 #figure(
   image("./img/system-archi-model-section3.png"),
