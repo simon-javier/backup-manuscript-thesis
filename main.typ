@@ -2465,10 +2465,10 @@ This step was a qualitative check on the system's feature recognition. The point
   image("./img/system-archi-web.png"),
   caption: [System Architecture Design],
 ) <system-architecture>
-The system architecture as shown in @system-architecture operationalizes the trained model by integrating it into a fully functional backend environment. This manages real-time inference requests, database operations, and probabilistic computations. The workflow begins when a user uploads a nail image via the web-based interface. The API Gateway receives the image through an HTTP POST request, validating the data and forwarding it to the backend’s business logic layer. The uploaded image is temporarily stored in the local file system under a designated directory, while its file path and metadata are recorded in an SQLite database for traceability and reproducibility.
 
-The Machine Learning Inference Service retrieves the image and performs classification using the trained deep learning model. The resulting prediction includes both the class label and its associated confidence score. The business logic layer then logs the output and queries the database for prior probabilities and likelihood values associated with the detected features. These are used by the Bayesian inference module to compute disease probabilities. The integration of database querying with inference ensures data consistency and enables the system to generate contextual, data-informed predictions. The results are transmitted back through the API Gateway to the front-end interface, where the user can view the diagnostic outcomes in an interpretable format.
+The architecture shown in @system-architecture puts the trained model into a working backend that handles inference requests, database operations, and probabilistic computations in real time. A user uploads a nail image through the web interface, and the API Gateway picks it up as an HTTP POST request. It validates the data, then passes it along to the backend's business logic layer. The image itself gets stored temporarily in a local directory, and its file path and metadata go into an SQLite database — that way there is a record for traceability if something needs to be checked later.
 
+From there, the Machine Learning Inference Service pulls the image and runs classification through the trained deep learning model. The output is a class label and a confidence score. The business logic layer logs that result and queries the database for prior probabilities and likelihood values tied to the detected features, which the Bayesian inference module then uses to compute disease probabilities. Tying database queries directly to the inference step keeps the data consistent and means the system's predictions are grounded in the actual statistical dataset rather than operating in isolation. Results flow back through the API Gateway to the front end, where the user sees the diagnostic outcomes laid out in a readable format.
 
 === Research Objective 1
 To obtain a publicly available fingernail image dataset from Roboflow, consisting of at least 3,000 labeled images across a minimum of 5 distinct nail feature classes, with each image meeting a minimum resolution of 224×224 pixels, the dataset will be verified by a dermatologist. In parallel, to curate a statistical dataset to be used for inference using Bayesian inference, containing percentage-based associations between these nail feature classes and systemic diseases derived from published clinical, epidemiological studies, and literature.
@@ -3052,61 +3052,61 @@ Limitations and future work were also documented. The prototype is optimized for
 This chapter presents the summary, conclusions, and recommendations derived from the development and evaluation of a deep learning-based system for the probabilistic detection of systemic diseases using fingernail biomarkers.
 
 === Summary
-This study aimed to develop a deep learning-based system for the probabilistic detection of systemic diseases using fingernail biomarkers. The following are the salient findings based on the specific research objectives:
+This study set out to build a deep learning system that uses fingernail biomarkers to probabilistically detect systemic diseases. The following are the key findings, organized by research objective.
 
 ==== Data Collection and Curation
-The researchers successfully acquired a labeled image dataset from Roboflow consisting of 7,258 images across 10 distinct nail feature classes (e.g., Clubbing, Koilonychia, Terry’s Nails). This dataset was verified by a dermatologist to ensure clinical relevance. In parallel, a statistical dataset was curated from 33 peer-reviewed clinical and epidemiological studies. This dataset mapped 31 associations between nail features and systemic diseases (e.g., Clubbing to Lung Cancer or Cardiovascular Disease), including conditional probabilities and population prevalence data to support the Bayesian inference engine.
+A labeled image dataset of 7,258 images across 10 nail feature classes — Clubbing, Koilonychia, Terry's Nails, and others — was acquired from Roboflow. A dermatologist verified the dataset for clinical relevance. On the statistical side, the researchers curated a dataset from 33 peer-reviewed clinical and epidemiological studies, mapping 31 associations between nail features and systemic diseases (Clubbing to Lung Cancer, Clubbing to Cardiovascular Disease, and so on). That dataset included conditional probabilities and population prevalence figures, which fed directly into the Bayesian inference engine.
 
 ==== Preprocessing and Augmentation
-Standardized preprocessing techniques, including resizing images to 224×224 pixels and normalizing them using ImageNet mean and standard deviation values, were applied to ensure compatibility with PyTorch frameworks. To address the limitations of a static dataset and improve model robustness, the researchers applied geometric and photometric augmentations (flipping, rotation, brightness adjustment), effectively generating multiple versions of source images to enhance generalization.
+Images were resized to 224×224 pixels and normalized using ImageNet mean and standard deviation values — standard preprocessing to keep things compatible with PyTorch. To make up for the limitations of a fixed dataset and push model robustness further, the researchers applied geometric and photometric augmentations: flipping, rotation, brightness adjustment. Each source image effectively produced multiple training variants, which helped with generalization.
 
 ==== Model Development and Training
-Five deep learning architectures were trained: VGG-16, ResNet-50, EfficientNetV2-S, SwinV2-T, and ConvNeXt-Tiny. The study implemented a two-phase pipeline: first, a CNN/ViT model classified the visual nail feature; second, a Bayesian inference engine calculated the posterior probability of systemic diseases based on the classified feature and user demographics.
+Five architectures were trained: VGG-16, ResNet-50, EfficientNetV2-S, SwinV2-T, and ConvNeXt-Tiny. The pipeline had two phases. A CNN or ViT model handled the visual classification of the nail feature first. Then a Bayesian inference engine took the classified feature along with user demographics and calculated posterior probabilities for systemic diseases.
 
 ==== Performance Evaluation
-Among the evaluated models, ConvNeXt-Tiny and SwinV2-T demonstrated superior performance, achieving classification accuracies of approximately 88.93% and 88.27% respectively. The study found that modern architectures (ConvNeXt, Swin, EfficientNet) yielded the best results using a Gradual Unfreezing strategy, whereas older architectures (VGG-16, ResNet-50) performed best with Full Fine-Tuning. Explainability methods, specifically Saliency Maps and Grad-CAM, were successfully implemented for CNN-based models to visualize the regions of interest (e.g., nail plate discoloration), addressing the "black box" nature of the algorithms.
+ConvNeXt-Tiny and SwinV2-T performed best, reaching classification accuracies around 88.93% and 88.27%. The newer architectures — ConvNeXt, Swin, EfficientNet — all did better with Gradual Unfreezing, while VGG-16 and ResNet-50 needed Full Fine-Tuning to get their best results. Saliency Maps and Grad-CAM were applied to the CNN-based models to show which parts of the nail plate the model focused on, things like discoloration or texture changes. That helped address the "black box" problem and made the predictions easier to trust.
 
 ==== Deployment
-The high-performing models were integrated into a web-based prototype application. This system accepts user-uploaded nail images and demographic inputs (age, sex), classifies the nail feature with a confidence score, and utilizes a calibrated Bayesian inference engine to output a ranked list of probable systemic diseases (e.g., "Psoriasis: 91.24%"), fulfilling the objective of creating an interpretable health screening tool,.
+The top-performing models were built into a web-based prototype. Users upload a nail image, enter their age and sex, and the system classifies the nail feature with a confidence score. A calibrated Bayesian inference engine then outputs a ranked list of probable systemic diseases — something like "Psoriasis: 91.24%." The result is an interpretable screening tool, which was the goal.
 
 === Conclusions
 Based on the findings, the following conclusions were drawn:
+
 ==== Feasibility of Deep Learning for Nail Biomarkers
-Deep learning models, particularly modern architectures like *ConvNeXt-Tiny* and *SwinV2-T*, are highly effective in classifying subtle fingernail deformities and discolorations. The study concludes that these models can distinguish between visually similar conditions with high accuracy when trained with appropriate augmentation and transfer learning strategies.
+Modern architectures like *ConvNeXt-Tiny* and *SwinV2-T* can classify subtle nail deformities and discolorations effectively. Visually similar conditions — the kind that would be easy to confuse — were distinguished with high accuracy, as long as the models were trained with proper augmentation and transfer learning. Deep learning works for this domain.
 
 ==== Architecture-Specific Training Strategies
-There is no "one-size-fits-all" training approach. The study concludes that modern, deeper networks benefit significantly from *Gradual Unfreezing*, which preserves pre-trained features while adapting to the specific domain. Conversely, older, shallower networks like VGG-16 require *Full Fine-Tuning* to adjust their weights sufficiently for the specific task of nail feature extraction.
+No single training approach works across all architectures. Modern, deeper networks got their best results from *Gradual Unfreezing*, which keeps pretrained features intact while adapting to the nail feature domain. Older, shallower networks like VGG-16 needed *Full Fine-Tuning* instead — their weights required more extensive adjustment to handle the specifics of nail feature extraction. The strategy has to match the architecture.
 
 ==== Probabilistic Inference as a Safety Layer
-Integrating *Bayesian Inference* with deep learning transforms the system from a simple image classifier into a clinically relevant screening tool. By mathematically linking nail features to systemic diseases using prevalence data, the system avoids making definitive diagnoses, which should remain the domain of medical professionals, and instead provides scientifically grounded risk assessments. This approach addresses the ethical and practical limitations of AI in healthcare.
+Adding *Bayesian Inference* on top of the deep learning classifier changes the system fundamentally. It stops being just an image classifier and becomes a screening tool with clinical relevance. The mathematical link between nail features and systemic diseases, grounded in prevalence data, means the system produces risk assessments rather than definitive diagnoses. Definitive diagnoses should stay with medical professionals. This approach handles the ethical and practical constraints of using AI in healthcare — the system flags possibilities without overstepping.
 
 ==== Necessity of Demographic Context
-The inclusion of patient demographics (age and sex) in the inference engine significantly refines the probability outputs. The study concludes that visual data alone is insufficient for systemic risk assessment; incorporating external factors allows the system to filter out implausible conditions (e.g., pediatric diseases in adults), thereby enhancing the logical accuracy of the results.
+Visual data on its own is not enough for systemic risk assessment. Adding patient demographics — age and sex — to the inference engine made a real difference in how accurate the probability outputs were. The system can filter out conditions that do not make sense for a given patient, like flagging pediatric diseases in an adult. Without that demographic layer, the results would be logically weaker.
 
 === Recommendations
 In light of the findings and conclusions, the researchers offer the following recommendations:
 
 ==== For Future Researchers and Developers
 ===== Expansion of Datasets
-Future studies should focus on curating a local dataset of fingernail images from Philippine hospitals to account for specific ethnic skin tones and local disease prevalence. As noted in the expert consultation, while nail features are generally consistent, expanding the dataset to include verified local cases would improve robustness.
+A locally curated dataset of fingernail images from Philippine hospitals would help account for ethnic skin tones and regional disease prevalence. The expert consultation noted that nail features are generally consistent across populations, but having verified local cases in the training data would still make the system more robust. Future studies should prioritize this.
 
 ===== Implementation of Object Detection
-To improve the system's robustness against poor-quality user uploads (e.g., background noise, non-nail images), future iterations should implement Object Detection models (such as YOLO) to automatically crop and center the nail plate before classification.
+Poor-quality uploads — background clutter, images that are not even nails — are a real problem for the system right now. Adding an object detection model like YOLO to automatically crop and center the nail plate before classification would handle most of that. Future iterations should build this in.
 
 ===== Inclusion of Lifestyle Factors
-Future iterations of the Bayesian inference engine should include "Occupation" and "Hobbies" as input variables. As suggested by the dermatologist expert, external trauma from manual labor or exposure to chemicals can mimic systemic nail signs, and filtering these factors would reduce false positives.
+The Bayesian inference engine should eventually take in "Occupation" and "Hobbies" as inputs. The dermatologist expert pointed out that external trauma from manual labor or chemical exposure can produce nail changes that look like systemic signs. Filtering for those factors would cut down on false positives.
 
 ==== For Medical Professionals and Health Institutions
 ===== Clinical Validation
-Medical institutions are encouraged to collaborate with technical researchers to validate the system's probabilistic outputs against "ground truth" patient diagnoses (e.g., confirming if a patient flagged for "High Probability of Renal Failure" based on nail features actually has the condition via blood chemistry).
+Medical institutions should work with technical researchers to test the system's probabilistic outputs against confirmed patient diagnoses. A patient flagged for "High Probability of Renal Failure" based on nail features — does blood chemistry actually confirm that? That kind of ground-truth validation is what the system needs next.
 
 ===== Screening Tool Utilization
-Healthcare providers in rural or resource-limited settings can utilize this system as a preliminary triage tool. It can help prioritize patients who exhibit high-probability biomarkers for serious systemic conditions, facilitating timely referrals to specialists.
+In rural or resource-limited settings, this system could serve as a preliminary triage tool. Providers could use it to flag patients showing high-probability biomarkers for serious systemic conditions and get them referred to specialists sooner.
 
 ==== For the General Public
 ===== Complementary Use
-Users should interpret the system's results as probabilistic risk assessments rather than definitive medical diagnoses. High-probability results should serve as a prompt to seek professional medical advice and physical examination.
-
+The system's outputs are probabilistic risk assessments. They are not diagnoses. A high-probability result means it is worth seeing a doctor and getting a proper examination — not that something has been confirmed.
 
 #metadata("Chapter 5 end") <ch5-e>
 #metadata("postlude start") <post-s>
