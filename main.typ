@@ -478,84 +478,84 @@ Some terminologies used in the design and development of the developed system we
   inset: 1em,
 
   [*Accuracy*],
-  [Accuracy is a standard evaluation metric used to assess the performance of CNN models, with various models achieving different accuracy rates.],
+  [Accuracy measures how well a CNN model performs. Models hit different rates depending on architecture and training.],
 
   [*Artificial Intelligence (AI)*],
-  [AI is described as a transformative force in addressing healthcare challenges, particularly through advancements in image processing and probabilistic modeling, with AI-driven diagnostic systems potentially improving the accuracy and speed of disease diagnosis.],
+  [AI has pushed healthcare forward in real ways — better image processing, stronger probabilistic modeling. Diagnostic systems built on AI could speed up disease diagnosis and make it more reliable, at least in principle.],
 
   [*Bayesian Inference*],
-  [Bayesian Inference is a probabilistic model used in the study, alongside Naïve Bayes, to infer systemic disease probabilities, and is supported by the knowledge integration module.],
+  [Bayesian Inference is a probabilistic model the study uses, alongside Naïve Bayes, for inferring systemic disease probabilities. It runs through the knowledge integration module.],
 
   [*Batch Learning / Mini Batches*],
-  [Training was conducted using mini batches of 32 images per iteration to enhance training efficiency while balancing generalization and convergence speed.],
+  [Training ran on mini batches of 32 images per iteration. That balanced generalization against convergence speed without dragging out the process.],
 
   [*Convolutional Neural Networks (CNNs)*],
-  [CNNs are the primary architecture for analyzing image data in this study, automatically learning spatial hierarchies of features essential for accurate classification of nail abnormalities, and excel at analyzing visual data to identify patterns that may escape human observation.],
+  [CNNs handle the image analysis in this study. They build up spatial feature hierarchies on their own — no manual extraction needed — and that is what makes them good at classifying nail abnormalities. Patterns that a human observer might overlook, CNNs tend to catch.],
 
   [*ConvNeXt-Tiny*],
-  [In this study, it replaced RegNetY-16GF due to its favorable trade-off between accuracy and computational cost, possessing approximately 28 million parameters. It emerged as the top-performing model, achieving the highest accuracy of 88.93% using a Gradual Unfreezing strategy, proving to be the most robust architecture for classifying diverse and subtle fingernail features.],
+  [ConvNeXt-Tiny came in as a replacement for RegNetY-16GF. It has around 28 million parameters and offered a better balance between accuracy and computational cost. With Gradual Unfreezing it hit 88.93% accuracy, the highest of any model tested. For classifying the subtle, varied features in fingernail images, nothing else in the study came close.],
 
   [*Cross Entropy Loss*],
-  [Cross Entropy Loss is the loss function employed during model training, specifically used for multiclass classification.],
+  [Cross Entropy Loss is the loss function used during training, suited to multiclass classification.],
 
   [*Deep Learning (DL)*],
-  [Deep Learning is a subfield of machine learning that utilizes deep neural networks capable of hierarchical representation learning, enabling end-to-end learning from raw images to disease classification output, which the study aims to develop.],
+  [Deep Learning sits inside machine learning and works through deep neural networks that learn layered representations. The study applies it end-to-end — raw images go in, disease classifications come out. No manual feature engineering.],
 
   [*EfficientNetV2*],
-  [EfficientNetV2 (specifically EfficientNetV2 S) is a pre-trained CNN model used in the study that showed strong performance with a relatively lower parameter count and faster training time, making it a competitive choice for lightweight applications and accurate diagnosis.],
+  [EfficientNetV2 S is a pre-trained CNN the study tested. Fewer parameters, faster training, and it still performed well. A good fit for lightweight deployments where diagnostic accuracy still matters.],
 
   [*F1 Score*],
-  [The F1 Score is a standard evaluation metric for CNN models and is also used to evaluate per-class performance and misclassification trends.],
+  [F1 Score is a standard evaluation metric for CNN models. The study also uses it to check per-class performance and figure out where misclassifications cluster.],
 
   [*Grad CAM*],
-  [Grad CAM is a technique that may be explored for visualization to explain the visual reasoning behind model predictions, enhancing interpretability and transparency.],
+  [Grad CAM visualizes which parts of an image drove a model's prediction. The study may explore it to make model reasoning more transparent.],
 
   [*Image Augmentation*],
-  [Image augmentation involves techniques like horizontal flipping, rotation, and brightness adjustment applied to increase dataset diversity and reduce overfitting, producing multiple versions of each source image.],
+  [Augmentation techniques — horizontal flipping, rotation, brightness adjustment — create multiple versions of each source image. More diversity in the dataset, less overfitting.],
 
   [*Image Classification*],
-  [Image classification is the core task of the system, involving classifying images into one of several disease categories, which serves as the basis for subsequent probabilistic inference of systemic conditions.],
+  [Classifying images into disease categories is the core task. Those category outputs then feed into probabilistic inference, which estimates systemic conditions from the nail-level diagnosis.],
 
   [*Image Preprocessing*],
-  [Image preprocessing refers to steps taken before training, such as resizing, format conversion, augmentation, and normalization, to ensure consistency across inputs and compatibility with model architectures.],
+  [Before training, images go through preprocessing: resizing, format conversion, augmentation, normalization. All of it keeps inputs consistent and compatible with whatever architecture gets used.],
 
   [*Image Processing*],
-  [Image processing is a field that has seen advancements, particularly with AI, used to analyze visual data, and is central to the study's focus on probabilistic detection of systemic diseases using deep learning on fingernail biomarkers.],
+  [Image processing has moved forward a lot with AI. This study puts it to work analyzing fingernail biomarkers through deep learning to detect systemic diseases. The whole approach is built around it.],
 
   [*Machine Learning (ML)*],
-  [Machine Learning is a broader field encompassing deep learning, with techniques like Support Vector Machines and CNNs employed in studies to enhance classification accuracy for nails, and is integrated into the study.],
+  [Machine Learning is the broader field deep learning belongs to. Support Vector Machines, CNNs, and other techniques have all been applied to improve nail classification. The study draws on that body of work.],
 
   [*Normalization (Image)*],
-  [Input images were normalized using standard ImageNet mean and standard deviation values to ensure compatibility with pre-trained models, enabling more effective transfer learning and stable gradient flow during training.],
+  [Images were normalized to ImageNet mean and standard deviation values. That ensures compatibility with pre-trained models, which in turn makes transfer learning work better and keeps gradients stable during training.],
 
-  [*Precision*], [Precision is a standard evaluation metric for CNN models.],
+  [*Precision*], [Precision is a standard metric used to evaluate CNN models.],
 
   [*Probabilistic Modeling / Probabilistic Inference*],
-  [Probabilistic modeling integrates deep learning-based classification with probabilistic inference to estimate the likelihood of systemic diseases, providing actionable insights for users and aiming to offer probabilistic risk assessments.],
+  [Probabilistic modeling pairs deep learning classification with probabilistic inference. Together they estimate systemic disease likelihood and give users risk assessments they can actually use.],
 
-  [*Recall*], [Recall is a standard evaluation metric for CNN models.],
+  [*Recall*], [Recall is a standard metric used to evaluate CNN models.],
 
   [*ResNet*],
-  [ResNet is a CNN model considered for use in the system that offers a solid baseline due to its residual connections and has been fine-tuned for superior performance in onychomycosis diagnosis compared to dermatologists.],
+  [ResNet was considered for the system. Residual connections give it a reliable baseline. Fine-tuned versions have beaten dermatologists at diagnosing onychomycosis, which says something.],
 
-  [*Sensitivity*], [Sensitivity is an evaluation metric for probabilistic models.],
+  [*Sensitivity*], [Sensitivity evaluates probabilistic model performance.],
 
-  [*Specificity*], [Specificity is an evaluation metric for probabilistic models.],
+  [*Specificity*], [Specificity evaluates probabilistic model performance.],
 
   [*SwinV2-T*],
-  [SwinV2-T achieved the highest performance across all evaluated metrics (accuracy, precision, recall, F1 score) among five architectures, despite its computational intensity, and is integrated into the business logic layer for accurate diagnosis.],
+  [Out of five architectures, SwinV2-T scored highest on every metric — accuracy, precision, recall, F1 score. Computationally heavy, but it is built into the business logic layer for running diagnoses.],
 
   [*Transfer Learning*],
-  [Transfer learning involves fine-tuning pre-trained models (e.g., EfficientNetV2 and ConvNeXt-Tiny), initially trained on large-scale datasets, using the nail disease dataset to accelerate training and improve performance, with normalization ensuring consistency for effectiveness.],
+  [Transfer learning takes models like EfficientNetV2 and ConvNeXt-Tiny that were pre-trained on large datasets and fine-tunes them on nail disease images. Training goes faster, results improve. Normalization keeps inputs consistent enough for this to hold up.],
 
   [*VGG16*],
-  [VGG16 is an older architecture benchmarked in the study that demonstrated the lowest accuracy and F1 score with the highest number of parameters, underscoring its inefficiency for fine-grained classification tasks compared to more modern architectures, although a hybrid VGG16 and Random Forest Model achieved 97.02% accuracy.],
+  [VGG16 is older. The study benchmarked it and it came in last — lowest accuracy, lowest F1 score, most parameters. Not efficient for fine-grained classification next to newer architectures. A hybrid VGG16–Random Forest setup did hit 97.02% accuracy, though.],
 
   [*Vision Transformers (ViTs)*],
-  [Vision Transformers are explored in the study alongside CNNs for their ability to capture long-range dependencies and attention-based representations, potentially enhancing classification in complex image scenarios, and one model was selected for building.],
+  [The study explores Vision Transformers alongside CNNs. Their attention-based representations capture long-range dependencies, which could help on harder classification problems. One ViT model was picked for the final build.],
 
   [*Weighted Loss Function*],
-  [A weighted loss function is used to address class imbalance within the dataset by assigning class weights inversely proportional to each class's frequency, ensuring underrepresented classes contributed more significantly to the loss during training and mitigating bias toward majority classes.],
+  [Weighted loss functions deal with class imbalance. Each class gets a weight inversely proportional to how often it shows up, so rare classes push the loss harder during training. Without this, the model leans toward whatever class has the most samples.],
 )
 
 #heading(level: 3, outlined: false)[Operational Terms]
@@ -566,48 +566,48 @@ This section defines any terms or phrases derived from the study operationally, 
   inset: 1em,
 
   [*Beau's Lines*],
-  [Beau's Lines are transverse linear depressions or grooves across the nail plate, resulting from a temporary decrease in nail growth due to severe systemic illness, trauma, drug use, or conditions like Raynaud's disease, diabetes, or zinc deficiency, and have been associated with COVID-19.],
+  [Beau's Lines are transverse grooves or depressions that run across the nail plate. They show up when nail growth temporarily slows down — usually from severe systemic illness, trauma, or drug use. Conditions like Raynaud's disease, diabetes, and zinc deficiency can cause them. They have also been linked to COVID-19.],
 
   [*Biomarkers (Fingernail)*],
-  [Fingernails are considered a "window to systemic health" and a globally recognized source of biomarkers, revealing early signs of serious conditions through subtle changes in their appearance, which the study focuses on for probabilistic detection of systemic diseases.],
+  [Fingernails are often called a "window to systemic health," and for good reason. Subtle changes in how they look can reveal early signs of serious conditions. The study treats them as a globally recognized source of biomarkers and focuses on using those signals for probabilistic detection of systemic diseases.],
 
   [*Blue Finger / Cyanosis*],
-  [Blue Finger or Cyanosis is a condition characterized by acute bluish discoloration of fingers, potentially with pain, indicating that organs, muscles, and tissues are not receiving enough blood/oxygen, and signifies lower oxygen saturation leading to deoxyhemoglobin accumulation.],
+  [Blue Finger, or Cyanosis, shows up as acute bluish discoloration of the fingers, sometimes with pain. It means organs, muscles, and tissues are not getting enough blood or oxygen. Lower oxygen saturation causes deoxyhemoglobin to build up, which is what produces the color change.],
 
   [*Clubbing (Hippocratic Nails)*],
-  [Clubbing, also known as Hippocratic Nails, is a nail abnormality characterized by fingers in the form of "drum sticks" or nails like "watch glasses," where the nail plate curvature is strengthened, and is considered an important early clinical symptom of severe health disorders, mostly related to cardiopulmonary malfunctioning.],
+  [Clubbing — also called Hippocratic Nails — is a nail abnormality where the fingers take on a "drum stick" shape and the nails curve like "watch glasses." The nail plate curvature becomes more pronounced. It is considered an important early clinical sign, mostly tied to cardiopulmonary problems.],
 
   [*Fingernail Disease / Nail Disorders*],
-  [Fingernail diseases are a common problem affecting millions globally, some of which can indicate internal systemic diseases, and the study focuses on their classification and the probabilistic inference of systemic diseases.],
+  [Fingernail diseases affect millions of people worldwide. Some of them point to internal systemic conditions. The study classifies these diseases and uses probabilistic inference to connect them back to broader health issues.],
 
-  [*Healthy Nail*], [Healthy nails are smooth, consistent in color, and usually indicate good health.],
+  [*Healthy Nail*], [Healthy nails tend to be smooth and consistent in color. They usually signal good health.],
 
   [*Koilonychia*],
-  [Koilonychia is a nail abnormality that enhances the accuracy of dermatological examination and alerts clinicians to generalized health issues, though some models may struggle with classifying it.],
+  [Koilonychia is a nail abnormality that makes dermatological exams more accurate and can alert clinicians to broader health issues. Some models have a harder time classifying it, though.],
 
   [*Muehrcke's Lines*],
-  [Muehrcke's Lines are a nail condition that is the most underrepresented class in the dataset, but some models show strong recall for it, which is critical in a preventive diagnostic context.],
+  [Muehrcke's Lines is the most underrepresented class in the dataset. Even so, some models show strong recall for it — which matters in a preventive diagnostic setting.],
 
   [*Nail Feature*],
-  [Refers to the distinct visual or morphological characteristics of the fingernail, such as color, texture, shape, thickness, and the presence of ridges, lines, or discoloration. These features serve as key biomarkers analyzed by the deep learning model to identify and classify nail diseases, which may indicate underlying systemic health conditions.],
+  [A nail feature is any distinct visual or morphological characteristic of the fingernail — color, texture, shape, thickness, ridges, lines, discoloration. The deep learning model analyzes these as biomarkers to classify nail diseases, which can point to underlying systemic health conditions.],
 
   [*Onychomycosis*],
-  [Onychomycosis is a common nail condition for which region-based CNNs and deep learning have demonstrated superior diagnostic performance compared to dermatologists.],
+  [Onychomycosis is a common nail condition. Region-based CNNs and deep learning approaches have outperformed dermatologists in diagnosing it.],
 
   [*Onychogryphosis*],
-  [Onychogryphosis is a nail disease mentioned as an architectural change in nails that constitutes important diagnostic information.],
+  [Onychogryphosis is a nail disease involving architectural changes in the nail. Those changes carry important diagnostic information.],
 
   [*Pitting*],
-  [Pitting refers to small depressions in the nail associated with psoriasis or other systemic diseases, serving as architectural changes that can indicate systemic issues, and some models show improvement in classifying it.],
+  [Pitting shows up as small depressions in the nail, usually associated with psoriasis or other systemic diseases. These architectural changes can signal systemic issues. Some models got better at classifying it over time.],
 
   [*Preventive Healthcare*],
-  [Preventive healthcare is the primary goal of the study, which aims to develop a system empowering individuals globally by providing a non-invasive, accessible tool for early health screening, detection, and actionable recommendations.],
+  [Preventive healthcare is what the study is ultimately about. The goal is a non-invasive, accessible tool that lets people screen for health issues early and get actionable recommendations — available to anyone, anywhere.],
 
   [*Systemic Diseases*],
-  [Systemic diseases are conditions such as diabetes, cardiovascular disorders, and liver conditions that often manifest early through fingernail abnormalities, providing a critical window for intervention, and the study aims for their probabilistic detection using deep learning on fingernail biomarkers.],
+  [Systemic diseases — diabetes, cardiovascular disorders, liver conditions — often show up early through fingernail abnormalities. That creates a window for intervention. The study uses deep learning on fingernail biomarkers to estimate the probability of these conditions.],
 
   [*Terry's Nails*],
-  [Terry's Nails are characterized by white opacification of the nails with effacement of the lunula and distal sparing, most commonly associated with hepatic cirrhosis, and can also be a sequela of other conditions like congestive heart failure, chronic kidney disease, diabetes mellitus, or normal aging.],
+  [Terry's Nails present as white opacification of the nail with the lunula effaced and distal sparing. Hepatic cirrhosis is the most common association, but congestive heart failure, chronic kidney disease, diabetes mellitus, and even normal aging can produce them too.],
 )
 
 #pagebreak()
