@@ -2487,7 +2487,7 @@ Among the models evaluated, ConvNeXt-Tiny and SwinV2-T demonstrated the superior
 
 ==== Strategy Evaluation
 ===== Scratch
-The Scratch strategy, which involved initializing models with random weights rather than using pre-trained ImageNet features, demonstrated the lowest performance among all training configurations, serving as a control experiment to validate the necessity of transfer learning for this specific domain. As indicated in the results, SwinV2-T and VGG-16 struggled significantly to converge, achieving accuracies of only 11.40% and 13.68% respectively, performance levels that are barely superior to random guessing in a 10-class classification task. While EfficientNetV2-S and ResNet-50 achieved comparatively better results with accuracies of approximately 51.14% and 50.81%, these figures remained substantially lower than the 80% threshold targeted by the study. These results confirm that the dataset size of approximately 7,000 images was insufficient for deep architectures to learn complex feature extraction filters from the ground up, highlighting the "data-hungry" nature of these models and underscoring the critical role of Transfer Learning in medical imaging tasks where data is often limited.
+The Scratch strategy used random weights, no pre-trained ImageNet features, nothing borrowed from prior training. It performed the worst out of all configurations, which was expected. It was run mainly as a control to check whether transfer learning was actually necessary for this kind of task. SwinV2-T and VGG-16 barely converged at all, finishing with accuracies of 11.40% and 13.68%. For a 10-class problem, that's close to random guessing. EfficientNetV2-S and ResNet-50 did better, reaching around 51.14% and 50.81%, but those numbers still fell well short of the 80% target the study was aiming for. Training from random weights on roughly 7,000 images wasn't enough for these models to learn useful filters from scratch. These architectures need a lot of data, more than what was available here, and the results make that clear. Transfer learning isn't optional in a setting like this.
 
 #{
 show table: set text(9pt)
@@ -2545,7 +2545,7 @@ figure(
 }
 
 ===== Baseline
-The Baseline strategy, which involved freezing the pre-trained backbone and training only the classification head, served as a benchmark to evaluate the transferability of ImageNet features to the nail domain without modifying the feature extractor. As shown in the results, SwinV2-T and ConvNeXt-Tiny achieved the highest baseline accuracies of approximately 72.96% and 71.66% respectively, indicating that modern architectures possess robust feature representations that transfer well even without fine-tuning. In contrast, older architectures like VGG-16 and ResNet-50 yielded lower accuracies around 63.84%, suggesting that their pre-trained features were less immediately applicable to the specific nuances of nail biomarkers and required further adaptation.
+The Baseline strategy froze the pre-trained backbone entirely, training only the classification head on top. No changes were made to the feature extractor, it was kept fixed. The point was to see how much of what these models learned from ImageNet would carry over to nail images on its own. SwinV2-T and ConvNeXt-Tiny held up well under these frozen conditions, reaching baseline accuracies of around 72.96% and 71.66%. Their features transferred without much help. VGG-16 and ResNet-50 came in lower, both sitting near 63.84%, which suggests their pre-trained features didn't map as cleanly onto the specifics of nail biomarkers, at least not without some fine-tuning first. Older architectures, it seems, need more nudging to adapt.
 
 #{
 show table: set text(9pt)
@@ -2603,7 +2603,7 @@ figure(
 }
 
 ===== Full Finetune
-In the Full Fine-Tuning strategy, all layers of the model were unfrozen, allowing the entire network to update its weights and adapt to the specific features of the nail dataset. This approach resulted in significant performance gains across all models compared to the Baseline and Scratch strategies, particularly for VGG-16, which saw its accuracy jump to 74.92%, making it the most effective strategy for this specific architecture. SwinV2-T achieved a remarkable accuracy of 89.25% with this method, demonstrating the power of allowing the model to fully adjust its parameters, although this comes with a higher computational cost and risk of overfitting compared to gradual approaches.
+Full fine-tuning unfroze every layer, letting the whole network adjust its weights to better fit the nail dataset. The gains were clear across all models, bigger than anything seen in the Baseline or Scratch runs. VGG-16 benefited the most. Its accuracy jumped to 74.92%, the best result any strategy produced for that architecture. SwinV2-T reached 89.25%, though that came with trade-offs. Full fine-tuning is more expensive to run and more prone to overfitting than gradual fine-tuning, a fair cost given the results, but not something to overlook.
 
 #{
 show table: set text(9pt)
@@ -2661,7 +2661,7 @@ figure(
 }
 
 ===== Gradual Unfreeze
-The Gradual Unfreezing strategy progressively unfroze layers from the classification head backwards to the input layers, aiming to preserve low-level features while adapting high-level abstractions. This strategy proved most effective for modern, deep architectures, with ConvNeXt-Tiny and EfficientNetV2-S achieving their peak performances of 88.93% and 87.95% respectively. However, VGG-16 struggled with this approach, dropping to an accuracy of 61.08%, likely due to its architectural simplicity failing to benefit from the staggered learning rate schedules that optimize complex residual or transformer-based networks.
+Gradual unfreezing progressively unlocked layers starting from the classification head and moving backward. Trying to keep the lower-level features intact while tweaking the more abstract stuff. For the newer architectures, this approach was the best one. ConvNeXt-Tiny and EfficientNetV2-S hit their peak performances here, 88.93% and 87.95%. VGG-16 really struggled with this approach, though, dropping down to 61.08% accuracy since its architecture is just too simple. It couldn't really benefit from the staggered learning rate schedules that usually help out those complex residual or transformer networks.
 
 #{
 show table: set text(9pt)
@@ -2722,7 +2722,7 @@ figure(
 #set image(width: 80%)
 
 ===== VGG-16
-As the oldest architecture evaluated, VGG-16 served as a classical baseline, achieving a peak accuracy of 74.92% using the Full Fine-Tuning strategy. While it demonstrated a decent recall at 77.78%, it had the lowest overall performance among the five models and the highest parameter count, making it computationally inefficient. The confusion matrix reveals that VGG-16 struggled with differentiating visually similar classes, such as Koilonychia and Pitting, and showed misclassifications between Clubbing and Terry’s Nails, highlighting the limitations of its shallower feature extraction capabilities compared to modern deep learning models.
+VGG-16 was the oldest model we tested, so it worked as the classic baseline. It peaked at 74.92% accuracy with Full Fine-Tuning, and recall was decent at 77.78%, but it still ended up the weakest overall. It also had the biggest parameter count, so it was the most costly to run, costly to run. The confusion matrix shows it had trouble separating look‑alike classes like Koilonychia and Pitting, and it mixed up Clubbing with Terry’s Nails too. That points back to its shallower feature extraction, which just does not keep up with newer deep models.
 
 #figure(
   caption: "Strategy comparison of VGG16",
@@ -2730,7 +2730,7 @@ As the oldest architecture evaluated, VGG-16 served as a classical baseline, ach
 ) <strategy-compare-vgg>
 
 ===== ResNet-50
-ResNet-50 demonstrated a solid improvement over VGG-16, achieving a peak accuracy of 79.48% with the Full Fine-Tuning strategy. The introduction of residual connections allowed it to learn deeper features without the vanishing gradient problem, resulting in a balanced precision of 79.48% and recall of 82.88%. Despite its stability as an industrial standard, it was still outperformed by the more modern architectures including EfficientNet, Swin, and ConvNeXt, suggesting that while reliable, standard residual blocks may not capture the fine-grained textural details of nail biomarkers as effectively as attention-based or modernized convolutional mechanisms.
+ResNet‑50 did a clear step up from VGG‑16, topping out at 79.48% accuracy with Full Fine‑Tuning. Residual connections let it go deeper without the vanishing gradient mess, and that gave a fairly balanced 79.48% precision and 82.88% recall. Still, the newer models beat it, EfficientNet, Swin, ConvNeXt, so even if it stays a solid industry standard, those plain residual blocks can miss the tiny texture details in nail biomarkers. It’s reliable, yes, but reliable only goes so far.
 
 #figure(
   caption: "Strategy comparison of ResNet-50",
@@ -2738,7 +2738,7 @@ ResNet-50 demonstrated a solid improvement over VGG-16, achieving a peak accurac
 ) <strategy-compare-resnet>
 
 ===== EfficientNetV2-S
-EfficientNetV2-S demonstrated high efficiency and strong performance, achieving its best accuracy of 87.95% using the Gradual Unfreezing strategy. This model balanced accuracy with computational cost, utilizing fewer parameters at 21.5 million than ResNet-50 while delivering significantly better results. The model showed high precision at 87.95% and recall at 88.87%, indicating that its progressive learning capability and fused-MBConv blocks are highly effective for medical image classification tasks where subtle feature detection is critical.
+EfficientNetV2-S came out efficient and strong, hitting its best accuracy at 87.95% with Gradual Unfreezing. It balanced accuracy and cost, using fewer parameters (21.5 million) than ResNet-50 while still doing better, better. Precision was 87.95% and recall 88.87%, so the progressive learning and fused‑MBConv blocks really fit medical image work where tiny, subtle details matter.
 
 #figure(
   caption: "Strategy comparison of EfficientNetV2-S",
@@ -2746,7 +2746,7 @@ EfficientNetV2-S demonstrated high efficiency and strong performance, achieving 
 ) <strategy-compare-efficientnet>
 
 ===== SwinV2-T
-The Vision Transformer model, SwinV2-T, achieved one of the highest performances in the study, with a peak accuracy of approximately 88.27% under the Gradual Unfreezing strategy and up to 89.25% under Full Fine-Tuning,. Its ability to model long-range dependencies through shifted window attention allowed it to capture global context within the nail images, resulting in high consistency across precision, recall, and F1-scores. However, the trade-off for this high performance is the complexity of interpretability, as transformer models lack the straightforward feature maps inherent to CNNs.
+SwinV2-T, a vision transformer, landed near the top: about 88.27% with Gradual Unfreezing and up to 89.25% with Full Fine-Tuning. And the shifted-window attention lets it model long-range links, so it captures the global context in nail images and keeps precision, recall, and F1 pretty steady. The trade-off is interpretability, a trade-off again, transformers do not give the straightforward feature maps you get from CNNs.
 
 #figure(
   caption: "Strategy comparison of SwinV2-T",
@@ -2754,7 +2754,7 @@ The Vision Transformer model, SwinV2-T, achieved one of the highest performances
 ) <strategy-compare-swinv2t>
 
 ===== ConvNeXt-Tiny
-ConvNeXt-Tiny emerged as the top-performing convolutional model, achieving an accuracy of 88.93% with the Gradual Unfreezing strategy, effectively matching the performance of the Vision Transformer. By modernizing the standard ResNet architecture with design choices inspired by transformers, such as larger kernel sizes and fewer activation layers, ConvNeXt retained the inductive biases of CNNs while achieving state-of-the-art results. It demonstrated the highest precision at 88.88% and F1-score at 88.52% among the best variants, proving to be the most robust model for classifying the diverse and subtle features of the fingernail dataset.
+ConvNeXt-Tiny was the best CNN in the run, hitting 88.93% with Gradual Unfreezing and basically matching the Vision Transformer. Modernized ResNet choices came in, bigger kernels, fewer activations, but the CNN bias stayed, and the results were state‑of‑the‑art. Precision peaked at 88.88% and F1 score at 88.52%, the highest of the best variants, so it ended up the most solid for the mix of subtle, varied nail features. And that mix of subtle features mattered.
 
 #figure(
   caption: "Strategy comparison of ConvNeXt-Tiny",
@@ -2762,7 +2762,7 @@ ConvNeXt-Tiny emerged as the top-performing convolutional model, achieving an ac
 ) <strategy-compare-convnext>
 
 ==== Best Variant per Model
-The evaluation of training strategies reveals a distinct divergence between older and newer architectures. As detailed in the summary table, older models like VGG-16 and ResNet-50 performed best with Full Fine-Tuning, achieving accuracies of 74.92% and 79.48% respectively, as their simpler structures benefited from a complete update of weights. In contrast, modern architectures such as EfficientNetV2-S, SwinV2-T, and ConvNeXt-Tiny achieved optimal results using Gradual Unfreezing, with ConvNeXt-Tiny reaching the highest overall accuracy of 88.93%,. This suggests that sophisticated modern architectures benefit from a training regime that carefully preserves their pre-trained feature extraction capabilities while progressively adapting to the specific domain of nail biomarkers.
+Training strategy results split the older and newer models. The summary table shows VGG‑16 and ResNet‑50 did best with Full Fine‑Tuning, at 74.92% and 79.48% accuracy, because their simpler builds needed a full weight update. The newer group, EfficientNetV2‑S, SwinV2‑T, ConvNeXt‑Tiny, peaked with Gradual Unfreezing, and ConvNeXt‑Tiny had the top accuracy at 88.93%. That pattern says modern models do better when you keep their pre‑trained feature extractors intact, mostly intact, then let them adapt bit by bit to the nail domain.
 
 #{
 show table: set text(9pt)
@@ -2825,7 +2825,7 @@ figure(
 ) <best-model-compare>
 
 ===== VGG-16
-The evaluation of VGG-16 using the Full Fine-Tuning strategy highlights its limitations in discerning subtle nail features. The confusion matrix reveals significant misclassifications, particularly between Koilonychia and other visually similar classes. The normalized confusion matrix quantifies this weakness, showing a very low correct classification rate of 39.29 percent for Koilonychia and 50.00 percent for Muehrcke’s Lines, suggesting the model struggles with texture-based features. The per-class metrics reinforce this, displaying a high disparity between the model's performance on distinct classes like Onychogryphosis, which achieved 97.06 percent, and its poor recall on subtle classes. The training history indicates that while the model converged, the validation accuracy plateaued early around the 75 percent mark, suggesting the architecture reached its learning capacity for this specific dataset.
+VGG-16 with Full Fine-Tuning shows the limits on subtle nail cues. The confusion matrix shows many mixups, especially Koilonychia against look‑alike classes. The normalized matrix puts numbers on it: 39.29 percent correct for Koilonychia, 50.00 percent for Muehrcke’s Lines, so texture details are slipping. Per-class metrics back that up, with Onychogryphosis at 97.06 percent while small-detail classes fall behind. The training history still converged, but validation accuracy flattened early near 75 percent, so the model hit its ceiling for this dataset.
 
 #figure(
   caption: "Confusion matrix of VGG-16 (full finetune)",
@@ -2848,7 +2848,7 @@ The evaluation of VGG-16 using the Full Fine-Tuning strategy highlights its limi
 ) <vgg-training_history>
 
 ===== ResNet-50
-The results for ResNet-50 under Full Fine-Tuning demonstrate an improvement over VGG-16 but persistent difficulties with specific classes. The confusion matrix shows a reduction in false negatives compared to VGG-16, yet the normalized confusion matrix indicates that the model still struggles significantly with Koilonychia, correctly identifying it only 32.14 percent of the time. However, it performed exceptionally well on Pitting with 96.88 percent accuracy and Melanonychia at 91.67 percent. The per-class metrics show a balanced precision and recall for most classes except for the minority classes where feature extraction was less robust. The training history graphs display a steady decrease in loss, but the gap between training and validation accuracy suggests mild overfitting compared to the more modern architectures.
+ResNet-50 under Full Fine-Tuning is better than VGG-16, but the hard classes still bite. The confusion matrix shows fewer false negatives, yet the normalized matrix says Koilonychia is only 32.14 percent correct. It does very well on Pitting at 96.88 percent and Melanonychia at 91.67 percent. Per-class metrics stay fairly balanced, except for the minority classes where features are thinner, thinner. Loss drops steadily, but the train vs validation gap hints at mild overfitting compared to newer models.
 
 #grid(
   columns: (1fr),
@@ -2877,7 +2877,7 @@ The results for ResNet-50 under Full Fine-Tuning demonstrate an improvement over
 
 
 ===== EfficientNetV2-S
-The EfficientNetV2-S model trained with Gradual Unfreezing demonstrated robust generalization capabilities. The confusion matrix is noticeably cleaner with fewer off-diagonal misclassifications compared to ResNet-50. The normalized confusion matrix highlights a massive improvement in detecting difficult classes, with Koilonychia accuracy rising to 75.00 percent and Terry’s Nails achieving 92.86 percent. The per-class metrics indicate high consistency, with precision and recall scores remaining well-balanced above 80 percent for almost all categories. The training history shows a smooth convergence curve where validation loss decreases in tandem with training loss, validating the effectiveness of the Gradual Unfreezing strategy in preventing catastrophic forgetting for this architecture.
+EfficientNetV2-S with Gradual Unfreezing generalizes well. Its confusion matrix is cleaner, with fewer off‑diagonal errors than ResNet-50. The normalized matrix shows big gains on tough classes: Koilonychia up to 75.00 percent and Terry’s Nails at 92.86 percent. Per-class precision and recall sit above 80 percent for most classes, consistent and steady. Training history is smooth, validation loss tracks training loss, which supports gradual unfreezing as a good fit here.
 
 #grid(
   columns: (1fr),
@@ -2902,7 +2902,7 @@ The EfficientNetV2-S model trained with Gradual Unfreezing demonstrated robust g
 )
 
 ===== SwinV2-T
-The SwinV2-T transformer model using Gradual Unfreezing delivered some of the highest specific detection rates in the study. The confusion matrix shows very few errors, and the normalized confusion matrix reveals that the model achieved a perfect 100.00 percent accuracy for Pitting and a very high 93.10 percent for Blue Nail. It also performed strongly on the underrepresented Muehrcke’s Lines class with 87.50 percent accuracy, outperforming the CNN baselines. The per-class metrics show that the transformer architecture excels at capturing global context, resulting in high F1-scores across diverse nail conditions. The training history demonstrates rapid learning, with validation accuracy quickly reaching high levels and remaining stable throughout the later epochs.
+SwinV2-T with Gradual Unfreezing hits some of the highest per-class scores. The confusion matrix is sparse, and the normalized matrix shows 100.00 percent for Pitting and 93.10 percent for Blue Nail. It also does well on Muehrcke’s Lines at 87.50 percent, beating the CNN baselines. Per-class metrics show high F1 scores across classes, global context seems to help. Training accuracy rises fast and stays stable, no wild swings.
 
 #grid(
   columns: (1fr),
@@ -2926,7 +2926,7 @@ The SwinV2-T transformer model using Gradual Unfreezing delivered some of the hi
 )
 
 ===== ConvNeXt-Tiny
-ConvNeXt-Tiny with Gradual Unfreezing emerged as the most balanced and effective model. The confusion matrix demonstrates the fewest aggregate errors across all ten classes. The normalized confusion matrix shows consistent performance with no class dropping below 80 percent accuracy; notably, it achieved 97.22 percent for Melanonychia and 87.50 percent for Muehrcke’s Lines. The per-class metrics confirm its superiority, showing the highest harmonic mean of precision and recall among all models. The training history illustrates a stable optimization process where the model effectively minimized loss without significant fluctuations, proving that modernizing convolutional architectures with transformer-like designs yields state-of-the-art results for fingernail disease classification.
+ConvNeXt-Tiny with Gradual Unfreezing ends up the most balanced overall. The confusion matrix has the fewest total errors across the ten classes. The normalized matrix stays above 80 percent for every class, with 97.22 percent on Melanonychia and 87.50 percent on Muehrcke’s Lines. Per-class metrics are strongest in harmonic mean, so precision and recall line up best here. Training history is stable too, loss drops without bumps, showing the modernized CNN design really works for this nail task.
 
 #grid(
   columns: (1fr),
@@ -2954,7 +2954,7 @@ ConvNeXt-Tiny with Gradual Unfreezing emerged as the most balanced and effective
 
 
 ==== Model Interpretability
-To address the black box nature of deep learning, the researchers implemented interpretability techniques such as Grad-CAM and saliency maps to visualize the decision-making process of the models. For CNN-based models like ResNet-50 and EfficientNetV2-S, heatmaps were generated to highlight the specific regions of the nail plate, such as discolorations in Melanonychia or structural changes in Clubbing, that most influenced the classification. This visual validation confirmed that the models were focusing on relevant clinical features rather than background noise. However, interpretability remained a challenge for the SwinV2-T transformer model due to its attention-based architecture, which does not produce the same feature maps as convolutional networks, representing a trade-off between the model's high accuracy and its explainability.
+To reduce the black box problem, the researchers Grad-CAM and saliency maps to show where the models look. For CNNs like ResNet-50 and EfficientNetV2-S, heatmaps point to nail‑plate regions, like Melanonychia discoloration or Clubbing structure, that drive the decision. That visual check shows the models focus on the right clinical cues, not background noise. But SwinV2-T still resists easy interpretability, because its attention blocks do not output the same feature maps, so there is a trade-off between accuracy and explainability, a real trade-off.
 
 #figure(
   caption: "Sample saliency maps using different cam tools",
