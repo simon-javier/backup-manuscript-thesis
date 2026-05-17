@@ -1217,78 +1217,78 @@ Nail images have a lot going on, texture, color, spatial patterns that vary acro
 @dnn shows the architecture of a deep neural network. Unlike basic neural networks, deep neural networks consist of many more hidden layers. Machine learning on these deep neural networks is called deep learning.
 
 ==== Convolutional Neural Networks
-According to #cite(<ibm-2025b>), convolutional neural networks are distinguished from other neural networks by their superior performance with image, speech or audio signal inputs. They have three main types of layers, which are the convolutional layer, pooling layer, and fully-connected (FC) layer.
+What sets convolutional neural networks apart, according to #cite(<ibm-2025b>), is how well they handle image, speech, and audio data. They rely on three layer types: convolutional, pooling, and fully connected.
 
-This nature of superior performance in images is the primary reason the researchers chose this type of neural networks. Convolutional neural networks are particularly well-suited for visual recognition tasks due to their ability to capture spatial hierarchies and local dependencies in images. The convolutional layers automatically learn relevant patterns such as edges, textures, and shapes, while deeper layers can abstract more complex features like structures or the anomalies present in the nail photos.
+That image performance is why the researchers went with CNNs. They pick up on spatial patterns and local details in images in a way other architectures do not. The convolutional layers learn edges, textures, shapes — and as you go deeper, the network starts recognizing more abstract things like structural abnormalities in nail photos.
 
 #figure(image("img/cnn-developer-breach.png"), caption: flex-caption(
   [Convolutional Neural Network Architecture #cite(<ibm-2025b>, form: "normal")],
   [Convolutional Neural Network Architecture],
 ))<cnn>
 
-@cnn illustrates the architecture of a CNN, which consists of two primary components: feature extraction and classification. The input image is processed through a series of convolutional layers with ReLU activation, followed by pooling layers that progressively reduce spatial dimensions while retaining important features. These operations generate hierarchical feature maps that capture visual patterns from the image. The output of the feature extraction stage is then flattened and passed through fully connected layers, which act as the classification component. Finally, a softmax activation function produces a probabilistic distribution over predefined classes, enabling the model to make predictions based on the learned features.
+@cnn lays out the CNN architecture. Two main stages: feature extraction, then classification. The image goes through convolutional layers with ReLU activation and pooling layers that reduce spatial size but hold onto the features that matter. Those layers produce feature maps, basically hierarchical snapshots of visual patterns the network found. After that, everything gets flattened and pushed through fully connected layers. A softmax function at the end outputs probabilities across the classes.
 
-All the CNNs used in this study follow this same fundamental procedure, only having differences in depth and complexity of their architecture like the number of convolutional and pooling layers, the size and the number of filters, and the structure of the fully connected layers.
+The CNNs in this study all follow that same general flow. Where they differ is in depth and how they are configured — number of convolutional and pooling layers, filter count, filter size, and the layout of the fully connected portion.
 
 ==== Vision Transformers
-According to #cite(<shah-2022>), in ViTs, images are represented as sequences, and class labels for the image are predicted, which allows models to learn image structure independently. Input images are treated as a sequence of patches where every patch is flattened into a single vector by concatenating the channels of all pixels in a patch and then linearly projecting it to the desired input dimension.
+ViTs treat images as sequences, according to #cite(<shah-2022>). The input image gets split into patches, each patch flattened into a single vector by concatenating pixel channels and then linearly projecting it to the right dimension. From there, the model learns image structure on its own and predicts class labels.
 
-The researchers considered testing ViTs due to their ability to model global relationships across an image rather than relying on local feature extractions. The researchers explored whether the unique architecture of ViTs can offer advantages over CNN models in classifying nail features. Testing it allowed researchers to compare performance, generalization, and representation against CNNs, contributing to a more comprehensive evaluation of model effectiveness. Vision Transformers generally perform better than CNNs, so the researchers considered using it. However, they are more computationally expensive and harder to interpret, so it's a matter of trade-offs.
+The researchers wanted to test ViTs because they model global relationships across an entire image instead of relying on local feature extraction the way CNNs do. The question was whether that kind of architecture could offer an edge when classifying nail features. And ViTs do tend to outperform CNNs in general. But they are also more computationally expensive and harder to interpret, so there are trade-offs. Testing both gave the researchers a broader basis for comparing performance and generalization.
 
 #figure(image("img/vit-geek-for-geeks.png"), caption: flex-caption(
   [Architecture and Working of Vision Transformers #cite(<geeksforgeeks-2025d>, form: "normal")],
   [Architecture and Working of Vision Transformers],
 )) <vit>
 
-@vit shows the architecture of ViTs. The figure is from #cite(<geeksforgeeks-2025d>). The input image is divided into patches which are flattened and embedded using linear projection. Positional encodings are then added to the patch embeddings to retain spatial information. The patch embeddings are passed through multiple transformer encoder layers, which include multi-head self-attention and feed-forward networks. Lastly, the CLS token's output is extracted and fed into Multi-Layer Perceptrons (MLP) for the final classification.
+@vit shows the ViT architecture, from #cite(<geeksforgeeks-2025d>). The image gets divided into patches, flattened, and embedded through linear projection. Positional encodings get added so the model knows where each patch sits spatially. Those embeddings then pass through transformer encoder layers — multi-head self-attention and feed-forward networks. At the end, the CLS token's output goes into an MLP for classification.
 
 ==== Transfer Learning
-According to #cite(<murel-jacob-2025a>), transfer learning uses pre-trained models from one machine learning task or dataset to improve performance and generalizability on a related task or dataset.
+Transfer learning takes a model that was already trained on one task and reuses it for a different but related one #cite(<murel-jacob-2025a>). Instead of building everything from the ground up, you start with what the model already knows.
 
 #figure(image("img/transfer-learning.png"), caption: flex-caption(
   [Transfer Learning #cite(<kaya-2022>, form: "normal")],
   [Transfer Learning],
 )) <transfer-learning>
 
-The researchers utilized and made use of transfer learning to gain several advantages in training. It helped the researchers reduce computational costs like model training time and training data. Using transfer learning also helps improve generalizability because it involves retraining an existing model with a new dataset, and the re-trained model will consist of knowledge gained from multiple datasets. In this case, the pre-trained models from `torchvision` were trained on ImageNet, enabling the model to benefit from features that were already learned from a wide range of images in ImageNet.
+There were a few reasons the researchers went with this approach. It cut down on training time. They did not need as much data either. And because the model retains what it learned from its original dataset, retraining it on new data tends to make it generalize better — the knowledge stacks. The pre-trained models here came from `torchvision`, already trained on ImageNet. So before the model ever touched a nail image, it could already pick up on a broad set of visual features.
 
 ==== Fine-Tuning
-Fine-tuning and transfer learning are related but distinct techniques. According to #cite(<murel-jacob-2025a>), while both approaches involve reusing pre-existing models instead of training from scratch, they differ in how the pre-trained models are adapted. Transfer learning typically involves using the pre-trained model as a fixed feature extractor by freezing its weights and training only a new classifier layer on top. In contrast, fine-tuning refers to unfreezing part or all of the pre-trained model and continuing the training process on a new, task-specific dataset. This allows the model to adapt its internal representations to better fit the characteristics of the target domain.
+Fine-tuning and transfer learning are related, but they work differently. #cite(<murel-jacob-2025a>) explains that both reuse pre-existing models instead of training from scratch — the difference is in how the model gets adapted. With transfer learning, you freeze the model's weights and use it as a fixed feature extractor, only training a new classifier layer on top. Fine-tuning goes further. You unfreeze part or all of the pre-trained model and keep training on a new dataset that is specific to your task, so the model can adjust its internal representations to fit the target domain better.
 
-In the researchers case, they further trained pre-trained models on their nail dataset. This was done to allow the model to refine general visual features it learned from Imagenet and adapt them to visual cues present in nail images.
+The researchers fine-tuned pre-trained models on their nail dataset. The models had already picked up general visual features from ImageNet, and fine-tuning let them adapt those features to the kinds of visual cues that show up in nail images specifically.
 
 ==== Multiclass Classification
-Multiclass classification is a machine learning classification task that consists of more than two classes, or outputs #cite(<data-robot-2025>, form: "normal"). In this study, the researchers adopted a multiclass classification approach because there are a total of 10 distinct classes of nail features in their dataset. The model is trained to identify which specific nail feature is present in a given input image. Since each image belongs to only one category and the task requires distinguishing among multiple possibilities, multiclass classification was the appropriate and necessary framework.
+A classification task with more than two possible outputs is called multiclass classification #cite(<data-robot-2025>, form: "normal"). The dataset in this study contains 10 nail feature classes, so that framework was the obvious fit. Given an input image, the model has to decide which nail feature it is looking at. Every image falls under one category only, but there are ten to choose from.
 
 #figure(image("img/multiclass-classification.png"), caption: flex-caption(
   [Multiclass Classification #cite(<kainat-2023>, form: "normal")],
   [Multiclass Classification],
 )) <multiclass-classification>
 
-@multiclass-classification shows an example of an illustration of multiclass classification. Each shape is its own label or class. In this illustration, the model would take an image of an object as input and predict one of the three possible classes which are "triangle", "cross", or "circle", to which the object belongs.
+@multiclass-classification shows a basic example of how this works. There are three classes — triangle, cross, and circle. The model receives an image of an object and predicts which one it belongs to.
 
 ==== Image Preprocessing
-According to #cite(<geeksforgeeks-2025e>), image preprocessing is a crucial step that involves transforming raw image data into a format that can be effectively utilized by machine learning algorithms. Proper preprocessing can significantly enhance the accuracy and efficiency of image recognition tasks.
+Image preprocessing is the step where raw images get converted into a format machine learning algorithms can actually process #cite(<geeksforgeeks-2025e>). It has a bigger impact than it might seem — getting it right improves both accuracy and efficiency.
 
-In this study, the researchers applied image preprocessing techniques in order to transform images to numbers or tensors, since machine learning and deep learning models only understand numbers, and not images. The preprocessing steps applied in this study are resizing, normalization, and conversion of image to tensors.
+The researchers needed to turn images into numbers. Deep learning models only work with tensors, so that conversion was necessary. Resizing came first, then normalization, then converting to tensors.
 
 ==== Image Normalization
-Normalization adjusts pixel intensity values to a standard scale #cite(<geeksforgeeks-2025e>, form: "normal"). In this research, input images were normalized using the standard ImageNet mean and standard deviation values: $"mean" = [0.485, 0.456, 0.406]$ and $"std" = [0.229, 0.224, 0.225]$. This normalization ensures compatibility with pre-trained models from PyTorch’s torchvision library, which were originally trained on the ImageNet dataset. By aligning the data distributions, normalization enables more effective transfer learning and stable gradient flow during training.
+Pixel intensity values were normalized to a standard scale #cite(<geeksforgeeks-2025e>, form: "normal"). The study used ImageNet's mean and standard deviation for this: $"mean" = [0.485, 0.456, 0.406]$ and $"std" = [0.229, 0.224, 0.225]$. The pre-trained models from PyTorch's torchvision library were trained on ImageNet, so matching those normalization values keeps the data distributions consistent. That consistency is what makes transfer learning work well and keeps gradients stable while training.
 
 ==== Data Augmentation
-According to #cite(<murel-jacob-2025b>), data augmentation uses pre-existing data to create new data samples that can improve model optimization and generalizability. It improves machine learning model optimization and generalization. In other words, data augmentation can reduce overfitting and improve model robustness.
+Data augmentation takes existing data and creates new samples from it to help the model generalize better #cite(<murel-jacob-2025b>). It cuts down on overfitting and makes the model more robust overall.
 
-In this research, the dataset was subjected to various image augmentation techniques, including flipping, shearing, rotation, brightness adjustment, and exposure modification. These augmentations enable the model to learn from diverse orientations, lighting conditions, and perspectives of the nail images, thereby enhancing its ability to generalize to unseen data.
+The researchers applied several augmentation techniques to the nail images — flipping, shearing, rotation, brightness adjustments, and exposure changes. That way the model sees the same nails from different orientations and under different lighting, which helps it handle unseen data better.
 
 #figure(image("img/data-augmentation.png"), caption: flex-caption(
   [Image Augmentation #cite(<murel-jacob-2025b>, form: "normal")],
   [Image Augmentation],
 )) <data-augmentation>
 
-@data-augmentation illustrates an example of data augmentation applied to images. The original image is transformed into multiple variations through techniques such as flipping, rotation, blurring, exposure adjustment, contrast adjustment, and conversion to grayscale. This process addresses dataset limitations by increasing diversity in the training samples, thereby improving the model’s generalization capability.
+@data-augmentation shows what this looks like in practice. One original image gets transformed into multiple variations: flipped, rotated, blurred, exposure-adjusted, contrast-shifted, converted to grayscale. It is a way to stretch a limited dataset further and give the model more diversity to train on.
 
 ==== Batch Learning
-According to @geeksforgeeks_batch_2025, batch learning, also called offline learning, is a type of learning where the model trains on the entire dataset at once. The researchers opted for batch learning in this study due to the static nature of the dataset, which consisted of a fixed collection of labeled images that did not require real-time updates. The advantages of batch learning in this study include enhanced stability, reproducibility, and accuracy.
+Batch learning, or offline learning, trains the model on the full dataset in one go @geeksforgeeks_batch_2025. The dataset here was a fixed collection of labeled nail images — nothing coming in live, no updates needed. So batch learning was the straightforward choice. It gave the researchers better stability and reproducibility, and the results were more accurate because of it.
 
 #figure(
   image("./img/batch-learning.png"),
@@ -1298,15 +1298,15 @@ According to @geeksforgeeks_batch_2025, batch learning, also called offline lear
   ),
 ) <batch-learning-img>
 
-@batch-learning-img shows the difference between batch learning and online learning. According to Gaidhane (2023), the key difference between batch learning and online learning is that batch learning requires a fixed dataset. Batch learning is typically faster and requires less computational resources than online learning, but may not be as flexible in handling changing or large datasets. Online learning, on the other hand, can be more flexible and adaptable due to incremental learning, where the model trains on new data as it arrives. However, it may require more resources and is slower to process data.
+@batch-learning-img shows how batch learning and online learning differ. Gaidhane (2023) points out that the core distinction is the dataset — batch learning works off a fixed one. It runs faster and uses fewer resources. Online learning is more flexible though, since the model picks up new data as it arrives and learns incrementally. That adaptability comes at a cost: it is slower and needs more compute.
 
 ==== Class Balancing
-Class balancing refers to techniques used to address imbalances in the dataset where certain classes, such as specific disease categories, have significantly fewer samples than others like healthy cases, preventing the model from biasing toward the majority class and improving overall performance, as explained by Kharwal (2021), who defines it as balancing classes with unbalanced samples to avoid skewed learning in machine learning models.
+Some classes in a dataset end up with far fewer samples than others — certain disease categories might have a handful of images while healthy nails have hundreds. Without balancing, the model just leans toward whatever class has the most data. Kharwal (2021) describes class balancing as the set of techniques used to fix that kind of skew so the model does not learn in a lopsided way.
 
-In this research, the researchers implemented a weighted Cross Entropy Loss, a technique that adjusts the loss function to assign higher penalties to misclassifications of underrepresented classes in the imbalance dataset. It helps to improve model performance on minority classes.
+The researchers used weighted Cross Entropy Loss to deal with this. It adjusts the loss function so that misclassifying an underrepresented class carries a heavier penalty. That pushes the model to pay more attention to minority classes instead of ignoring them.
 
 ==== Learning Rate Scheduling
-As stated by @chugani_gentle_2025, learning rate schedulers are algorithms that automatically adjust the model’s learning rate during training. Instead of using the same learning rate from start to finish, these schedulers change it based on predefined rules or training performance.
+Learning rate schedulers change the learning rate during training instead of leaving it fixed @chugani_gentle_2025. Some follow preset rules, others respond to how the model is performing.
 
 #figure(
   image("./img/reduceLR-scheduler.png"),
@@ -1316,22 +1316,23 @@ As stated by @chugani_gentle_2025, learning rate schedulers are algorithms that 
   ),
 )
 
-In this research, the researchers applied an adaptive plateau reduction scheduler which is ReduceLROnPlateau. ReduceLROnPlateau monitors validation metrics and reduces the learning rate only when improvement stagnates. Unlike StepLR which reduces learning rate by a factor on n number of epochs, ReduceLROnPlateau automatically reduces the learning rate by the defined factor if the validation loss does not improve for n number of epochs. The main advantage of this is its simplicity and responsiveness to training dynamics.
+For this study, the researchers went with ReduceLROnPlateau. It tracks validation metrics and drops the learning rate only when improvement stalls — if validation loss does not get better for n epochs, the rate gets reduced by a set factor. That makes it different from something like StepLR, which just cuts the rate on a schedule no matter what. ReduceLROnPlateau is simpler in practice and adapts to the actual training dynamics.
 
 ==== Early Stopping
-According to @murel_what_2023, early stopping is the most readily implemented regularization technique. Early stopping limits the number of iterations during model training.
+Early stopping is one of the simplest regularization techniques out there @murel_what_2023. It caps the number of iterations during training.
+
 #figure(
   image("./img/early-stopping.png"),
   caption: flex-caption([Early Stopping #cite(<murel_what_2023>, form: "normal")], [Early Stopping]),
 ) <early-stopping-img>
-@early-stopping-img shows a model continuously passing through the training data. Early stopping makes it so that it stops once there is no more improvement in training and validation accuracy after a predefined number of epochs has passed. The goal is to train a model until it has reached the lowest possible training error preceding a plateau or increase in validation error. This technique helped the researchers to save time and GPU usage on colab, preventing the model from training more epochs even if the model is not improving anymore.
+
+@early-stopping-img shows how it works. The model keeps passing through the training data, epoch after epoch, but early stopping cuts it off once there is no meaningful improvement in training and validation accuracy for a set number of epochs. The point is to stop right when the model hits its lowest training error — before validation error starts climbing or flatlines. For the researchers, this saved time and GPU hours on Colab. No point in running more epochs if the model is not getting any better.
 
 ==== Evaluation Metrics
-Model evaluation is the process of using different evaluation metrics to understand a machine learning model’s performance, as well as its strengths and weaknesses. Model evaluation is important to assess the efficacy of a model during initial research phases, and it also plays a role in model monitoring #cite(<domino_what_nodate>, form: "normal").
-The researchers used multiple evaluation metrics to systematically monitor training dynamics and rigorously assess the predictive performance of the model across different experimental setups.
+Evaluating a model means using metrics to figure out how well it performs — and where it does not #cite(<domino_what_nodate>, form: "normal"). That matters early in research, and it stays relevant when monitoring the model down the line. The researchers relied on several metrics to track how training was going and to compare predictive performance across different experimental setups.
 
 ===== Accuracy
-Accuracy is a fundamental metric for evaluating the performance of a classification model. It tells us the proportion of correct predictions made by the model out of all predictions #cite(<geeksforgeeks_evaluation_2025>, form: "normal"). In the context of this study, where the objective is to classify images into multiple fingernail feature categories, accuracy provides an intuitive and holistic measure of the model’s predictive effectiveness.
+Accuracy is the simplest classification metric. It tells you the proportion of predictions the model got right out of everything it predicted #cite(<geeksforgeeks_evaluation_2025>, form: "normal"). With multiple nail feature categories to classify, accuracy gave a useful overall snapshot of how the model was doing.
 
 #figure(
   kind: "equation",
@@ -1345,7 +1346,7 @@ Accuracy is a fundamental metric for evaluating the performance of a classificat
 )
 
 ===== Precision
-Precision measures how many of the positive predictions made by the model are actually correct. It’s useful when the cost of false positives is high, such as in medical diagnoses where predicting a disease when it’s not present can have serious consequences. The formula of precision is defined as:
+Precision asks a different question: of all the times the model predicted a positive, how often was it actually right? That matters when false positives carry a real cost — like in medical diagnosis, where flagging a disease that is not there has consequences. The formula is defined as: 
 
 #figure(
   kind: "equation",
@@ -1357,10 +1358,11 @@ Precision measures how many of the positive predictions made by the model are ac
     [Formula for Precision/PPV],
   ),
 )
-where TP denotes True Positive and FP denotes False Positive. In multiclass classification, precision is computed per class and can be averaged (macro, micro, or weighted) to obtain an overall measure #cite(<sokolova_systematic_2009>, form: "normal").
+
+where TP is True Positive and FP is False Positive. In multiclass settings, precision is calculated per class and then averaged. The averaging method — macro, micro, or weighted — depends on what you want to emphasize #cite(<sokolova_systematic_2009>, form: "normal").
 
 ===== Recall
-According to @pedigo_sensitivity_2025, recall or sensitivity, also called true positive rate, measures the model’s ability to correctly identify true positives. More precisely, it is the proportion of true positives to actual positives. The formula for recall is defined as:
+Recall, or sensitivity, flips the perspective @pedigo_sensitivity_2025. It measures how many of the actual positives the model managed to catch. The formula is defined as: 
 
 #figure(
   kind: "equation",
@@ -1370,10 +1372,10 @@ According to @pedigo_sensitivity_2025, recall or sensitivity, also called true p
   caption: flex-caption([Formula for Recall #cite(<pedigo_sensitivity_2025>, form: "normal")], [Formula for Recall]),
 )
 
-where TP denotes True Positive and FN denotes False Negatives.
+where TP is True Positive and FN is False Negative.
 
 ===== F1 score
-According to @geeksforgeeks_evaluation_2025 the F1 score is the harmonic mean of precision and recall. It is useful when we need a balance between precision and recall as it combines both into a single number. A high F1 score means the model performs well on both. The formula for F1 score is defined as:
+F1 score is the harmonic mean of precision and recall @geeksforgeeks_evaluation_2025. It rolls both into a single number, which helps when you need the model to do well on both fronts. High F1 means it does. The formula is defined as:
 
 #figure(
   kind: "equation",
@@ -1387,7 +1389,8 @@ According to @geeksforgeeks_evaluation_2025 the F1 score is the harmonic mean of
 )
 
 ===== Confusion Matrix
-@geeksforgeeks_understanding_2025 defines confusion matrix as a simple table used to measure how well a classification model is performing. It compares the predictions made by the model with the actual results and shows where the model was right or wrong. This helps in understanding where the model is making mistakes.
+A confusion matrix is a table that shows how well a classification model is doing @geeksforgeeks_understanding_2025. It lines up the model's predictions against the actual results — where it got things right and where it got them wrong. That makes it easier to spot specific patterns in the mistakes.
+
 #figure(
   image("./img/confusion-matrix.jpg"),
   caption: flex-caption(
@@ -1397,15 +1400,14 @@ According to @geeksforgeeks_evaluation_2025 the F1 score is the harmonic mean of
 )
 
 ==== Model Interpretability
-According to @geeksforgeeks_model_2025, model interpretability is the ability to understand and explain how a machine learning or deep learning model makes predictions or decisions. Understanding traditional machine learning models, such as decision trees or linear regression, is relatively simple due to their transparency. Deep learning models, particularly neural networks, operate as complex, multi-layered black boxes, making them difficult to interpret.
+Model interpretability, as @geeksforgeeks_model_2025 puts it, is about being able to understand and explain how a model arrives at its predictions. With traditional models like decision trees or linear regression, that is fairly straightforward — they are transparent by design. Neural networks are a different story. They are multi-layered black boxes, and figuring out why they made a particular decision is much harder.
 
-The researchers applied saliency maps as their interpretability method. Saliency maps is an interpretability method for computer vision tasks. It highlights which parts of the image are the most important for the model’s decision, offering visual interpretability.
+The researchers used saliency maps to make their model more interpretable. Saliency maps are built for computer vision — they highlight which parts of an image the model focused on most when making its prediction. That gives a visual explanation of what drove the decision.
 
 #figure(
   image("./img/saliency-map.png"),
   caption: flex-caption([Saliency Map #cite(<geeksforgeeks_what_2021>, form: "normal")], [Saliency Map])
 )
-
 
 === Algorithm Analysis
 In order to evaluate the performance of deep learning models for nail feature classification, the researchers considered a set of architectures that represent different stages of advancement in computer vision research. The selection of models was guided by two principles: the first is ensuring diversity in architectural design to capture a broad range of representational capabilities, and the second one is relying on established benchmarks such as ImageNet Top-1 and Top-5 accuracy, parameter counts, and computational complexity (GFLOPs) as reported in the official PyTorch model repository. These criteria provide a standardized basis for comparison and ensure that the chosen models span from classical convolutional networks to modern transformer-based approaches.
